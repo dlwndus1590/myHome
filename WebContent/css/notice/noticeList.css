@@ -1,0 +1,56 @@
+@charset "UTF-8";
+
+table .info {
+	border: solid 1px #48D1CC;
+}
+
+.commontable {
+	width: 700px;
+	margin: auto;
+	padding: 1px;
+	border-spacing: 3px;
+}
+
+.nTitle {
+	width : 300px;
+	background-color: #D1EEEE;
+	text-align: center;
+}
+
+.info {
+	width: 200px;
+	height: 30px;
+	margin-bottom: 10px;
+	text-align: center;
+}
+
+#write {
+	background-color: #03C75A;
+	color: white;
+	width: 100px;
+	height: 40px;
+}
+
+#noticeType {
+	width: 142px;
+	height: 34px;
+}
+
+#searchCategory {
+	width: 142px;
+	height: 34px;
+}
+
+#searchInfo {
+	width: 200px;
+	height: 34px;
+}
+
+#search {
+	width: 56px;
+	height: 36px;
+	background-color: #03C75A;
+	color: white;
+	border: 1px;
+	font-size: 18px";
+}

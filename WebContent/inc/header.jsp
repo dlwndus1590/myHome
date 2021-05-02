@@ -63,7 +63,7 @@
 					 <li class="dropdown">
 					 	<a data-toggle="dropdown" class="dropdown-toggle" href="#">커뮤니티 <b class="caret"></b></a>
 					 	<div class="dropdown-menu">
-					 		<a href="#">공지사항</a>
+					 		<a href="${CONTEXT_PATH}/notice/noticeController?action=noticeListForm">공지사항</a>
 					 		<a href="#">질문과 답변</a>
 					 	</div>
 					 </li>
