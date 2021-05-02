@@ -50,7 +50,7 @@
 </header>
 
 <!-- Navigation Bar Section -->
-<div class="navbar">
+<div class="navbar" style="width:960px;">
 	  <div class="navbar-inner">
 		<div class="container">
 		  <a data-target=".nav-collapse" data-toggle="collapse" class="btn btn-navbar">
@@ -72,7 +72,7 @@
 					 	<div class="dropdown-menu">
 					 		<a href="#">스토어 홈</a>
 					 		<a href="${CONTEXT_PATH}/product/category.jsp">카테고리</a>
-					 		<a href="#">베스트</a>
+					 		<a href="${CONTEXT_PATH}/product/best.jsp">베스트</a>
 					 	</div>
 					 </li>
 				</ul>
