@@ -23,9 +23,24 @@
 	<div class="topNav">
 		<div class="container">
 			<div class="alignR">
-				<a href="#"><span class="icon-lock"></span> Login</a> 
-				<a href="#"><span class="icon-user"></span> 마이페이지</a> 
-				<a href="register.html"><span class="icon-edit"></span> 회원가입 </a> 
+				<a href="${CONTEXT_PATH}/member/login.jsp"><span class="icon-lock"></span> Login</a> 
+				
+				<!-- mypage menu : 마이페이지 분리 메뉴 : 로그인 후 다시 확인해보기 -->
+					<c:choose>
+						<c:when test="${empty grade}">
+							<a href="${CONTEXT_PATH}/member/memberMyPage.jsp"><span class="icon-user"></span> 마이페이지</a> 
+						</c:when>
+					
+						<c:when test="${grade == 'G'}">
+							<a href="${CONTEXT_PATH}/member/sellerMyPage.jsp"><span class="icon-user"></span> 마이페이지</a> 
+						</c:when>
+					
+						<c:when test="${grade == 'A'}">
+							<a href="${CONTEXT_PATH}/admin/adminMypage.jsp"><span class="icon-user"></span> 마이페이지</a> 
+						</c:when>
+					</c:choose>				
+				
+				<a href="${CONTEXT_PATH}/member/loginChoice.jsp"><span class="icon-edit"></span> 회원가입 </a> 
 				<a href="${CONTEXT_PATH}/member/cart.jsp"><span class="icon-shopping-cart"></span> 장바구니(2)</a>
 			</div>
 		</div>
