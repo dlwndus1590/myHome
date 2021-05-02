@@ -1,0 +1,56 @@
+@charset "UTF-8";
+
+table {
+	border: solid 1px #EBECEF;
+}
+
+table .info {
+	border: solid 1px #EBECEF;
+}
+
+#commontable {
+	width: 700px;
+	margin: auto;
+	padding: 1px;
+}
+
+#category {
+	color: #11CA63;
+	text-align: left;
+	width: 600px;
+	height: 15px;
+	margin-bottom: 1px;
+	padding-top: 2px;
+}
+
+#infoTitle {
+	font-size: 15px;
+	font-weight: bold;
+	width: 700px;
+	height: 15px;
+	text-align: left;
+	padding-top: 2px;
+	border: none;
+	margin-top: 10px;
+}
+
+#infoMemberIdGrade {
+	font-size: 13px;
+	width: 700px;
+	height: 15px;
+	text-align: left;
+	padding-top: 2px;
+	border: none;
+}
+
+#infoContent {
+	width: 700px;
+	height: 300px;
+	text-align: left;
+}
+
+#infoTag {
+	width: 700px;
+	height: 30px;
+	text-align: left;
+}

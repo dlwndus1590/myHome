@@ -26,10 +26,12 @@ create table member (
 -- notice table(공지사항)
 CREATE TABLE NOTICE (
    n_no        NUMBER       PRIMARY KEY,
+   member_id varchar2(20),
    n_title     VARCHAR2(100) not null,
    n_content   CLOB not null,
    n_reg_date  DATE,
-   n_hits      NUMBER   
+   n_hits      NUMBER,
+   CONSTRAINT notice_fk foreign key(member_id) references member(member_id) on delete cascade 
 );
 
 -- category table(카테고리)

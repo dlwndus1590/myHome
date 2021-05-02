@@ -5,7 +5,7 @@ insert into member values ('admin', 'admin01', '마동석', 'admin@work.com', '0
 insert into member values ('ucamp01', 'ucamppw01', '강감찬', 'ucamp01@work.com', '010-5678-1000', '73154', '서울시 은평구', 'oo건물 502호', '251-24-51821', 'KCC', '2021-03-20', 0, '판매자');
 
 -- notice(공지사항) 초기화데이터
-insert into notice values (1, '공지사항입니다.', '다음주에 2차 실습시험 있습니다.', to_char(sysdate, 'yyyy-mm-dd'), 3);
+insert into notice values (1,'admin', '공지사항입니다.', '다음주에 2차 실습시험 있습니다.', to_char(sysdate, 'yyyy-mm-dd'), 3);
 
 -- category 초기화데이터
 insert into category values (1, '가구/가전');
@@ -41,7 +41,7 @@ insert into orders_method values (3, '휴대폰결제');
 insert into orders_detail values (1, 2, 2);
 
 -- orders 초기화데이터
-insert into orders values (1, 'user01', 2, 1, 50000, to_char(sysdate, 'yyyy-mm-dd'), 2500);
+insert into orders values (1, 'user01', 2, 2, 50000, to_char(sysdate, 'yyyy-mm-dd'), 2500);
 
 -- interior 초기화데이터
 insert into interior values (1, '유캠프인테리어', 5, '설명 대체', '서울시 태해란로 11길 5');
@@ -91,4 +91,3 @@ select * from product where p_name like '%배개%';
 
 -- 후기
 select * from review;
-
