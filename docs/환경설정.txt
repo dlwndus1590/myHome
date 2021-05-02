@@ -1,0 +1,30 @@
+<자바 환경설정>
+1. 인코딩
+ Window -> Preferences -> encoding 검색 ->utf-8로 맞추기
+
+2. Java
+ Build Path -> output folder name : classes로 바꾸기 
+ compiler : 버전 1.8 로
+ installed JREs jdk 1.8.0_202
+
+3. 톰캣 8.5
+ Window -> Preferences -> Server -> Runtime Environments : Add 8.5 (JRE -> jdk1.8.0_202)
+ Window -> show View -> Servers
+
+4. 크롬으로
+ Window ->  Web Browser -> Chrome
+
+5. DB -> 계정 생성
+ create user myHome identified by myHome;
+ grant connect, resource, create view to myHome;
+
+6. 이클립스 연동
+ 1) Open Perspective -> Database Development -> 우클릭 New -> Oracle -> Drivers : Oracle Thin Driver -> ojdbc6 추가 
+ 2) ojdbc6 경로 : oracleexe -> product -> 오라클버전 -> dbhome_1 -> jdbc -> lib
+
+ 3) Resource url : jdbc:oracle:thin:@localhost:1521:XE
+ 4) type : javax.sql.DataSource
+ 5) name : jdbc/Oracle11g
+ 6) driverClassName : oracle.jdbc.driver.OracleDriver
+ 
+ 7) Test Connection!
