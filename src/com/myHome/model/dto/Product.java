@@ -24,7 +24,7 @@ public class Product implements Serializable {
 	/** 카테고리 번호 */
 	private int categoryId;
 	/** 평점 */
-	private int pScore;
+	private float pScore;
 	/** 판매량 */
 	private int pSales;
 	/** 재고 */
@@ -48,7 +48,7 @@ public class Product implements Serializable {
 	 * @param pCount
 	 */
 	public Product(int pNo, String pName, int pPrice, String pImg, String pDescribe, int deliveryFee,
-			String companyName, int categoryId, int pScore, int pSales, int pCount) {
+			String companyName, int categoryId, float pScore, int pSales, int pCount) {
 		this.pNo = pNo;
 		this.pName = pName;
 		this.pPrice = pPrice;
@@ -127,11 +127,11 @@ public class Product implements Serializable {
 		this.categoryId = categoryId;
 	}
 
-	public int getpScore() {
+	public float getpScore() {
 		return pScore;
 	}
 
-	public void setpScore(int pScore) {
+	public void setpScore(float pScore) {
 		this.pScore = pScore;
 	}
 

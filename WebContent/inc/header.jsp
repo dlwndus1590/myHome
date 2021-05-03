@@ -86,7 +86,7 @@
 					 	<a data-toggle="dropdown" class="dropdown-toggle" href="#">스토어 <b class="caret"></b></a>
 					 	<div class="dropdown-menu">
 					 		<a href="#">스토어 홈</a>
-					 		<a href="${CONTEXT_PATH}/product/category.jsp">카테고리</a>
+					 		<a href="${CONTEXT_PATH}/product/productController?action=productListByCategoryForm">카테고리</a>
 					 		<a href="${CONTEXT_PATH}/product/best.jsp">베스트</a>
 					 	</div>
 					 </li>

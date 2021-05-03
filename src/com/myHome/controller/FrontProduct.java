@@ -1,6 +1,7 @@
 package com.myHome.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -8,9 +9,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import com.myHome.model.biz.ProductBiz;
+import com.myHome.model.dto.Category;
+import com.myHome.model.dto.Product;
 
 /**
- * Servlet implementation class FrontProduct
+ * 상품관리 서비스
+ * @author 이주연
  */
 @WebServlet("/product/productController")
 public class FrontProduct extends HttpServlet {
@@ -26,11 +33,20 @@ public class FrontProduct extends HttpServlet {
 	
 	protected void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=UTF-8");
+		
 		String action = request.getParameter("action");
 		switch(action) {
-//		case "":
-//			(request, response);	
-//			break;
+			case "productListByCategoryForm":
+				productListByCategoryForm(request, response);	
+				break;
+			case "productListByCategory":
+				productListByCategory(request, response);
+				break;
+			case "productDetail":
+				productDetail(request, response);
+				break;
+			
 		}
 	}
 	
@@ -42,4 +58,80 @@ public class FrontProduct extends HttpServlet {
 		process(request, response);
 	}
 
+	/**
+	 * 카테고리별 상품조회 화면 요청 서비스
+	 */
+	protected void productListByCategoryForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		ProductBiz biz = new ProductBiz();
+		ArrayList<Category> categoryList = new ArrayList<Category>();
+		ArrayList<Product> productList = new ArrayList<Product>();
+		
+		try {
+			biz.getCategoryList(categoryList);
+			biz.getProductList(productList);
+			
+			HttpSession session = request.getSession();
+			session.setAttribute("categoryList", categoryList);
+			session.setAttribute("productList", productList);
+			
+			response.sendRedirect(CONTEXT_PATH + "/product/category.jsp");
+		} catch (Exception e) {
+			e.printStackTrace();			
+		}
+	}
+	
+	/**
+	 * 카테고리별 상품조회 서비스
+	 */
+	protected void productListByCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String categoryIdStr = request.getParameter("categoryId");
+		int categoryId = Integer.parseInt(categoryIdStr);
+		ArrayList<Product> productList = new ArrayList<Product>();
+		
+		ProductBiz biz = new ProductBiz();
+		
+		try {
+			biz.getProductListByCategory(categoryId, productList);
+			
+			HttpSession session = request.getSession();
+			session.setAttribute("productList", productList);
+			request.getRequestDispatcher("/product/category.jsp").forward(request, response);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 상품 상세조회 화면요청 서비스
+	 */
+	protected void productDetail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String pNoStr = request.getParameter("pNo");
+		int pNo = Integer.parseInt(pNoStr);
+		
+		Product product = new Product();
+		Category category = new Category();
+		ArrayList<Product> productList1 = new ArrayList<Product>();
+		
+		ProductBiz biz = new ProductBiz();
+		product.setpNo(pNo);
+		
+		try {
+			biz.selectProductOne(pNo, product);
+			HttpSession session = request.getSession();
+			session.setAttribute("product", product);
+			
+			category.setCategoryId(product.getCategoryId());
+			biz.getCategory(category);	
+			session.setAttribute("category", category);
+			
+			biz.getProductListByCategory(product.getCategoryId(), productList1);
+			request.setAttribute("productList1", productList1);
+			
+			request.getRequestDispatcher("/product/productDetails.jsp").forward(request, response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 }
