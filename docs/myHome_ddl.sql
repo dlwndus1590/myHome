@@ -11,7 +11,7 @@ drop table ORDERS_METHOD cascade constraints;
 drop table PRODUCT cascade constraints;
 drop table QNOTICE cascade constraints;
 drop table REVIEW cascade constraints;
-
+commit;
 -- member table
 create table member (
     member_id varchar2(20) primary key,
