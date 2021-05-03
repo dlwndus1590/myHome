@@ -23,35 +23,38 @@
 
 	<!-- contents menu -->
 	<c:if test="${not empty dto}">
-		<h3 style="padding-left: 100px;" align="center"">게시글 상세 조회</h3>
-		<table id="commonTable">
-			<tr>
-				<td align="center" height="20px"><textarea id="infoTitle"
-						cols="2" rows="3" readonly="readonly">${dto.nTitle}</textarea></td>
-			</tr>
+		<h3 align="center"">공지사항 게시글 상세 조회</h3>
+		<form action="${CONTEXT_PATH}/notice/noticeController?action=noticeEditOrDelete&nNo=${dto.nNo}" method="post">
+			<table id="commonTable">
+				<tr>
+					<td align="center" height="20px" class="info"><textarea
+							id="infoTitle" cols="2" rows="3" readonly="readonly">${dto.nTitle}</textarea></td>
+				</tr>
 
-			<tr>
-				<td align="left" height="20px" id="infoMemberIdGrade">아이디 :
-					${dto.memberId} | 관리자</td>
-			</tr>
+				<tr>
+					<td align="left" height="20px" id="infoMemberIdGrade" class="info"><span id="memberId">아이디
+						: ${dto.memberId} | 관리자</span></td>
+				</tr>
 
-			<tr>
-				<td align="left" height="20px" id="infoMemberDateViews">${dto.nRegDate}조회수
-					: ${dto.nHits}</td>
-			</tr>
-			<tr>
-				<td align="center" height="20px"><textarea id="infoContent"
-						class="info" cols="100" rows="30" readonly="readonly">${dto.nContent}</textarea></td>
-			</tr>
+				<tr>
+					<td align="left" height="20px" id="infoMemberDateViews"
+						class="info"><span id="nRegDate">${dto.nRegDate}</span><span id="nHits">조회수: ${dto.nHits}</span></td>
+				</tr>
+				<tr>
+					<td align="center" height="20px"><textarea id="infoContent"
+							class="info" cols="100" rows="30" readonly="readonly"
+							class="info">${dto.nContent}</textarea></td>
+				</tr>
 
-			<tr align="right">
-				<td><input type="submit" value="삭제" size="100px"
-					style="background-color: #03C75A; color: white; border: 1px; font-size: 18px; padding-left: 20px; padding-right: 20px">
-					<input type="submit" value="수정" size="100px"
-					style="background-color: #03C75A; color: white; border: 1px; font-size: 18px; padding-left: 20px; padding-right: 20px">
-				</td>
-			</tr>
-		</table>
+				<tr align="right">
+					<td><input type="submit" value="삭제" name ="submit" size="100px"
+						style="background-color: #03C75A; color: white; border: 1px; font-size: 18px; padding-left: 20px; padding-right: 20px">
+						<input type="submit" value="수정" name ="submit" size="100px"
+						style="background-color: #03C75A; color: white; border: 1px; font-size: 18px; padding-left: 20px; padding-right: 20px">
+					</td>
+				</tr>
+			</table>
+		</form>
 	</c:if>
 
 	<!-- footer -->

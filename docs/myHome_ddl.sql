@@ -1,5 +1,16 @@
 -- drop table  cascade constraints;
-drop table member cascade constraints ;
+drop table member cascade constraints;
+drop table CART cascade constraints;
+drop table ANSWER cascade constraints;
+drop table CATEGORY cascade constraints;
+drop table INTERIOR cascade constraints;
+drop table NOTICE cascade constraints;
+drop table ORDERS cascade constraints;
+drop table ORDERS_DETAIL cascade constraints;
+drop table ORDERS_METHOD cascade constraints;
+drop table PRODUCT cascade constraints;
+drop table QNOTICE cascade constraints;
+drop table REVIEW cascade constraints;
 
 -- member table
 create table member (
@@ -7,7 +18,7 @@ create table member (
     member_pw varchar2(40) not null,
     name varchar2(15) not null,
     email varchar2(40) not null,
-    mobile varchar2(13) not null,
+    mobile varchar2(30) not null,
     zip_code number(5) not null,
     address1 varchar2(100) not null,
     address2 varchar2(100) not null,
@@ -45,10 +56,10 @@ CREATE TABLE CATEGORY(
 -- product table(상품)
 create table product (
     p_no number primary key,
-    p_name varchar2(50) not null,
+    p_name varchar2(100) not null,
     p_price number not null,
-    p_img blob not null,
-    p_describe blob not null,
+    p_img varchar2(100) not null,
+    p_describe varchar2(100) not null,
     delivery_fee number not null,
     company_name varchar2(40),
     category_id number,
@@ -91,14 +102,13 @@ CREATE TABLE QNOTICE (
    q_no      NUMBER      PRIMARY KEY,
    q_title       VARCHAR2(100) not null,
    q_content   CLOB not null,
-   q_img      BLOB,
+   q_img      VARCHAR2(100),
    member_id   VARCHAR2(20),
    q_reg_date   DATE,
    q_hits      NUMBER,
    
    constraint member_id_fk3 foreign key(member_id) references member(member_id) on delete cascade
 );
-
 -- answer table(답변)
 create table answer(
     a_no     number primary key,
@@ -117,29 +127,29 @@ create table orders_method (
     o_method_name varchar2(30)
 );
 
--- orders_detail table (구매상세)
+-- orders_detail table (구매상세) 변경
 create table orders_detail (
     d_no number primary key,
     d_count number not null,
     p_no number,
+    o_no number,
     
-    constraint p_no_fk3 foreign key(p_no) references product(p_no) on delete cascade
+    constraint p_no_fk3 foreign key(p_no) references product(p_no) on delete cascade,
+    constraint o_no_pk foreign key(o_no) references orders(o_no)
 );
 
--- orders table
+-- orders table(구매 테이블) 변경
 create table orders(
     o_no number primary key,
     member_id varchar2(20),
     o_method_id number,
-    d_no number,
     o_total_price number,
     o_date date,
     o_delivery_fee number,
     
     constraint o_method_fk foreign key(o_method_id) references orders_method(o_method_id) on delete cascade,
-    constraint member_id_fk5 foreign key(member_id) references member(member_id) on delete cascade,
-    constraint d_no_fk foreign key(d_no) references orders_detail(d_no) on delete cascade
-);
+    constraint member_id_fk5 foreign key(member_id) references member(member_id) on delete cascade
+);	
 
 -- interior table
 create table interior(
