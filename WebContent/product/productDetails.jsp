@@ -127,7 +127,7 @@
 </div>
 
 
-<br>
+<br><br>
 <!-- footer -->
 <jsp:include page="/inc/footer.jsp"/>
 
