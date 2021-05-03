@@ -6,18 +6,16 @@ public class Orders implements Serializable {
 	private int oNo;
 	private String memberId;
 	private int oMethodId;
-	private int dNo;
 	private int oTotalPrice;
 	private String oDate;
 	private int oDeliveryFee;
 	
 	public Orders() {}
 	
-	public Orders(int oNo, String memberId, int oMethodId, int dNo, int oTotalPrice, String oDate, int oDeliveryFee) {
+	public Orders(int oNo, String memberId, int oMethodId, int oTotalPrice, String oDate, int oDeliveryFee) {
 		this.oNo = oNo;
 		this.memberId = memberId;
 		this.oMethodId = oMethodId;
-		this.dNo = dNo;
 		this.oTotalPrice = oTotalPrice;
 		this.oDate = oDate;
 		this.oDeliveryFee = oDeliveryFee;
@@ -58,18 +56,6 @@ public class Orders implements Serializable {
 	 */
 	public void setoMethodId(int oMethodId) {
 		this.oMethodId = oMethodId;
-	}
-	/**
-	 * @return the dNo
-	 */
-	public int getdNo() {
-		return dNo;
-	}
-	/**
-	 * @param dNo the dNo to set
-	 */
-	public void setdNo(int dNo) {
-		this.dNo = dNo;
 	}
 	/**
 	 * @return the oTotalPrice
@@ -117,8 +103,6 @@ public class Orders implements Serializable {
 		builder.append(memberId);
 		builder.append(", oMethodId=");
 		builder.append(oMethodId);
-		builder.append(", dNo=");
-		builder.append(dNo);
 		builder.append(", oTotalPrice=");
 		builder.append(oTotalPrice);
 		builder.append(", oDate=");

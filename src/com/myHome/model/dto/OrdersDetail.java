@@ -6,13 +6,15 @@ public class OrdersDetail implements Serializable {
 	private int dNo;
 	private int dCount;
 	private int pNo;
+	private int oNo;
 	
 	public OrdersDetail() {}
 	
-	public OrdersDetail(int dNo, int dCount, int pNo) {
+	public OrdersDetail(int dNo, int dCount, int pNo, int oNo) {
 		this.dNo = dNo;
 		this.dCount = dCount;
 		this.pNo = pNo;
+		this.oNo = oNo;
 	}
 
 	/**
@@ -51,6 +53,18 @@ public class OrdersDetail implements Serializable {
 	public void setpNo(int pNo) {
 		this.pNo = pNo;
 	}
+	/**
+	 * @return the oNo
+	 */
+	public int getoNo() {
+		return oNo;
+	}
+	/**
+	 * @param oNo the oNo to set
+	 */
+	public void setoNo(int oNo) {
+		this.oNo = oNo;
+	}
 
 	@Override
 	public String toString() {
@@ -61,6 +75,8 @@ public class OrdersDetail implements Serializable {
 		builder.append(dCount);
 		builder.append(", pNo=");
 		builder.append(pNo);
+		builder.append(", oNo=");
+		builder.append(oNo);
 		builder.append("]");
 		return builder.toString();
 	}
