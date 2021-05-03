@@ -15,7 +15,7 @@ public class Member implements Serializable {
 	private String name;
 	private String email;
 	private String mobile;
-	private String zipcode;
+	private int zipcode;
 	private String address1;
 	private String address2;
 
@@ -42,8 +42,8 @@ public class Member implements Serializable {
 	 * @param address1		회원 기본주소
 	 * @param address2		회원 상세주소
 	 */
-	public Member(String memberId, String memberPw, String name, String email, String mobile, String zipcode,
-			String address1, String address2) {
+	public Member(String memberId, String memberPw, String name, String email, String mobile, int zipcode,
+			String address1, String address2,String grade) {
 		super();
 		this.memberId = memberId;
 		this.memberPw = memberPw;
@@ -53,6 +53,7 @@ public class Member implements Serializable {
 		this.zipcode = zipcode;
 		this.address1 = address1;
 		this.address2 = address2;
+		this.grade = grade;
 	}
 
 
@@ -69,8 +70,8 @@ public class Member implements Serializable {
 	 * @param businessNumber		판매자 사업자번호
 	 * @param companyName		판매자 회사명
 	 */
-	public Member(String memberId, String memberPw, String name, String email, String mobile, String zipcode,
-			String address1, String address2, String businessNumber, String companyName) {
+	public Member(String memberId, String memberPw, String name, String email, String mobile, int zipcode,
+			String address1, String address2, String businessNumber, String companyName,String grade) {
 		super();
 		this.memberId = memberId;
 		this.memberPw = memberPw;
@@ -82,6 +83,7 @@ public class Member implements Serializable {
 		this.address2 = address2;
 		this.businessNumber = businessNumber;
 		this.companyName = companyName;
+		this.grade = grade;
 	}
 
 	/**
@@ -143,11 +145,11 @@ public class Member implements Serializable {
 		this.companyName = companyName;
 	}
 
-	public String getZipcode() {
+	public int getZipcode() {
 		return zipcode;
 	}
 
-	public void setZipcode(String zipcode) {
+	public void setZipcode(int zipcode) {
 		this.zipcode = zipcode;
 	}
 

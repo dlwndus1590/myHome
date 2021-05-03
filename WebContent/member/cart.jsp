@@ -46,6 +46,7 @@
 							<th>상품명</th>
 							<th>선택</th>
 							<th>상품 가격</th>
+							<th>배송비</th>
 							<th>수량</th>
 							<th>금액</th>
 						</tr>
@@ -60,6 +61,7 @@
 								<input type="checkbox" name="">
 							</td>
 							<td>5,000원</td>
+							<td>2,500원</td>
 							<td><input class="span1" style="max-width: 34px"
 								placeholder="1" size="16" type="number"
 								value="2" min="1">
@@ -80,6 +82,7 @@
 								<input type="checkbox" name="">
 							</td>
 							<td>7,000원</td>
+							<td>2,500원</td>
 							<td><input class="span1" style="max-width: 34px"
 								placeholder="1" size="16" type="number" min="1" value="1">
 								<div class="input-append">
@@ -100,7 +103,7 @@
 				<a href="${CONTEXT_PATH}/product/category.jsp" class="shopBtn btn-large">
 					<span class="icon-arrow-left"></span> 쇼핑 계속하기 
 				</a> 
-				<a href="${CONTEXT_PATH}/member/cart.jsp" class="shopBtn btn-large pull-right">결제하기
+				<a href="${CONTEXT_PATH}/member/ordersController?action=ordersPage" class="shopBtn btn-large pull-right">결제하기
 					<span class="icon-arrow-right"></span>
 				</a>
 			</div>

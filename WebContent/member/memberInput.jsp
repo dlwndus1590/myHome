@@ -98,9 +98,9 @@ a {
 
     <label><b>아이디</b></label>
     <p>
-    <input type="text" name="checkMemberId" id="checkMemberId" placeholder="아이디"
+    <input type="text" name=memberId id="memberId" placeholder="아이디"
 		class="inline" autofocus="autofocus">
-	<input type="button" value="아이디중복확인" class="inline">
+	<input type="button" value="중복체크" class="inline">
 	<div id="checkMessage"></div>
   	<br>
   	
@@ -118,7 +118,7 @@ a {
     <input type="text" placeholder="Enter Email" name="email" id="email" required>
 
 	<label><b>핸드폰</b></label>
-    <input type="text" placeholder="Enter Mobile" name="mobile" id="mobile" required>
+    <input type="text" placeholder="Enter mobile" name="mobile" id="mobile" required>
     
     <label><b>주소</b></label>
     <br>

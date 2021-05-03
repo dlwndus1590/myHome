@@ -22,45 +22,57 @@
 	<jsp:include page="/inc/header.jsp" />
 
 	<!-- contents menu -->
-	<h3 align="center">전체 게시글 상세 조회</h3>
+	<h3 align="left" style="padding-left: 50px;">공지사항</h3>
 	<hr>
-	
+
 	<div align="center">
 		<table class="commonTable">
 			<tr>
 				<td align="right" colspan="8"><a
-					href="${CONTEXT_PATH}/mms04/NoticeController?action=noticeInputForm">
+					href="${CONTEXT_PATH}/notice/noticeController?action=noticeInputForm">
 						<input type="button" value="글쓰기" id="write">
 				</a></td>
 			</tr>
 			<tr>
+				<th align="center" class="nTitle" id="nNo"></th>
 				<th align="center" class="nTitle">아이디</th>
 				<th align="center" class="nTitle">제목</th>
 				<th align="center" class="nTitle">등록일자</th>
 				<th align="center" class="nTitle">조회수</th>
 			</tr>
-			<c:forEach var="dto" items="${list}">
+			<c:choose>
+				<c:when test="${not empty list}">
+					<c:forEach var="dto" items="${list}">
+						<tr>
+							<td class="info">${dto.nNo}</td>
+							<td class="info">${dto.memberId}</td>
+							<td class="info"><a
+								href="${CONTEXT_PATH}/notice/noticeController?action=noticeDetail&nNo=${dto.nNo}&writeMemberId=${dto.memberId}"
+								id="link">${dto.nTitle}</a></td>
+							<td class="info">${dto.nRegDate}</td>
+							<td class="info">${dto.nHits}</td>
+						</tr>
+					</c:forEach>
+				</c:when>
+				
+				<c:otherwise>
 				<tr>
-					<td class="info">${dto.memberId}</td>
-					<td class="info"><a
-						href="${CONTEXT_PATH}/notice/noticeController?action=noticeDetail&nNo=${dto.nNo}&writeMemberId=${dto.memberId}"
-						id="link">${dto.nTitle}</a></td>
-					<td class="info">${dto.nRegDate}</td>
-					<td class="info">${dto.nHits}</td>
+					<td rowspan="5" colspan="5" align="center" id ="noInfo">등록된 게시글이 없습니다. </td>
 				</tr>
-			</c:forEach>
+				</c:otherwise>
+			</c:choose>
 		</table>
 	</div>
 	<br />
 
 	<form
-		action="${CONTEXT_PATH}/mms04/NoticeController?action=noticeSearchForm"
+		action="${CONTEXT_PATH}//notice/noticeController?action=noticeSearch"
 		method="post">
 		<div align="center">
 			<table class="commonTable">
 				<tr>
-					<td align="center" height="20px"><select name="noticeType"
-						id="noticeType">
+					<td align="center" height="20px"><select name="searchType"
+						id="searchType">
 							<option value="titleContents">제목+내용</option>
 							<option value="title">제목만</option>
 							<option value="writer">작성자</option>

@@ -16,7 +16,6 @@ insert into category values (5, '생활용품');
 insert into category values (6, '주방');
 insert into category values (7, 'DIY/공구');
 
--- product 초기화데이터
 insert into product values (1, '박나래 기절베개 - 호텔식베개 커버포함 2종',  25900, 'img/product/1.jpg', 'img/productDetail/1.png', 0, 'KCC', 2, 4.87, 4979 , 2000);
 insert into product values (2, '프란시스 Y3.3 커피머신 + 웰컴캡슐 14개',  119000, 'img/product/2.jpg', 'img/productDetail/2.png', 5000, 'KCC', 1, 4.9, 1632, 1000);
 insert into product values (3, '헤링본 발탄 사이잘룩 러그 카페트',  12800, 'img/product/3.jpg', 'img/productDetail/3.png', 0, 'KCC', 2, 4.85, 12614, 1000);

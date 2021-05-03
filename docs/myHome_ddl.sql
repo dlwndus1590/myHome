@@ -11,7 +11,7 @@ drop table ORDERS_METHOD cascade constraints;
 drop table PRODUCT cascade constraints;
 drop table QNOTICE cascade constraints;
 drop table REVIEW cascade constraints;
-commit;
+
 -- member table
 create table member (
     member_id varchar2(20) primary key,
@@ -127,6 +127,19 @@ create table orders_method (
     o_method_name varchar2(30)
 );
 
+
+
+-- orders_detail table (구매상세) 변경
+create table orders_detail (
+    d_no number primary key,
+    d_count number not null,
+    p_no number,
+    o_no number,
+    
+    constraint p_no_fk3 foreign key(p_no) references product(p_no) on delete cascade,
+    constraint o_no_pk foreign key(o_no) references orders(o_no) on delete cascade
+);
+
 -- orders table(구매 테이블) 변경
 create table orders(
     o_no number primary key,
@@ -140,6 +153,7 @@ create table orders(
     constraint member_id_fk5 foreign key(member_id) references member(member_id) on delete cascade
 );	
 
+
 -- orders_detail table (구매상세) 변경
 create table orders_detail (
     d_no number primary key,
@@ -148,7 +162,7 @@ create table orders_detail (
     o_no number,
     
     constraint p_no_fk3 foreign key(p_no) references product(p_no) on delete cascade,
-    constraint o_no_pk foreign key(o_no) references orders(o_no)
+    constraint o_no_pk foreign key(o_no) references orders(o_no) on delete cascade
 );
 
 -- interior table
