@@ -3,7 +3,7 @@
 insert into member values ('user01', 'password01', '홍길동', 'user01@work.com', '010-1234-1000', '12345', '서울시 관악구', '111동 1111호', null, null, to_char(sysdate, 'yyyy-mm-dd'), 1000, '일반회원');
 insert into member values ('admin', 'admin01', '마동석', 'admin@work.com', '010-1111-2222', '46321', '부산 해운대구', '102동 1103호', null, null, '2020-01-01', 0, '관리자');
 insert into member values ('ucamp01', 'ucamppw01', '강감찬', 'ucamp01@work.com', '010-5678-1000', '73154', '서울시 은평구', 'oo건물 502호', '251-24-51821', 'KCC', '2021-03-20', 0, '판매자');
-
+commit;
 -- notice(공지사항) 초기화데이터
 insert into notice values (1,'admin', '공지사항입니다.', '다음주에 2차 실습시험 있습니다.', to_char(sysdate, 'yyyy-mm-dd'), 3);
 
@@ -107,3 +107,4 @@ select * from product where p_name like '%배개%';
 
 -- 후기
 select * from review;
+

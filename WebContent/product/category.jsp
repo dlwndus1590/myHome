@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/inc/taglib_menu.jsp" %>  
 <!DOCTYPE html>
 <html>
   <head>
@@ -24,17 +25,15 @@
 
 <!-- Body Section -->
 <div class="row">
-<div id="sidebar" class="span3">
+<div id="sidebar" class="span3" style="width:200px">
 <div class="well well-small">
 	<ul class="nav nav-list">
-		<li><a href="#"><span class="icon-chevron-right"></span>전체</a></li>
-		<li><a href="#"><span class="icon-chevron-right"></span>가구/가전</a></li>
-		<li><a href="#"><span class="icon-chevron-right"></span>패브릭</a></li>
-		<li><a href="#"><span class="icon-chevron-right"></span>홈데코/조명</a></li>
-		<li><a href="#"><span class="icon-chevron-right"></span>수납/정리</a></li>
-		<li><a href="#"><span class="icon-chevron-right"></span>생활용품</a></li>
-		<li><a href="#"><span class="icon-chevron-right"></span>주방</a></li>
-		<li><a href="products.html"><span class="icon-chevron-right"></span>조명</a></li>
+		<li><a href="${CONTEXT_PATH}/product/productController?action=productListByCategoryForm">
+			<span class="icon-chevron-right"></span>전체</a></li>
+		<c:forEach var="categoryList" items="${categoryList}">
+		<li><a href="${CONTEXT_PATH}/product/productController?action=productListByCategory&categoryId=${categoryList.categoryId}">
+			<span class="icon-chevron-right"></span>${categoryList.categoryName}</a></li>
+		</c:forEach>
 		<li style="border:0"> &nbsp;</li>
 	</ul>
 </div>
@@ -43,121 +42,28 @@
 <div class="span9">
 
 <!-- New Products -->
-<div class="well well-small">
+<div class="well well-small" style="width:730px">
 <h3> 전체 </h3>
-	<div class="row-fluid">
+	<div class="row-fluid">	
 		<ul class="thumbnails">
-		  
-			<li class="span4">
+		  <c:forEach var="productList" items="${productList}">
+			<li class="span4" style="width:220px; ">
 				<div class="thumbnail">
-					<a class="zoomTool" href="product_details.html" title="add to cart"><span class="icon-search"></span> 가격 : 13000</a>
-					<a href="product_details.html"><img src="${CONTEXT_PATH}/assets/img/b.jpg" alt=""></a>
+					<a class="zoomTool"><span class="icon-search"></span> ${productList.pPrice}원</a>
+					<a href="${CONTEXT_PATH}/product/productController?action=productDetail&pNo=${productList.pNo}"><img src="${CONTEXT_PATH}/${productList.pImg}"></a>
 						<div class="caption cntr">
-							<p>Manicure & Pedicure</p>
-							<p><strong> $22.00</strong></p>
-							<h4><a class="shopBtn" href="#" title="add to cart"> Add to cart </a></h4>
+							<p><strong>${productList.pName}</strong></p>
+							<h4><a class="shopBtn" href="#" title="add to cart"> 장바구니 담기 </a></h4>
 								<div class="actionList">
-									<a class="pull-left" href="#">Add to Wish List </a> 
-									<a class="pull-left" href="#"> Add to Compare </a>
+									<p><img src="${CONTEXT_PATH}/img/star.png">${productList.pScore}  </p> 
 								</div> 
 								<br class="clr">
 						</div>
 			  	</div>
-			</li>
-			
-			<li class="span4">
-				<div class="thumbnail">
-					<a class="zoomTool" href="product_details.html" title="add to cart"><span class="icon-search"></span> QUICK VIEW</a>
-					<a href="product_details.html"><img src="${CONTEXT_PATH}/assets/img/c.jpg" alt=""></a>
-						<div class="caption cntr">
-							<p>Manicure & Pedicure</p>
-							<p><strong> $22.00</strong></p>
-							<h4><a class="shopBtn" href="#" title="add to cart"> Add to cart </a></h4>
-								<div class="actionList">
-									<a class="pull-left" href="#">Add to Wish List </a> 
-									<a class="pull-left" href="#"> Add to Compare </a>
-								</div> 
-								<br class="clr">
-						</div>
-			 	 </div>
-			</li>
-			
-			<li class="span4">
-				<div class="thumbnail">
-					<a class="zoomTool" href="product_details.html" title="add to cart"><span class="icon-search"></span> QUICK VIEW</a>
-					<a href="product_details.html"><img src="${CONTEXT_PATH}/assets/img/a.jpg" alt=""></a>
-						<div class="caption cntr">
-							<p>Manicure & Pedicure</p>
-							<p><strong> $22.00</strong></p>
-							<h4><a class="shopBtn" href="#" title="add to cart"> Add to cart </a></h4>
-								<div class="actionList">
-									<a class="pull-left" href="#">Add to Wish List </a> 
-									<a class="pull-left" href="#"> Add to Compare </a>
-								</div> 
-								<br class="clr">
-						</div>
-				  </div>
-			</li>
+			  </li>
+			</c:forEach>			
 		</ul>
 	</div>
-	
-	<div class="row-fluid">
-		<ul class="thumbnails">
-		  
-			<li class="span4">
-				<div class="thumbnail">
-					<a class="zoomTool" href="product_details.html" title="add to cart"><span class="icon-search"></span> QUICK VIEW</a>
-					<a href="product_details.html"><img src="${CONTEXT_PATH}/assets/img/b.jpg" alt=""></a>
-						<div class="caption cntr">
-							<p>Manicure & Pedicure</p>
-							<p><strong> $22.00</strong></p>
-							<h4><a class="shopBtn" href="#" title="add to cart"> Add to cart </a></h4>
-								<div class="actionList">
-									<a class="pull-left" href="#">Add to Wish List </a> 
-									<a class="pull-left" href="#"> Add to Compare </a>
-								</div> 
-								<br class="clr">
-						</div>
-			  	</div>
-			</li>
-			
-			<li class="span4">
-				<div class="thumbnail">
-					<a class="zoomTool" href="product_details.html" title="add to cart"><span class="icon-search"></span> QUICK VIEW</a>
-					<a href="product_details.html"><img src="${CONTEXT_PATH}/assets/img/c.jpg" alt=""></a>
-						<div class="caption cntr">
-							<p>Manicure & Pedicure</p>
-							<p><strong> $22.00</strong></p>
-							<h4><a class="shopBtn" href="#" title="add to cart"> Add to cart </a></h4>
-								<div class="actionList">
-									<a class="pull-left" href="#">Add to Wish List </a> 
-									<a class="pull-left" href="#"> Add to Compare </a>
-								</div> 
-								<br class="clr">
-						</div>
-			 	 </div>
-			</li>
-			
-			<li class="span4">
-				<div class="thumbnail">
-					<a class="zoomTool" href="product_details.html" title="add to cart"><span class="icon-search"></span> QUICK VIEW</a>
-					<a href="product_details.html"><img src="${CONTEXT_PATH}/assets/img/a.jpg" alt=""></a>
-						<div class="caption cntr">
-							<p>Manicure & Pedicure</p>
-							<p><strong> $22.00</strong></p>
-							<h4><a class="shopBtn" href="#" title="add to cart"> Add to cart </a></h4>
-								<div class="actionList">
-									<a class="pull-left" href="#">Add to Wish List </a> 
-									<a class="pull-left" href="#"> Add to Compare </a>
-								</div> 
-								<br class="clr">
-						</div>
-				  </div>
-			</li>
-		</ul>
-	</div>
-		
-
 </div>
 </div>
 <br>	
