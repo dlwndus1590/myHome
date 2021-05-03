@@ -1,9 +1,14 @@
 package com.myHome.model.biz;
 
+import java.sql.Connection;
 import java.util.ArrayList;
 
+import com.myHome.common.JdbcTemplate;
 import com.myHome.model.dao.MemberDao;
 import com.myHome.model.dto.Member;
+import com.myHome.util.Utility;
+
+
 
 /**
  * <pre>
@@ -25,9 +30,19 @@ public class MemberBiz<searchKey> {
 	 * @param memberPw 비밀번호
 	 * @return 등급, 미존재시 null
 	 */
-	public String login(String memberId, String memberPw) {
-		String grade = dao.login(memberId, memberPw);
-		return grade;
+	public void login(Member dto) throws Exception {
+		Connection con = JdbcTemplate.getConnection();
+		
+		try{
+			dao.login(con, dto);
+			
+		} catch(Exception e) {
+			JdbcTemplate.rollback(con);
+			throw e; // dao에서 던지 예외를 다시 controller에게 예외 던짐
+			
+		} finally {
+			JdbcTemplate.close(con);
+		}
 	}
 	
 	/**
@@ -56,15 +71,20 @@ public class MemberBiz<searchKey> {
 	 * @param dto 회원객체
 	 * @return 성공시 true, 실패시 false
 	 */
-	public boolean insertMember(Member member) {
-		//member.setEntryDate(Utility.getCurrentDate());
-		member.setGrade("G");
-		int rows = dao.insertMember(member);
-		if (rows == 1) {
-			return true;
-		} else {
-			return false;
-		}
+	public void insertMember(Member dto) {
+		Connection con = JdbcTemplate.getConnection();
+		
+		dto.setEntryDate(Utility.getCurrentDate("yyyy-MM-dd"));
+		try {
+			System.out.println("(일반 회원가입)데이터 서비스 단 확인 : "+dto);
+			dao.insertMember(con,dto);
+			JdbcTemplate.commit(con);
+		} catch (Exception e) {
+			e.printStackTrace();
+			JdbcTemplate.rollback(con);
+		} finally {
+			JdbcTemplate.close(con);
+		}		
 	}
 	
 	/**
@@ -78,28 +98,106 @@ public class MemberBiz<searchKey> {
 	 * @param dto 회원객체
 	 * @return 성공시 true, 실패시 false
 	 */
-	public boolean insertSeller(Member dto) {
-		//dto.setEntryDate(Utility.getCurrentDate());
-		dto.setGrade("S");
-		int rows = dao.insertSeller(dto);
-		if (rows == 1) {
-			return true;
-		} else {
-			return false;
-		}
+	public void insertSeller(Member dto) {
+		Connection con = JdbcTemplate.getConnection();		
+		dto.setEntryDate(Utility.getCurrentDate("yyyy-MM-dd"));
+		try {
+			System.out.println("(판매자 회원가입)데이터 서비스 단 확인 : "+dto);
+			dao.insertMember(con,dto);
+			JdbcTemplate.commit(con);
+		} catch (Exception e) {
+			e.printStackTrace();
+			JdbcTemplate.rollback(con);
+		} finally {
+			JdbcTemplate.close(con);
+		}	
 	}
 	
 	/**
-	 * 회원 상세조회
+	 * 일반회원 상세조회
 	 * 	-- 내 정보 조회 및 
 	 * 		관리자의 상세조회 
 	 * @param memberId 아이디
 	 * @return 존재시 Member, 미존재시 null
 	 */
-	public Member selectOneMember(String memberId) {
-		return dao.selectOne(memberId);
+	public void selectOneMember(Member dto) throws Exception{
+		Connection con = JdbcTemplate.getConnection();
+		
+		try {
+			dao.selectOneMember(con, dto);
+			
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			JdbcTemplate.close(con);	
+		}		
 	}
 	
+	/**
+	 * 판매자회원 상세조회
+	 * 	-- 내 정보 조회 및 
+	 * 		관리자의 상세조회 
+	 * @param memberId 아이디
+	 * @return 존재시 Member, 미존재시 null
+	 */
+	public void selectOneSeller(Member dto, String memberId) throws Exception {
+		Connection con = JdbcTemplate.getConnection();
+		
+		try {
+			dao.selectOneSeller(con, dto);
+			
+		} catch (Exception e) {			
+			throw e;
+		} finally {
+			JdbcTemplate.close(con);	
+		}	
+	}
+	
+	/**
+	 * 일반 회원
+	 * 		-- 내정보 수정
+	 * @param dto Member
+	 * @return 성공시 true, 실패시 false
+	 */
+	public void updateMemberMyInfo(Member dto) throws Exception{
+		Connection con = JdbcTemplate.getConnection();
+		
+		try{
+			dao.updateMyInfo(con, dto);
+			JdbcTemplate.commit(con);
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+			JdbcTemplate.rollback(con);
+			throw e; 
+			
+		} finally {
+			JdbcTemplate.close(con);	
+		}		
+	}
+	
+	/**
+	 * 판매자 회원
+	 * 		-- 내정보 수정
+	 * @param dto Member
+	 * @return 성공시 true, 실패시 false
+	 */
+	public void updateSellerMyInfo(Member dto) throws Exception{
+		Connection con = JdbcTemplate.getConnection();
+		
+		try{
+			dao.updateSellerInfo(con, dto);
+			JdbcTemplate.commit(con);
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+			JdbcTemplate.rollback(con);
+			throw e; 
+			
+		} finally {
+			JdbcTemplate.close(con);	
+		}		
+	}
 	/** 
 	 * 관리자 권한
 	 * 		- 전체회원조회(일반 회원, 판매자 회원)
@@ -139,36 +237,17 @@ public class MemberBiz<searchKey> {
 			return null;
 		}
 		
-		//String tempMemberPw = Utility.getSecureNumberAndString(8);
-		//int result = dao.updateByMemberPw(memberId, tempMemberPw);
+		String tempMemberPw = Utility.getSecureNumberAndString(8);
+		int result = dao.updateByMemberPw(memberId, tempMemberPw);
 		
-		//System.out.println("[debug] biz : " + result + ", " + tempMemberPw);
-		//if (result == 1) {
-		//	return tempMemberPw;
-		//}
+		System.out.println("[debug] biz : " + result + ", " + tempMemberPw);
+		if (result == 1) {
+			return tempMemberPw;
+		}
 		
 		return null;
 	}
 	
-	/**
-	 * 일반 회원
-	 * 		-- 내정보 수정
-	 * @param dto Member
-	 * @return 성공시 true, 실패시 false
-	 */
-	public boolean updateMyInfo(Member dto) {
-		return dao.updateMyInfo(dto);
-	}
-	
-	/**
-	 * 판매자 회원
-	 * 		-- 내정보 수정
-	 * @param dto Member
-	 * @return 성공시 true, 실패시 false
-	 */
-	public boolean updateSellerInfo(Member dto) {
-		return dao.updateSellerInfo(dto);
-	}
 	
 	/** 
 	 * 관리자 : 전체 회원정보 수정

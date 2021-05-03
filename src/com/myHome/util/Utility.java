@@ -115,4 +115,43 @@ public class Utility {
 		
 		return secureCode;
 	}
+	
+	/**
+	 * <pre>
+	 * 보안문자 숫자+영문조합 반환
+	 * </pre>
+	 * @param length 길이
+	 * @param isUpper 보안영문 대소문자 
+	 * @return 지정한 길의 영문대소문자+숫자결합 
+	 */
+	public static String getSecureNumberAndString(int length, boolean isUpper) {
+		StringBuilder secureNumber = new StringBuilder();
+		Random random = new Random((long)(System.nanoTime() * Math.random()));
+		for (int index = 0; index < length; index++) {
+			if (random.nextBoolean()) {
+				secureNumber.append(random.nextInt(10));
+			} else {
+				if (isUpper) {
+					secureNumber.append((char)(random.nextInt(26) + 65));
+				} else {
+					secureNumber.append((char)(random.nextInt(26) + 97));
+				}
+			}
+		}
+		return secureNumber.toString();
+	}	
+	
+	/**
+	 * <pre>
+	 * 보안문자 숫자+영문조합 반환
+	 * </pre>
+	 * @return 기본 숫자+영문조합 6자리 
+	 */
+	public static String getSecureNumberAndString() {
+		return getSecureNumberAndString(6, true);
+	}
+	
+	public static String getSecureNumberAndString(int length) {
+		return getSecureNumberAndString(length, true);
+	}
 }

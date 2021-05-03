@@ -58,7 +58,7 @@ function checkMemberPw() {
 /* 아이디 중복체크  */
 function idCheckSub() {
 	// 아이디 존재 여부 확인? 입력란 정보 가져오기
-	var checkMemberId = document.getElementById("checkMemberId");
+	var checkMemberId = document.getElementById("memberId");
 	var checkId = checkMemberId.value;
 	console.log('debug checkId:',checkId);
 	
@@ -72,7 +72,5 @@ function idCheckSub() {
 		}
 		document.getElementById("checkMessage").innerHTML = "사용가능한 아이디 입니다.";
 		document.getElementById("checkMessage").style.color = "green";
-		// 존재하지 않으면 : 사용가능 아이디 오류 메시지 출력, "아이디 사용하기 버튼 " 활성화	
-		document.getElementById("idUse").disabled = false;
 	}
 }

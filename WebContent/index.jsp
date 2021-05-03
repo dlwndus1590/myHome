@@ -1,6 +1,10 @@
+<%@page import="com.myHome.model.dto.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/inc/taglib_menu.jsp" %>  
+<%
+	Member dto = (Member)session.getAttribute("dto");
+%>
 <!DOCTYPE html>
 <html>
   <head>
