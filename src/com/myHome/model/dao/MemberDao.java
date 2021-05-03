@@ -38,24 +38,35 @@ public class MemberDao implements Serializable{
 	 * @param memberPw 비밀번호
 	 * @return 등급, 미존재시 null
 	 */
-	public String login(String memberId, String memberPw) {
-		String sql = "select grade from member where member_id=? and member_pw=?";
-
-		Connection conn = null;
+	public void login(Connection conn, Member dto) throws Exception{
+		String sql = "select * from member where member_id=? and member_pw=?";
+		
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		
-		try {
-			conn = JdbcTemplate.getConnection();
+		try {			
 			
 			stmt = conn.prepareStatement(sql);
-			stmt.setString(1, memberId);
-			stmt.setString(2, memberPw);
+			stmt.setString(1, dto.getMemberId());
+			stmt.setString(2, dto.getMemberPw());
 			
 			rs = stmt.executeQuery();
 			
-			if(rs.next()) {
-				return rs.getString("grade");
+			if(rs.next()) {				
+				dto.setMemberId(rs.getString("member_id"));
+				dto.setMemberPw(rs.getString("member_pw"));
+				dto.setName(rs.getString("name"));
+				dto.setEmail(rs.getString("email"));
+				dto.setMobile(rs.getString("mobile"));
+				dto.setZipcode(rs.getInt("zip_code"));
+				dto.setAddress1(rs.getString("address1"));
+				dto.setAddress2(rs.getString("address2"));
+				dto.setBusinessNumber(rs.getString("business_number"));
+				dto.setCompanyName(rs.getString("company_name"));
+				dto.setEntryDate(rs.getString("entry_date"));
+				dto.setMileage(rs.getInt("mileage"));
+				dto.setGrade(rs.getString("grade"));
+								
 			}
 			
 		} catch (SQLException e) {
@@ -66,8 +77,7 @@ public class MemberDao implements Serializable{
 			JdbcTemplate.close(rs);
 			JdbcTemplate.close(stmt);
 			JdbcTemplate.close(conn);
-		}
-		return null;
+		}		
 	}
 	
 	/**
@@ -75,42 +85,39 @@ public class MemberDao implements Serializable{
 	 * @param dto 회원
 	 * @return 성공시 1, 실패시 0
 	 */
-	public int insertMember(Member dto) {
-		String sql = "insert into member values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	public void insertMember(Connection con,Member dto) {
+		String sql = "insert into member values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
 
-		Connection conn = null;
 		PreparedStatement stmt = null;
 		
 		try {
-			conn = JdbcTemplate.getConnection();
-			stmt = conn.prepareStatement(sql);
+			
+			stmt = con.prepareStatement(sql);
 			stmt.setString(1, dto.getMemberId());
 			stmt.setString(2, dto.getMemberPw());
 			stmt.setString(3, dto.getName());
 			stmt.setString(4, dto.getMobile());
 			stmt.setString(5, dto.getEmail());
-			stmt.setString(6, dto.getZipcode());
+			stmt.setInt(6, dto.getZipcode());
 			stmt.setString(7, dto.getAddress1());
-			stmt.setString(8, dto.getAddress2());			
-			stmt.setString(9, dto.getEntryDate());
-			stmt.setInt(10, dto.getMileage());
-			stmt.setString(11, dto.getGrade());	
+			stmt.setString(8, dto.getAddress2());	
+			stmt.setString(9, dto.getBusinessNumber());
+			stmt.setString(10, dto.getCompanyName());
+			stmt.setString(11, dto.getEntryDate());			
+			stmt.setInt(12, dto.getMileage());
+			stmt.setString(13, dto.getGrade());	
 			
 			// 마일리지 부여
-			sql = "update member set mileage = meileage+1000 where member_id=?";
-			
-			JdbcTemplate.commit(conn);			
-			return stmt.executeUpdate();
-			
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			JdbcTemplate.rollback(conn);
+			//sql = "update member set mileage = meileage+1000 where member_id=?";
+			stmt.executeUpdate();	
+								
+		} catch (Exception e) {
 			e.printStackTrace();
+			
 		} finally {			
 			JdbcTemplate.close(stmt);
-			JdbcTemplate.close(conn);
 		}
-		return 0;		
+	
 	}
 
 	/**
@@ -132,7 +139,7 @@ public class MemberDao implements Serializable{
 			stmt.setString(3, member.getName());
 			stmt.setString(4, member.getMobile());
 			stmt.setString(5, member.getEmail());
-			stmt.setString(6, member.getZipcode());
+			stmt.setInt(6, member.getZipcode());
 			stmt.setString(7, member.getAddress1());
 			stmt.setString(8, member.getAddress2());
 			stmt.setString(9, member.getBusinessNumber());
@@ -155,55 +162,88 @@ public class MemberDao implements Serializable{
 	}
 
 	/**
-	 * 회원 상세조회
+	 * 일반회원 상세조회
 	 * @param memberId 회원아이디
 	 * @return 회원, 미존재시 null
 	 */
-	public Member selectOne(String memberId) {
+	public void selectOneMember(Connection con,Member dto) throws Exception{
 		String sql = "select * from member where member_id=?";
 
-		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		
-		try {
-			conn = JdbcTemplate.getConnection();
-			stmt = conn.prepareStatement(sql);
-			stmt.setString(1, memberId);
+		try {		
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, dto.getMemberId());
 			rs = stmt.executeQuery();
 			
-			if(rs.next()) {
-				Member dto = new Member();
+			if(rs.next()) {			
 				
-				dto.setMemberId(rs.getString("memberId"));
-				dto.setMemberPw(rs.getString("memberpw"));
+				dto.setMemberId(rs.getString("member_id"));
+				dto.setMemberPw(rs.getString("member_pw"));
 				dto.setName(rs.getString("name"));
-				dto.setMobile(rs.getString("mobile"));
 				dto.setEmail(rs.getString("email"));
-				dto.setZipcode(rs.getString("zipcode"));
+				dto.setMobile(rs.getString("mobile"));
+				dto.setZipcode(rs.getInt("zip_code"));
 				dto.setAddress1(rs.getString("address1"));
-				dto.setAddress2(rs.getString("address2"));
-				dto.setBusinessNumber(rs.getString("businessNumber"));
-				dto.setCompanyName(rs.getString("companyName"));				
-				dto.setEntryDate(rs.getString("entryDate"));
+				dto.setAddress2(rs.getString("address2"));		
+				dto.setEntryDate(rs.getString("entry_date"));
 				dto.setMileage(rs.getInt("mileage"));
 				dto.setGrade(rs.getString("grade"));
-				
-				return dto;
+
 			}
-			
+			System.out.println("일반회원 상세조회 테스트 dao : "+dto);
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			JdbcTemplate.rollback(conn);
+			System.out.println(e.getMessage());			
 			e.printStackTrace();
 		} finally {
 			JdbcTemplate.close(rs);
-			JdbcTemplate.close(stmt);
-			JdbcTemplate.close(conn);
+			JdbcTemplate.close(stmt);			
 		}
-		return null;
+		
 	}
+	
+	/**
+	 * 판매자회원 상세조회
+	 * @param memberId 회원아이디
+	 * @return 회원, 미존재시 null
+	 */
+	public void selectOneSeller(Connection con,Member dto) throws Exception{
+		String sql = "select * from member where member_id=?";
 
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		try {		
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, dto.getMemberId());
+			rs = stmt.executeQuery();
+			
+			if(rs.next()) {				
+				
+				dto.setMemberId(rs.getString("member_id"));
+				dto.setMemberPw(rs.getString("member_pw"));
+				dto.setName(rs.getString("name"));
+				dto.setMobile(rs.getString("mobile"));
+				dto.setEmail(rs.getString("email"));
+				dto.setZipcode(rs.getInt("zip_code"));
+				dto.setAddress1(rs.getString("address1"));
+				dto.setAddress2(rs.getString("address2"));
+				dto.setBusinessNumber(rs.getString("business_number"));
+				dto.setCompanyName(rs.getString("company_name"));				
+				dto.setEntryDate(rs.getString("entry_date"));				
+				dto.setGrade(rs.getString("grade"));
+				
+			}
+			
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());			
+			e.printStackTrace();
+		} finally {
+			JdbcTemplate.close(rs);
+			JdbcTemplate.close(stmt);			
+		}		
+	}
 	/**
 	 * 관리자 권한
 	 * 		- 전체회원조회(일반 회원, 판매자 회원)
@@ -233,16 +273,16 @@ public class MemberDao implements Serializable{
 			while(rs.next()) {
 				dto = new Member();
 				
-				dto.setMemberId(rs.getString("memberId"));
-				dto.setMemberPw(rs.getString("memberpw"));
+				dto.setMemberId(rs.getString("member_id"));
+				dto.setMemberPw(rs.getString("member_pw"));
 				dto.setName(rs.getString("name"));
 				dto.setMobile(rs.getString("mobile"));
 				dto.setEmail(rs.getString("email"));
-				dto.setZipcode(rs.getString("zipcode"));
+				dto.setZipcode(rs.getInt("zipcode"));
 				dto.setAddress1(rs.getString("address1"));
 				dto.setAddress2(rs.getString("address2"));
-				dto.setBusinessNumber(rs.getString("businessNumber"));
-				dto.setCompanyName(rs.getString("companyName"));				
+				dto.setBusinessNumber(rs.getString("business_number"));
+				dto.setCompanyName(rs.getString("company_name"));				
 				dto.setEntryDate(rs.getString("entryDate"));
 				dto.setMileage(rs.getInt("mileage"));
 				dto.setGrade(rs.getString("grade"));
@@ -288,7 +328,7 @@ public class MemberDao implements Serializable{
 			rs = stmt.executeQuery();
 			
 			if(rs.next()) {
-				return rs.getString("memberId");
+				return rs.getString("member_id");
 			}
 			
 		} catch (SQLException e) {
@@ -350,7 +390,7 @@ public class MemberDao implements Serializable{
 	 * @return 성공시 1, 실패시 0
 	 */
 	public int updateByMemberPw(String memberId, String tempMemberPw) {
-		String sql = "update member set memberpw=? where memberid=?";
+		String sql = "update member set member_pw=? where member_id=?";
 
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -381,39 +421,34 @@ public class MemberDao implements Serializable{
 	 * @param dto Member
 	 * @return 성공시 true, 실패시 false
 	 */
-	public boolean updateMyInfo(Member dto) {
-		String sql = "update member set member_pw=?, name=?, mobile=?, email=? "
+	public void updateMyInfo(Connection con,Member dto) throws Exception{
+		String sql = "update member set member_pw=?, name=?, mobile=?, email=?, "
 				+ "zip_code=?, address1=?, address2=? where member_id=?";
 
-		Connection conn = null;
 		PreparedStatement stmt = null;
 		
-		try {
-			conn = JdbcTemplate.getConnection();
-			stmt = conn.prepareStatement(sql);
+		try {			
+			stmt = con.prepareStatement(sql);
 			stmt.setString(1, dto.getMemberPw());
 			stmt.setString(2, dto.getName());
 			stmt.setString(3, dto.getMobile());
 			stmt.setString(4, dto.getEmail());
-			stmt.setString(5, dto.getZipcode());
+			stmt.setInt(5, dto.getZipcode());
 			stmt.setString(6, dto.getAddress1());
 			stmt.setString(7, dto.getAddress2());
 			stmt.setString(8, dto.getMemberId());
 			
-			int rows = stmt.executeUpdate();
-			JdbcTemplate.commit(conn);
-			if (rows == 1) {
-				return true;
+			int rows =stmt.executeUpdate();
+			if(rows == 0) {
+				throw new Exception();
 			}
-		} catch (SQLException e) {
-			JdbcTemplate.rollback(conn);
+			
+		} catch (SQLException e) {			
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		} finally {
-			JdbcTemplate.close(stmt);
-			JdbcTemplate.close(conn);
-		}
-		return false;
+			JdbcTemplate.close(stmt);			
+		}		
 	}
 	
 	/**
@@ -422,21 +457,19 @@ public class MemberDao implements Serializable{
 	 * @param dto Member
 	 * @return 성공시 true, 실패시 false
 	 */
-	public boolean updateSellerInfo(Member dto) {
-		String sql = "update member set member_pw=?, name=?, mobile=?, email=? "
+	public void updateSellerInfo(Connection con,Member dto) throws Exception{
+		String sql = "update member set member_pw=?, name=?, mobile=?, email=?, "
 				+ "zip_code=?, address1=?, address2=?, business_number=?, company_name=? where member_id=?";
 
-		Connection conn = null;
 		PreparedStatement stmt = null;
 		
-		try {
-			conn = JdbcTemplate.getConnection();
-			stmt = conn.prepareStatement(sql);
+		try {			
+			stmt = con.prepareStatement(sql);
 			stmt.setString(1, dto.getMemberPw());
 			stmt.setString(2, dto.getName());
 			stmt.setString(3, dto.getMobile());
 			stmt.setString(4, dto.getEmail());
-			stmt.setString(5, dto.getZipcode());
+			stmt.setInt(5, dto.getZipcode());
 			stmt.setString(6, dto.getAddress1());
 			stmt.setString(7, dto.getAddress2());
 			stmt.setString(8, dto.getBusinessNumber());
@@ -444,19 +477,16 @@ public class MemberDao implements Serializable{
 			stmt.setString(10, dto.getMemberId());
 			
 			int rows = stmt.executeUpdate();
-			JdbcTemplate.commit(conn);
+			
 			if (rows == 1) {
-				return true;
+				throw new Exception();
 			}
-		} catch (SQLException e) {
-			JdbcTemplate.rollback(conn);
+		} catch (SQLException e) {			
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		} finally {
-			JdbcTemplate.close(stmt);
-			JdbcTemplate.close(conn);
-		}
-		return false;
+			JdbcTemplate.close(stmt);		
+		}		
 	}
 	
 	/**

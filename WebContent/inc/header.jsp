@@ -1,5 +1,9 @@
+<%@page import="com.myHome.model.dto.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	Member dto = (Member)session.getAttribute("dto");
+%>
 <!DOCTYPE html>
 <html>
   <head>
@@ -23,25 +27,61 @@
 	<div class="topNav">
 		<div class="container">
 			<div class="alignR">
-				<a href="${CONTEXT_PATH}/member/login.jsp"><span class="icon-lock"></span> Login</a> 
-				
-				<!-- mypage menu : 마이페이지 분리 메뉴 : 로그인 후 다시 확인해보기 -->
-					<c:choose>
-						<c:when test="${empty grade}">
-							<a href="${CONTEXT_PATH}/member/memberMyPage.jsp"><span class="icon-user"></span> 마이페이지</a> 
-						</c:when>
+			
+					<a href="${CONTEXT_PATH}/index.jsp"><span class="icon-lock"></span> Home </a>
+					<!-- 로그인 / 미 로그인 상태 변화 -->
+					<%
+						Member mainMember = null;
+						if(session.getAttribute("dto")==null){
+					%>	
+						<a href="${CONTEXT_PATH}/member/login.jsp"><span class="icon-lock"></span> Login </a>						
+					<%
+						} else {
+							mainMember = (Member)session.getAttribute("dto");
+					%>
+						<a href="${CONTEXT_PATH}/member/memberController?action=logout"><span class="icon-lock"></span> Logout </a>
+					<%
+						}
+					%>
+						
+					<!-- 마이페이지 일반회원 / 판매자 회원 분리 -->		
+					<%
+						if(session.getAttribute("grade")=="일반회원"){
+					%>
+						 <a href="${CONTEXT_PATH}/member/memberController?action=memberMyPage"><span class="icon-user"></span> 마이페이지</a>
+					<%
+						} else if(session.getAttribute("grade")=="판매자"){
+					%>								
+						<a href="${CONTEXT_PATH}/member/memberController?action=sellerMyPage"><span class="icon-user"></span> 마이페이지</a> 
+					<%
+						} else if(session.getAttribute("grade")=="관리자"){
+					%>
+						<a href="${CONTEXT_PATH}/member/memberController?action=adminMypage"><span class="icon-user"></span> 마이페이지</a> 
+					<%
+						} else {
+					%>
+						<a onclick="alert('로그인이 필요한 서비스 입니다.')'"><span class="icon-user"></span> 마이페이지</a>
+					<%
+						}
+					%>
 					
-						<c:when test="${grade == 'G'}">
-							<a href="${CONTEXT_PATH}/member/sellerMyPage.jsp"><span class="icon-user"></span> 마이페이지</a> 
-						</c:when>
 					
-						<c:when test="${grade == 'A'}">
-							<a href="${CONTEXT_PATH}/admin/adminMypage.jsp"><span class="icon-user"></span> 마이페이지</a> 
-						</c:when>
-					</c:choose>				
-				
-				<a href="${CONTEXT_PATH}/member/loginChoice.jsp"><span class="icon-edit"></span> 회원가입 </a> 
-				<a href="${CONTEXT_PATH}/member/cart.jsp"><span class="icon-shopping-cart"></span> 장바구니(2)</a>
+					<!-- 회원가입 요청 서비스 -->	
+					<%						
+						if(session.getAttribute("memberId")==null){
+					%>	
+						<a href="${CONTEXT_PATH}/member/loginChoice.jsp"><span class="icon-edit"></span> 회원가입 </a> 
+					<%
+						} else {							
+					%>
+						<a href="${CONTEXT_PATH}/member/loginChoice.jsp"></a>
+					<%
+						}
+					%>
+					
+					
+					<a href="${CONTEXT_PATH}/member/cart.jsp"><span class="icon-shopping-cart"></span> 장바구니(2)</a>
+					
 			</div>
 		</div>
 	</div>
