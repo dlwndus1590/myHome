@@ -175,7 +175,6 @@ public class MemberBiz<searchKey> {
 			JdbcTemplate.close(con);	
 		}		
 	}
-ㄴㅇㄴ
 	/**
 	 * 판매자 회원
 	 * 		-- 내정보 수정
