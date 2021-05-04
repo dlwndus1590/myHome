@@ -22,29 +22,30 @@ public class OrdersDao {
 		return instance;
 	}
 	
-	/*
-	 * 장바구니 리스트 조회
+	/**
+	 * 장바구니 페이지 조회
 	 */
-	public void getCartList(Connection conn, ArrayList<Cart> cartList) throws Exception {
-		String sql = "select * from cart";
+	public void getCartPage(Connection conn, String memberId, ArrayList<OrdersPage> cartList) throws Exception {
+		String sql = "select p.p_no, p.p_name, p.p_price, c.c_count, p.p_img, p.delivery_fee,(p.p_price * c.c_count) as total_price " + 
+				"from cart c join product p on (c.p_no = p.p_no) " + 
+				"where member_id = ?";
 		
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		
 		try {
 			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, memberId);
 			rs = stmt.executeQuery();
 			
-			Cart cart = null;
+			OrdersPage ordersPage = null;
+			System.out.println(memberId);
 			
 			while(rs.next()) {
-				cart = new Cart();
-				cart.setcNo(rs.getInt("c_no"));
-				cart.setMemberId(rs.getString("member_id"));
-				cart.setpNo(rs.getInt("p_no"));
-				cart.setcCount(rs.getInt("c_count"));
+				ordersPage = new OrdersPage(
+						rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getString(5), rs.getInt(6), rs.getInt(7));
 				
-				cartList.add(cart);
+				cartList.add(ordersPage);
 			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -95,16 +96,16 @@ public class OrdersDao {
 		}
 	}
 
-	/*
-	 * 결제페이지 조회
+	/**
+	 * 결제 페이지 조회
 	 */
 	public void getOrdersPage(Connection conn, String memberId, ArrayList<OrdersPage> ordersList) throws Exception {
 		String sql = "select m.name, m.email, m.mobile, m.mileage, m.zip_code, m.address1, m.address2, " + 
-				   "p.p_no, p.p_name, p.p_price, c.c_count, p.p_img, p.p_describe, " + 
-				   "p.p_count - c.c_count as stock, p.delivery_fee, p.p_price + p.delivery_fee as total_price " + 
-				"from product p join cart c on (p.p_no = c.p_no) " + 
-				"join member m on (m.member_id = c.member_id) " + 
-				"where m.member_id = ?";
+				   		"p.p_no, p.p_name, p.p_price, c.c_count, p.p_img, p.p_describe, " + 
+				   		"p.p_count - c.c_count as stock, p.delivery_fee, (p.p_price * c.c_count) + p.delivery_fee as total_price " + 
+				   	"from product p join cart c on (p.p_no = c.p_no) " + 
+				   	"join member m on (m.member_id = c.member_id) " + 
+				   	"where m.member_id = ?";
 		
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
