@@ -16,6 +16,8 @@ import com.myHome.model.biz.NoticeBiz;
 import com.myHome.model.dto.Answer;
 import com.myHome.model.dto.Notice;
 import com.myHome.model.dto.Qnotice;
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 /**
  * Servlet implementation class FrontNotice
@@ -64,24 +66,54 @@ public class FrontNotice extends HttpServlet {
 		case "noticeSearch":
 			noticeSearch(request, response);
 			break;
-		
+
 		case "qNoticeForm":
 			qNoticeForm(request, response);
 			break;
-		
+
 		case "qNoticeDetail":
 			qNoticeDetail(request, response);
 			break;
-		
+
+		case "qNoticeInputForm":
+			qNoticeInputForm(request, response);
+			break;
+
+		case "qNoticeInput":
+			qNoticeInput(request, response);
+			break;
+
 		case "addComment":
 			addComment(request, response);
 			break;
-			
-		case "commentUpdate":
-			commentUpdate(request, response);
+
+		case "updateComment":
+			updateComment(request, response);
 			break;
+
+		case "deleteComment":
+			deleteComment(request, response);
+			break;
+
+		case "qNoticeUpdateForm":
+			qNoticeUpdateForm(request, response);
+			break;
+
+		case "qNoticeUpdate":
+			qNoticeUpdate(request, response);
+			break;
+
+		case "qNoticeDelete":
+			qNoticeDelete(request, response);
+			break;
+
+		case "qNoticeSearch":
+			qNoticeSearch(request, response);
+			break;
+	
+			
 		}
-			}
+	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -232,7 +264,7 @@ public class FrontNotice extends HttpServlet {
 	}
 
 	/**
-	 * 게시글 검색 요청 서블릿
+	 * 공지사항 게시글 검색 요청 서블릿
 	 */
 	protected void noticeSearch(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -277,12 +309,158 @@ public class FrontNotice extends HttpServlet {
 		}
 	}
 
+	/**
+	 * 질문 게시글 작성 화면 요청 서비스
+	 */
+	private void qNoticeInputForm(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			request.getRequestDispatcher("/notice/qNoticeInputForm.jsp").forward(request, response);
+		} catch (ServletException | IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 질문 게시글 작성 요청 서비스
+	 */
+	private void qNoticeInput(HttpServletRequest request, HttpServletResponse response) {
+		NoticeBiz biz = new NoticeBiz();
+		String directory = "C:/student_ucamp33/workspace_servlet/myHome/WebContent/img/qNotice";
+		int maxSize = 1024 * 1024 * 100;
+		String encoding = "UTF-8";
+		MultipartRequest multipartRequest = null;
+		try {
+			multipartRequest = new MultipartRequest(request, directory, maxSize, encoding,
+					new DefaultFileRenamePolicy());
+			String qTitle = multipartRequest.getParameter("qTitle");
+			String imgUrl = "/img/qNotice/" + multipartRequest.getOriginalFileName("imgUrl");
+			;
+			String qContent = multipartRequest.getParameter("qContent");
+			Qnotice dto = new Qnotice(qTitle, qContent, imgUrl, "user01");
+			biz.addQnotice(dto);
+			try {
+				request.getRequestDispatcher("/notice/noticeController?action=qNoticeForm").forward(request, response);
+			} catch (ServletException e) {
+				e.printStackTrace();
+			}
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+	}
+
+	/**
+	 * 댓글 등록 요청 서비스
+	 */
 	private void addComment(HttpServletRequest request, HttpServletResponse response) {
+		String comment = request.getParameter("comment");
+		int qNo = Integer.parseInt(request.getParameter("qNo"));
+		NoticeBiz biz = new NoticeBiz();
+		Answer dto = new Answer();
+		dto.setaContent(comment);
+		dto.setMemberId("admin");
+		dto.setqNo(qNo);
+
+		biz.addComment(dto);
+		try {
+			request.getRequestDispatcher("/notice/noticeController?action=qNoticeDetail&qNo=" + qNo).forward(request,
+					response);
+		} catch (ServletException | IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 댓글 수정 요청 서비스
+	 */
+	private void updateComment(HttpServletRequest request, HttpServletResponse response) {
 
 	}
-	
 
-	private void commentUpdate(HttpServletRequest request, HttpServletResponse response) {
+	/**
+	 * 댓글 삭제 요청 서비스
+	 */
+	private void deleteComment(HttpServletRequest request, HttpServletResponse response) {
+		int qNo = Integer.parseInt(request.getParameter("qNo"));
+		int aNo = Integer.parseInt(request.getParameter("aNo"));
+		NoticeBiz biz = new NoticeBiz();
+		biz.deleteComment(aNo);
+		try {
+			request.getRequestDispatcher("/notice/noticeController?action=qNoticeDetail&qNo=" + qNo).forward(request,
+					response);
+		} catch (ServletException | IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 질문 게시글 수정 화면 요청 서비스
+	 */
+	private void qNoticeUpdateForm(HttpServletRequest request, HttpServletResponse response) {
+		int qNo = Integer.parseInt(request.getParameter("qNo"));
+		NoticeBiz biz = new NoticeBiz();
+		Qnotice dto = new Qnotice();
+
+		biz.qNoticeDetail(qNo, dto);
+		request.setAttribute("dto", dto);
+		try {
+			request.getRequestDispatcher("/notice/qNoticeUpdateForm.jsp").forward(request, response);
+		} catch (ServletException | IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 질문 게시글 수정 요청 서비스
+	 */
+	private void qNoticeUpdate(HttpServletRequest request, HttpServletResponse response) {
+		int qNo = Integer.parseInt(request.getParameter("qNo"));
+		String qTitle = request.getParameter("qTitle");
+		String qContent = request.getParameter("qContent");
+		NoticeBiz biz = new NoticeBiz();
+		Qnotice dto = new Qnotice();
+
+		dto.setqNo(qNo);
+		dto.setqTitle(qTitle);
+		dto.setqContent(qContent);
+
+		biz.qNoticeUpdate(dto);
+		try {
+			request.getRequestDispatcher("/notice/noticeController?action=qNoticeForm").forward(request, response);
+		} catch (ServletException | IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 질문 게시글 삭제 요청 서비스
+	 */
+	private void qNoticeDelete(HttpServletRequest request, HttpServletResponse response) {
+		int qNo = Integer.parseInt(request.getParameter("qNo"));
+		NoticeBiz biz = new NoticeBiz();
+		biz.qNoticeDelete(qNo);
+		try {
+			request.getRequestDispatcher("/notice/noticeController?action=qNoticeForm").forward(request, response);
+		} catch (ServletException | IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 질문 게시글 검색
+	 */
+	private void qNoticeSearch(HttpServletRequest request, HttpServletResponse response) {
+		String searchInfo = request.getParameter("searchInfo");
+		String keyWord = request.getParameter("keyWord");
+		System.out.println(keyWord);
+		NoticeBiz biz = new NoticeBiz();
+		ArrayList<Qnotice> list = new ArrayList<Qnotice>();
+		biz.searchQnoticeList(searchInfo, list);
+		request.setAttribute("list", list);
+		try {
+			request.getRequestDispatcher("/notice/qNoticeForm.jsp").forward(request, response);
+		} catch (ServletException | IOException e) {
+			e.printStackTrace();
+		}
 		
 	}
 }

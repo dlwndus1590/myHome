@@ -30,11 +30,27 @@ public class NoticeBiz {
 	}
 
 	/**
-	 * 마지막 게시글 번호 반환 메서드
+	 * 마지막 공지사항 게시글 번호 반환 메서드
 	 * @return 마지막 게시글 번호
 	 */
 	public int noticeLastNum() {
 		return dao.getInstance().noticeLastNum();
+	}
+	
+	/**
+	 * 마지막 질문 게시글 번호 반환 메서드
+	 * @return 마지막 게시글 번호
+	 */
+	public int qNoticeLastNum() {
+		return dao.getInstance().qNoticeLastNum();
+	}
+	
+	/**
+	 * 마지막 답변 번호 반환 메서드
+	 * @return 마지막 게시글 번호
+	 */
+	public int answerLastNum() {
+		return dao.getInstance().answerLastNum();
 	}
 	
 	/**
@@ -115,5 +131,65 @@ public class NoticeBiz {
 	 */
 	public void answerList(int qNo, ArrayList<Answer> list) {
 		dao.getInstance().answerList(qNo, list);
+	}
+
+	/**
+	 * 질문 게시글 등록 요청 메서드
+	 * @param dto 질문 게시글 객체
+	 */
+	public boolean addQnotice(Qnotice dto) {
+		/* 마지막 게시글 번호 + 1 */
+		int row = qNoticeLastNum() + 1;
+		dto.setqNo(row);
+		dto.setqRegDate(Utility.getCurrentDate("yyyy-MM-dd"));
+		dto.setqHits(0);
+		return dao.getInstance().addQnotice(dto);
+	}
+
+	/**
+	 * 질문 게시글 수정 요청 메서드
+	 * @param qNo 질문 게시글 번호
+	 * @param dto 질문 게시글 객체
+	 */
+	public void qNoticeUpdate(Qnotice dto) {
+		dao.getInstance().qNoticeUpdate(dto);
+	}
+
+	/**
+	 * 질문 게시글 삭제 요청 메서드
+	 * @param qNo 삭제할 질문 게시글 번호
+	 */
+	public void qNoticeDelete(int qNo) {
+		dao.getInstance().qNoticeDelete(qNo);
+	}
+
+	/**
+	 * 댓글 작성 요청 서비스
+	 * @param qNo 댓글 작성할 질문 게시글 번호
+	 * @param dto 댓글 작성 객체
+	 */
+	public void addComment(Answer dto) {
+		/* 마지막 게시글 번호 + 1*/
+		int row = answerLastNum() + 1;
+		dto.setaRegDate(Utility.getCurrentDate("yyyy-MM-dd"));
+		dto.setaNo(row);
+		dao.getInstance().addComment(dto);
+	}
+
+	/**
+	 * 댓글 삭제 요청 서비스
+	 * @param aNo 삭제할 댓글 번호
+	 */
+	public void deleteComment(int aNo) {
+		dao.getInstance().deleteComment(aNo);
+	}
+
+	/**
+	 * 질문 게시글 검색 요청 메서드
+	 * @param searchInfo 검색 내용
+	 * @param list 검색에 부합하는 질문 게시글 리스트
+	 */
+	public void searchQnoticeList(String searchInfo, ArrayList<Qnotice> list) {
+		dao.getInstance().searchQnoticeList(searchInfo, list);
 	}
 }

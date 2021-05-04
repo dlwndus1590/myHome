@@ -1,6 +1,8 @@
 package com.myHome.model.dto;
 
-/**답변 도메인 클래스
+/**
+ * 답변 도메인 클래스
+ * 
  * @author 김보성
  * @since jdk1.8
  * @version 1.0
@@ -11,30 +13,40 @@ public class Answer {
 	private String aContent;
 	private String memberId;
 	private String aRegDate;
-	
+
 	/**
 	 * 기본 생성자 메서드
 	 */
 	public Answer() {
 	}
 
-	/**생성자 오버로딩 메서드
-	 * @param aNo 답변 번호
-	 * @param qNo 질문 게시글 번호
+	/**
+	 * 답변 등록 생성자 메서드
+	 * @param qNo      답변 등록할 질문 게시글 번호
+	 * @param aContent 답변 내용
+	 * @param memberId 답변 작성자 아이디
+	 */
+	public Answer(int qNo, String aContent, String memberId) {
+		super();
+		this.qNo = qNo;
+		this.aContent = aContent;
+		this.memberId = memberId;
+	}
+
+	/**
+	 * 생성자 오버로딩 메서드
+	 * @param aNo      답변 번호
+	 * @param qNo      질문 게시글 번호
 	 * @param aContent 답변 내용
 	 * @param memberId 답변 작성자 아이디
 	 * @param aRegDate 답변 작성일
 	 */
 	public Answer(int aNo, int qNo, String aContent, String memberId, String aRegDate) {
-		super();
+		this(qNo, aContent, memberId);
 		this.aNo = aNo;
-		this.qNo = qNo;
-		this.aContent = aContent;
-		this.memberId = memberId;
 		this.aRegDate = aRegDate;
 	}
 
-	
 	/**
 	 * @return the aNo
 	 */
