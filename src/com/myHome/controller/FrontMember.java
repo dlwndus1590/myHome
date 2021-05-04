@@ -769,7 +769,7 @@ public class FrontMember extends HttpServlet {
 		String companyName = request.getParameter("companyName");		
 
 		MemberBiz biz = new MemberBiz();
-ㅇㄹㅇㄹ
+ㅇㄹ
 		Member dao = new Member();
 		dao.setMemberId(memberId);
 		dao.setMemberPw(memberPw);
