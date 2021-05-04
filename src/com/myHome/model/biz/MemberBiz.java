@@ -140,7 +140,7 @@ public class MemberBiz<searchKey> {
 	 * @param memberId 아이디
 	 * @return 존재시 Member, 미존재시 null
 	 */
-	public void selectOneSeller(Member dto, String memberId) throws Exception {
+	public void selectOneSeller(Member dto) throws Exception {
 		Connection con = JdbcTemplate.getConnection();
 		
 		try {
@@ -175,7 +175,6 @@ public class MemberBiz<searchKey> {
 			JdbcTemplate.close(con);	
 		}		
 	}
-	
 	/**
 	 * 판매자 회원
 	 * 		-- 내정보 수정
@@ -205,8 +204,18 @@ public class MemberBiz<searchKey> {
 	 * @param searchKey 
 	 * @return ArrayList<Member>
 	 */
-	public ArrayList<Member> selectMemberList(String searchKey, String keyWord) {
-		return dao.selectList(searchKey,keyWord);
+	public void selectMemberList(ArrayList<Member> list,String searchKey, String keyWord) throws Exception{//
+		Connection conn = JdbcTemplate.getConnection();
+		
+		try {
+			dao.selectList(conn, list,searchKey,keyWord);
+			
+		} catch (Exception e) {			
+			throw e;
+		} finally {
+			JdbcTemplate.close(conn);
+		}
+		
 	}
 	
 	/**
@@ -230,10 +239,10 @@ public class MemberBiz<searchKey> {
 	 */
 	public String selectByMemberPw(String memberId, String name, String mobile) {
 		System.out.println("[debug] biz : " + memberId + ", " + name + ", " + mobile);
-		boolean isMember = dao.selectByMemberPw(memberId, name, mobile);
+		boolean memberPw = dao.selectByMemberPw(memberId, name, mobile);
 		
-		System.out.println("[debug] biz : " + isMember);
-		if (!isMember) {
+		System.out.println("[debug] biz : " + memberPw);
+		if (!memberPw) {
 			return null;
 		}
 		
@@ -242,6 +251,7 @@ public class MemberBiz<searchKey> {
 		
 		System.out.println("[debug] biz : " + result + ", " + tempMemberPw);
 		if (result == 1) {
+			System.out.println("[debug] temp_biz : " + tempMemberPw);
 			return tempMemberPw;
 		}
 		
@@ -270,5 +280,22 @@ public class MemberBiz<searchKey> {
 		// 탈퇴회원이 작성한 게시글 전체 삭제
 		//boardDao.removeBoard(memberId);
 		return dao.deleteMember(memberId);
+	}
+
+	/** 
+	 * 관리자 : 전체 회원 상세조회
+	 *	@param memberId 아이디
+	 */
+	public void selectMemberDetail(Member dto,String memberId) throws Exception{
+		Connection conn = JdbcTemplate.getConnection();
+		
+		try {
+			dao.selectMemberDetail(conn, dto,memberId);
+			
+		} catch (Exception e) {			
+			throw e;
+		} finally {
+			JdbcTemplate.close(conn);	
+		}
 	}
 }
