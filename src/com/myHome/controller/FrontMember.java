@@ -756,7 +756,7 @@ public class FrontMember extends HttpServlet {
 			// 미사용자 오류 처리
 			request.getRequestDispatcher("/member/login.jsp").forward(request, response);
 		}
-ㅁ
+
 		String memberId = (String)session.getAttribute("memberId");
 		String memberPw = request.getParameter("memberPw");
 		String name = request.getParameter("name");

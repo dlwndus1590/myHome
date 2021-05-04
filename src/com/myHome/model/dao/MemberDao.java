@@ -516,7 +516,7 @@ public class MemberDao implements Serializable{
 			JdbcTemplate.close(stmt);		
 		}		
 	}
-	ㅁㅁ
+	
 	/**
 	 * 회원 상세조회
 	 * @param memberId 회원아이디
