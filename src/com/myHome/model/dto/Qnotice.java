@@ -21,6 +21,20 @@ public class Qnotice {
 	public Qnotice() {
 	}
 
+	/** 질문 게시글 등록 생성자 메서드
+	 * @param qTitle 질문 게시글 제목
+	 * @param qContent 질문 게시글 내용
+	 * @param qImg 질문 게시글 이미지 사진 경로
+	 * @param memberId 질문 게시글 작성자
+	 */
+	public Qnotice(String qTitle, String qContent, String qImg, String memberId) {
+		super();
+		this.qTitle = qTitle;
+		this.qContent = qContent;
+		this.qImg = qImg;
+		this.memberId = memberId;
+	}
+
 	/** 생성자 오버로딩
 	 * @param qNO 질문 게시글 번호
 	 * @param qTitle 질문 게시글 제목
@@ -31,16 +45,13 @@ public class Qnotice {
 	 * @param qHits 질문 게시글 조회수
 	 */
 	public Qnotice(int qNo, String qTitle, String qContent, String qImg, String memberId, String qRegDate, int qHits) {
-		super();
+		this(qTitle, qContent, qImg, memberId);
 		this.qNo = qNo;
-		this.qTitle = qTitle;
-		this.qContent = qContent;
-		this.qImg = qImg;
-		this.memberId = memberId;
 		this.qRegDate = qRegDate;
 		this.qHits = qHits;
 	}
 
+	
 	/**
 	 * @return the qNo
 	 */

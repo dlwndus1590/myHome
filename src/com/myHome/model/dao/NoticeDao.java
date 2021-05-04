@@ -85,8 +85,7 @@ public class NoticeDao {
 	}
 
 	/**
-	 * 마지막 게시글 번호 반환 메서드
-	 * 
+	 * 공지사항 게시글 마지막 번번호 반환 메서드
 	 * @return 마지막 게시글 번호
 	 */
 	public int noticeLastNum() {
@@ -115,6 +114,66 @@ public class NoticeDao {
 		return -1;
 	}
 
+	/**
+	 * 질문 게시글 마지막 번호 반환 메서드
+	 * @return 마지막 게시글 번호
+	 */
+	public int qNoticeLastNum() {
+		ArrayList<Notice> list = new ArrayList<Notice>();
+		String sql = "SELECT MAX(Q_NO) FROM QNOTICE";
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			conn = JdbcTemplate.getConnection();
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			if (rs != null) {
+				if (rs.next()) {
+					return rs.getInt("MAX(Q_NO)");
+				}
+			}
+		} catch (SQLException e) {
+			System.out.println("message : " + e.getMessage());
+			e.printStackTrace();
+		} finally {
+			JdbcTemplate.close(rs);
+			JdbcTemplate.close(stmt);
+			JdbcTemplate.close(conn);
+		}
+		return -1;
+	}
+	
+	/**
+	 * 질문 게시글 마지막 번호 반환 메서드
+	 * @return 마지막 게시글 번호
+	 */
+	public int answerLastNum() {
+		ArrayList<Notice> list = new ArrayList<Notice>();
+		String sql = "SELECT MAX(A_NO) FROM ANSWER";
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			conn = JdbcTemplate.getConnection();
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			if (rs != null) {
+				if (rs.next()) {
+					return rs.getInt("MAX(A_NO)");
+				}
+			}
+		} catch (SQLException e) {
+			System.out.println("message : " + e.getMessage());
+			e.printStackTrace();
+		} finally {
+			JdbcTemplate.close(rs);
+			JdbcTemplate.close(stmt);
+			JdbcTemplate.close(conn);
+		}
+		return -1;
+	}
+	
 	/**
 	 * 게시글 등록 메서드
 	 * 
@@ -166,6 +225,9 @@ public class NoticeDao {
 			return true;
 		} catch (SQLException e) {
 			JdbcTemplate.rollback(conn);
+		}finally {
+			JdbcTemplate.close(pstmt);
+			JdbcTemplate.close(conn);
 		}
 		return false;
 	}
@@ -193,6 +255,9 @@ public class NoticeDao {
 			JdbcTemplate.rollback(conn);
 			System.out.println("Message : " + e.getMessage());
 			e.printStackTrace();
+		}finally {
+			JdbcTemplate.close(pstmt);
+			JdbcTemplate.close(conn);
 		}
 	}
 
@@ -332,6 +397,10 @@ public class NoticeDao {
 		} catch (SQLException e) {
 			System.out.println("Message : " + e.getMessage());
 			e.printStackTrace();
+		}finally {
+			JdbcTemplate.close(rs);
+			JdbcTemplate.close(pstmt);
+			JdbcTemplate.close(conn);
 		}
 	}
 
@@ -383,13 +452,16 @@ public class NoticeDao {
 	 * @param list 해당 질문 게시글 답변 목록
 	 */
 	public void answerList(int qNo, ArrayList<Answer> list) {
-		String sql = "SELECT A_NO, Q_NO, A_CONTENT, MEMBER_ID, TO_CHAR(A_REG_DATE,'yyyy-mm-dd') FROM ANSWER WHERE Q_NO = ?";
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT A_NO, Q_NO, A_CONTENT, MEMBER_ID, TO_CHAR(A_REG_DATE,'yyyy-mm-dd') ");
+		sql.append("FROM ANSWER WHERE Q_NO = ? ");
+		sql.append("ORDER BY A_NO DESC");
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			conn = JdbcTemplate.getConnection();
-			pstmt = conn.prepareStatement(sql);
+			pstmt = conn.prepareStatement(sql.toString());
 			pstmt.setInt(1, qNo);
 			rs = pstmt.executeQuery();
 			Answer dto = null;
@@ -406,6 +478,192 @@ public class NoticeDao {
 		} catch (SQLException e) {
 			System.out.println("Message : " + e.getMessage());
 			e.printStackTrace();
+		}finally {
+			JdbcTemplate.close(rs);
+			JdbcTemplate.close(pstmt);
+			JdbcTemplate.close(conn);
+		}
+	}
+
+	/**
+	 * 질문 게시글 등록 요청 메서드
+	 * @param dto 질문 게시글 객체
+	 */
+	public boolean addQnotice(Qnotice dto) {
+		String sql ="INSERT INTO QNOTICE VALUES(?, ?, ?, ?, ?, ?, ?)";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = JdbcTemplate.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, dto.getqNo());
+			pstmt.setString(2, dto.getqTitle());
+			pstmt.setString(3, dto.getqContent());
+			pstmt.setString(4, dto.getqImg());
+			pstmt.setString(5, dto.getMemberId());
+			pstmt.setString(6, dto.getqRegDate());
+			pstmt.setInt(7, dto.getqHits());
+			pstmt.executeUpdate();
+			JdbcTemplate.commit(conn);
+			return true;
+		}catch(SQLException e) {
+			JdbcTemplate.rollback(conn);
+			System.out.println("Message : " + e.getMessage());
+			e.printStackTrace();
+		}finally {
+			JdbcTemplate.close(pstmt);
+			JdbcTemplate.close(conn);
+		}
+		return false;
+	}
+
+	/**
+	 * 질문 게시글 수정 요청 메서드
+	 * @param qNo 질문 게시글 번호
+	 * @param dto 질문 게시글 객체
+	 */
+	public void qNoticeUpdate(Qnotice dto) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("UPDATE QNOTICE ");
+		sql.append("SET Q_TITLE = ?, Q_CONTENT = ? ");
+		sql.append("WHERE Q_NO = ?");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = JdbcTemplate.getConnection();
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setString(1, dto.getqTitle());
+			pstmt.setString(2, dto.getqContent());
+			pstmt.setInt(3, dto.getqNo());
+			pstmt.executeUpdate();
+			JdbcTemplate.commit(conn);
+		}catch(SQLException e) {
+			JdbcTemplate.rollback(conn);
+			System.out.println("message : " + e.getMessage());
+			e.printStackTrace();
+		}finally {
+			JdbcTemplate.close(pstmt);
+			JdbcTemplate.close(conn);
+		}
+	}
+
+	/**
+	 * 질문 게시글 삭제 요청 메서드
+	 * @param qNo 삭제할 질문 게시글 번호
+	 */
+	public void qNoticeDelete(int qNo) {
+		String sql = "DELETE FROM QNOTICE WHERE Q_NO = ?";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = JdbcTemplate.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, qNo);
+			pstmt.executeUpdate();
+			JdbcTemplate.commit(conn);
+		}catch(SQLException e) {
+			JdbcTemplate.rollback(conn);
+			System.out.println("Message : " + e.getMessage());
+			e.printStackTrace();
+		}finally {
+			JdbcTemplate.close(pstmt);
+			JdbcTemplate.close(conn);
+		}
+	}
+
+	/**
+	 * 댓글 등록 요청 메서드
+	 * @param qNo 댓글 등록할 질문 게시글 번호 
+	 * @param dto 댓글 등록 객체
+	 */
+	public void addComment(Answer dto) {
+		String sql = "INSERT INTO ANSWER VALUES(?, ?, ?, ?, ?)";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = JdbcTemplate.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, dto.getaNo());
+			pstmt.setInt(2, dto.getqNo());
+			pstmt.setString(3, dto.getaContent());
+			pstmt.setString(4, dto.getMemberId());
+			pstmt.setString(5, dto.getaRegDate());
+			pstmt.executeUpdate();
+			JdbcTemplate.commit(conn);
+		}catch(SQLException e ) {
+			JdbcTemplate.rollback(conn);
+			System.out.println("Message : " + e.getMessage());
+			e.printStackTrace();
+		}finally {
+			JdbcTemplate.close(pstmt);
+			JdbcTemplate.close(conn);
+		}
+	}
+
+	/**
+	 * 댓글 삭제 요청 서비스 메서드
+	 * @param aNo 삭제할 댓글 번호
+	 */
+	public void deleteComment(int aNo) {
+		String sql = "DELETE FROM ANSWER WHERE A_NO = ?";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try{
+			conn = JdbcTemplate.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, aNo);
+			pstmt.executeUpdate();
+			JdbcTemplate.commit(conn);
+		}catch(SQLException e) {
+			JdbcTemplate.rollback(conn);
+			System.out.println("Message : " + e.getMessage());
+			e.printStackTrace();
+		}finally {
+			JdbcTemplate.close(pstmt);
+			JdbcTemplate.close(conn);
+		}
+	}
+
+	/**
+	 * 질문 게시글 검색 요청 메서드
+	 * @param searchInfo 검색 내용
+	 * @param list 검색에 부합하는 질문 게시글 리스트
+	 */
+	public void searchQnoticeList(String searchInfo, ArrayList<Qnotice> list) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT Q_NO, Q_TITLE, Q_CONTENT, Q_IMG, MEMBER_ID, TO_CHAR(Q_REG_DATE,'yyyy-mm-dd'), Q_HITS ");
+		sql.append("FROM QNOTICE ");
+		sql.append("WHERE Q_TITLE like '%' || ? || '%' OR Q_CONTENT like '%' || ? || '%' ");
+		sql.append("ORDER BY Q_NO DESC");
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		try {
+			conn = JdbcTemplate.getConnection();
+			stmt = conn.prepareStatement(sql.toString());
+			stmt.setString(1, searchInfo);
+			stmt.setString(2, searchInfo);
+			rs = stmt.executeQuery();
+			Qnotice dto = null;
+			while (rs.next()) {
+				dto = new Qnotice(
+						rs.getInt("Q_NO")
+						,rs.getString("Q_TITLE")
+						,rs.getString("Q_CONTENT")
+						,rs.getString("Q_IMG")
+						,rs.getString("MEMBER_ID")
+						,rs.getString("TO_CHAR(Q_REG_DATE,'yyyy-mm-dd')")
+						,rs.getInt("Q_HITS")
+						);
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			System.out.println("message : " + e.getMessage());
+			e.printStackTrace();
+		} finally {
+			JdbcTemplate.close(rs);
+			JdbcTemplate.close(stmt);
+			JdbcTemplate.close(conn);
 		}
 	}
 }
