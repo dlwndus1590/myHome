@@ -127,7 +127,7 @@
 					 	<div class="dropdown-menu">
 					 		<a href="#">스토어 홈</a>
 					 		<a href="${CONTEXT_PATH}/product/productController?action=productListByCategoryForm">카테고리</a>
-					 		<a href="${CONTEXT_PATH}/product/best.jsp">베스트</a>
+					 		<a href="${CONTEXT_PATH}/product/productController?action=productListByBestForm">베스트</a>
 					 	</div>
 					 </li>
 				</ul>

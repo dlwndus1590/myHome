@@ -49,7 +49,7 @@
 		  <c:forEach var="productList" items="${productList}">
 			<li class="span4" style="width:220px; ">
 				<div class="thumbnail">
-					<a class="zoomTool"><span class="icon-search"></span> ${productList.pPrice}원</a>
+					<a class="zoomTool" href="${CONTEXT_PATH}/product/productController?action=productDetail&pNo=${productList.pNo}"><span class="icon-search"></span> ${productList.pPrice}원</a>
 					<a href="${CONTEXT_PATH}/product/productController?action=productDetail&pNo=${productList.pNo}"><img src="${CONTEXT_PATH}/${productList.pImg}"></a>
 						<div class="caption cntr">
 							<p><strong>${productList.pName}</strong></p>
