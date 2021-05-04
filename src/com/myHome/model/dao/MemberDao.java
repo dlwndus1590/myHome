@@ -477,6 +477,10 @@ public class MemberDao implements Serializable{
 			JdbcTemplate.close(stmt);			
 		}		
 	}
+	/**
+	 * 
+	 * */
+	
 	
 	/**
 	 * 판매자 회원
