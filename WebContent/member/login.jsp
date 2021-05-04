@@ -12,7 +12,8 @@
 <jsp:include page="/inc/header.jsp" />
 
 <script type="text/javascript" src="${CONTEXT_PATH}/js/member_input.js"></script>
-
+  <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 </head>
 <body>
 
@@ -48,8 +49,24 @@
 		<a  href="${CONTEXT_PATH}/member/memberController?action=loginChoice"><b>회원가입</b></a>
 	</div>
   </div>
+  <h1></h1>
+  <center>
+    	<!-- 네이버아이디로로그인 버튼 노출 영역 -->
+  		<div id="naver_id_login"></div>
+	</center>
 
 </form>
+
+<script type="text/javascript">
+  	var naver_id_login = new naver_id_login("aTSJqkAHtCJDk4iOio2e", "http://localhost:8090/myHome/member/naver_callback.html");
+  	var state = naver_id_login.getUniqState();
+  	naver_id_login.setButton("white", 6,40);
+  	naver_id_login.setDomain("http://localhost:8090");
+  	naver_id_login.setState(state);
+  	/* naver_id_login.setPopup(); */
+  	naver_id_login.init_naver_id_login();
+</script>
+
 <!-- footer menu -->
 <jsp:include page="/inc/footer.jsp"/>
 </body>

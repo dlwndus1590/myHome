@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	Member dto = (Member)session.getAttribute("dto");
+	Member dao = (Member)session.getAttribute("dao");
 %>
 <!DOCTYPE html>
 <html>
@@ -96,39 +96,39 @@ a {
 <form action="${CONTEXT_PATH}/member/memberController?action=sellerMyInfoUpdate" style="border:1px solid #ccc" method="post">
 	
   <div class="container">
-    <h1><%=dto.getName() %> 님 상세조회</h1>    
+    <h1><%=dao.getName() %> 님 상세조회</h1>    
     <hr>
 
     <label><b>아이디</b></label>
     <p>
-    <input type="text" name="memberId" id="memberId" placeholder="아이디" value="<%=dto.getMemberId() %>"
+    <input type="text" name="memberId" id="memberId" placeholder="아이디" 
 		class="inline" autofocus="autofocus" readonly="readonly" >
   	<br>
   	
     <label><b>비밀번호</b></label>
-    <input type="password" placeholder="Enter your Password" name="memberPw" id="memberPw" value="<%=dto.getMemberPw()%>">
+    <input type="password" placeholder="Enter your Password" name="memberPw" id="memberPw" value="<%=dao.getMemberPw()%>">
 
     <label><b>이름</b></label>
-    <input type="text" placeholder="Enter Name" name="name" id="name" value="<%=dto.getName()%>">
+    <input type="text" placeholder="Enter Name" name="name" id="name" value="<%=dao.getName()%>">
     
     <label><b>이메일</b></label>
-    <input type="text" placeholder="Enter Email" name="email" id="email" value="<%=dto.getEmail()%>">
+    <input type="text" placeholder="Enter Email" name="email" id="email" value="<%=dao.getEmail()%>">
 
 	<label><b>핸드폰</b></label>
-    <input type="text" placeholder="Enter Mobile" name="mobile" id="mobile" value="<%=dto.getMobile()%>">
+    <input type="text" placeholder="Enter Mobile" name="mobile" id="mobile" value="<%=dao.getMobile()%>">
     
     <label><b>주소</b></label>
     <br>
-    <input type="text" placeholder="Enter Zipcode" name="zipcode" id="zipcode" value="<%=dto.getZipcode() %>" maxlength="5">
+    <input type="text" placeholder="Enter Zipcode" name="zipcode" id="zipcode" value="<%=dao.getZipcode() %>" >
     <input type="button" value="우편찾기" id="zipcodeCheck" name="zipcodeCheck">  
-	<input type="text" placeholder="Enter address" name="address1"  required="required" value="<%=dto.getAddress1()%>">
-	<input type="text" placeholder="Enter address" name="address2"  required="required" value="<%=dto.getAddress2()%>">	    
+	<input type="text" placeholder="Enter address" name="address1"  required="required" value="<%=dao.getAddress1()%>">
+	<input type="text" placeholder="Enter address" name="address2"  required="required" value="<%=dao.getAddress2()%>">	    
     
     <label><b>사업자 번호</b></label>
-    <input type="text" placeholder=" '-'를 제외하고 입력해주세요. " name="businessNumber" id="businessNumber" maxlength="12" value="<%=dto.getBusinessNumber()%>">
+    <input type="text" placeholder=" '-'를 제외하고 입력해주세요. " name="businessNumber" id="businessNumber" maxlength="12" value="<%=dao.getBusinessNumber()%>">
     
     <label><b>회사/점포명</b></label>
-    <input type="text" placeholder="Enter Company" name="companyName" id="companyName" value="<%=dto.getCompanyName()%>">
+    <input type="text" placeholder="Enter Company" name="companyName" id="companyName" value="<%=dao.getCompanyName()%>">
     
     <hr>
 

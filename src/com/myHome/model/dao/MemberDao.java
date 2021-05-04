@@ -96,8 +96,8 @@ public class MemberDao implements Serializable{
 			stmt.setString(1, dto.getMemberId());
 			stmt.setString(2, dto.getMemberPw());
 			stmt.setString(3, dto.getName());
-			stmt.setString(4, dto.getMobile());
-			stmt.setString(5, dto.getEmail());
+			stmt.setString(4, dto.getEmail());
+			stmt.setString(5, dto.getMobile());
 			stmt.setInt(6, dto.getZipcode());
 			stmt.setString(7, dto.getAddress1());
 			stmt.setString(8, dto.getAddress2());	
@@ -106,9 +106,7 @@ public class MemberDao implements Serializable{
 			stmt.setString(11, dto.getEntryDate());			
 			stmt.setInt(12, dto.getMileage());
 			stmt.setString(13, dto.getGrade());	
-			
-			// 마일리지 부여
-			//sql = "update member set mileage = meileage+1000 where member_id=?";
+			System.out.println("");
 			stmt.executeUpdate();	
 								
 		} catch (Exception e) {
@@ -137,8 +135,8 @@ public class MemberDao implements Serializable{
 			stmt.setString(1, member.getMemberId());
 			stmt.setString(2, member.getMemberPw());
 			stmt.setString(3, member.getName());
-			stmt.setString(4, member.getMobile());
-			stmt.setString(5, member.getEmail());
+			stmt.setString(4, member.getEmail());
+			stmt.setString(5, member.getMobile());
 			stmt.setInt(6, member.getZipcode());
 			stmt.setString(7, member.getAddress1());
 			stmt.setString(8, member.getAddress2());
@@ -159,6 +157,39 @@ public class MemberDao implements Serializable{
 			JdbcTemplate.close(conn);
 		}
 		return 0;		
+	}
+	
+	/**
+	 * 아이디 중복 체크
+	 * @param memberId 회원아이디
+	 * @return 회원, 미존재시 null
+	 */
+	public boolean selectCheckId(String memberId){
+		boolean check = false;
+		
+		Connection con = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String sql = "select member_id from member where member_id=?";
+		
+		try {
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, memberId);
+			rs = stmt.executeQuery();
+			
+			if(rs.next()) {
+				check = true;
+				System.out.println("checkId() dao 테스트 확인 성공"+check);
+			}
+			
+		} catch (Exception e) {
+			System.out.println("checkId() dao 테스트 확인 에러");
+			
+		} finally {
+			JdbcTemplate.close(rs);
+			JdbcTemplate.close(stmt);			
+		}
+		return check;
 	}
 
 	/**
@@ -235,7 +266,7 @@ public class MemberDao implements Serializable{
 				dto.setGrade(rs.getString("grade"));
 				
 			}
-			
+			System.out.println("판매자회원 상세조회 테스트 dao : "+dto);
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());			
 			e.printStackTrace();
@@ -249,9 +280,8 @@ public class MemberDao implements Serializable{
 	 * 		- 전체회원조회(일반 회원, 판매자 회원)
 	 * @return ArrayList<Member>
 	 */
-	public ArrayList<Member> selectList(String searchKey, String keyWord) {
+	public void selectList(Connection conn,ArrayList<Member> list, String searchKey, String keyWord) throws Exception{//
 
-		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		
@@ -259,16 +289,14 @@ public class MemberDao implements Serializable{
 			String sql = "select * from member";
 			
 			if(keyWord != null && !keyWord.equals("") ){
-                sql +=" where "+searchKey.trim()+" LIKE '%"+keyWord.trim()+"%' order by memberid";
+                sql +=" where "+searchKey.trim()+" LIKE '%"+keyWord.trim()+"%' order by entry_date desc";
             }else {//모든 레코드 검색
-                sql +=" order by memberid";
+                sql +=" order by entry_date desc";
             }
-			
-			conn = JdbcTemplate.getConnection();
+
 			stmt = conn.prepareStatement(sql);
 			rs = stmt.executeQuery();
-			
-			ArrayList<Member> list = new ArrayList<Member>();
+
 			Member dto = null;			
 			while(rs.next()) {
 				dto = new Member();
@@ -278,31 +306,27 @@ public class MemberDao implements Serializable{
 				dto.setName(rs.getString("name"));
 				dto.setMobile(rs.getString("mobile"));
 				dto.setEmail(rs.getString("email"));
-				dto.setZipcode(rs.getInt("zipcode"));
+				dto.setZipcode(rs.getInt("zip_code"));
 				dto.setAddress1(rs.getString("address1"));
 				dto.setAddress2(rs.getString("address2"));
 				dto.setBusinessNumber(rs.getString("business_number"));
 				dto.setCompanyName(rs.getString("company_name"));				
-				dto.setEntryDate(rs.getString("entryDate"));
+				dto.setEntryDate(rs.getString("entry_date"));
 				dto.setMileage(rs.getInt("mileage"));
 				dto.setGrade(rs.getString("grade"));
 				
 				list.add(dto);
 			}
 			
-			return list;
-			
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-			JdbcTemplate.rollback(conn);
 			e.printStackTrace();
+			throw new Exception();
 		} finally {
 			JdbcTemplate.close(rs);
-			JdbcTemplate.close(stmt);
-			JdbcTemplate.close(conn);
+			JdbcTemplate.close(stmt);			
 		}
-		
-		return null;
+
 	}
 	
 
@@ -400,8 +424,11 @@ public class MemberDao implements Serializable{
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, tempMemberPw);
 			stmt.setString(2, memberId);
+			
+			int result = stmt.executeUpdate();
 			JdbcTemplate.commit(conn);
-			return stmt.executeUpdate();
+			
+			return result;
 			
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -478,7 +505,7 @@ public class MemberDao implements Serializable{
 			
 			int rows = stmt.executeUpdate();
 			
-			if (rows == 1) {
+			if (rows == 0) {
 				throw new Exception();
 			}
 		} catch (SQLException e) {			
@@ -486,6 +513,49 @@ public class MemberDao implements Serializable{
 			e.printStackTrace();
 		} finally {
 			JdbcTemplate.close(stmt);		
+		}		
+	}
+	
+	/**
+	 * 회원 상세조회
+	 * @param memberId 회원아이디
+	 * @return 회원, 미존재시 null
+	 */
+	public void selectMemberDetail(Connection conn, Member dto,String memberId) throws Exception{
+		String sql = "select * from member where member_id=?";
+
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		try {			
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, memberId);
+			rs = stmt.executeQuery();
+			
+			if(rs.next()) {				
+				dto.setMemberId(rs.getString("member_id"));
+				dto.setMemberPw(rs.getString("member_pw"));
+				dto.setName(rs.getString("name"));
+				dto.setEmail(rs.getString("email"));
+				dto.setMobile(rs.getString("mobile"));
+				dto.setZipcode(rs.getInt("zip_code"));
+				dto.setAddress1(rs.getString("address1"));
+				dto.setAddress2(rs.getString("address2"));
+				dto.setBusinessNumber(rs.getString("business_number"));
+				dto.setCompanyName(rs.getString("company_name"));				
+				dto.setEntryDate(rs.getString("entry_date"));
+				dto.setMileage(rs.getInt("mileage"));
+				dto.setGrade(rs.getString("grade"));
+
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception();
+			
+		} finally {
+			JdbcTemplate.close(rs);
+			JdbcTemplate.close(stmt);
 		}		
 	}
 	
@@ -563,5 +633,6 @@ public class MemberDao implements Serializable{
 		}
 		return false;	
 	}
+
 
 }

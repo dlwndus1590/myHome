@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class Pager {
 	private int totalRecord;		// 총 레코드 수
-	private int pageSize=10;	// 페이지당 보여질 레코드수(개발자임의)
+	private int pageSize=4;	// 페이지당 보여질 레코드수(개발자임의)
 	private int totalPage;
-	private int blockSize = 10;	// 믈럭당 보여질 페이지 수
+	private int blockSize = 5;	// 믈럭당 보여질 페이지 수
 	private int currentPage=1;
 	private int firstPage;
 	private int lastPage;

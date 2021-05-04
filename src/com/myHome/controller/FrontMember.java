@@ -1,6 +1,7 @@
 package com.myHome.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -62,6 +63,9 @@ public class FrontMember extends HttpServlet {
 		case "logout":
 			logout(request, response);
 			break;
+		case "idCheck":
+			idCheck(request, response);
+			break;
 		case "memberInputForm":
 			memberInputForm(request,response);
 			break;
@@ -114,6 +118,9 @@ public class FrontMember extends HttpServlet {
 		case "memberList":	
 			memberList(request,response);
 			break;
+		case "memberDetail":	
+			memberDetail(request,response);
+			break;
 		}
 	}
 
@@ -149,6 +156,14 @@ public class FrontMember extends HttpServlet {
 		response.sendRedirect(url); 
 	}
 	
+	/**
+	 * 아이디 중복 체크 화면 요청 서비스
+	 */
+	protected void idCheck(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String url = CONTEXT_PATH + "/member/idcheck.jsp";
+		response.sendRedirect(url); 
+	}
+
 	/**
 	 * 마이페이지 일반/판매자 분리 화면 요청 서비스
 	 */
@@ -196,24 +211,13 @@ public class FrontMember extends HttpServlet {
 				
 		
 		if (memberId == null || memberId.trim().length() == 0) {
-			MessageEntity messageEntity = new MessageEntity("validation", 0);
-			messageEntity.setLinkTitle("로그인");
-			messageEntity.setUrl(CONTEXT_PATH + "/member/loginForm");
-			
-			request.setAttribute("messageEntity", messageEntity);
-			request.getRequestDispatcher("/member/message.jsp").forward(request, response);
+			request.getRequestDispatcher("/member/login.jsp").forward(request, response);
 			
 			return;
 		} 
 		
 		if (memberPw == null || memberPw.trim().length() == 0) {
-			MessageEntity messageEntity = new MessageEntity("validation", 1);
-			messageEntity.setLinkTitle("로그인");
-			messageEntity.setUrl(CONTEXT_PATH + "/member/loginForm");
-			
-			request.setAttribute("messageEntity", messageEntity);
-			request.getRequestDispatcher("/member/message.jsp").forward(request, response);
-			
+			request.getRequestDispatcher("/member/login.jsp").forward(request, response);
 			return;
 		} 
 		
@@ -501,15 +505,16 @@ public class FrontMember extends HttpServlet {
 			dto.setZipcode(zipcode);
 			dto.setAddress1(address1);
 			dto.setAddress2(address2);
+			dto.setMileage(1000);
 			dto.setGrade("일반회원");			
 								
 			try {
 				biz.insertMember(dto);
 				
-				request.getRequestDispatcher("/member/memberController?action=loginForm").forward(request, response);
+				request.getRequestDispatcher("/member/login.jsp").forward(request, response);
 			} catch (Exception e) {
 				e.printStackTrace();
-				request.getRequestDispatcher("/member/memberController?action=loginChoice").forward(request, response);
+				request.getRequestDispatcher("/member/loginChoice.jsp").forward(request, response);
 			}
 		}
 	}
@@ -586,29 +591,14 @@ public class FrontMember extends HttpServlet {
 		System.out.println("데이터 추출:"+mobile);
 
 		/** 데이터 검증 : 필수입력 항목 미입력 오류 처리 */
-		if (memberId == null || memberId.trim().length() == 0) {
-			MessageEntity messageEntity = new MessageEntity("validation",0);
-			messageEntity.setLinkTitle("아이디/비밀번호 찾기");
-			
-			messageEntity.setUrl(CONTEXT_PATH+"/member/memberController?action=memberFindForm");	
-			request.setAttribute("messageEntity", messageEntity);
-			request.getRequestDispatcher("/member/message.jsp").forward(request,response);
+		if (memberId == null || memberId.trim().length() == 0) {			
+			request.getRequestDispatcher("/member/memberFind.jsp").forward(request,response);
 			
 		} else if(name == null || name.trim().length() == 0) {
-			MessageEntity messageEntity = new MessageEntity("validation",0);
-			messageEntity.setLinkTitle("아이디/비밀번호 찾기");
-			
-			messageEntity.setUrl(CONTEXT_PATH+"/member/memberController?action=memberFindForm");	
-			request.setAttribute("messageEntity", messageEntity);
-			request.getRequestDispatcher("/member/message.jsp").forward(request,response);
+			request.getRequestDispatcher("/member/memberFind.jsp").forward(request,response);
 			
 		} else if(mobile == null || mobile.trim().length() == 0) {
-			MessageEntity messageEntity = new MessageEntity("validation",0);
-			messageEntity.setLinkTitle("아이디/비밀번호 찾기");
-			
-			messageEntity.setUrl(CONTEXT_PATH+"/member/memberController?action=memberFindForm");	
-			request.setAttribute("messageEntity", messageEntity);
-			request.getRequestDispatcher("/member/message.jsp").forward(request,response);			
+			request.getRequestDispatcher("/member/memberFind.jsp").forward(request,response);			
 		}
 		
 		memberId = memberId.trim();
@@ -630,12 +620,7 @@ public class FrontMember extends HttpServlet {
 			request.getRequestDispatcher("/member/mainService.jsp").forward(request,response);
 			return;
 		} else {
-			/** messageEntity 객체 생성 및 이동페이지 관련 설정 */
-			MessageEntity messageEntity = new MessageEntity("error",4);
-			messageEntity.setLinkTitle("비밀번호 찾기");
-			messageEntity.setUrl(CONTEXT_PATH+"/member/memberController?action=memberFindForm");
-			request.setAttribute("messageEntity", messageEntity);
-			request.getRequestDispatcher("/member/message.jsp").forward(request,response);		
+			request.getRequestDispatcher("/member/memberFind.jsp").forward(request,response);		
 		}
 	}
 	
@@ -717,8 +702,7 @@ public class FrontMember extends HttpServlet {
 			session.setAttribute("dto", dto);
 			
 			System.out.println("(일반회원) 내정보변경 데이터 확인 : "+dto);
-			request.getRequestDispatcher("/member/memberMyPage.jsp")
-					.forward(request, response);
+			request.getRequestDispatcher("/member/memberController?action=memberMyPage&memberId="+memberId).forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 			e.getMessage();
@@ -744,17 +728,18 @@ public class FrontMember extends HttpServlet {
 		
 		MemberBiz biz = new MemberBiz();
 		Member dto = new Member();
+		dto.setMemberId(memberId);
 		
 		try {
-			biz.selectOneSeller(dto, memberId);
+			biz.selectOneSeller(dto);
 			
 			session.setAttribute("dto", dto);			
 			request.getRequestDispatcher("/member/memberMyInfo.jsp")
 				.forward(request, response);
 		} catch (Exception e) {
 			e.getMessage();
-			request.getRequestDispatcher("/member/memberMyPage.jsp")	.forward(request, response);
-		}		
+			request.getRequestDispatcher("/member/memberMyPage.jsp").forward(request, response);
+		}	
 		
 	}
 	
@@ -785,26 +770,27 @@ public class FrontMember extends HttpServlet {
 
 		MemberBiz biz = new MemberBiz();
 		
-		Member dto = new Member();
-		dto.setMemberId(memberId);
-		dto.setMemberPw(memberPw);
-		dto.setName(name);
-		dto.setMobile(mobile);
-		dto.setEmail(email);
-		dto.setZipcode(zipcode);
-		dto.setAddress1(address1);
-		dto.setAddress2(address2);
-		dto.setBusinessNumber(businessNumber);
-		dto.setCompanyName(companyName);
+		Member dao = new Member();
+		dao.setMemberId(memberId);
+		dao.setMemberPw(memberPw);
+		dao.setName(name);
+		dao.setMobile(mobile);
+		dao.setEmail(email);
+		dao.setZipcode(zipcode);
+		dao.setAddress1(address1);
+		dao.setAddress2(address2);
+		dao.setBusinessNumber(businessNumber);
+		dao.setCompanyName(companyName);
 	
 		
 		try {
-			biz.updateSellerMyInfo(dto);
-			session.setAttribute("dto", dto);
-			request.getRequestDispatcher("/member/memberMyPage.jsp").forward(request, response);
+			biz.updateSellerMyInfo(dao);
+			session.setAttribute("dao", dao);
+			System.out.println("(판매자회원) 내정보변경 데이터 확인 : "+dao);
+			request.getRequestDispatcher("/member/memberController?action=sellerMyPage&memberId=\"+memberId").forward(request, response);
 		} catch (Exception e) {
 			e.getMessage();
-			request.getRequestDispatcher("/member/memberMyInfo.jsp").forward(request, response);
+			request.getRequestDispatcher("/member/sellerMyInfo.jsp").forward(request, response);
 		}
 	}	
 	
@@ -843,23 +829,55 @@ public class FrontMember extends HttpServlet {
 	 */
 	protected void memberList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("[dubug] 전체회원목록 요청");
-		HttpSession session = request.getSession();
-		
-		/** 데이터추출 */		
+
+		/** 데이터추출 */	
+		ArrayList<Member> list = new ArrayList<Member>();
 		MemberBiz biz = new MemberBiz();
 		
 		String searchKey = request.getParameter("searchKey");
 		String keyWord = request.getParameter("keyWord");
+		
+		try {
+			/** 응답 설정 */
+			biz.selectMemberList(list,searchKey,keyWord);
+			
+			request.setAttribute("list", list);				
+			System.out.println("list"+list);			
+			request.getRequestDispatcher("/member/memberList.jsp").forward(request, response);
+		} catch (Exception e) {
+			/* 응답 페이지로 이동 */
+			request.getRequestDispatcher("/member/adminMypage.jsp").forward(request, response);
+		}		
+	}
+	
+	/**
+	 * 관리자 권한 
+	 * 		-- 일반/판매자 상세조회 요청 서비스
+	 */
+	protected void memberDetail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("[debug] 회원 상세조회 요청");
+		HttpSession session = request.getSession();
 				
-		/** 응답 설정 */
-		ArrayList<Member> list = biz.selectMemberList(searchKey, keyWord);				
-		System.out.println("list"+list);
-				
-		/* 응답을 위한 설정 */
-		session.setAttribute("list", list);				
-		/* 응답 페이지로 이동 */
-		RequestDispatcher nextView = request.getRequestDispatcher("/member/memberList.jsp");
-		nextView.forward(request, response);				
+		String memberId = request.getParameter("memberId");
+		
+		if (memberId == null || memberId.trim().length() == 0) {
+			request.getRequestDispatcher("/member/memberList.jsp").forward(request, response);
+			return;
+		}
+		
+		memberId = memberId.trim();
+		
+		MemberBiz biz = new MemberBiz();
+		Member dto = new Member();	
+		
+		try {
+			biz.selectMemberDetail(dto,memberId);
+			session.setAttribute("dto", dto);
+			System.out.println("관리자 상세조회 서블릿 테스트 : "+dto);
+			request.getRequestDispatcher("/member/memberDetail.jsp").forward(request, response);
+		} catch (Exception e) {
+			request.getRequestDispatcher("/member/memberList.jsp").forward(request, response);
+		}
 	}
 }
 
