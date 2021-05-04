@@ -477,9 +477,7 @@ public class MemberDao implements Serializable{
 			JdbcTemplate.close(stmt);			
 		}		
 	}
-	/**
-	 * 
-	 * */
+ㄴㅇㄴㅇ
 	
 	
 	/**
