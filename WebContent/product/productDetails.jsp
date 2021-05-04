@@ -18,6 +18,24 @@
 
 	<!-- Favicons -->
     <link rel="shortcut icon" href="${CONTEXT_PATH}/assets/ico/favicon.ico">
+    
+    <!-- javascript -->
+    <script type="text/javascript" src="${CONTEXT_PATH}/js/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+    	function messageChange() {
+    		var messageElement = document.getElementById("message");
+    		var countElement = document.getElementById("count");
+    		var count = countElement.value;
+    		count = count.trim();
+    		
+    		if(count.length == 0) {
+    			messageElement.innerHTML = "주문금액 : 0 원";
+    		} else {
+    			count = parseInt(count);
+    			messageElement.innerHTML = "주문금액 : " + (count* ${product.pPrice}) + " 원";
+    		}
+    	}
+    </script>
   </head>
 <body>
 
@@ -53,14 +71,14 @@
 			<form class="form-horizontal qtyFrm">
 			  <div class="control-group">
 				<label class="control-label"> 수량</label>
-				<input type="number" class="span6" placeholder="1" min="1" style="width:100px">
+				<input type="number" id="count" class="span6" placeholder="1" min="1" style="width:100px" onmouseup="messageChange()" onkeyup="messageChange()">
 			  </div>
-			  <h5> 재고수량 : ${product.pCount } </h5>
+			  <h5> 재고수량 : ${product.pCount} </h5>
 			  <button type="button" class="defaultBtn"><span class=" icon-shopping-cart"></span> 장바구니 </button>
 			  <button type="submit" class="shopBtn"><span class=" icon-shopping-cart"></span> 바로구매 </button>
 			</form>
-				
-			<h3 style="float:right; padding-right:50px;">주문금액 : </h3>		
+			<h3 style="float:right; padding-right:100px;"> </h3>
+			<div id="message" style="float:right; font-size:20px; font-weight:bold; color:#548235;"></div>
 		</div>
 	</div>
 	

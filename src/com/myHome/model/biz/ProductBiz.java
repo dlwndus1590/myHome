@@ -64,6 +64,24 @@ public class ProductBiz {
 	}
 	
 	/**
+	 * 관련상품 조회 메서드
+	 * @param categoryId
+	 * @param productList
+	 * @throws Exception
+	 */
+	public void getRelatedProductList(int categoryId, int pNo, ArrayList<Product> productList) throws Exception{
+		Connection conn= JdbcTemplate.getConnection();
+		
+		try {
+			ProductDao.getInstance().getRelatedProductList(conn, categoryId, pNo, productList);
+		} catch(SQLException e) {
+			throw e;
+		} finally {
+			JdbcTemplate.close(conn);
+		}
+	}
+	
+	/**
 	 * 상품 상세조회 메서드
 	 * @param pNo
 	 * @param product
@@ -81,6 +99,11 @@ public class ProductBiz {
 		}
 	}
 	
+	/**
+	 * 카테고리 이름 반환 메서드
+	 * @param category
+	 * @throws Exception
+	 */
 	public void getCategory(Category category) throws Exception {
 		Connection conn = JdbcTemplate.getConnection();
 		
@@ -91,5 +114,41 @@ public class ProductBiz {
 		} finally {
 			JdbcTemplate.close(conn);
 		}
+	}
+	
+	/**
+	 * 베스트 상품 조회 메서드
+	 * @param productList
+	 * @throws Exception
+	 */
+	public void productListbyBest(ArrayList<Product> productList) throws Exception {
+		Connection conn = JdbcTemplate.getConnection();
+		
+		try {
+			ProductDao.getInstance().productListByBest(conn, productList);
+		} catch(SQLException e) {
+			throw e;
+		} finally {
+			JdbcTemplate.close(conn);
+		}
+	}
+	
+	/**
+	 * 카테고리별 베스트 상품 조회 메서드
+	 * @param categoryId
+	 * @param productList
+	 * @throws Exception
+	 */
+	public void productListbyBestCategory(int categoryId, ArrayList<Product> productList) throws Exception{
+		Connection conn = JdbcTemplate.getConnection();
+		
+		try {
+			ProductDao.getInstance().productListbyBestCategory(conn, categoryId, productList);
+		} catch(SQLException e) {
+			throw e;
+		} finally {
+			JdbcTemplate.close(conn);
+		}
+
 	}
 }

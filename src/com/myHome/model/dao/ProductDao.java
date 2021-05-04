@@ -180,6 +180,12 @@ public class ProductDao {
 		}
 	}
 	
+	/** 
+	 * 카테고리 이름 반환
+	 * @param conn
+	 * @param category
+	 * @throws Exception
+	 */
 	public void getCategory(Connection conn, Category category) throws Exception{
 		String sql = "select * from category where category_id=?";
 		
@@ -204,5 +210,136 @@ public class ProductDao {
 			JdbcTemplate.close(pstmt);
 		}
 	}
-	
+
+	/**
+	 * 관련상품 찾기 
+	 * @param conn
+	 * @param categoryId
+	 * @param pNo
+	 * @param productList
+	 * @throws Exception
+	 */
+	public void getRelatedProductList(Connection conn, int categoryId, int pNo, ArrayList<Product> productList) throws Exception {
+		String sql = "select * from product where category_id=? and p_no!=?";
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, categoryId);
+			pstmt.setInt(2, pNo);
+			rs = pstmt.executeQuery();
+			
+			Product product = null;
+			while(rs.next()) {
+				product = new Product();
+				product.setpNo(rs.getInt(1));
+				product.setpName(rs.getString(2));
+				product.setpPrice(rs.getInt(3));
+				product.setpImg(rs.getString(4));
+				product.setpDescribe(rs.getString(5));
+				product.setDeliveryFee(rs.getInt(6));
+				product.setCompanyName(rs.getString(7));
+				product.setCategoryId(rs.getInt(8));
+				product.setpScore(rs.getFloat(9));
+				product.setpSales(rs.getInt(10));
+				product.setpCount(rs.getInt(11));
+				productList.add(product);
+			}
+		} catch(SQLException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			JdbcTemplate.close(rs);
+			JdbcTemplate.close(pstmt);
+		}
+	}
+
+	/**
+	 * 베스트상품 조회(30개 상품)
+	 * @param conn
+	 * @param productList
+	 * @throws Exception
+	 */
+	public void productListByBest(Connection conn, ArrayList<Product> productList) throws Exception {
+		String sql = "select * from product where rownum<=30 order by p_score*p_sales desc";
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			Product product = null;
+			while(rs.next()) {
+				product = new Product();
+				product.setpNo(rs.getInt(1));
+				product.setpName(rs.getString(2));
+				product.setpPrice(rs.getInt(3));
+				product.setpImg(rs.getString(4));
+				product.setpDescribe(rs.getString(5));
+				product.setDeliveryFee(rs.getInt(6));
+				product.setCompanyName(rs.getString(7));
+				product.setCategoryId(rs.getInt(8));
+				product.setpScore(rs.getFloat(9));
+				product.setpSales(rs.getInt(10));
+				product.setpCount(rs.getInt(11));
+				productList.add(product);
+			}
+		} catch(SQLException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			JdbcTemplate.close(rs);
+			JdbcTemplate.close(pstmt);
+		}
+	}
+
+	/**
+	 * 카테고리별 베스트상품 조회
+	 * @param conn
+	 * @param categoryId
+	 * @param productList
+	 * @throws Exception
+	 */
+	public void productListbyBestCategory(Connection conn, int categoryId, ArrayList<Product> productList) throws Exception{
+		String sql = "select * from product where category_id=? and rownum<=30 order by p_score*p_sales desc";
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, categoryId);
+			rs = pstmt.executeQuery();
+			
+			Product product = null;
+			while(rs.next()) {
+				product = new Product();
+				product.setpNo(rs.getInt(1));
+				product.setpName(rs.getString(2));
+				product.setpPrice(rs.getInt(3));
+				product.setpImg(rs.getString(4));
+				product.setpDescribe(rs.getString(5));
+				product.setDeliveryFee(rs.getInt(6));
+				product.setCompanyName(rs.getString(7));
+				product.setCategoryId(rs.getInt(8));
+				product.setpScore(rs.getFloat(9));
+				product.setpSales(rs.getInt(10));
+				product.setpCount(rs.getInt(11));
+				productList.add(product);
+			}
+		} catch(SQLException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			JdbcTemplate.close(rs);
+			JdbcTemplate.close(pstmt);
+		}
+	}
 }

@@ -29,28 +29,26 @@
 
 <!-- Body Section -->
 <div class="row">
-<div id="sidebar" class="span3">
-	</div>
-	<div class="span9" style="width:960px;">
+<div class="span9" style="width:960px;">
 	<div class="well np">
 		<div id="myCarousel" class="carousel slide homCar">
             <div class="carousel-inner">
 			  <div class="item">
-                <img style="width:100%" src="${CONTEXT_PATH}/assets/img/bootstrap_free-ecommerce.png" alt="bootstrap ecommerce templates">
+                <img style="width:100%" src="${CONTEXT_PATH}/img/interior/interior1.jpg">
                 <div class="carousel-caption">
                       <h4>Bootstrap shopping cart</h4>
                       <p><span>Very clean simple to use</span></p>
                 </div>
               </div>
 			  <div class="item">
-                <img style="width:100%" src="${CONTEXT_PATH}/assets/img/carousel1.png" alt="bootstrap ecommerce templates">
+                <img style="width:100%" src="${CONTEXT_PATH}/img/interior/interior2.jpg">
                 <div class="carousel-caption">
                       <h4>Bootstrap Ecommerce template</h4>
                       <p><span>Highly Google seo friendly</span></p>
                 </div>
               </div>
 			  <div class="item active">
-                <img style="width:100%" src="${CONTEXT_PATH}/assets/img/carousel3.png" alt="bootstrap ecommerce templates">
+                <img style="width:100%" src="${CONTEXT_PATH}/img/interior/interior3.jpg">
                 <div class="carousel-caption">
                       <h4>Twitter Bootstrap cart</h4>
                       <p><span>Very easy to integrate and expand.</span></p>

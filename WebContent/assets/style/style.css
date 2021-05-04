@@ -112,7 +112,7 @@ hr.soften {margin: 8px 0;background: #E2F0D9;}
 /** 추가 css */
 .dropdown-menu a:hover { background-color: #A9D18E;}
 .dropdown:hover .dropdown-menu {display: block;}
-.dropdown:hover .dropdown-toggle{background-color: #A9D18E;}
+.dropdown:hover .dropdown-toggle:focus{background-color: #A9D18E;}
 .dropdown-menu a {
   float: none;
   color: #385723;
