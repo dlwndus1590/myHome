@@ -33,6 +33,9 @@ public class FrontOrders extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		String action = request.getParameter("action");
 		switch(action) {
+		case "cartPage":
+			cartPage(request, response);	
+			break;
 		case "ordersPage":
 			ordersPage(request, response);	
 			break;
@@ -57,6 +60,29 @@ public class FrontOrders extends HttpServlet {
 	}
 
 	/**
+	 * 장바구니페이지
+	 */
+	private void cartPage(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("cartPage");
+		HttpSession session = request.getSession();
+		//String memberId = (String) session.getAttribute("memberId");
+		String memberId = "user01";
+		ArrayList<OrdersPage> cartList = new ArrayList<OrdersPage>();
+		OrdersBiz ordersBiz = new OrdersBiz();
+		try {
+			ordersBiz.getCartPage(memberId, cartList);
+			
+			session.setAttribute("cartList", cartList);
+			System.out.println(cartList);
+			response.sendRedirect(CONTEXT_PATH + "/member/cart.jsp");
+		} catch (Exception e) {
+			e.printStackTrace();
+			// 에러처리 페이지로 이동
+			
+		}
+	}
+	
+	/**
 	 * 결제페이지
 	 */
 	private void ordersPage(HttpServletRequest request, HttpServletResponse response) {
@@ -75,6 +101,7 @@ public class FrontOrders extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 			// 에러처리 페이지로 이동
+			
 		}
 	}
 	

@@ -21,6 +21,18 @@ public class OrdersPage {
 	public OrdersPage() {
 	}
 
+	
+	public OrdersPage(int pNo, String pName, int pPrice, int cCount, String pImg, int deliveryFee, int totalPrice) {
+		this.pNo = pNo;
+		this.pName = pName;
+		this.pPrice = pPrice;
+		this.cCount = cCount;
+		this.pImg = pImg;
+		this.deliveryFee = deliveryFee;
+		this.totalPrice = totalPrice;
+	}
+
+
 	public OrdersPage(String name, String email, String mobile, int mileage, int zipCode, String address1,
 			String address2, int pNo, String pName, int pPrice, int cCount, String pImg, String pDescribe, int stock,
 			int deliveryFee, int totalPrice) {
