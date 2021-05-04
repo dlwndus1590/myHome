@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	Member dto = (Member)session.getAttribute("dto");
+	Member dto = (Member)session.getAttribute("dto");	
 %>
 <!DOCTYPE html>
 <html>
@@ -34,36 +34,26 @@
 						Member mainMember = null;
 						if(session.getAttribute("dto")==null){
 					%>	
-						<a href="${CONTEXT_PATH}/member/login.jsp"><span class="icon-lock"></span> Login </a>						
+						<a href="${CONTEXT_PATH}/member/login.jsp"><span class="icon-lock"></span> Login </a>	
+						<a href="javascript:alert('로그인이 필요한 서비스 입니다.')"><span class="icon-user"></span> 마이페이지</a>					
 					<%
 						} else {
 							mainMember = (Member)session.getAttribute("dto");
 					%>
-						<a href="${CONTEXT_PATH}/member/memberController?action=logout"><span class="icon-lock"></span> Logout </a>
+						<a href="${CONTEXT_PATH}/member/memberController?action=logout"><span class="icon-lock"></span> Logout </a>						
 					<%
+							if(mainMember.getGrade().equals("일반회원")){%>
+								<a href="${CONTEXT_PATH}/member/memberController?action=memberMyPage"><span class="icon-user"></span> 마이페이지</a>
+					<%
+							} else if(mainMember.getGrade().equals("판매자")){%>
+								<a href="${CONTEXT_PATH}/member/memberController?action=sellerMyPage"><span class="icon-user"></span> 마이페이지</a> 						
+					<%
+							} else if(mainMember.getGrade().equals("관리자")){%>
+								<a href="${CONTEXT_PATH}/member/memberController?action=adminMypage"><span class="icon-user"></span> 마이페이지</a>
+					<%
+							}
 						}
-					%>
-						
-					<!-- 마이페이지 일반회원 / 판매자 회원 분리 -->		
-					<%
-						if(session.getAttribute("grade")=="일반회원"){
-					%>
-						 <a href="${CONTEXT_PATH}/member/memberController?action=memberMyPage"><span class="icon-user"></span> 마이페이지</a>
-					<%
-						} else if(session.getAttribute("grade")=="판매자"){
-					%>								
-						<a href="${CONTEXT_PATH}/member/memberController?action=sellerMyPage"><span class="icon-user"></span> 마이페이지</a> 
-					<%
-						} else if(session.getAttribute("grade")=="관리자"){
-					%>
-						<a href="${CONTEXT_PATH}/member/memberController?action=adminMypage"><span class="icon-user"></span> 마이페이지</a> 
-					<%
-						} else {
-					%>
-						<a onclick="alert('로그인이 필요한 서비스 입니다.')'"><span class="icon-user"></span> 마이페이지</a>
-					<%
-						}
-					%>
+					%>	
 					
 					
 					<!-- 회원가입 요청 서비스 -->	
@@ -80,7 +70,7 @@
 					%>
 					
 					
-					<a href="${CONTEXT_PATH}/member/ordersController?action=cartPage"><span class="icon-shopping-cart"></span> 장바구니</a>
+					<a href="${CONTEXT_PATH}/member/cart.jsp"><span class="icon-shopping-cart"></span> 장바구니(2)</a>
 					
 			</div>
 		</div>
