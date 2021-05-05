@@ -34,5 +34,17 @@ public class OrdersBiz {
 		}
 	}
 	
-	
+	public void cartDelete(String memberId, int pNo) throws Exception {
+		Connection conn = JdbcTemplate.getConnection();
+		try {
+			dao.cartDelete(conn, memberId, pNo);
+			JdbcTemplate.commit(conn);
+		} catch (Exception e) {
+			JdbcTemplate.rollback(conn);
+			e.printStackTrace();
+			throw e;
+		} finally {
+			JdbcTemplate.close(conn);
+		}
+	}
 }

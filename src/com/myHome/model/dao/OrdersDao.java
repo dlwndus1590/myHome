@@ -38,7 +38,6 @@ public class OrdersDao {
 			rs = stmt.executeQuery();
 			
 			OrdersPage ordersPage = null;
-			System.out.println(memberId);
 			
 			while(rs.next()) {
 				ordersPage = new OrdersPage(
@@ -115,7 +114,6 @@ public class OrdersDao {
 			rs = stmt.executeQuery();
 			
 			OrdersPage ordersPage = null;
-			System.out.println(memberId);
 			
 			while(rs.next()) {
 				ordersPage = new OrdersPage();
@@ -148,4 +146,30 @@ public class OrdersDao {
 			JdbcTemplate.close(stmt);
 		}
 	}
+
+	/**
+	 * 장바구니 삭제
+	 */
+	public void cartDelete(Connection conn, String memberId, int pNo) throws Exception {
+		String sql = "delete from cart where member_id = ? and p_no = ?";
+		
+		PreparedStatement stmt = null;
+		
+		try {
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, memberId);
+			stmt.setInt(2, pNo);
+			int rows = stmt.executeUpdate();
+			if (rows == 0) {
+				throw new Exception();
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			throw new Exception();
+		} finally {
+			JdbcTemplate.close(stmt);
+		}
+	}
+	
 }

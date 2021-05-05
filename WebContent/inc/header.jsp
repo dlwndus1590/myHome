@@ -70,7 +70,7 @@
 					%>
 					
 					
-					<a href="${CONTEXT_PATH}/member/cart.jsp"><span class="icon-shopping-cart"></span> 장바구니(2)</a>
+					<a href="${CONTEXT_PATH}/member/ordersController?action=cartPage"><span class="icon-shopping-cart"></span> 장바구니</a>
 					
 			</div>
 		</div>
