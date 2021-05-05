@@ -342,4 +342,42 @@ public class ProductDao {
 			JdbcTemplate.close(pstmt);
 		}
 	}
+
+	
+	public void getEnrolledProductList(Connection conn, String companyName, ArrayList<Product> productList) throws Exception{
+		String sql = "select * from product where company_name=? order by p_score*p_sales desc";
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, companyName);
+			rs = pstmt.executeQuery();
+			
+			Product product = null;
+			while(rs.next()) {
+				product = new Product();
+				product.setpNo(rs.getInt(1));
+				product.setpName(rs.getString(2));
+				product.setpPrice(rs.getInt(3));
+				product.setpImg(rs.getString(4));
+				product.setpDescribe(rs.getString(5));
+				product.setDeliveryFee(rs.getInt(6));
+				product.setCompanyName(rs.getString(7));
+				product.setCategoryId(rs.getInt(8));
+				product.setpScore(rs.getFloat(9));
+				product.setpSales(rs.getInt(10));
+				product.setpCount(rs.getInt(11));
+				productList.add(product);
+			}
+		} catch(SQLException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			JdbcTemplate.close(rs);
+			JdbcTemplate.close(pstmt);
+		}
+	}
 }
