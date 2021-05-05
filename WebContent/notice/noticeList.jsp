@@ -27,12 +27,15 @@
 
 	<div align="center">
 		<table class="commonTable">
+		<c:if test="${sessionScope.memberId == 'admin'}">
 			<tr>
-				<td align="right" colspan="8"><a
-					href="${CONTEXT_PATH}/notice/noticeController?action=noticeInputForm">
+				<td align="right" colspan="8">
+				<a href="${CONTEXT_PATH}/notice/noticeController?action=noticeInputForm">
 						<input type="button" value="글쓰기" id="write">
-				</a></td>
+				</a>
+				</td>
 			</tr>
+		</c:if>
 			<tr>
 				<th align="center" class="nTitle" id="nNo"></th>
 				<th align="center" class="nTitle">아이디</th>
@@ -42,15 +45,15 @@
 			</tr>
 			<c:choose>
 				<c:when test="${not empty list}">
-					<c:forEach var="dto" items="${list}">
+					<c:forEach var="index" items="${list}">
 						<tr>
-							<td class="info">${dto.nNo}</td>
-							<td class="info">${dto.memberId}</td>
+							<td class="info">${index.nNo}</td>
+							<td class="info">${index.memberId}</td>
 							<td class="info"><a
-								href="${CONTEXT_PATH}/notice/noticeController?action=noticeDetail&nNo=${dto.nNo}&writeMemberId=${dto.memberId}"
-								id="link">${dto.nTitle}</a></td>
-							<td class="info">${dto.nRegDate}</td>
-							<td class="info">${dto.nHits}</td>
+								href="${CONTEXT_PATH}/notice/noticeController?action=noticeDetail&nNo=${index.nNo}&writeMemberId=${index.memberId}"
+								id="link">${index.nTitle}</a></td>
+							<td class="info">${index.nRegDate}</td>
+							<td class="info">${index.nHits}</td>
 						</tr>
 					</c:forEach>
 				</c:when>

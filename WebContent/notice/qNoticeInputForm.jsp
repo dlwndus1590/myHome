@@ -18,6 +18,13 @@
 <link rel="shortcut icon" href="assets/ico/favicon.ico">
 </head>
 <body>
+	<c:if test="${empty dto}">
+		<script type="text/javascript">
+			alert('로그인을 먼저 시도해주세요!');
+			location.href="${CONTEXT_PATH}/notice/noticeController?action=qNoticeForm"
+		</script>
+	</c:if>
+
 	<!-- header -->
 	<jsp:include page="/inc/header.jsp" />
 
