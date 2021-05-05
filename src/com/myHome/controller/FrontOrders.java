@@ -42,6 +42,9 @@ public class FrontOrders extends HttpServlet {
 		case "orders":
 			orders(request, response);	
 			break;
+		case "cartDelete":
+			cartDelete(request, response);	
+			break;
 		}
 	}
 
@@ -63,7 +66,6 @@ public class FrontOrders extends HttpServlet {
 	 * 장바구니페이지
 	 */
 	private void cartPage(HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("cartPage");
 		HttpSession session = request.getSession();
 		//String memberId = (String) session.getAttribute("memberId");
 		String memberId = "user01";
@@ -71,9 +73,8 @@ public class FrontOrders extends HttpServlet {
 		OrdersBiz ordersBiz = new OrdersBiz();
 		try {
 			ordersBiz.getCartPage(memberId, cartList);
-			
 			session.setAttribute("cartList", cartList);
-			System.out.println(cartList);
+			
 			response.sendRedirect(CONTEXT_PATH + "/member/cart.jsp");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -83,12 +84,39 @@ public class FrontOrders extends HttpServlet {
 	}
 	
 	/**
-	 * 결제페이지
+	 * 장바구니 삭제
 	 */
-	private void ordersPage(HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("ordersPage");
+	private void cartDelete(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		//String memberId = (String) session.getAttribute("memberId");
+		int pNo = Integer.parseInt(request.getParameter("pNo"));
+		System.out.println(pNo);
+		String memberId = "user01";
+		OrdersBiz ordersBiz = new OrdersBiz();
+		try {
+			ordersBiz.cartDelete(memberId, pNo);
+			response.sendRedirect(CONTEXT_PATH + "/member/ordersController?action=cartPage");
+		} catch (Exception e) {
+			e.printStackTrace();
+			// 에러처리 페이지로 이동
+		}
+	}
+	
+	/**
+	 * 장바구니 결제페이지
+	 */
+	private void ordersPage(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		//String memberId = (String) session.getAttribute("memberId");
+		String[] price = request.getParameterValues("totalCost");
+		//Integer.parseInt(price);
+		int total = 0;
+		for (int i = 0; i < price.length; i++) {
+			System.out.println(i + ", " + price[i]);
+			total += Integer.parseInt(price[i]);
+		}
+		System.out.println("total : " + total);
+		
 		String memberId = "user01";
 		ArrayList<OrdersPage> ordersList = new ArrayList<OrdersPage>();
 		OrdersBiz ordersBiz = new OrdersBiz();
@@ -96,7 +124,6 @@ public class FrontOrders extends HttpServlet {
 			ordersBiz.getOrdersPage(memberId, ordersList);
 			
 			session.setAttribute("ordersList", ordersList);
-			System.out.println(ordersList);
 			response.sendRedirect(CONTEXT_PATH + "/member/ordersPage.jsp");
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -45,7 +45,8 @@
 							class="info" cols="100" rows="30" readonly="readonly"
 							class="info">${dto.nContent}</textarea></td>
 				</tr>
-
+				
+				<c:if test="${sessionScope.memberId == 'admin'}">
 				<tr align="right">
 					<td><input type="submit" value="삭제" name ="submit" size="100px"
 						style="background-color: #03C75A; color: white; border: 1px; font-size: 18px; padding-left: 20px; padding-right: 20px">
@@ -53,6 +54,7 @@
 						style="background-color: #03C75A; color: white; border: 1px; font-size: 18px; padding-left: 20px; padding-right: 20px">
 					</td>
 				</tr>
+				</c:if>
 			</table>
 		</form>
 	</c:if>

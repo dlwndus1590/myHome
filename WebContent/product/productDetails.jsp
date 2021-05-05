@@ -20,7 +20,6 @@
     <link rel="shortcut icon" href="${CONTEXT_PATH}/assets/ico/favicon.ico">
     
     <!-- javascript -->
-    <script type="text/javascript" src="${CONTEXT_PATH}/js/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">
     	function messageChange() {
     		var messageElement = document.getElementById("message");

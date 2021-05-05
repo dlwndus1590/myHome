@@ -110,8 +110,14 @@ public class FrontNotice extends HttpServlet {
 		case "qNoticeSearch":
 			qNoticeSearch(request, response);
 			break;
-	
+		
+		case "qNoticeNewList":
+			qNoticeNewList(request, response);
+			break;
 			
+		case "qNoticePopularityList":
+			qNoticePopularityList(request, response);
+			break;
 		}
 	}
 
@@ -145,14 +151,18 @@ public class FrontNotice extends HttpServlet {
 	protected void noticeDetail(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		System.out.println("[debug]게시판 상세조회 요청");
-		int nNo = Integer.parseInt(request.getParameter("nNo"));
-
-		/* 작성자 아이디 */
-//		String writeMemberId = request.getParameter("writeMemberId");
-//		HttpSession session = request.getSession(true);
-
+		HttpSession session = request.getSession(true);
 		NoticeBiz biz = new NoticeBiz();
 		Notice dto = new Notice();
+		int nNo = Integer.parseInt(request.getParameter("nNo"));
+		/* 작성자 아이디 */
+		String writeMemberId = request.getParameter("writeMemberId");
+		
+		if(session.getAttribute("memberId") != null && !writeMemberId.equals((String)session.getAttribute("memberId"))){
+			/* 작성자가 아닌 회원이 해당 게시글 상세 조회를 요청 했을 경우*/
+			biz.nHitsUp(nNo);
+		}
+		
 		biz.NoticeDetail(nNo, dto);
 		// biz.viewsUp(nNo, writeMemberId, (String)session.getAttribute("memberId"));
 		if (dto != null) {
@@ -168,6 +178,7 @@ public class FrontNotice extends HttpServlet {
 	 */
 	protected void noticeInputForm(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		HttpSession session = request.getSession();
 		request.getRequestDispatcher("/notice/noticeInputForm.jsp").forward(request, response);
 	}
 
@@ -293,14 +304,22 @@ public class FrontNotice extends HttpServlet {
 	}
 
 	private void qNoticeDetail(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
 		NoticeBiz biz = new NoticeBiz();
 		ArrayList<Answer> list = new ArrayList<Answer>();
 		int qNo = Integer.parseInt(request.getParameter("qNo"));
-		Qnotice dto = new Qnotice();
-
-		biz.qNoticeDetail(qNo, dto);
+		String writeMemberId = request.getParameter("writeMemberId");
+		Qnotice qdto = new Qnotice();
+		
+		if(writeMemberId != null) {
+		if(session.getAttribute("memberId") != null && !writeMemberId.equals((String)session.getAttribute("memberId"))){
+			/* 작성자가 아닌 회원이 해당 게시글 상세 조회를 요청 했을 경우*/
+			biz.qHitsUp(qNo);
+		}}
+		
+		biz.qNoticeDetail(qNo, qdto);
 		biz.answerList(qNo, list);
-		request.setAttribute("dto", dto);
+		request.setAttribute("qdto", qdto);
 		request.setAttribute("list", list);
 		try {
 			request.getRequestDispatcher("/notice/qNoticeDetail.jsp").forward(request, response);
@@ -352,12 +371,13 @@ public class FrontNotice extends HttpServlet {
 	 * 댓글 등록 요청 서비스
 	 */
 	private void addComment(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
 		String comment = request.getParameter("comment");
 		int qNo = Integer.parseInt(request.getParameter("qNo"));
 		NoticeBiz biz = new NoticeBiz();
 		Answer dto = new Answer();
 		dto.setaContent(comment);
-		dto.setMemberId("admin");
+		dto.setMemberId((String)session.getAttribute("memberId"));
 		dto.setqNo(qNo);
 
 		biz.addComment(dto);
@@ -373,7 +393,16 @@ public class FrontNotice extends HttpServlet {
 	 * 댓글 수정 요청 서비스
 	 */
 	private void updateComment(HttpServletRequest request, HttpServletResponse response) {
-
+		int aNo = Integer.parseInt(request.getParameter("aNo"));
+		int qNo = Integer.parseInt(request.getParameter("qNo"));
+		String edditContent = request.getParameter("edit_acontent" + aNo);
+		NoticeBiz biz = new NoticeBiz();
+		biz.updateComment(aNo, edditContent);
+		try {
+			request.getRequestDispatcher("/notice/noticeController?action=qNoticeDetail&qNo=" + qNo).forward(request, response);
+		} catch (ServletException | IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -446,7 +475,7 @@ public class FrontNotice extends HttpServlet {
 	}
 	
 	/**
-	 * 질문 게시글 검색
+	 * 질문 게시글 검색 요청 서비스
 	 */
 	private void qNoticeSearch(HttpServletRequest request, HttpServletResponse response) {
 		String searchInfo = request.getParameter("searchInfo");
@@ -461,6 +490,41 @@ public class FrontNotice extends HttpServlet {
 		} catch (ServletException | IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * 질문 게시글 최신순(등록순) 리스트 요청 서비스
+	 */
+	private void qNoticeNewList(HttpServletRequest request, HttpServletResponse response) {
+		NoticeBiz biz = new NoticeBiz();
+		ArrayList<Qnotice> list = new ArrayList<Qnotice>();
+		String listType = "최신순";
 		
+		biz.qNoticeNewList(list);
+		request.setAttribute("list", list);
+		request.setAttribute(listType, listType);
+		try {
+			request.getRequestDispatcher("/notice/qNoticeForm.jsp").forward(request, response);
+		} catch (ServletException | IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 질문 게시글 인기순(조회수) 리스트 요청 서비스
+	 */
+	private void qNoticePopularityList(HttpServletRequest request, HttpServletResponse response) {
+		NoticeBiz biz = new NoticeBiz();
+		ArrayList<Qnotice> list = new ArrayList<Qnotice>();
+		String listType = "인기순";
+
+		biz.qNoticePopularityList(list);
+		request.setAttribute("list", list);
+		request.setAttribute("listType", listType);
+		try {
+			request.getRequestDispatcher("/notice/qNoticeForm.jsp").forward(request, response);
+		} catch (ServletException | IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

@@ -55,7 +55,7 @@
 	  <div class="column">
 	    <div class="card">
 	      <h3>order list</h3>
-	      <a href="#"><p>상품 등록내역</p></a>  
+	      <a href="${CONTEXT_PATH}/product/productController?action=enrolledProductListForm"><p>내 상품 관리</p></a>  
 	    </div>
 	  </div>
 	  

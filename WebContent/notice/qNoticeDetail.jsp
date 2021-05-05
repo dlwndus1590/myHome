@@ -16,36 +16,10 @@
 <link href="${CONTEXT_PATH}/css/notice/qNoticeDetail.css"
 	rel="stylesheet" />
 <link rel="shortcut icon" href="assets/ico/favicon.ico">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
 <script type="text/javascript"
-	src="${CONTEXT_PATH}/js/notice/commentUpdate.js"></script>
-</script>
-<script type="text/javascript">
-function fn_editReply(aNo, memberId, aContent) {
-	alert('확인!');
-	var htmls = "";
-	htmls += '<div class="media text-muted pt-3" id="aNo' + aNo + '">';
-	htmls += '<svg class="bd-placeholder-img mr-2 rounded" width="32" height="32" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder:32x32">';
-	htmls += '<title>Placeholder</title>';
-	htmls += '<rect width="100%" height="100%" fill="#007bff"></rect>';
-	htmls += '<text x="50%" fill="#007bff" dy=".3em">32x32</text>';
-	htmls += '</svg>';
-	htmls += '<p class="media-body pb-3 mb-0 small lh-125 border-bottom horder-gray">';
-	htmls += '<span class="d-block">';
-	htmls += '<strong class="text-gray-dark">' + memberId + '</strong>';
-	htmls += '<span style="padding-left: 7px; font-size: 9pt">';
-	htmls += '<a href="javascript:void(0)" onclick="fn_updateReply(' + aNo + ', \'' + memberId + '\')" style="padding-right:5px">저장</a>';
-	htmls += '<a href="javascript:void(0)" onClick="showReplyList()">취소<a>';
-	htmls += '</span>';
-	htmls += '</span>';
-	htmls += '<textarea name="editaContent" id="editaContent" class="form-control" rows="3">';
-	htmls += aContent;
-	htmls += '</textarea>';
-	htmls += '</p>';
-	htmls += '</div>';
-	$("#aNo").replaceWith(htmls);
-	$("#editaContent").focus();
-};
-</script>
+	src="${CONTEXT_PATH}/js/notice/edditComment.js"></script>
 </head>
 <body>
 	<!-- header -->
@@ -54,41 +28,58 @@ function fn_editReply(aNo, memberId, aContent) {
 	<!-- contents menu -->
 	<a href="${CONTEXT_PATH}/notice/noticeController?action=qNoticeForm">질문과
 		답변</a>
-	<br>
-
+	<br><br>
+	
 	<table>
 		<tr>
-			<td id="qTitle" class="info"><h3>${dto.qTitle}</h3></td>
+			<td class="info"><p id="qTitle">${qdto.qTitle}</p></td>
 		</tr>
 
 		<tr>
-			<td>${dto.memberId}|${dto.qRegDate}<span id="qHits" style="float: right">조회수:
-					${dto.qHits}</span><div align="right"><a href="${CONTEXT_PATH}/notice/noticeController?action=qNoticeUpdateForm&qNo=${dto.qNo}">수정</a> | <a href="${CONTEXT_PATH}/notice/noticeController?action=qNoticeDelete&qNo=${dto.qNo}">삭제</a></div></td>
-		</tr>
-		
-		<tr>
-			<td class="info"><hr><img src="${CONTEXT_PATH}${dto.qImg}"></td>
+			<td>
+			<img src="${CONTEXT_PATH}/img/qNotice/userIcon.png" id="userIcon"/><p></p>
+			<span id="qmemberIdRegDate">${qdto.memberId} | ${qdto.qRegDate}</span>
+			<span id="qHits" style="float: right">조회수: ${qdto.qHits}</span>
+				<c:if test="${qdto.memberId == sessionScope.memberId or sessionScope.memberId == 'admin'}">
+				<div align="right">
+					<a href="${CONTEXT_PATH}/notice/noticeController?action=qNoticeUpdateForm&qNo=${qdto.qNo}">수정</a>
+					| <a href="${CONTEXT_PATH}/notice/noticeController?action=qNoticeDelete&qNo=${qdto.qNo}">삭제</a>
+				</div>
+				</c:if>
+			</td>
 		</tr>
 
 		<tr>
-			<td class="info">${dto.qContent}</td>
+			<td class="info"><hr> <img src="${CONTEXT_PATH}${qdto.qImg}"></td>
+		</tr>
+
+		<tr>
+			<td class="info">${qdto.qContent}</td>
 		</tr>
 	</table>
 	<hr>
-	<form action="${CONTEXT_PATH}/notice/noticeController?action=addComment&qNo=${dto.qNo}" method="post">
-		<p>댓글</p>
-		<input type="text" placeholder="댓글을 남겨 보세요" name="comment"
-			style="width: 850px; height: 40px;"> <input type="submit"
-			value="등록" id="commentButton">
-	</form>
-
+	<h3>댓글</h3>
+	<c:if test="${not empty memberId}">
+		<form action="${CONTEXT_PATH}/notice/noticeController?action=addComment&qNo=${qdto.qNo}" method="post">
+			<input type="text" placeholder="댓글을 남겨 보세요" name="comment"
+				style="width: 850px; height: 40px;"> <input type="submit"
+				value="등록" id="commentButton">
+		</form>
+	</c:if>
+	
 	<c:forEach var="index" items="${list}">
-		<span style="float: right; margin-right: 25px;"><a href="#"
-			onclick="fn_editReply(${index.aNo},${index.memberId},${index.aContent})">수정</a> | <a href="${CONTEXT_PATH}/notice/noticeController?action=deleteComment&aNo=${index.aNo}&qNo=${dto.qNo}">삭제</a></span>
-		<div id="${index.aNo}">
-			<span>${index.memberId}</span> <br> ${index.aContent}
-		</div>
-		<span>${index.aRegDate}</span>
+		<c:if test="${memberId == index.memberId or memberId == 'admin'}">
+		<span style="float: right; margin-right: 25px;"
+			id="edditButton${index.aNo}"> 
+			<a onclick="answerEdit(${index.aNo}, ${index.qNo},'${index.aContent}');">수정</a>
+			| <a href="${CONTEXT_PATH}/notice/noticeController?action=deleteComment&aNo=${index.aNo}&qNo=${index.qNo}">삭제</a>
+			</span>
+		</c:if>
+		<img src="${CONTEXT_PATH}/img/qNotice/userIcon.png" id="userIcon"/>
+		<span>${index.memberId}</span>
+		<br>
+		<div id="content${index.aNo}">${index.aContent}</div>
+		<div >${index.aRegDate}</div>
 		<br>
 	</c:forEach>
 
