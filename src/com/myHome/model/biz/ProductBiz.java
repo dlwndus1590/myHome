@@ -151,4 +151,22 @@ public class ProductBiz {
 		}
 
 	}
+
+	/**
+	 * 판매자회원 - 등록한 상품 리스트 조회
+	 * @param companyName
+	 * @param productList
+	 * @throws Exception
+	 */
+	public void getEnrolledProductList(String companyName, ArrayList<Product> productList) throws Exception {
+		Connection conn = JdbcTemplate.getConnection();
+		
+		try {
+			ProductDao.getInstance().getEnrolledProductList(conn, companyName, productList);
+		} catch(SQLException e) {
+			throw e;
+		} finally {
+			JdbcTemplate.close(conn);
+		}		
+	}
 }

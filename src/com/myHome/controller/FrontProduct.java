@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import com.myHome.model.biz.ProductBiz;
 import com.myHome.model.dto.Category;
+import com.myHome.model.dto.Member;
 import com.myHome.model.dto.Product;
 
 /**
@@ -51,6 +52,9 @@ public class FrontProduct extends HttpServlet {
 				break;
 			case "productListByBest":
 				productListByBest(request, response);
+				break;
+			case "enrolledProductListForm" :
+				enrolledProductListForm(request, response);
 				break;
 			
 		}
@@ -146,13 +150,16 @@ public class FrontProduct extends HttpServlet {
 	protected void productListByBestForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ArrayList<Product> productList = new ArrayList<Product>();
 		ProductBiz biz = new ProductBiz();
+		ArrayList<Category> categoryList = new ArrayList<Category>();
 		int number= 1;
 		
 		try {
 			biz.productListbyBest(productList);
+			biz.getCategoryList(categoryList);
 			
 			HttpSession session = request.getSession();
 			session.setAttribute("productList", productList);
+			session.setAttribute("categoryList", categoryList);
 			session.setAttribute("number", number);
 			
 			response.sendRedirect(CONTEXT_PATH + "/product/best.jsp");
@@ -179,6 +186,37 @@ public class FrontProduct extends HttpServlet {
 			session.setAttribute("number", number);
 			
 			response.sendRedirect(CONTEXT_PATH + "/product/best.jsp");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 내 상품 관리
+	 */
+	protected void enrolledProductListForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		
+		if (session == null || 
+				session.getAttribute("memberId") == null ||
+				!session.getAttribute("grade").equals("판매자")) {
+			
+			request.getRequestDispatcher("/member/login.jsp").forward(request, response);
+			return;
+		}
+		
+		Member member = (Member)session.getAttribute("dto");
+		String companyName = member.getCompanyName();
+		
+		ArrayList<Product> productList = new ArrayList<Product>();
+		ProductBiz biz = new ProductBiz();
+		
+		try {
+			biz.getEnrolledProductList(companyName, productList);
+			session.setAttribute("productList", productList);
+			session.setAttribute("companyName", companyName);
+			
+			response.sendRedirect(CONTEXT_PATH + "/product/enrolledProductList.jsp");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
