@@ -24,13 +24,15 @@
 table {
   border-collapse: collapse;
   border-spacing: 0;
-  width: 100%;
+  width: 1250px;
   border: 1px solid #ddd;
+  margin-right: 50px;
 }
 
 th, td {
   text-align: center;
-  padding: 16px;
+  padding: 10px;
+  font-size: 10px;
 }
 
 tr:nth-child(even) {
@@ -63,70 +65,47 @@ tr:nth-child(even) {
 	    <th>이름</th>
 	    <th>이메일</th>
 	    <th>휴대폰</th>
-	    <th>우편번호</th>    
+	    <th>우편번호</th>
+	    <th>기본주소</th>
+    	<th>상세주소</th>	
+		<th>사업자 번호</th>
+	    <th>회사/점포명</th>	    
+	    <th >가입일</th>      
+	    <th>마일리지</th>
+	    <th>등급</th>    
 	  </tr>
-
 		<%
-         //++혹은 --할 대상은 변수로 받아놓고 처리해야 편하다
-         int curPos = pager.getCurPos();
-         int num = pager.getNum();
-      	%>
-      	<%for(int i = 1; i<=pager.getPageSize();i++){ %>
-      	<%if(num<1)break; %>
-      	<%
-      		Member dto = dao.get(curPos++);
-      	%>
+			int num = 1;
+		%>
 		<c:forEach var="dto" items="${list}">
 		  <tr>	    
-		  	<td><%=num-- %></td>
+		  	<td><%=num++ %></td>
 		    <td><a href="${CONTEXT_PATH}/member/memberController?action=memberDetail&memberId=${dto.memberId}">${dto.memberId}</a></td>
 		    <td>${dto.memberPw}</td>
 		    <td>${dto.name}</td>
 		    <td>${dto.email}</td>
 		    <td>${dto.mobile}</td>
-		    <td>${dto.zipcode}</td>   
-		  </tr>
+		    <td>${dto.zipcode}</td>  
+		    <td>${dto.address1}</td>
+	    	<td>${dto.address2}</td>
+			<td>${dto.businessNumber}</td>
+		    <td>${dto.companyName}</td>
+		    <td>${dto.entryDate}</td>			    		    
+		    <td>${dto.mileage}</td>
+		    <td>${dto.grade}</td> 
+	  </tr>
+	  
 	  	</c:forEach>
 	</table>
 	<p>
-	<table>	
-		<tr>
-			<th>기본주소</th>
-	    	<th>상세주소</th>	
-			<th>사업자 번호</th>
-		    <th>회사/점포명</th>	    
-		    <th >가입일</th>      
-		    <th>마일리지</th>
-		    <th>등급</th>
-		</tr>
-		
-		<c:forEach var="dto" items="${list}">
+	<div>
+		<table>
 			<tr>
-				<td>${dto.address1}</td>
-		    	<td>${dto.address2}</td>
-				<td>${dto.businessNumber}</td>
-			    <td>${dto.companyName}</td>
-			    <td>${dto.entryDate}</td>			    		    
-			    <td>${dto.mileage}</td>
-			    <td>${dto.grade}</td>	
-			</tr>
-		</c:forEach>
-		<%} %>
-		
-		<tr>
-         <td colspan="7" style="text-align:center">
-            <div align="center">
-				<a href="${CONTEXT_PATH}/member/memberController?action=memberList?currentPage=<%if(pager.getFirstPage()==1){%>1<%}else{ %><%=pager.getFirstPage()-1%><%}%>">◀</a>
-				<%for(int i=pager.getFirstPage();i<=pager.getLastPage();i++){ %>
-				<%if(i>pager.getTotalPage())break;%>   
-					<a  <%if(pager.getCurrentPage()==i){%>class="pageNum"<%}%>   href="${CONTEXT_PATH}/member/memberController?action=memberList?currentPage=<%=i%>">[<%=i %>]</a>
-				<%} %>
-				<a href="${CONTEXT_PATH}/member/memberController?action=memberList?currentPage=<%if(pager.getLastPage()>=pager.getTotalPage()){%><%=pager.getTotalPage()%><%}else{ %><%=pager.getLastPage()+1%><%}%>">▶</a>
-			</div>
-         </td>
-      	</tr>
-		
-	</table>
+				<td>[1]</td>
+			</tr>			
+		</table>
+	</div>
+	
 <p>
 <p>
 <p>

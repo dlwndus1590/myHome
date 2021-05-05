@@ -3,10 +3,13 @@ package com.myHome.model.dao;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.myHome.common.JdbcTemplate;
 import com.myHome.model.dto.Interior;
+import com.myHome.model.dto.Member;
 
 
 public class InteriorDao implements Serializable{
@@ -50,5 +53,43 @@ public class InteriorDao implements Serializable{
 			JdbcTemplate.close(conn);
 		}
 		return 0;		
+	}
+	
+	/**
+	 * 인테리어 전체 조회
+	 * 		- 경력 순으로 정렬
+	 * @return ArrayList<Interior>
+	 */
+	public void selectInteriorList(Connection conn,ArrayList<Interior> list) throws Exception{
+
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			String sql = "select * from interior order by i_career desc";
+
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+
+			Interior dto = null;		
+			while(rs.next()) {
+				dto = new Interior();
+				dto.setIno(rs.getInt("i_no"));
+				dto.setIname(rs.getString("i_name"));
+				dto.setIcareer(rs.getInt("i_career"));
+				dto.setIdetail(rs.getString("i_detail"));
+				dto.setIlocation(rs.getString("i_location"));
+		
+				list.add(dto);
+			}
+			
+		} catch (SQLException e) {			
+			e.printStackTrace();
+			throw new Exception();
+		} finally {
+			JdbcTemplate.close(rs);
+			JdbcTemplate.close(stmt);			
+		}
+
 	}
 }
