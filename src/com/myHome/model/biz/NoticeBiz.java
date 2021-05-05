@@ -177,6 +177,15 @@ public class NoticeBiz {
 	}
 
 	/**
+	 * 댓글 수정 요청 서비스
+	 * @param aNo 수정할 댓글 번호
+	 * @param edditContent 수정할 댓글 내용
+	 */
+	public void updateComment(int aNo, String edditContent) {
+		dao.getInstance().updateComment(aNo, edditContent);
+	}
+	
+	/**
 	 * 댓글 삭제 요청 서비스
 	 * @param aNo 삭제할 댓글 번호
 	 */
@@ -191,5 +200,37 @@ public class NoticeBiz {
 	 */
 	public void searchQnoticeList(String searchInfo, ArrayList<Qnotice> list) {
 		dao.getInstance().searchQnoticeList(searchInfo, list);
+	}
+	
+	/**
+	 * 작성자이외 회원이 공지사항 게시글 상세 조회를 요청했을 경우
+	 * @param nNo 공지사항 게시글 번호
+	 */
+	public void nHitsUp(int nNo) {
+		dao.getInstance().nHitsUp(nNo);
+	}
+
+	/**
+	 * 작성자이외 회원이 질문 게시글 상세 조회를 요청했을 경우
+	 * @param nNo 질문 게시글 번호
+	 */
+	public void qHitsUp(int qNo) {
+		dao.getInstance().qHitsUp(qNo);
+	}
+
+	/**
+	 * 질문 게시글 최신순(등록순서) 리스트 요청 서비스
+	 * @param list 최신순(등록순서) 리스트
+	 */
+	public void qNoticeNewList(ArrayList<Qnotice> list) {
+		dao.getInstance().qNoticeNewList(list);
+	}
+
+	/**
+	 * 질문 게시글 인기순(조회) 리스트 요청 서비스
+	 * @param list 최신순(조회) 리스트
+	 */
+	public void qNoticePopularityList(ArrayList<Qnotice> list) {
+		dao.getInstance().qNoticePopularityList(list);
 	}
 }

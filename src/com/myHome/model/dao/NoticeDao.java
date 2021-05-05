@@ -116,6 +116,7 @@ public class NoticeDao {
 
 	/**
 	 * 질문 게시글 마지막 번호 반환 메서드
+	 * 
 	 * @return 마지막 게시글 번호
 	 */
 	public int qNoticeLastNum() {
@@ -143,9 +144,10 @@ public class NoticeDao {
 		}
 		return -1;
 	}
-	
+
 	/**
 	 * 질문 게시글 마지막 번호 반환 메서드
+	 * 
 	 * @return 마지막 게시글 번호
 	 */
 	public int answerLastNum() {
@@ -173,7 +175,7 @@ public class NoticeDao {
 		}
 		return -1;
 	}
-	
+
 	/**
 	 * 게시글 등록 메서드
 	 * 
@@ -225,7 +227,7 @@ public class NoticeDao {
 			return true;
 		} catch (SQLException e) {
 			JdbcTemplate.rollback(conn);
-		}finally {
+		} finally {
 			JdbcTemplate.close(pstmt);
 			JdbcTemplate.close(conn);
 		}
@@ -255,7 +257,7 @@ public class NoticeDao {
 			JdbcTemplate.rollback(conn);
 			System.out.println("Message : " + e.getMessage());
 			e.printStackTrace();
-		}finally {
+		} finally {
 			JdbcTemplate.close(pstmt);
 			JdbcTemplate.close(conn);
 		}
@@ -397,7 +399,7 @@ public class NoticeDao {
 		} catch (SQLException e) {
 			System.out.println("Message : " + e.getMessage());
 			e.printStackTrace();
-		}finally {
+		} finally {
 			JdbcTemplate.close(rs);
 			JdbcTemplate.close(pstmt);
 			JdbcTemplate.close(conn);
@@ -465,20 +467,15 @@ public class NoticeDao {
 			pstmt.setInt(1, qNo);
 			rs = pstmt.executeQuery();
 			Answer dto = null;
-			while(rs.next()) {
-				dto = new Answer(
-						rs.getInt("A_NO")
-						,rs.getInt("Q_NO")
-						,rs.getString("A_CONTENT")
-						,rs.getString("MEMBER_ID")
-						,rs.getString("TO_CHAR(A_REG_DATE,'yyyy-mm-dd')")
-						);
+			while (rs.next()) {
+				dto = new Answer(rs.getInt("A_NO"), rs.getInt("Q_NO"), rs.getString("A_CONTENT"),
+						rs.getString("MEMBER_ID"), rs.getString("TO_CHAR(A_REG_DATE,'yyyy-mm-dd')"));
 				list.add(dto);
 			}
 		} catch (SQLException e) {
 			System.out.println("Message : " + e.getMessage());
 			e.printStackTrace();
-		}finally {
+		} finally {
 			JdbcTemplate.close(rs);
 			JdbcTemplate.close(pstmt);
 			JdbcTemplate.close(conn);
@@ -487,10 +484,11 @@ public class NoticeDao {
 
 	/**
 	 * 질문 게시글 등록 요청 메서드
+	 * 
 	 * @param dto 질문 게시글 객체
 	 */
 	public boolean addQnotice(Qnotice dto) {
-		String sql ="INSERT INTO QNOTICE VALUES(?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO QNOTICE VALUES(?, ?, ?, ?, ?, ?, ?)";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
@@ -506,11 +504,11 @@ public class NoticeDao {
 			pstmt.executeUpdate();
 			JdbcTemplate.commit(conn);
 			return true;
-		}catch(SQLException e) {
+		} catch (SQLException e) {
 			JdbcTemplate.rollback(conn);
 			System.out.println("Message : " + e.getMessage());
 			e.printStackTrace();
-		}finally {
+		} finally {
 			JdbcTemplate.close(pstmt);
 			JdbcTemplate.close(conn);
 		}
@@ -519,6 +517,7 @@ public class NoticeDao {
 
 	/**
 	 * 질문 게시글 수정 요청 메서드
+	 * 
 	 * @param qNo 질문 게시글 번호
 	 * @param dto 질문 게시글 객체
 	 */
@@ -537,11 +536,11 @@ public class NoticeDao {
 			pstmt.setInt(3, dto.getqNo());
 			pstmt.executeUpdate();
 			JdbcTemplate.commit(conn);
-		}catch(SQLException e) {
+		} catch (SQLException e) {
 			JdbcTemplate.rollback(conn);
 			System.out.println("message : " + e.getMessage());
 			e.printStackTrace();
-		}finally {
+		} finally {
 			JdbcTemplate.close(pstmt);
 			JdbcTemplate.close(conn);
 		}
@@ -549,6 +548,7 @@ public class NoticeDao {
 
 	/**
 	 * 질문 게시글 삭제 요청 메서드
+	 * 
 	 * @param qNo 삭제할 질문 게시글 번호
 	 */
 	public void qNoticeDelete(int qNo) {
@@ -561,11 +561,11 @@ public class NoticeDao {
 			pstmt.setInt(1, qNo);
 			pstmt.executeUpdate();
 			JdbcTemplate.commit(conn);
-		}catch(SQLException e) {
+		} catch (SQLException e) {
 			JdbcTemplate.rollback(conn);
 			System.out.println("Message : " + e.getMessage());
 			e.printStackTrace();
-		}finally {
+		} finally {
 			JdbcTemplate.close(pstmt);
 			JdbcTemplate.close(conn);
 		}
@@ -573,7 +573,8 @@ public class NoticeDao {
 
 	/**
 	 * 댓글 등록 요청 메서드
-	 * @param qNo 댓글 등록할 질문 게시글 번호 
+	 * 
+	 * @param qNo 댓글 등록할 질문 게시글 번호
 	 * @param dto 댓글 등록 객체
 	 */
 	public void addComment(Answer dto) {
@@ -590,11 +591,38 @@ public class NoticeDao {
 			pstmt.setString(5, dto.getaRegDate());
 			pstmt.executeUpdate();
 			JdbcTemplate.commit(conn);
-		}catch(SQLException e ) {
+		} catch (SQLException e) {
 			JdbcTemplate.rollback(conn);
 			System.out.println("Message : " + e.getMessage());
 			e.printStackTrace();
-		}finally {
+		} finally {
+			JdbcTemplate.close(pstmt);
+			JdbcTemplate.close(conn);
+		}
+	}
+
+	/**
+	 * 댓글 수정 요청 서비스
+	 * 
+	 * @param aNo          수정할 댓글 번호
+	 * @param edditContent 수정할 댓글 내용
+	 */
+	public void updateComment(int aNo, String edditContent) {
+		String sql = "UPDATE ANSWER SET A_CONTENT = ? WHERE A_NO = ?";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = JdbcTemplate.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, edditContent);
+			pstmt.setInt(2, aNo);
+			pstmt.executeUpdate();
+			JdbcTemplate.commit(conn);
+		} catch (SQLException e) {
+			JdbcTemplate.rollback(conn);
+			System.out.println("Message : " + e.getMessage());
+			e.printStackTrace();
+		} finally {
 			JdbcTemplate.close(pstmt);
 			JdbcTemplate.close(conn);
 		}
@@ -602,23 +630,24 @@ public class NoticeDao {
 
 	/**
 	 * 댓글 삭제 요청 서비스 메서드
+	 * 
 	 * @param aNo 삭제할 댓글 번호
 	 */
 	public void deleteComment(int aNo) {
 		String sql = "DELETE FROM ANSWER WHERE A_NO = ?";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		try{
+		try {
 			conn = JdbcTemplate.getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, aNo);
 			pstmt.executeUpdate();
 			JdbcTemplate.commit(conn);
-		}catch(SQLException e) {
+		} catch (SQLException e) {
 			JdbcTemplate.rollback(conn);
 			System.out.println("Message : " + e.getMessage());
 			e.printStackTrace();
-		}finally {
+		} finally {
 			JdbcTemplate.close(pstmt);
 			JdbcTemplate.close(conn);
 		}
@@ -626,8 +655,9 @@ public class NoticeDao {
 
 	/**
 	 * 질문 게시글 검색 요청 메서드
+	 * 
 	 * @param searchInfo 검색 내용
-	 * @param list 검색에 부합하는 질문 게시글 리스트
+	 * @param list       검색에 부합하는 질문 게시글 리스트
 	 */
 	public void searchQnoticeList(String searchInfo, ArrayList<Qnotice> list) {
 		StringBuffer sql = new StringBuffer();
@@ -646,15 +676,9 @@ public class NoticeDao {
 			rs = stmt.executeQuery();
 			Qnotice dto = null;
 			while (rs.next()) {
-				dto = new Qnotice(
-						rs.getInt("Q_NO")
-						,rs.getString("Q_TITLE")
-						,rs.getString("Q_CONTENT")
-						,rs.getString("Q_IMG")
-						,rs.getString("MEMBER_ID")
-						,rs.getString("TO_CHAR(Q_REG_DATE,'yyyy-mm-dd')")
-						,rs.getInt("Q_HITS")
-						);
+				dto = new Qnotice(rs.getInt("Q_NO"), rs.getString("Q_TITLE"), rs.getString("Q_CONTENT"),
+						rs.getString("Q_IMG"), rs.getString("MEMBER_ID"),
+						rs.getString("TO_CHAR(Q_REG_DATE,'yyyy-mm-dd')"), rs.getInt("Q_HITS"));
 				list.add(dto);
 			}
 		} catch (SQLException e) {
@@ -662,7 +686,125 @@ public class NoticeDao {
 			e.printStackTrace();
 		} finally {
 			JdbcTemplate.close(rs);
-			JdbcTemplate.close(stmt);
+
+		}
+	}
+
+	/**
+	 * 작성자이외 회원이 공지사항 게시글 상세 조회를 요청했을 경우
+	 * @param nNo 공지사항 게시글 번호
+	 */
+	public void nHitsUp(int nNo) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("UPDATE NOTICE ");
+		sql.append("SET N_HITS = N_HITS+1 ");
+		sql.append("WHERE N_NO = ?");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = JdbcTemplate.getConnection();
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setInt(1, nNo);
+			pstmt.executeUpdate();
+			JdbcTemplate.commit(conn);
+		}catch(SQLException e) {
+			JdbcTemplate.rollback(conn);
+			System.out.println("Message : " + e.getMessage());
+			e.printStackTrace();
+		}finally {
+			JdbcTemplate.close(pstmt);
+			JdbcTemplate.close(conn);
+		}
+	}
+	/**
+	 * 작성자이외 회원이 질문 게시글 상세 조회를 요청했을 경우
+	 * @param nNo 질문 게시글 번호
+	 */
+	public void qHitsUp(int qNo) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("UPDATE QNOTICE ");
+		sql.append("SET Q_HITS = Q_HITS+1 ");
+		sql.append("WHERE Q_NO = ?");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		try {
+			conn = JdbcTemplate.getConnection();
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setInt(1, qNo);
+			pstmt.executeUpdate();
+			JdbcTemplate.commit(conn);
+		}catch(SQLException e) {
+			JdbcTemplate.rollback(conn);
+			System.out.println("Message : " + e.getMessage());
+			e.printStackTrace();
+		}finally {
+			JdbcTemplate.close(pstmt);
+			JdbcTemplate.close(conn);
+		}
+	}
+
+	/**
+	 * 질문 게시글 최신순(등록순서) 리스트 요청 서비스
+	 * @param list 최신순(등록순서) 리스트
+	 */
+	public void qNoticeNewList(ArrayList<Qnotice> list) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT Q_NO, Q_TITLE, Q_CONTENT, Q_IMG, MEMBER_ID, TO_CHAR(Q_REG_DATE,'yyyy-mm-dd'), Q_HITS ");
+		sql.append("FROM QNOTICE ");
+		sql.append("ORDER BY Q_NO DESC");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = JdbcTemplate.getConnection();
+			pstmt = conn.prepareStatement(sql.toString());
+			rs = pstmt.executeQuery();
+			Qnotice dto = null;
+			while (rs.next()) {
+				dto = new Qnotice(rs.getInt("Q_NO"), rs.getString("Q_TITLE"), rs.getString("Q_CONTENT"),
+						rs.getString("Q_IMG"), rs.getString("MEMBER_ID"),
+						rs.getString("TO_CHAR(Q_REG_DATE,'yyyy-mm-dd')"), rs.getInt("Q_HITS"));
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			System.out.println("Message : " + e.getMessage());
+			e.printStackTrace();
+		} finally {
+			JdbcTemplate.close(rs);
+			JdbcTemplate.close(pstmt);
+			JdbcTemplate.close(conn);
+		}
+	}
+
+	/**
+	 * 질문 게시글 인기순(조회) 리스트 요청 서비스
+	 * @param list 최신순(조회) 리스트
+	 */
+	public void qNoticePopularityList(ArrayList<Qnotice> list) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT Q_NO, Q_TITLE, Q_CONTENT, Q_IMG, MEMBER_ID, TO_CHAR(Q_REG_DATE,'yyyy-mm-dd'), Q_HITS ");
+		sql.append("FROM QNOTICE ");
+		sql.append("ORDER BY Q_HITS DESC");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = JdbcTemplate.getConnection();
+			pstmt = conn.prepareStatement(sql.toString());
+			rs = pstmt.executeQuery();
+			Qnotice dto = null;
+			while (rs.next()) {
+				dto = new Qnotice(rs.getInt("Q_NO"), rs.getString("Q_TITLE"), rs.getString("Q_CONTENT"),
+						rs.getString("Q_IMG"), rs.getString("MEMBER_ID"),
+						rs.getString("TO_CHAR(Q_REG_DATE,'yyyy-mm-dd')"), rs.getInt("Q_HITS"));
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			System.out.println("Message : " + e.getMessage());
+			e.printStackTrace();
+		} finally {
+			JdbcTemplate.close(rs);
+			JdbcTemplate.close(pstmt);
 			JdbcTemplate.close(conn);
 		}
 	}

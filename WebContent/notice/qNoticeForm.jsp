@@ -15,10 +15,20 @@
 	rel="stylesheet">
 <link href="${CONTEXT_PATH}/css/notice/qNotice.css" rel="stylesheet" />
 <link rel="shortcut icon" href="assets/ico/favicon.ico">
+<style>
+#userIcon {
+	padding-bottom : 20px;
+	width: 30px;
+	height: 30px;
+	margin-right: 10px;
+	float: left;
+}
+</style>
 </head>
 <body>
 	<!-- header -->
 	<jsp:include page="/inc/header.jsp" />
+
 	<!-- contents menu -->
 	<section id="qHeader">
 		<form
@@ -42,12 +52,6 @@
 					<td align="center"><input type="text"
 						placeholder="궁금한 것을 검색해보세요." id="searchInfo" name="searchInfo"></td>
 				</tr>
-
-				<tr>
-					<td align="left">#<a href="${CONTEXT_PATH}/notice/noticeController?action=qNoticeSearch&keyWord=리모델링" class="keyWord" name="keyWord">리모델링</a> #<a
-						href="${CONTEXT_PATH}/notice/noticeController?action=qNoticeSearch&keyWord=20평대" class="keyWord" name="keyWord">20평대</a> #<a href="${CONTEXT_PATH}/notice/noticeController?action=qNoticeSearch&keyWord=아파트" class="keyWord" name="keyWord">아파트</a>
-						#<a href="${CONTEXT_PATH}/notice/noticeController?action=qNoticeSearch&keyWord=도배" class="keyWord">도배</a></td>
-				</tr>
 			</table>
 		</form>
 	</section>
@@ -63,36 +67,49 @@
 		<li class="dropdown"><a data-toggle="dropdown"
 			class="dropdown-toggle" href="#">정렬 <b class="caret"></b></a>
 			<div class="dropdown-menu">
-				<a href="#">최신순</a> <a href="#">인기순</a>
+				<a
+					href="${CONTEXT_PATH}/notice/noticeController?action=qNoticeNewList">최신순</a>
+				<a
+					href="${CONTEXT_PATH}/notice/noticeController?action=qNoticePopularityList">인기순</a>
 			</div></li>
 	</ul>
 	<div>
-		<h3 style="margin-left: 20px;">최신순</h3>
+		<c:choose>
+			<c:when test="${empty listType or listType  == '최신순'}">
+				<h3 style="padding-left: 20px;">최신순</h3>
+			</c:when>
+			<c:otherwise>
+				<h3 style="padding-left: 20px;">인기순</h3>
+			</c:otherwise>
+		</c:choose>
 	</div>
 	<br>
 	<c:choose>
 		<c:when test="${not empty list}">
-			<c:forEach var="dto" items="${list}">
+			<c:forEach var="index" items="${list}">
 				<article class="qItem">
 					<table class="qTable">
 						<tr>
 							<td style="width: 820px">
 								<h3>
 									<a
-										href="${CONTEXT_PATH}/notice/noticeController?action=qNoticeDetail&qNo=${dto.qNo}">${dto.qTitle}</a>
+										href="${CONTEXT_PATH}/notice/noticeController?action=qNoticeDetail&qNo=${index.qNo}&writeMemberId=${index.memberId}">${index.qTitle}</a>
 								</h3>
 							</td>
 							<td></td>
 						</tr>
 
 						<tr>
-							<td style="width: 820px"><span class="qContent">${dto.qContent}</span></td>
-							<td><img src="${CONTEXT_PATH}${dto.qImg}" class="picture">
+							<td style="width: 820px"><span class="qContent">${index.qContent}</span></td>
+							<td><img src="${CONTEXT_PATH}${index.qImg}" class="picture">
 							</td>
 						</tr>
 
 						<tr>
-							<td style="width: 820px"><span>${dto.memberId}</span> <span>조회수${dto.qHits}</span></td>
+							<td style="width: 820px"><img
+								src="${CONTEXT_PATH}/img/qNotice/userIcon.png" id="userIcon" />
+								<span>${index.memberId}</span> | <span>조회수 ${index.qHits}</span> |
+								<span style="padding-left: 5px;">${index.qRegDate}</span></td>
 						</tr>
 					</table>
 				</article>
@@ -103,7 +120,8 @@
 		<c:otherwise>
 			<table style="width: 940px;">
 				<tr>
-					<td rowspan="5" colspan="5" align="center" style="padding: 100px;">등록된 게시글이 없습니다.</td>
+					<td rowspan="5" colspan="5" align="center" style="padding: 100px;">등록된
+						게시글이 없습니다.</td>
 				</tr>
 			</table>
 		</c:otherwise>
