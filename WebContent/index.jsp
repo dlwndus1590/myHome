@@ -1,10 +1,8 @@
 <%@page import="com.myHome.model.dto.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/inc/taglib_menu.jsp" %>  
-<%
-	Member dto = (Member)session.getAttribute("dto");
-%>
+<%@ include file="/inc/taglib_menu.jsp" %> 
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -16,7 +14,7 @@
     <!-- Bootstrap styles -->
     <link href="${CONTEXT_PATH}/assets/css/bootstrap.css" rel="stylesheet"/>
     <!-- Customize styles -->
-    <link href="${CONTEXT_PATH}/assets/style/style.css" rel="stylesheet"/>
+    <link href="${CONTEXT_PATH}/assets/style/style.css" rel="stylesheet"/>    
     <!-- font awesome styles -->
 	<link href="${CONTEXT_PATH}/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
 	<!-- Favicons -->
@@ -65,8 +63,7 @@
             <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
             <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
           </div>
-        </div>
-        
+        </div>        
 <!--New Products -->
 	<div class="well well-small" style="width:960;">
 	<h3> 카테고리 </h3>

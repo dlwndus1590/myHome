@@ -43,7 +43,7 @@ public class Member implements Serializable {
 	 * @param address2		회원 상세주소
 	 */
 	public Member(String memberId, String memberPw, String name, String email, String mobile, int zipcode,
-			String address1, String address2,String grade) {
+			String address1, String address2,String entryDate,int mileage,String grade) {
 		super();
 		this.memberId = memberId;
 		this.memberPw = memberPw;
@@ -53,6 +53,8 @@ public class Member implements Serializable {
 		this.zipcode = zipcode;
 		this.address1 = address1;
 		this.address2 = address2;
+		this.entryDate = entryDate;
+		this.mileage = mileage;
 		this.grade = grade;
 	}
 
@@ -71,7 +73,7 @@ public class Member implements Serializable {
 	 * @param companyName		판매자 회사명
 	 */
 	public Member(String memberId, String memberPw, String name, String email, String mobile, int zipcode,
-			String address1, String address2, String businessNumber, String companyName,String grade) {
+			String address1, String address2, String businessNumber, String companyName,String entryDate,int mileage,String grade) {
 		super();
 		this.memberId = memberId;
 		this.memberPw = memberPw;
@@ -83,6 +85,8 @@ public class Member implements Serializable {
 		this.address2 = address2;
 		this.businessNumber = businessNumber;
 		this.companyName = companyName;
+		this.entryDate = entryDate;
+		this.mileage = mileage;
 		this.grade = grade;
 	}
 

@@ -1,17 +1,7 @@
 <%@page import="com.myHome.model.dto.Member"%>
-<%@page import="java.util.ArrayList"%>
+<%@ include file="/inc/taglib_menu.jsp"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%
-	ArrayList<Member> list = new ArrayList<Member>();
-	StringBuffer sb = new StringBuffer();
-	for(int i=0;i<list.size();i++){
-		if(sb.length()>0){
-			sb.append(",");
-		}
-		sb.append("").append(list.get(i)).append("");
-	}
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -96,43 +86,34 @@ a {
 </style>
 
 <script
-     src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js";></script>
+     src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript" src="${CONTEXT_PATH}/js/member_input.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script type="text/javascript">
+	var idcheck=false;
 	
-	/* 아이디 중복 체크 */
-	function idCheck() {		
-		var memberId = document.getElementById("memberId");
-		if(memberId.value=""){// 왜 불러올수 없지?
-			alert("아이디를 먼저 입력해주세요.");
-			return;
-		} 
-		url = "idcheck.jsp?memberId="+memberId.value;
-		open(url,"confirm","width=350, height=200");
-			
-	}
-	var idcheck = false;
 	function idCheck(){
+		/* var memberId = document.getElementById("memberId").value; */
 		 $.ajax({	
-				url:"member/idCheck",
-				type:"get",	
-				datatype:"json",
+			 	//http://localhost:8090/myHome/member/memberInput.jsp
+			 	//8090/member/Id_Check=test
+				url:"/myHome/member/memberController?action=idCheck",
+				type:"get",			
 				data:{
 					"memberId" : $("#memberId").val()  
 				},				
 				success:function(data){
-					if(data==1){						
+					//alert("data: "+data);
+					if(data == '1'){
 						alert("해당 아이디는 사용중입니다.");	
 						idcheck=false;
-					}else if(data==0){
+					}else {
 						$("#memberId").attr("value","Y");						
 						alert("사용가능한 아이디입니다.");
 						idcheck=true;
 					}			
 				}
-		});
-		 
+		});	 
 	};
 	
 	function postcodeTest() {
@@ -162,8 +143,7 @@ a {
     <p>
     <input type="text" name=memberId id="memberId" placeholder="아이디"
 		class="inline" autofocus="autofocus">
-	<input type="button" value="중복체크" class="idCheck_btn" onclick="idCheck()">
-	<div id="checkMessage" name="checkMessage"></div>
+	<input type="button" value="중복체크" class="idCheck_btn" onclick="idCheck()">	
   	<br>
   	
     <label><b>비밀번호</b></label>

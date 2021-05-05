@@ -1,5 +1,9 @@
 package com.myHome.model.biz;
 
+import java.sql.Connection;
+import java.util.ArrayList;
+
+import com.myHome.common.JdbcTemplate;
 import com.myHome.model.dao.InteriorDao;
 import com.myHome.model.dto.Interior;
 
@@ -28,6 +32,24 @@ public class InteriorBiz {
 			return true;
 		} else {
 			return false;
+		}
+	}
+	
+	/**
+	 * 인테리어 전체 조회
+	 * 		- 경력 순으로 정렬
+	 * @return ArrayList<Interior>
+	 */
+	public void selectInteriorList(ArrayList<Interior> list) throws Exception{
+		Connection conn = JdbcTemplate.getConnection();
+		
+		try {
+			dao.selectInteriorList(conn, list);
+			
+		} catch (Exception e) {			
+			throw e;
+		} finally {
+			JdbcTemplate.close(conn);
 		}
 	}
 }

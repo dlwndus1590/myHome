@@ -89,16 +89,28 @@ a {
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script type="text/javascript">
 	/* 아이디 중복 체크 */
-	function idCheck() {		
-		var memberId = document.getElementById("memberId");
-		if(memberId.value=""){// 왜 불러올수 없지?
-			alert("아이디를 먼저 입력해주세요.");
-			return;
-		} 
-		url = "idcheck.jsp?memberId="+memberId.value;
-		open(url,"confirm","width=350, height=200");
-			
-	}
+	var idcheck=false;
+	
+	function idCheck(){		
+		 $.ajax({			 	
+				url:"/myHome/member/memberController?action=idCheck",
+				type:"get",			
+				data:{
+					"memberId" : $("#memberId").val()  
+				},				
+				success:function(data){
+					//alert("data: "+data);
+					if(data == '1'){
+						alert("해당 아이디는 사용중입니다.");	
+						idcheck=false;
+					}else {
+						$("#memberId").attr("value","Y");						
+						alert("사용가능한 아이디입니다.");
+						idcheck=true;
+					}			
+				}
+		});	 
+	};
 	
 	function postcodeTest() {
 		   new daum.Postcode({
@@ -126,8 +138,7 @@ a {
     <p>
     <input type="text" name=memberId id="memberId" placeholder="아이디"
 		class="inline" autofocus="autofocus">
-	<input type="button" value="중복체크" class="idCheck_btn" onclick="idCheck(this.form.memberId.value)">
-	<div id="checkMessage" name="checkMessage"></div>
+	<input type="button" value="중복체크" class="idCheck_btn" onclick="idCheck()">	
   	<br>
   	
     <label><b>비밀번호</b></label>

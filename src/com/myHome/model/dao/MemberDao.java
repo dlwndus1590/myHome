@@ -164,10 +164,8 @@ public class MemberDao implements Serializable{
 	 * @param memberId 회원아이디
 	 * @return 회원, 미존재시 null
 	 */
-	public boolean selectCheckId(String memberId){
-		boolean check = false;
+	public int selectCheckId(Connection con, String memberId){
 		
-		Connection con = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		String sql = "select member_id from member where member_id=?";
@@ -177,19 +175,19 @@ public class MemberDao implements Serializable{
 			stmt.setString(1, memberId);
 			rs = stmt.executeQuery();
 			
-			if(rs.next()) {
-				check = true;
-				System.out.println("checkId() dao 테스트 확인 성공"+check);
+			// return rs.next()
+			if(rs.next()) {				
+				return 1;
 			}
 			
 		} catch (Exception e) {
-			System.out.println("checkId() dao 테스트 확인 에러");
+			e.printStackTrace();			
 			
-		} finally {
+		} finally { 
 			JdbcTemplate.close(rs);
 			JdbcTemplate.close(stmt);			
 		}
-		return check;
+		return 0;
 	}
 
 	/**
@@ -222,8 +220,7 @@ public class MemberDao implements Serializable{
 				dto.setMileage(rs.getInt("mileage"));
 				dto.setGrade(rs.getString("grade"));
 
-			}
-			System.out.println("일반회원 상세조회 테스트 dao : "+dto);
+			}			
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());			
 			e.printStackTrace();
@@ -265,8 +262,7 @@ public class MemberDao implements Serializable{
 				dto.setEntryDate(rs.getString("entry_date"));				
 				dto.setGrade(rs.getString("grade"));
 				
-			}
-			System.out.println("판매자회원 상세조회 테스트 dao : "+dto);
+			}			
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());			
 			e.printStackTrace();

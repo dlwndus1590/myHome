@@ -38,7 +38,7 @@ public class MemberBiz<searchKey> {
 			
 		} catch(Exception e) {
 			JdbcTemplate.rollback(con);
-			throw e; // dao에서 던지 예외를 다시 controller에게 예외 던짐
+			throw e; 
 			
 		} finally {
 			JdbcTemplate.close(con);
@@ -75,8 +75,7 @@ public class MemberBiz<searchKey> {
 		Connection con = JdbcTemplate.getConnection();
 		
 		dto.setEntryDate(Utility.getCurrentDate("yyyy-MM-dd"));
-		try {
-			System.out.println("(일반 회원가입)데이터 서비스 단 확인 : "+dto);
+		try {			
 			dao.insertMember(con,dto);
 			JdbcTemplate.commit(con);
 		} catch (Exception e) {
@@ -102,7 +101,7 @@ public class MemberBiz<searchKey> {
 		Connection con = JdbcTemplate.getConnection();		
 		dto.setEntryDate(Utility.getCurrentDate("yyyy-MM-dd"));
 		try {
-			System.out.println("(판매자 회원가입)데이터 서비스 단 확인 : "+dto);
+			
 			dao.insertMember(con,dto);
 			JdbcTemplate.commit(con);
 		} catch (Exception e) {
@@ -219,6 +218,18 @@ public class MemberBiz<searchKey> {
 	}
 	
 	/**
+	 * 아이디 중복체크
+	 * @param memberId 	회원아이디
+	 * @return 아이디, 미존재시 null
+	 */
+	public int selectCheckId(String memberId) {
+		Connection con = JdbcTemplate.getConnection();
+		int row = dao.selectCheckId(con, memberId);
+		JdbcTemplate.close(con);
+		return row;
+	}
+	
+	/**
 	 * 아이디 찾기
 	 * @param name 이름
 	 * @param mobile 휴대폰
@@ -249,9 +260,7 @@ public class MemberBiz<searchKey> {
 		String tempMemberPw = Utility.getSecureNumberAndString(8);
 		int result = dao.updateByMemberPw(memberId, tempMemberPw);
 		
-		System.out.println("[debug] biz : " + result + ", " + tempMemberPw);
-		if (result == 1) {
-			System.out.println("[debug] temp_biz : " + tempMemberPw);
+		if (result == 1) {			
 			return tempMemberPw;
 		}
 		
@@ -277,8 +286,6 @@ public class MemberBiz<searchKey> {
 	 * @return 성공시 true, 실패시 false
 	 */
 	public boolean deleteMember(String memberId) {
-		// 탈퇴회원이 작성한 게시글 전체 삭제
-		//boardDao.removeBoard(memberId);
 		return dao.deleteMember(memberId);
 	}
 
