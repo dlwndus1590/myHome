@@ -9,9 +9,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.myHome.model.biz.InteriorBiz;
+import com.myHome.model.biz.MemberBiz;
 import com.myHome.model.dto.Interior;
+import com.myHome.model.dto.Member;
+import com.myHome.model.dto.MessageEntity;
 
 /**
  * 인테리어 관리 시스템
@@ -44,10 +48,22 @@ public class FrontInterior extends HttpServlet {
 			interiorList(request, response);
 			break;
 		case "insertInterior":
-			//insertInterior(request, response);
+			insertInterior(request, response);
+			break;
+		case "selectInterior":
+			selectInterior(request, response);
+			break;
+		case "updateInterior":
+			updateInterior(request, response);
+			break;
+		case "deleteInterior":
+			deleteInterior(request, response);
 			break;
 		case "sangdamApply":
 			//sangdamApply(request, response);
+			break;
+		case "billPage":
+			billPage(request, response);
 			break;
 		}
 	}
@@ -69,6 +85,146 @@ public class FrontInterior extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 			request.getRequestDispatcher("/index.jsp").forward(request, response);
+		}
+	}
+	
+	/**
+	 * 인테리어 업체 견적서 작성 화면
+	 */
+	protected void billPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("[dubug] 견적 페이지 신청");
+		
+		String url = CONTEXT_PATH + "/interior/billPage.jsp";
+		response.sendRedirect(url);
+	}
+	
+	/**
+	 *	관리자 권한
+	 *		-- 인테리어 업체 등록 서비스
+	 */
+	protected void insertInterior(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
+		/** 인코딩 설정 */
+		System.out.println("[dubug] 인테리어 등록요청");
+		
+		/** 데이터 추출 */
+		int ino = Integer.parseInt(request.getParameter("ino"));
+		String iname = request.getParameter("iname");
+		int icareer = Integer.parseInt(request.getParameter("icareer"));		
+		String idetail = request.getParameter("idetail");		
+		String ilocation = request.getParameter("ilocation");	
+		
+		iname = iname.trim();		
+		idetail = idetail.trim();		
+		ilocation = ilocation.trim();		
+		
+		InteriorBiz biz = new InteriorBiz();
+		Interior interior = new Interior(ino,iname, icareer, idetail, ilocation);
+							
+		try {
+			biz.insertInterior(interior);		
+			System.out.println("인테리어 등록 테스트 : "+interior);
+			request.getRequestDispatcher("/interior/interiorController?action=interiorList").forward(request, response);
+		} catch (Exception e) {
+			e.printStackTrace();
+			request.getRequestDispatcher("/interior/interiorList.jsp").forward(request, response);
+		}
+		
+	}
+	
+	/**
+	 *	관리자 권한
+	 *		-- 인테리어 업체 수정 서비스
+	 */
+	protected void updateInterior(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// 로그인 사용자 여부 체킹
+		HttpSession session = request.getSession(false);
+		
+		if (session == null || 
+				session.getAttribute("memberId") == null) {
+			// 미사용자 오류 처리
+			request.getRequestDispatcher("/member/login.jsp").forward(request, response);
+			return;
+		}
+		
+		int ino = Integer.parseInt(request.getParameter("ino"));
+		String iname = (String)session.getAttribute("iname");
+		int icareer = Integer.parseInt(request.getParameter("icareer"));		
+		String idetail = request.getParameter("idetail");		
+		String ilocation = request.getParameter("ilocation");			
+
+		InteriorBiz biz = new InteriorBiz();
+		Interior interior = new Interior(ino,iname, icareer, idetail, ilocation);
+		
+		try {
+			biz.updateInterior(interior);
+			System.out.println("인테리어 수정 테스트 : "+interior);
+			session.setAttribute("interiordto", interior);
+			request.getRequestDispatcher("/interior/interiorController?action=selectInterior&iname="+iname).forward(request, response);
+		} catch (Exception e) {
+			e.printStackTrace();
+			e.getMessage();
+			request.getRequestDispatcher("/interior/interiorList.jsp").forward(request, response);
+		}
+	}
+	
+	/**
+	 *	관리자 권한
+	 *		-- 인테리어 업체 상세조회 서비스
+	 */
+	protected void selectInterior(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// 로그인 사용자 여부 체킹
+		HttpSession session = request.getSession(false);
+		
+		if (session == null || 
+				session.getAttribute("memberId") == null) {
+			// 미사용자 오류 처리
+			request.getRequestDispatcher("/member/login.jsp").forward(request, response);
+			return;
+		}
+		
+		String iname = request.getParameter("iname");
+		System.out.println("상세조회 회사명 : "+iname);
+		InteriorBiz biz = new InteriorBiz();
+		Interior interior = new Interior();
+		interior.setIname(iname);
+		
+		try {
+			biz.selectInterior(interior);
+			session.setAttribute("interiordto", interior);
+			System.out.println("인테리어 상세조회 테스트 : "+interior); 
+			request.getRequestDispatcher("/interior/interiorDetail.jsp").forward(request, response);
+		} catch (Exception e) {
+			e.printStackTrace();
+			e.getMessage();
+			request.getRequestDispatcher("/interior/interiorList.jsp").forward(request, response);
+		}
+	}
+	
+	/**
+	 *	관리자 권한
+	 *		-- 인테리어 업체 삭제 서비스
+	 */
+	protected void deleteInterior(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// 로그인 사용자 여부 체킹
+		HttpSession session = request.getSession(false);
+		
+		if (session == null || 
+				session.getAttribute("memberId") == null) {
+			// 미사용자 오류 처리
+			request.getRequestDispatcher("/member/login.jsp").forward(request, response);
+			return;
+		}
+		String iname = (String)session.getAttribute("iname");
+		//String iname = request.getParameter("iname");
+		
+		InteriorBiz biz = new InteriorBiz();	
+		try{			
+			biz.deleteInterior(iname);
+			System.out.println("인테리어 삭제 테스트 :"+iname);
+			session.invalidate();
+			response.sendRedirect(CONTEXT_PATH+"/index.jsp");
+		} catch(Exception e) {
+			request.getRequestDispatcher("/interior/interiorDetail.jsp").forward(request, response);
 		}
 	}
 }

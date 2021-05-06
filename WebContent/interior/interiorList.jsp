@@ -3,7 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	ArrayList<Interior> interior = (ArrayList<Interior>)request.getAttribute("list");
+	ArrayList<Interior> list = (ArrayList<Interior>)request.getAttribute("list");
 %>
 <!DOCTYPE html>
 <html>
@@ -13,6 +13,8 @@
 <!-- header menu -->
 <jsp:include page="/inc/header.jsp" />
 <style>
+body {font-family: Arial, Helvetica, sans-serif;}
+
 * {
   box-sizing: border-box;
 }
@@ -57,6 +59,20 @@ tr:nth-child(even) {
 	text-align: center;
 	text-decoration: none;
 }
+button{
+  background-color: #04AA6D;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 65%;
+  opacity: 0.9;
+}
+
+button:hover {
+  opacity:1;
+}
 </style>
 </head>
 <body>
@@ -76,25 +92,32 @@ tr:nth-child(even) {
       </tr>
       <%
       		int num = 0;
-      		for(Interior dto : interior){
+      		for(Interior dto : list){
       			num++;
       %>
 	      <tr>
-	        <td><%=num%></td>
-	        <td><%=dto.getIname() %></td>
+	        <td><%=dto.getIno() %></td>
+	        <td><a href="${CONTEXT_PATH}/interior/interiorController?action=selectInterior&iname=<%=dto.getIname()%>"><%=dto.getIname() %></a></td>
 	        <td><%=dto.getIcareer() %></td>
 	        <td><%=dto.getIdetail() %></td>
 	        <td><%=dto.getIlocation() %></td>
-	        <td class="applyBtn"><a class="applyBtn" href="${CONTEXT_PATH}/interior/interiorController?sangdamApply"> 신청 </a></td>
+	        <td class="applyBtn"><a class="applyBtn" href="${CONTEXT_PATH}/interior/billPage.jsp">견적</a></td>
 	      </tr>
       <%} %>
     </table>
   </div>
   
-  <div class="column">
-  </div>
-  
+	<!-- 
+  		인테리어 등록/수정/삭제하기는 관리자 권한
+  		관리자 로그인 시에만 보이는 버튼  
+  		-->
+  	<%
+  		
+  	%>	
+		<button onclick="location.href='interiorInput.jsp'" style="width:auto;">등록하기</button>
+	
 </div>
+
 <!-- footer menu -->
 <jsp:include page="/inc/footer.jsp"/>
 </body>

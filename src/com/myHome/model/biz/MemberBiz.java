@@ -248,11 +248,9 @@ public class MemberBiz<searchKey> {
 	 *  	성공 : 변경완료된 임시발급비밀번호
 	 *  	실패 : null 
 	 */
-	public String selectByMemberPw(String memberId, String name, String mobile) {
-		System.out.println("[debug] biz : " + memberId + ", " + name + ", " + mobile);
+	public String selectByMemberPw(String memberId, String name, String mobile) {		
 		boolean memberPw = dao.selectByMemberPw(memberId, name, mobile);
 		
-		System.out.println("[debug] biz : " + memberPw);
 		if (!memberPw) {
 			return null;
 		}

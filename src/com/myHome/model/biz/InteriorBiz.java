@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import com.myHome.common.JdbcTemplate;
 import com.myHome.model.dao.InteriorDao;
 import com.myHome.model.dto.Interior;
+import com.myHome.model.dto.Member;
+import com.myHome.util.Utility;
 
 
 /**
@@ -26,13 +28,19 @@ public class InteriorBiz {
 	 * @param dto 회원객체
 	 * @return 성공시 true, 실패시 false
 	 */
-	public boolean insertMember(Interior dto) {
-		int rows = dao.insertInterior(dto);
-		if (rows == 1) {
-			return true;
-		} else {
-			return false;
+	public void insertInterior(Interior interior) {
+		Connection con = JdbcTemplate.getConnection();
+		
+		try {			
+			dao.insertInterior(con,interior);
+			JdbcTemplate.commit(con);
+		} catch (Exception e) {
+			e.printStackTrace();
+			JdbcTemplate.rollback(con);
+		} finally {
+			JdbcTemplate.close(con);
 		}
+
 	}
 	
 	/**
@@ -51,5 +59,67 @@ public class InteriorBiz {
 		} finally {
 			JdbcTemplate.close(conn);
 		}
+	}
+	
+	/**
+	 * 인테리어 업체 수정
+	 * @param dto Interior
+	 * @return 성공시 true, 실패시 false
+	 */
+	public void updateInterior(Interior interior) throws Exception{
+		Connection con = JdbcTemplate.getConnection();
+		
+		try{
+			dao.updateInterior(con, interior);
+			JdbcTemplate.commit(con);
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+			JdbcTemplate.rollback(con);
+			throw e; 
+			
+		} finally {
+			JdbcTemplate.close(con);	
+		}		
+	}
+	
+	/** 
+	 * 인테리어 회사 상세조회
+	 *	@param iname 회사명
+	 */
+	public void selectInterior(Interior interior) throws Exception{
+		Connection conn = JdbcTemplate.getConnection();
+		
+		try {
+			dao.selectInterior(conn, interior);
+			
+		} catch (Exception e) {			
+			throw e;
+		} finally {
+			JdbcTemplate.close(conn);	
+		}
+	}
+	
+	/**
+	 * 인테리어 업체 삭제
+	 * @param i_no 번호
+	 * @return 성공시 true, 실패시 false
+	 */
+	public void deleteInterior(String iname) {
+		Connection con = JdbcTemplate.getConnection();
+		
+		try{
+			dao.deleteInterior(con, iname);
+			JdbcTemplate.commit(con);
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+			JdbcTemplate.rollback(con);
+			throw e; 
+			
+		} finally {
+			JdbcTemplate.close(con);	
+		}
+		
 	}
 }

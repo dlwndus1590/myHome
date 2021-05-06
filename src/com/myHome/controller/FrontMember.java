@@ -436,8 +436,7 @@ public class FrontMember extends HttpServlet {
 		/** 아이디 찾기 : 데이터 추출 */		
 		String name = request.getParameter("name");
 		String mobile = request.getParameter("mobile");
-		
-		System.out.println();
+	
 		
 		/** 데이터 검증 : 필수입력 항목 미입력 오류 처리 */
 		if(name == null || name.trim().length() == 0) {			
