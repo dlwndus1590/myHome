@@ -18,12 +18,6 @@
 	<!-- Favicons -->
     <link rel="shortcut icon" href="${CONTEXT_PATH}/assets/ico/favicon.ico">
     
-    <!-- javascript -->
-    <script type="text/javascript">
-    	window.onload = function() {
-    		location.href="${CONTEXT_PATH}/product/productController?action=storeHome";
-    	}
-    </script>
   </head>
 <body>
 <!-- header -->

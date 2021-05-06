@@ -87,11 +87,11 @@ public class ProductBiz {
 	 * @param product
 	 * @throws Exception
 	 */
-	public void selectProductOne(int pNo, Product product) throws Exception {
+	public void selectProductOne(Product product) throws Exception {
 		Connection conn = JdbcTemplate.getConnection();
 		
 		try {
-			ProductDao.getInstance().selectProductOne(conn, pNo, product);
+			ProductDao.getInstance().selectProductOne(conn, product);
 		} catch(SQLException e) {
 			throw e;
 		} finally {

@@ -30,7 +30,7 @@
 	<ul class="nav nav-list">
 		<li><a href="${CONTEXT_PATH}/product/productController?action=productListByCategoryForm">
 			<span class="icon-chevron-right"></span>전체</a></li>
-		<c:forEach var="categoryList" items="${categoryList}">
+		<c:forEach var="categoryList" items="${categoryList1}">
 		<li><a href="${CONTEXT_PATH}/product/productController?action=productListByCategory&categoryId=${categoryList.categoryId}">
 			<span class="icon-chevron-right"></span>${categoryList.categoryName}</a></li>
 		</c:forEach>
@@ -46,10 +46,10 @@
 <h3> 전체 </h3>
 	<div class="row-fluid">	
 		<ul class="thumbnails">
-		  <c:forEach var="productList" items="${productList}">
+		  <c:forEach var="productList" items="${productList1}">
 			<li class="span4" style="width:220px; ">
 				<div class="thumbnail">
-					<a class="zoomTool" href="${CONTEXT_PATH}/product/productController?action=productDetail&pNo=${productList.pNo}"><span class="icon-search"></span> ${productList.pPrice}원</a>
+					<a class="zoomTool" href="${CONTEXT_PATH}/product/productController?action=productDetail&pNo=${productList.pNo}"><span class="icon-search"></span> <fmt:formatNumber value="${productList.pPrice }" pattern="###,###"/> 원</a>
 					<a href="${CONTEXT_PATH}/product/productController?action=productDetail&pNo=${productList.pNo}"><img src="${CONTEXT_PATH}/${productList.pImg}"></a>
 						<div class="caption cntr">
 							<p><strong>${productList.pName}</strong></p>

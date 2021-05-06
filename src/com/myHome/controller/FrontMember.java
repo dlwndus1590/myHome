@@ -22,7 +22,7 @@ import com.myHome.model.dto.MessageEntity;
 /**
  * 회원관리 시스템
  */
-@WebServlet(urlPatterns = {"/member/memberController"},loadOnStartup = 1)
+@WebServlet(urlPatterns = {"/member/memberController"},loadOnStartup = 2)
 public class FrontMember extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -227,6 +227,7 @@ public class FrontMember extends HttpServlet {
 				session.setAttribute("memberId", memberId);
 				session.setAttribute("grade", dto.getGrade());
 				session.setAttribute("name", dto.getName());
+				session.setAttribute("companyName", dto.getCompanyName());
 				session.setAttribute("dto", dto);				
 				request.getRequestDispatcher("/index.jsp").forward(request, response);
 			}else {

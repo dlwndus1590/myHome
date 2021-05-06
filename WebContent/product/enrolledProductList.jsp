@@ -22,7 +22,7 @@
 <body>
 <c:if test="${empty dto}">
 	<script type="text/javascript">
-		alert('로그인을 먼저 시도해주세요!');
+		alert('로그인을 먼저 시도해주세요');
 		location.href="${CONTEXT_PATH}/member/login.jsp"
 	</script>
 </c:if>
@@ -40,7 +40,7 @@
    		<li class="active">내 상품 관리 [회사명 : ${companyName}]</li>
     </ul>
 <div class="well well-small">
-	<c:forEach var="productList" items="${productList}">
+	<c:forEach var="productList" items="${productList5}">
 	<div class="row-fluid">	  
 		<div class="span2">
 			<a href="${CONTEXT_PATH}/product/productController?action=productDetail&pNo=${productList.pNo}"><img src="${CONTEXT_PATH}/${productList.pImg}"></a>
@@ -56,7 +56,7 @@
 		<form class="form-horizontal qtyFrm">
 		<h3> <fmt:formatNumber value="${productList.pPrice}" pattern="###,###" /> 원</h3>
 		<div class="btn-group">
-		  <a href="" class="defaultBtn">수정</a>
+		  <a href="${CONTEXT_PATH}/product/productController?action=updateProductForm&pNo=${productList.pNo}" class="defaultBtn">수정</a>
 		  <a href="" class="shopBtn">삭제</a>
 		</div>
 		</form>

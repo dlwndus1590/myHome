@@ -68,6 +68,9 @@ public class FrontProduct extends HttpServlet {
 			case "storeHome":
 				storeHome(request, response);
 				break;
+			case "updateProductForm":
+				updateProductForm(request, response);
+				break;
 		}
 	}
 	
@@ -84,16 +87,16 @@ public class FrontProduct extends HttpServlet {
 	 */
 	protected void productListByCategoryForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ProductBiz biz = new ProductBiz();
-		ArrayList<Category> categoryList = new ArrayList<Category>();
-		ArrayList<Product> productList = new ArrayList<Product>();
+		ArrayList<Category> categoryList1 = new ArrayList<Category>();
+		ArrayList<Product> productList1 = new ArrayList<Product>();
 		
 		try {
-			biz.getCategoryList(categoryList);
-			biz.getProductList(productList);
+			biz.getCategoryList(categoryList1);
+			biz.getProductList(productList1);
 			
 			HttpSession session = request.getSession();
-			session.setAttribute("categoryList", categoryList);
-			session.setAttribute("productList", productList);
+			session.setAttribute("categoryList1", categoryList1);
+			session.setAttribute("productList1", productList1);
 			
 			response.sendRedirect(CONTEXT_PATH + "/product/category.jsp");
 		} catch (Exception e) {
@@ -107,15 +110,15 @@ public class FrontProduct extends HttpServlet {
 	protected void productListByCategory(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String categoryIdStr = request.getParameter("categoryId");
 		int categoryId = Integer.parseInt(categoryIdStr);
-		ArrayList<Product> productList = new ArrayList<Product>();
+		ArrayList<Product> productList1 = new ArrayList<Product>();
 		
 		ProductBiz biz = new ProductBiz();
 		
 		try {
-			biz.getProductListByCategory(categoryId, productList);
+			biz.getProductListByCategory(categoryId, productList1);
 			
 			HttpSession session = request.getSession();
-			session.setAttribute("productList", productList);
+			session.setAttribute("productList1", productList1);
 			request.getRequestDispatcher("/product/category.jsp").forward(request, response);
 			
 		} catch (Exception e) {
@@ -132,13 +135,13 @@ public class FrontProduct extends HttpServlet {
 		
 		Product product = new Product();
 		Category category = new Category();
-		ArrayList<Product> productList1 = new ArrayList<Product>();
+		ArrayList<Product> productList2 = new ArrayList<Product>();
 		
 		ProductBiz biz = new ProductBiz();
 		product.setpNo(pNo);
 		
 		try {
-			biz.selectProductOne(pNo, product);
+			biz.selectProductOne(product);
 			HttpSession session = request.getSession();
 			session.setAttribute("product", product);
 			
@@ -146,8 +149,8 @@ public class FrontProduct extends HttpServlet {
 			biz.getCategory(category);	
 			session.setAttribute("category", category);
 			
-			biz.getRelatedProductList(product.getCategoryId(), product.getpNo(), productList1);
-			request.setAttribute("productList1", productList1);
+			biz.getRelatedProductList(product.getCategoryId(), product.getpNo(), productList2);
+			request.setAttribute("productList2", productList2);
 			
 			request.getRequestDispatcher("/product/productDetails.jsp").forward(request, response);
 		} catch (Exception e) {
@@ -159,18 +162,18 @@ public class FrontProduct extends HttpServlet {
 	 * 베스트 상품 조회 화면요청 서비스
 	 */
 	protected void productListByBestForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<Product> productList = new ArrayList<Product>();
+		ArrayList<Product> productList3 = new ArrayList<Product>();
 		ProductBiz biz = new ProductBiz();
-		ArrayList<Category> categoryList = new ArrayList<Category>();
+		ArrayList<Category> categoryList2 = new ArrayList<Category>();
 		int number= 1;
 		
 		try {
-			biz.productListbyBest(productList);
-			biz.getCategoryList(categoryList);
+			biz.productListbyBest(productList3);
+			biz.getCategoryList(categoryList2);
 			
 			HttpSession session = request.getSession();
-			session.setAttribute("productList", productList);
-			session.setAttribute("categoryList", categoryList);
+			session.setAttribute("productList3", productList3);
+			session.setAttribute("categoryList2", categoryList2);
 			session.setAttribute("number", number);
 			
 			response.sendRedirect(CONTEXT_PATH + "/product/best.jsp");
@@ -187,18 +190,41 @@ public class FrontProduct extends HttpServlet {
 		int categoryId = Integer.parseInt(categoryIdStr);
 		int number= 1;
 		
-		ArrayList<Product> productList = new ArrayList<Product>();
+		ArrayList<Product> productList3 = new ArrayList<Product>();
 		ProductBiz biz = new ProductBiz();
 		
 		try {
-			biz.productListbyBestCategory(categoryId, productList);
+			biz.productListbyBestCategory(categoryId, productList3);
 			HttpSession session = request.getSession();
-			session.setAttribute("productList", productList);
+			session.setAttribute("productList3", productList3);
 			session.setAttribute("number", number);
 			
 			response.sendRedirect(CONTEXT_PATH + "/product/best.jsp");
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 스토어홈 요청 서비스
+	 */
+	protected void storeHome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		ProductBiz biz = new ProductBiz();
+		ArrayList<Category> categoryList3 = new ArrayList<Category>();
+		ArrayList<Product> productList4 = new ArrayList<Product>();
+		
+		try {
+			biz.productListbyBest(productList4);
+			biz.getCategoryList(categoryList3);
+			
+			HttpSession session = request.getSession();
+			session.setAttribute("categoryList3", categoryList3);
+			session.setAttribute("productList4", productList4);
+			System.out.println("확인");
+			
+			request.getRequestDispatcher("/product/storeHome.jsp").forward(request, response);
+		} catch (Exception e) {
+			e.printStackTrace();			
 		}
 	}
 	
@@ -219,12 +245,12 @@ public class FrontProduct extends HttpServlet {
 		Member member = (Member)session.getAttribute("dto");
 		String companyName = member.getCompanyName();
 		
-		ArrayList<Product> productList = new ArrayList<Product>();
+		ArrayList<Product> productList5 = new ArrayList<Product>();
 		ProductBiz biz = new ProductBiz();
 		
 		try {
-			biz.getEnrolledProductList(companyName, productList);
-			session.setAttribute("productList", productList);
+			biz.getEnrolledProductList(companyName, productList5);
+			session.setAttribute("productList5", productList5);
 			session.setAttribute("companyName", companyName);
 			
 			response.sendRedirect(CONTEXT_PATH + "/product/enrolledProductList.jsp");
@@ -247,12 +273,12 @@ public class FrontProduct extends HttpServlet {
 			return;
 		}
 		
-		ArrayList<Category> categoryList = new ArrayList<Category>();
+		ArrayList<Category> categoryList4 = new ArrayList<Category>();
 		ProductBiz biz = new ProductBiz();
 		
 		try {
-			biz.getCategoryList(categoryList);
-			session.setAttribute("categoryList", categoryList);
+			biz.getCategoryList(categoryList4);
+			session.setAttribute("categoryList4", categoryList4);
 			
 			response.sendRedirect(CONTEXT_PATH + "/product/productRegister.jsp");
 		} catch (Exception e) {
@@ -305,21 +331,38 @@ public class FrontProduct extends HttpServlet {
 		}
 	}
 	
-	protected void storeHome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	/**
+	 * 상품수정 화면 요청 서비스
+	 */
+	protected void updateProductForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		
+		if (session == null || 
+				session.getAttribute("memberId") == null ||
+				!session.getAttribute("grade").equals("판매자")) {
+			
+			request.getRequestDispatcher("/member/login.jsp").forward(request, response);
+			return;
+		}
+		
+		String pNoStr = request.getParameter("pNo");
+		int pNo = Integer.parseInt(pNoStr);
+		
+		Product product = new Product();
+		Category category = new Category();
 		ProductBiz biz = new ProductBiz();
-		ArrayList<Category> categoryList = new ArrayList<Category>();
+		product.setpNo(pNo);		
 		
 		try {
-			biz.getCategoryList(categoryList);
+			biz.selectProductOne(product);
+			category.setCategoryId(product.getCategoryId());
+			biz.getCategory(category);
 			
-			HttpSession session = request.getSession();
-			session.setAttribute("categoryList1", categoryList);
-			
-			response.sendRedirect(CONTEXT_PATH + "/index.jsp");
+			session.setAttribute("product", product);
+			session.setAttribute("category", category);
+			response.sendRedirect(CONTEXT_PATH + "/product/updateProduct.jsp");
 		} catch (Exception e) {
-			e.printStackTrace();			
+			e.printStackTrace();
 		}
 	}
-	
-	
 }
