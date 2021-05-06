@@ -49,6 +49,7 @@ CREATE TABLE NOTICE (
 CREATE TABLE CATEGORY(
     CATEGORY_ID NUMBER,
     CATEGORY_NAME VARCHAR2(30),
+    CATEGORY_IMG VARCHAR2(100),
 
     CONSTRAINT CATEGORY_PK PRIMARY KEY(CATEGORY_ID)
 );
@@ -66,6 +67,7 @@ create table product (
     p_score number(2,1),
     p_sales number,
     p_count number,
+    p_regDate date,
     
     constraint company_name_fk foreign key(company_name) references member(company_name) on delete cascade,
     constraint category_id_fk foreign key(category_id) references category(category_id) on delete cascade
@@ -148,6 +150,8 @@ create table orders(
     o_total_price number,
     o_date date,
     o_delivery_fee number,
+    usedMileage number,
+    accumulateMileage number,
     
     constraint o_method_fk foreign key(o_method_id) references orders_method(o_method_id) on delete cascade,
     constraint member_id_fk5 foreign key(member_id) references member(member_id) on delete cascade

@@ -1,11 +1,8 @@
 package com.myHome.controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.myHome.model.biz.MemberBiz;
+import com.myHome.model.biz.ProductBiz;
+import com.myHome.model.dto.Category;
 import com.myHome.model.dto.Member;
 import com.myHome.model.dto.MessageEntity;
 
@@ -22,7 +21,7 @@ import com.myHome.model.dto.MessageEntity;
 /**
  * 회원관리 시스템
  */
-@WebServlet(urlPatterns = {"/member/memberController"},loadOnStartup = 1)
+@WebServlet(urlPatterns = {"/member/memberController"},loadOnStartup = 2)
 public class FrontMember extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -121,6 +120,27 @@ public class FrontMember extends HttpServlet {
 		case "memberDetail":	
 			memberDetail(request,response);
 			break;
+		case "storeHome":
+			storeHome(request, response);
+			break;
+		}
+	}
+	/**
+	 * 메인화면 요청서비스
+	 */
+	protected void storeHome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		ProductBiz biz = new ProductBiz();
+		ArrayList<Category> categoryList = new ArrayList<Category>();
+		
+		try {
+			biz.getCategoryList(categoryList);
+			
+			HttpSession session = request.getSession();
+			session.setAttribute("categoryList1", categoryList);
+			
+			response.sendRedirect(CONTEXT_PATH + "/index.jsp");
+		} catch (Exception e) {
+			e.printStackTrace();			
 		}
 	}
 
@@ -227,6 +247,7 @@ public class FrontMember extends HttpServlet {
 				session.setAttribute("memberId", memberId);
 				session.setAttribute("grade", dto.getGrade());
 				session.setAttribute("name", dto.getName());
+				session.setAttribute("companyName", dto.getCompanyName());
 				session.setAttribute("dto", dto);				
 				request.getRequestDispatcher("/index.jsp").forward(request, response);
 			}else {

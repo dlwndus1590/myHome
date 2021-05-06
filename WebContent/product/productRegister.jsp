@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/inc/taglib_menu.jsp" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -28,12 +29,17 @@
 
   </head>
 <body>
+<c:if test="${empty dto}">
+	<script type="text/javascript">
+		alert('로그인을 먼저 시도해주세요');
+		location.href="${CONTEXT_PATH}/member/login.jsp"
+	</script>
+</c:if>
+
 <!-- header -->
 <jsp:include page="/inc/header.jsp" />
 
-<!-- 
-Body Section 
--->
+<!-- Body Section -->
 <div class="row">
 	<div class="span9" style="width:960px;">
     <ul class="breadcrumb">
@@ -42,57 +48,57 @@ Body Section
    		<li class="active">상품등록</li>
     </ul>
 	<div class="well">
-	<form class="form-horizontal">
+	<form class="form-horizontal" action="${CONTEXT_PATH}/product/productController?action=productRegist" method="post" enctype="multipart/form-data">
 		<h3>상품 등록</h3>
 		<div class="control-group">
 		<label class="control-label">상품명 <sup>*</sup></label>
 		<div class="controls">
-			<input type="text" placeholder="상품명을 입력하세요." style="width:300px;">
+			<input type="text" name="pName" id="pName" placeholder="상품명을 입력하세요." required="required" style="width:300px;">
 		</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label"> 가격 <sup>*</sup></label>
 			<div class="controls">
-			  <input type="number" max="50000" min="0" placeholder="숫자만 입력" style="width:300px;">
+			  <input type="number" name="pPrice" id="pPrice" min="0" required="required" placeholder="숫자만 입력" >
 			</div>
 		 </div>
 		 <div class="control-group">
 			<label class="control-label" for="inputLname"> 상품이미지 <sup>*</sup></label>
 			<div class="controls">
-
-            	  <input type="file">
-				
+            	  <input type="file" name="pImg" id="pImg" required="required">
 			</div>
 		 </div>
 		<div class="control-group">
 		<label class="control-label" for="inputEmail"> 상품설명 <sup>*</sup></label>
 		<div class="controls">
-		  <input type="text" placeholder="Email">
+		  <input type="file" name="pDescribe" id="pDescribe" required="required">
 		</div>
 	  </div>	  
 		<div class="control-group">
 		<label class="control-label"> 배송비 <sup>*</sup></label>
 		<div class="controls">
-		  <input type="number" max="50000" min="0" placeholder="숫자만 입력">
+		  <input type="number" name="deliveryFee" id="deliveryFee" max="50000" min="0" required="required" placeholder="숫자만 입력">
 		</div>
 	   </div>
 		<div class="control-group">
 		<label class="control-label"> 카테고리 <sup>*</sup></label>
 		<div class="controls">
-		  <select class="span1" name="days">
-				<option value="">-</option>
+		  	<select name="categoryId" id="categoryId" style="width:220px;">
+		  	<c:forEach var="categoryList" items="${categoryList}">
+				<option value="${categoryList.categoryId}">${categoryList.categoryName}</option>
+			</c:forEach>
 			</select>
 		</div>
 	  </div>
 	  <div class="control-group">
 		<label class="control-label"> 재고수량 <sup>*</sup></label>
 		<div class="controls">
-		  <input type="password" placeholder="Password">
+		  <input type="number" name="pCount" id="pCount" placeholder="숫자만 입력" required="required">
 		</div>
 	   </div>
 	<div class="control-group">
 		<div class="controls">
-		 <input type="submit" name="submitAccount" value="Register" class="exclusive shopBtn">
+		 <input type="submit" value="상품 등록" class="exclusive shopBtn">
 		</div>
 	</div>
 	</form>

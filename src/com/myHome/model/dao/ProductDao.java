@@ -45,6 +45,7 @@ public class ProductDao {
 				category = new Category();
 				category.setCategoryId(rs.getInt(1));
 				category.setCategoryName(rs.getString(2));
+				category.setCategoryImg(rs.getString(3));
 				categoryList.add(category);
 			}
 		} catch(SQLException e) {
@@ -86,6 +87,7 @@ public class ProductDao {
 				product.setpScore(rs.getFloat(9));
 				product.setpSales(rs.getInt(10));
 				product.setpCount(rs.getInt(11));
+				product.setpRegDate(rs.getString(12));
 				productList.add(product);
 			}
 		} catch(SQLException e) {
@@ -128,6 +130,7 @@ public class ProductDao {
 				product.setpScore(rs.getFloat(9));
 				product.setpSales(rs.getInt(10));
 				product.setpCount(rs.getInt(11));
+				product.setpRegDate(rs.getString(12));
 				productList.add(product);
 			}
 		} catch(SQLException e) {
@@ -169,6 +172,7 @@ public class ProductDao {
 				product.setpScore(rs.getFloat(9));
 				product.setpSales(rs.getInt(10));
 				product.setpCount(rs.getInt(11));
+				product.setpRegDate(rs.getString(12));
 			}
 		} catch(SQLException e) {
 			System.out.println(e.getMessage());
@@ -200,6 +204,7 @@ public class ProductDao {
 			if(rs.next()) {
 				category.setCategoryId(rs.getInt(1));
 				category.setCategoryName(rs.getString(2));
+				category.setCategoryImg(rs.getString(3));
 			}
 		} catch(SQLException e) {
 			System.out.println(e.getMessage());
@@ -245,6 +250,7 @@ public class ProductDao {
 				product.setpScore(rs.getFloat(9));
 				product.setpSales(rs.getInt(10));
 				product.setpCount(rs.getInt(11));
+				product.setpRegDate(rs.getString(12));
 				productList.add(product);
 			}
 		} catch(SQLException e) {
@@ -287,6 +293,7 @@ public class ProductDao {
 				product.setpScore(rs.getFloat(9));
 				product.setpSales(rs.getInt(10));
 				product.setpCount(rs.getInt(11));
+				product.setpRegDate(rs.getString(12));
 				productList.add(product);
 			}
 		} catch(SQLException e) {
@@ -331,6 +338,7 @@ public class ProductDao {
 				product.setpScore(rs.getFloat(9));
 				product.setpSales(rs.getInt(10));
 				product.setpCount(rs.getInt(11));
+				product.setpRegDate(rs.getString(12));
 				productList.add(product);
 			}
 		} catch(SQLException e) {
@@ -343,7 +351,13 @@ public class ProductDao {
 		}
 	}
 
-	
+	/**
+	 * 판매자회원 - 등록한 상품리스트 조회
+	 * @param conn
+	 * @param companyName
+	 * @param productList
+	 * @throws Exception
+	 */
 	public void getEnrolledProductList(Connection conn, String companyName, ArrayList<Product> productList) throws Exception{
 		String sql = "select * from product where company_name=? order by p_score*p_sales desc";
 		
@@ -369,6 +383,7 @@ public class ProductDao {
 				product.setpScore(rs.getFloat(9));
 				product.setpSales(rs.getInt(10));
 				product.setpCount(rs.getInt(11));
+				product.setpRegDate(rs.getString(12));
 				productList.add(product);
 			}
 		} catch(SQLException e) {
@@ -377,6 +392,74 @@ public class ProductDao {
 			throw e;
 		} finally {
 			JdbcTemplate.close(rs);
+			JdbcTemplate.close(pstmt);
+		}
+	}
+
+	/**
+	 * 상품 마지막번호 반환
+	 * @param conn
+	 * @return
+	 */
+	public int getMaxProductNum(Connection conn) throws Exception {
+		String sql = "select max(p_no) from product";
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				return rs.getInt(1);
+			} 
+		} catch(SQLException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			JdbcTemplate.close(rs);
+			JdbcTemplate.close(pstmt);
+		}
+		return 0;
+	}
+
+	/**
+	 * 상품 등록
+	 * @param conn
+	 * @param product
+	 * @throws Exception
+	 */
+	public void addProduct(Connection conn, Product product) throws Exception {
+		String sql = "insert into product values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		
+		PreparedStatement pstmt = null;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, product.getpNo());
+			pstmt.setString(2, product.getpName());
+			pstmt.setInt(3, product.getpPrice());
+			pstmt.setString(4, product.getpImg());
+			pstmt.setString(5, product.getpDescribe());
+			pstmt.setInt(6, product.getDeliveryFee());
+			pstmt.setString(7, product.getCompanyName());
+			pstmt.setInt(8, product.getCategoryId());
+			pstmt.setFloat(9, product.getpScore());
+			pstmt.setInt(10, product.getpSales());
+			pstmt.setInt(11, product.getpCount());
+			pstmt.setString(12, product.getpRegDate());
+			
+			int rows = pstmt.executeUpdate(); 
+			if(rows == 0) {
+				throw new Exception();
+			}
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			throw new Exception();
+		} finally {
 			JdbcTemplate.close(pstmt);
 		}
 	}
