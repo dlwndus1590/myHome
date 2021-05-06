@@ -227,6 +227,7 @@ public class FrontMember extends HttpServlet {
 				session.setAttribute("memberId", memberId);
 				session.setAttribute("grade", dto.getGrade());
 				session.setAttribute("name", dto.getName());
+				session.setAttribute("companyName", dto.getCompanyName());
 				session.setAttribute("dto", dto);	
 				
 				response.setContentType("text/html;charset=UTF-8");
