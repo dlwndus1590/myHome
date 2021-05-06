@@ -69,7 +69,7 @@
 										<td width="120">
 											<input class="input-small" type="text" name="deliveryFee" value="${dto.deliveryFee }">원
 										</td>
-										<td width="80"><input class="span1" style="max-width: 34px"
+										<td width="90"><input class="span1" style="max-width: 50px"
 											placeholder="1" size="16" type="number"
 											value="${dto.cCount }" min="1" id="itemCount"
 											name="itemCount">

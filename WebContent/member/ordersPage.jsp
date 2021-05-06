@@ -210,9 +210,9 @@
 		$(document).ready(function() {
 			$("#checkedMileage").change(function() {
 				if ($("#checkedMileage").is(":checked")) {
-					$("#useMileage").attr("value", "${orders[0].mileage }");
+					$("#usedMileage").attr("value", "${orders[0].mileage }");
 				} else {
-					$("#useMileage").attr("value", 0);
+					$("#usedMileage").attr("value", 0);
 				}
 			});
 		});

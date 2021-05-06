@@ -31,9 +31,9 @@
 						<li class="span4" style="width: 220px; margin-left: 50px;">
 							<div class="thumbnail">
 								<a class="zoomTool"
-									href="${CONTEXT_PATH}/orderList/orderListController?action=orderDetail&oNo=${index.oNo}"><span
+									href="${CONTEXT_PATH}/orderList/orderListController?action=orderDetail&oNo=${index.oNo}&oDate=${index.oDate}"><span
 									class="icon-search"></span> 구매 이력 상세 조회</a> <a
-									href="${CONTEXT_PATH}/orderList/orderListController?action=orderDetail&oNo=${index.oNo}"><img
+									href="${CONTEXT_PATH}/orderList/orderListController?action=orderDetail&oNo=${index.oNo}&oDate=${index.oDate}"><img
 									src="${CONTEXT_PATH}/${index.pImg}"></a>
 								<div class="caption cntr">
 									<p>
