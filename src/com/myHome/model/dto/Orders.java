@@ -9,16 +9,20 @@ public class Orders implements Serializable {
 	private int oTotalPrice;
 	private String oDate;
 	private int oDeliveryFee;
+	private int usedMileage;
+	private int accumulateMileage;
 	
 	public Orders() {}
 	
-	public Orders(int oNo, String memberId, int oMethodId, int oTotalPrice, String oDate, int oDeliveryFee) {
+	public Orders(int oNo, String memberId, int oMethodId, int oTotalPrice, String oDate, int oDeliveryFee, int usedMileage, int accumulateMileage) {
 		this.oNo = oNo;
 		this.memberId = memberId;
 		this.oMethodId = oMethodId;
 		this.oTotalPrice = oTotalPrice;
 		this.oDate = oDate;
 		this.oDeliveryFee = oDeliveryFee;
+		this.usedMileage = usedMileage;
+		this.accumulateMileage = accumulateMileage;
 	}
 
 	/**
@@ -92,6 +96,34 @@ public class Orders implements Serializable {
 	 */
 	public void setoDeliveryFee(int oDeliveryFee) {
 		this.oDeliveryFee = oDeliveryFee;
+	}
+
+	/**
+	 * @return the usedMileage
+	 */
+	public int getUsedMileage() {
+		return usedMileage;
+	}
+
+	/**
+	 * @param usedMileage the usedMileage to set
+	 */
+	public void setUsedMileage(int usedMileage) {
+		this.usedMileage = usedMileage;
+	}
+
+	/**
+	 * @return the accumulateMileage
+	 */
+	public int getAccumulateMileage() {
+		return accumulateMileage;
+	}
+
+	/**
+	 * @param accumulateMileage the accumulateMileage to set
+	 */
+	public void setAccumulateMileage(int accumulateMileage) {
+		this.accumulateMileage = accumulateMileage;
 	}
 
 	@Override

@@ -56,7 +56,7 @@
 	  <div class="column">
 	    <div class="card">
 	      <h3>order list</h3>
-	      <a href="#"><p>주문내역</p></a>  
+	      <a href="${CONTEXT_PATH}/orderList/orderListController?action=orderList"><p>주문내역</p></a>  
 	    </div>
 	  </div>
 	  

@@ -20,7 +20,8 @@ import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 /**
- * Servlet implementation class FrontNotice
+ * 게시글 관리 서비스
+ * @author 김보성
  */
 @WebServlet("/notice/noticeController")
 public class FrontNotice extends HttpServlet {
@@ -344,7 +345,8 @@ public class FrontNotice extends HttpServlet {
 	 */
 	private void qNoticeInput(HttpServletRequest request, HttpServletResponse response) {
 		NoticeBiz biz = new NoticeBiz();
-		String directory = "C:/student_ucamp33/workspace_servlet/myHome/WebContent/img/qNotice";
+		String directory = "C:/Users/jspea/git/myHome/WebContent/img/qNotice";
+		
 		int maxSize = 1024 * 1024 * 100;
 		String encoding = "UTF-8";
 		MultipartRequest multipartRequest = null;
@@ -480,7 +482,6 @@ public class FrontNotice extends HttpServlet {
 	private void qNoticeSearch(HttpServletRequest request, HttpServletResponse response) {
 		String searchInfo = request.getParameter("searchInfo");
 		String keyWord = request.getParameter("keyWord");
-		System.out.println(keyWord);
 		NoticeBiz biz = new NoticeBiz();
 		ArrayList<Qnotice> list = new ArrayList<Qnotice>();
 		biz.searchQnoticeList(searchInfo, list);
