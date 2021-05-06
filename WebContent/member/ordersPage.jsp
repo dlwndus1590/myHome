@@ -64,7 +64,10 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="dto" items="${ordersList }">
+					<%-- <c:forEach var="map" items="${map }">
+						<c:set var="value" value=" ${map.value }"/>
+					</c:forEach> --%>
+					<c:forEach var="dto" items="${ordersList }" varStatus="status">
 						<tr>
 							<td><img width="100" src="${CONTEXT_PATH }/${dto.pImg }"></td>
 							<td>${dto.pName }</td>
@@ -73,18 +76,20 @@
 							<td><input class="span1" style="max-width: 34px"
 								placeholder="1" size="16" type="number" value="${dto.cCount }"
 								min="1"></td>
-							<td>${dto.totalPrice }원</td>
+							<%-- <td>${map.get(status.index).value}</td> --%>
+							<%-- <td>${i.value }원</td> --%>
+							<%-- <td>${value }</td> --%>
 						</tr>
 					</c:forEach>
 					<tr>
 						<c:set var="total" value="0" />
 						<td colspan="6" class="alignR"
 							style="text-align: right; font-size: 20px;">총 금액 :</td>
-						<c:forEach var="i" begin="0" end="${fn:length(ordersList) - 1}">
+						<%-- <c:forEach var="i" begin="0" end="${fn:length(ordersList) - 1}">
 							<c:set var="total" value="${total + orders[i].totalPrice }" />
-						</c:forEach>
+						</c:forEach> --%>
 						<td class="label label-primary" style="font-size: 20px"><c:out
-								value="${total}원" /></td>
+								value="${totalCost}원" /></td>
 					</tr>
 				</tbody>
 			</table>

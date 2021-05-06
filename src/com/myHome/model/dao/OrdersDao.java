@@ -100,7 +100,7 @@ public class OrdersDao {
 	public void getOrdersPage(Connection conn, String memberId, ArrayList<OrdersPage> ordersList) throws Exception {
 		String sql = "select m.name, m.email, m.mobile, m.mileage, m.zip_code, m.address1, m.address2, " + 
 				   		"p.p_no, p.p_name, p.p_price, c.c_count, p.p_img, p.p_describe, " + 
-				   		"p.p_count - c.c_count as stock, p.delivery_fee, (p.p_price * c.c_count) + p.delivery_fee as total_price " + 
+				   		"p.p_count - c.c_count as stock, p.delivery_fee, (p.p_price * c.c_count) as total_price " + 
 				   	"from product p join cart c on (p.p_no = c.p_no) " + 
 				   	"join member m on (m.member_id = c.member_id) " + 
 				   	"where m.member_id = ?";
@@ -171,5 +171,30 @@ public class OrdersDao {
 			JdbcTemplate.close(stmt);
 		}
 	}
-	
+
+	public void cartUpdate(Connection conn, int pNo1, int count1, String memberId) throws Exception {
+		String sql = "update cart set c_count = ? where p_no = ? and member_id = ?";
+		
+		PreparedStatement stmt = null;
+		System.out.println("[debug3]");
+		try {
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, count1);
+			stmt.setInt(2, pNo1);
+			stmt.setString(3, memberId);
+			System.out.println("[debug4] : " + "pNo1 - " + pNo1 + ", count1 - " + count1);
+			int rows = stmt.executeUpdate();
+			System.out.println(rows);
+			System.out.println("[debug5] : " + "pNo1 - " + pNo1 + ", count1 - " + count1);
+			if (rows == 0) {
+				throw new Exception();
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			throw new Exception();
+		} finally {
+			JdbcTemplate.close(stmt);
+		}
+	}
 }
