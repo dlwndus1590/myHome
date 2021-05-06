@@ -1,0 +1,48 @@
+@charset "UTF-8";
+
+#headerTitle{
+	margin : 30px 0px 0px 50px;
+}
+
+#orderInfoTable{
+	border : 5px solid 	#EFF0F2;
+
+	height: 40px;
+	margin : 5px 0px 10px 50px;
+}
+
+#orderInfoTableTd{
+	width : 900px;
+	padding : 17px 0px 16px 0px;
+}
+
+.orderInfoTitle{
+	padding-left: 10px;
+	font-size: 16px;
+	font-weight: bolder;
+}
+
+#orderDate{
+	padding-left: 15px;
+	font-size: 16px;
+}
+
+#orderNum{
+	padding-left: 15px;
+	font-size: 16px;
+	color: #00884F;
+}
+#division{
+	padding : 0px 10px 0px 10px;
+	font-size: 20px;
+	opacity: 0.3;
+}
+
+#hrBold{
+	border : 0;
+	margin-left : 50px;
+	width : 900px;
+	height: 2px;
+	background-color: black;
+}
+
