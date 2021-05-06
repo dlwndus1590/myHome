@@ -120,27 +120,6 @@ public class FrontMember extends HttpServlet {
 		case "memberDetail":	
 			memberDetail(request,response);
 			break;
-		case "storeHome":
-			storeHome(request, response);
-			break;
-		}
-	}
-	/**
-	 * 메인화면 요청서비스
-	 */
-	protected void storeHome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ProductBiz biz = new ProductBiz();
-		ArrayList<Category> categoryList = new ArrayList<Category>();
-		
-		try {
-			biz.getCategoryList(categoryList);
-			
-			HttpSession session = request.getSession();
-			session.setAttribute("categoryList1", categoryList);
-			
-			response.sendRedirect(CONTEXT_PATH + "/index.jsp");
-		} catch (Exception e) {
-			e.printStackTrace();			
 		}
 	}
 

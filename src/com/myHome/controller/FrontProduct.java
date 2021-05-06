@@ -65,6 +65,9 @@ public class FrontProduct extends HttpServlet {
 			case "productRegist":
 				productRegist(request, response);
 				break;
+			case "storeHome":
+				storeHome(request, response);
+				break;
 		}
 	}
 	
@@ -299,6 +302,22 @@ public class FrontProduct extends HttpServlet {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	protected void storeHome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		ProductBiz biz = new ProductBiz();
+		ArrayList<Category> categoryList = new ArrayList<Category>();
+		
+		try {
+			biz.getCategoryList(categoryList);
+			
+			HttpSession session = request.getSession();
+			session.setAttribute("categoryList1", categoryList);
+			
+			response.sendRedirect(CONTEXT_PATH + "/index.jsp");
+		} catch (Exception e) {
+			e.printStackTrace();			
 		}
 	}
 	
