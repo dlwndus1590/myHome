@@ -47,4 +47,21 @@ public class OrdersBiz {
 			JdbcTemplate.close(conn);
 		}
 	}
+
+	public void cartUpdate(String pNo, String count, String memberId) throws Exception {
+		Connection conn = JdbcTemplate.getConnection();
+		int pNo1 = Integer.parseInt(pNo);
+		int count1 = Integer.parseInt(count);
+		try {
+			System.out.println("[debug2]");
+			dao.cartUpdate(conn, pNo1, count1, memberId);
+			JdbcTemplate.commit(conn);
+		} catch (Exception e) {
+			JdbcTemplate.rollback(conn);
+			e.printStackTrace();
+			throw e;
+		} finally {
+			JdbcTemplate.close(conn);
+		}
+	}
 }
