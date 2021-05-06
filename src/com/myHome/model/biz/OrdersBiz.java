@@ -53,7 +53,6 @@ public class OrdersBiz {
 		int pNo1 = Integer.parseInt(pNo);
 		int count1 = Integer.parseInt(count);
 		try {
-			System.out.println("[debug2]");
 			dao.cartUpdate(conn, pNo1, count1, memberId);
 			JdbcTemplate.commit(conn);
 		} catch (Exception e) {

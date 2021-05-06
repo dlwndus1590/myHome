@@ -2,7 +2,6 @@ package com.myHome.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -106,68 +105,55 @@ public class FrontOrders extends HttpServlet {
 		}
 	}
 	
+	/**
+	 * 장바구니 결제페이지
+	 */
 	private void cartOrdersPage(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		// String memberId = (String) session.getAttribute("memberId");
-		// 수량, 상품 번호를 받아서 update 쿼리문 실행 후 select
 		String memberId = "user01";
 		String[] pNo = request.getParameterValues("pNo");
 		String[] count = request.getParameterValues("itemCount");
-		//String[] totalCost = request.getParameterValues("totalCost[]");
-		//int total = 0;
-		//ArrayList<OrdersPage> ordersList = new ArrayList<OrdersPage>();
+		String[] totalCost = request.getParameterValues("totalCost[]");
+		int total = 0;
+		ArrayList<OrdersPage> ordersList = new ArrayList<OrdersPage>();
 		OrdersBiz ordersBiz = new OrdersBiz();
 		for (int i = 0; i < pNo.length; i++) {
-			System.out.println("pNo.length : " + pNo.length);
-			System.out.println(i + ", pNo : " + pNo[i]);
-			System.out.println(i + ", count : " + count[i]);
-			//total += Integer.parseInt(totalCost[i]);
+			total += Integer.parseInt(totalCost[i]);
 			try {
-				System.out.println("[debug1]");
 				ordersBiz.cartUpdate(pNo[i], count[i], memberId);
-				//response.sendRedirect(CONTEXT_PATH + "/member/ordersController?action=ordersPage");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 		
-		/*
-		 * try { ordersBiz.getOrdersPage(memberId, ordersList);
-		 * session.setAttribute("ordersList", ordersList);
-		 * session.setAttribute("totalCost", total); response.sendRedirect(CONTEXT_PATH
-		 * + "/member/cartOrdersPage.jsp"); } catch (Exception e) { e.printStackTrace();
-		 * }
-		 */
+		try {
+			ordersBiz.getOrdersPage(memberId, ordersList);
+			session.setAttribute("ordersList", ordersList);
+			session.setAttribute("totalCost", total);
+			response.sendRedirect(CONTEXT_PATH + "/member/cartOrdersPage.jsp");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 	}
 	
 	/**
-	 * 장바구니 결제페이지(금액, 최종수량, 총합계) 
+	 * 단일 상품 결제페이지(상품상세에서 memberId - 세션, pNo, cCount)
 	 */
 	private void ordersPage(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		//String memberId = (String) session.getAttribute("memberId");
-		// 상품 번호에 따른 최종수량 -> view 최종수량 * 상품금액
-		// HashMap<Integer, String> map = new HashMap<Integer, String>();
-		//HashMap<String, String> map = new HashMap<String, String>();
-		//String[] pNo1 = request.getParameterValues("pNo");
-		//int pNo = 0;
-		//System.out.println(pNo1[0]);
-		//System.out.println(pNo1[1]);
 		//String[] totalPrice = request.getParameterValues("totalPrice");
 		String[] totalCost = request.getParameterValues("totalCost[]");
 		//String[] count = request.getParameterValues("itemCount");
-		//System.out.println("count : " + count);
 		int total = 0;
 		for (int i = 0; i < totalCost.length; i++) {
 			System.out.println(i + ", " + totalCost[i]);
 			//pNo = Integer.parseInt(pNo1[i]);
-			//map.put("totalPrice" + i, totalPrice[i]);
 			total += Integer.parseInt(totalCost[i]);
 		}
 		System.out.println("total : " + total);
-		//System.out.println(map);
-		//System.out.println("pNo : " + pNo);
 		String memberId = "user01";
 		ArrayList<OrdersPage> ordersList = new ArrayList<OrdersPage>();
 		OrdersBiz ordersBiz = new OrdersBiz();
@@ -175,7 +161,6 @@ public class FrontOrders extends HttpServlet {
 			ordersBiz.getOrdersPage(memberId, ordersList);
 			
 			session.setAttribute("ordersList", ordersList);
-			//session.setAttribute("map", map);
 			session.setAttribute("totalCost", total);
 			response.sendRedirect(CONTEXT_PATH + "/member/ordersPage.jsp");
 		} catch (Exception e) {
@@ -189,6 +174,39 @@ public class FrontOrders extends HttpServlet {
 	 * 결제하기
 	 */
 	private void orders(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		//String memberId = (String) session.getAttribute("memberId");
+		String memberId = "user01";
+		String optionsRadios = request.getParameter("optionsRadios");
+		String usedMileage = request.getParameter("usedMileage");
+		String currentMileage = request.getParameter("accumulateMileage");
+		// 배달비 포함한 가격 or 배달비 포함 x 가격? => 현재는 배달비 포함 x
+		String[] totalPrice = request.getParameterValues("totalPrice");
+		String[] deliveryFee = request.getParameterValues("deliveryFee");
+		// address1 or address2 어떤거 받을지 확인? 도로명 or 지번
+		String zipCode = request.getParameter("zipcode");
+		String address1 = request.getParameter("address1");
+		String address2 = request.getParameter("address2");
+		String address3 = request.getParameter("address3");
+		int i = Integer.parseInt(currentMileage);
+		int j = Integer.parseInt(usedMileage);
+		System.out.println("optionsRadios : " + optionsRadios);
+		System.out.println("currentMileage : " + i);
+		System.out.println("usedMileage : " + j);
+		int accumulateMileage = i - j;
+		System.out.println("accumulateMileage : " + accumulateMileage);
+		System.out.println("zipCode : " + zipCode);
+		System.out.println("address1 : " + address1);
+		System.out.println("address2 : " + address2);
+		System.out.println("address3 : " + address3);
 		
+		for (int index = 0; index < totalPrice.length; index++) {
+			System.out.println("totalPrice : " + totalPrice[index]);
+			System.out.println("deliveryFee : " + deliveryFee[index]);
+			// insert 처리
+			if (accumulateMileage > 0) {
+				
+			}
+		}
 	}
 }
