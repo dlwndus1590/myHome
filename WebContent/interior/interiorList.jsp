@@ -1,3 +1,4 @@
+<%@page import="com.myHome.model.dto.Member"%>
 <%@page import="com.myHome.model.dto.Interior"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -111,11 +112,21 @@ button:hover {
   		인테리어 등록/수정/삭제하기는 관리자 권한
   		관리자 로그인 시에만 보이는 버튼  
   		-->
-  	<%
-  		
-  	%>	
-		<button onclick="location.href='interiorInput.jsp'" style="width:auto;">등록하기</button>
-	
+  			<%
+                  Member mainMember = null;
+                  if(session.getAttribute("dto")==null){
+            %>   
+                 	<p></p>                            
+            <%
+               	}else {
+                     mainMember = (Member)session.getAttribute("dto");                     
+			%> 
+            <% if(mainMember.getGrade().equals("관리자")){  %>                
+                  	<button onclick="location.href='interiorInput.jsp'" style="width:auto;">등록하기</button>
+         	<%
+                }
+            }
+            %>
 </div>
 
 <!-- footer menu -->

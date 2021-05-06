@@ -279,12 +279,10 @@
                   Member mainMember = null;
                   if(session.getAttribute("dto")==null){
                %>   
-                  <a href="${CONTEXT_PATH}/member/login.jsp"><span class="icon-lock"></span> Login </a>   
-                  <a href="javascript:alert('로그인이 필요한 서비스 입니다.')"><span class="icon-user"></span> 마이페이지</a>               
+                  <a href="${CONTEXT_PATH}/member/login.jsp"><span class="icon-lock"></span> Login </a>                            
                <%
                   } else {
-                     mainMember = (Member)session.getAttribute("dto");
-                     System.out.println("정보 : " + mainMember);
+                     mainMember = (Member)session.getAttribute("dto");                     
                %>
                   <a href="${CONTEXT_PATH}/member/memberController?action=logout"><span class="icon-lock"></span> Logout </a>                  
                <%

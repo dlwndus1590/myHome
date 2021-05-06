@@ -227,7 +227,13 @@ public class FrontMember extends HttpServlet {
 				session.setAttribute("memberId", memberId);
 				session.setAttribute("grade", dto.getGrade());
 				session.setAttribute("name", dto.getName());
-				session.setAttribute("dto", dto);				
+				session.setAttribute("dto", dto);	
+				
+				response.setContentType("text/html;charset=UTF-8");
+				//PrintWriter writer = response.getWriter();
+				//writer.println("<script>alert('로그인이 완료되었습니다.'); location.href= ' \"CONTEXT_PATH\"+ /index.jsp';</script>");
+				//writer.close();
+				
 				request.getRequestDispatcher("/index.jsp").forward(request, response);
 			}else {
 				request.getRequestDispatcher("/member/login.jsp").forward(request, response);
@@ -236,7 +242,8 @@ public class FrontMember extends HttpServlet {
 			HttpSession session = request.getSession(true); // true
 			session.setAttribute("memberId", memberId);
 			session.setAttribute("grade", dto.getGrade());
-			session.setAttribute("dto", dto);
+			session.setAttribute("name", dto.getName());
+			session.setAttribute("dto", dto);	
 			request.getRequestDispatcher("/index.jsp").forward(request, response);
 		}
 		

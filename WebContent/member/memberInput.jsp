@@ -121,7 +121,7 @@ a {
 		   new daum.Postcode({
 			    oncomplete: function(data) {			    	
 			    	 document.getElementById('zipcode').value = data.zonecode;			    	 
-			         document.getElementById("address1").value = data.jibunAddress;
+			    	 document.getElementById("address1").value = data.roadAddress;
 			         document.getElementById("address2").focus();
 			    }
 			}).open();

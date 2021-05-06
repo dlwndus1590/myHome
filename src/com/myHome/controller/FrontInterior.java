@@ -60,7 +60,7 @@ public class FrontInterior extends HttpServlet {
 			deleteInterior(request, response);
 			break;
 		case "sangdamApply":
-			//sangdamApply(request, response);
+			sangdamApply(request, response);
 			break;
 		case "billPage":
 			billPage(request, response);
@@ -97,7 +97,7 @@ public class FrontInterior extends HttpServlet {
 		String url = CONTEXT_PATH + "/interior/billPage.jsp";
 		response.sendRedirect(url);
 	}
-	
+		
 	/**
 	 *	관리자 권한
 	 *		-- 인테리어 업체 등록 서비스
@@ -154,10 +154,12 @@ public class FrontInterior extends HttpServlet {
 
 		InteriorBiz biz = new InteriorBiz();
 		Interior interior = new Interior(ino,iname, icareer, idetail, ilocation);
-		
+		System.out.println("인테리어 수정 전 테스트 : "+interior);
 		try {
 			biz.updateInterior(interior);
-			System.out.println("인테리어 수정 테스트 : "+interior);
+			session.setAttribute("iname", iname);
+			session.setAttribute("ino", ino);
+			System.out.println("인테리어 수정 후 테스트 : "+interior);
 			session.setAttribute("interiordto", interior);
 			request.getRequestDispatcher("/interior/interiorController?action=selectInterior&iname="+iname).forward(request, response);
 		} catch (Exception e) {
@@ -189,7 +191,8 @@ public class FrontInterior extends HttpServlet {
 		interior.setIname(iname);
 		
 		try {
-			biz.selectInterior(interior);
+			biz.selectInterior(interior);		
+			session.setAttribute("iname", iname);
 			session.setAttribute("interiordto", interior);
 			System.out.println("인테리어 상세조회 테스트 : "+interior); 
 			request.getRequestDispatcher("/interior/interiorDetail.jsp").forward(request, response);
@@ -226,5 +229,20 @@ public class FrontInterior extends HttpServlet {
 		} catch(Exception e) {
 			request.getRequestDispatcher("/interior/interiorDetail.jsp").forward(request, response);
 		}
+	}
+	
+	/**
+	 *	관리자 권한
+	 *		-- 인테리어 업체 등록 서비스
+	 */
+	protected void sangdamApply(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
+		/** 인코딩 설정 */
+		System.out.println("[dubug] 인테리어 상담신청 요청");
+		
+		// billPage에서 입력받은 값 추출
+		
+		// 계산한 비즈 호출
+		
+		// 체크 유무 확인 
 	}
 }
