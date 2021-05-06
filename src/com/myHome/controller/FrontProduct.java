@@ -1,6 +1,7 @@
 package com.myHome.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.ServletContext;
@@ -15,6 +16,9 @@ import com.myHome.model.biz.ProductBiz;
 import com.myHome.model.dto.Category;
 import com.myHome.model.dto.Member;
 import com.myHome.model.dto.Product;
+import com.myHome.util.Utility;
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 /**
  * 상품관리 서비스
@@ -34,7 +38,6 @@ public class FrontProduct extends HttpServlet {
 	
 	protected void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-		response.setContentType("text/html;charset=UTF-8");
 		
 		String action = request.getParameter("action");
 		switch(action) {
@@ -56,7 +59,15 @@ public class FrontProduct extends HttpServlet {
 			case "enrolledProductListForm" :
 				enrolledProductListForm(request, response);
 				break;
-			
+			case "productRegisterForm":
+				productRegisterForm(request, response);
+				break;
+			case "productRegist":
+				productRegist(request, response);
+				break;
+			case "storeHome":
+				storeHome(request, response);
+				break;
 		}
 	}
 	
@@ -67,7 +78,7 @@ public class FrontProduct extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		process(request, response);
 	}
-
+	
 	/**
 	 * 카테고리별 상품조회 화면 요청 서비스
 	 */
@@ -221,5 +232,94 @@ public class FrontProduct extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * 상품등록 화면요청 서비스
+	 */
+	protected void productRegisterForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		
+		if (session == null || 
+				session.getAttribute("memberId") == null ||
+				!session.getAttribute("grade").equals("판매자")) {
+			
+			request.getRequestDispatcher("/member/login.jsp").forward(request, response);
+			return;
+		}
+		
+		ArrayList<Category> categoryList = new ArrayList<Category>();
+		ProductBiz biz = new ProductBiz();
+		
+		try {
+			biz.getCategoryList(categoryList);
+			session.setAttribute("categoryList", categoryList);
+			
+			response.sendRedirect(CONTEXT_PATH + "/product/productRegister.jsp");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 상품등록 서비스
+	 */
+	protected void productRegist(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		
+		if (session == null || 
+				session.getAttribute("memberId") == null ||
+				!session.getAttribute("grade").equals("판매자")) {
+			
+			request.getRequestDispatcher("/member/login.jsp").forward(request, response);
+			return;
+		}
+		String companyName = (String)session.getAttribute("companyName");
+		String pRegDate = Utility.getCurrentDate("yyyy-mm-dd");
+		
+		ProductBiz biz = new ProductBiz();
+		String directory = "C:/student_ucamp33/workspace_teamProject/myHome/WebContent/img/product";
+		int maxSize = 1024 * 1024 * 100;
+		String encoding = "UTF-8";
+		MultipartRequest multi = null;
+		try {
+			multi = new MultipartRequest(request, directory, maxSize, encoding, new DefaultFileRenamePolicy());
+			String pName = multi.getParameter("pName");
+			String pPrice = multi.getParameter("pPrice");
+			String pImg = "/img/product/" + multi.getOriginalFileName("pImg");
+			String pDescribe = "/img/product/" + multi.getOriginalFileName("pDescribe");
+			String deliveryFee = multi.getParameter("deliveryFee");
+			String categoryId = multi.getParameter("categoryId");
+			String pCount = multi.getParameter("pCount");
+			int number = biz.getMaxProductNum();
+			
+			Product product = new Product(++number, pName, Integer.parseInt(pPrice), pImg, pDescribe, Integer.parseInt(deliveryFee), companyName, Integer.parseInt(categoryId), 0, 0, Integer.parseInt(pCount), pRegDate);
+			biz.addProduct(product);
+			
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter writer = response.getWriter();
+			writer.println("<script>alert('상품이 등록되었습니다.'); location.href='" + CONTEXT_PATH + "/member/memberController?action=sellerMyPage';</script>");
+			writer.close();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	protected void storeHome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		ProductBiz biz = new ProductBiz();
+		ArrayList<Category> categoryList = new ArrayList<Category>();
+		
+		try {
+			biz.getCategoryList(categoryList);
+			
+			HttpSession session = request.getSession();
+			session.setAttribute("categoryList1", categoryList);
+			
+			response.sendRedirect(CONTEXT_PATH + "/index.jsp");
+		} catch (Exception e) {
+			e.printStackTrace();			
+		}
+	}
+	
 	
 }

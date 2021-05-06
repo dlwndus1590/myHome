@@ -58,19 +58,25 @@
 	      <a href="${CONTEXT_PATH}/product/productController?action=enrolledProductListForm"><p>내 상품 관리</p></a>  
 	    </div>
 	  </div>
-	  
+
 	  <div class="column">
 	    <div class="card">
-	      <h3>myboard</h3>
-	      <a href="#"><p>내 게시글</p></a>  
+	      <h3>order list</h3>
+	      <a href="${CONTEXT_PATH}/product/productController?action=productRegisterForm"><p>상품등록</p></a>  
 	    </div>
-	  </div>
+	  </div>	  
 	</div> 
 
 	<br>
 	<br>
 	<br>
 	<br>
+	  <div class="column">
+	    <div class="card">
+	      <h3>myboard</h3>
+	      <a href="#"><p>내 게시글</p></a>  
+	    </div>
+	  </div>
 		
 		<div class="column">
 		   <div class="card">

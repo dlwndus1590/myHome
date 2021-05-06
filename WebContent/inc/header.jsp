@@ -77,8 +77,6 @@
 	<div class="topNav">
 		<div class="container">
 			<div class="alignR">
-			
-					<a href="${CONTEXT_PATH}/index.jsp"><span class="icon-lock"></span> Home </a>
 
 					<!-- 로그인 / 미 로그인 상태 변화 -->
 					<%
@@ -165,7 +163,7 @@
 					 <li class="dropdown">
 					 	<a data-toggle="dropdown" class="dropdown-toggle" href="#">스토어 <b class="caret"></b></a>
 					 	<div class="dropdown-menu">
-					 		<a href="#">스토어 홈</a>
+					 		<a href="${CONTEXT_PATH}/index.jsp">스토어 홈</a>
 					 		<a href="${CONTEXT_PATH}/product/productController?action=productListByCategoryForm">카테고리</a>
 					 		<a href="${CONTEXT_PATH}/product/productController?action=productListByBestForm">베스트</a>
 					 	</div>

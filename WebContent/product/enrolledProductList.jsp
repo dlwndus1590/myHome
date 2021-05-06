@@ -20,6 +20,12 @@
     <link rel="shortcut icon" href="${CONTEXT_PATH}/assets/ico/favicon.ico">
   </head>
 <body>
+<c:if test="${empty dto}">
+	<script type="text/javascript">
+		alert('로그인을 먼저 시도해주세요!');
+		location.href="${CONTEXT_PATH}/member/login.jsp"
+	</script>
+</c:if>
 
 <!-- header -->
 <jsp:include page="/inc/header.jsp" />
@@ -32,7 +38,6 @@
    		<li><a href="${CONTEXT_PATH}/index.jsp">Home</a> <span class="divider">></span></li>
    		<li><a href="${CONTEXT_PATH}/member/memberController?action=sellerMyPage">마이페이지</a> <span class="divider">></span></li>
    		<li class="active">내 상품 관리 [회사명 : ${companyName}]</li>
-   		<input type="button" class="shopBtn" value="상품 등록" style="float:right;" onclick="location.href='${CONTEXT_PATH}/product/productRegister.jsp'">
     </ul>
 <div class="well well-small">
 	<c:forEach var="productList" items="${productList}">
@@ -45,6 +50,7 @@
 			<p><img src="${CONTEXT_PATH}/img/star.png"> ${productList.pScore} </p>
 			<p style="font-weight:bold;"> 판매량 : <fmt:formatNumber value="${productList.pSales }" pattern="###,###" /></p>
 			<p style="font-weight:bold;"> 재고수량 : <fmt:formatNumber value="${productList.pCount }" pattern="###,###" /></p>
+			<p>상품 등록일 : ${productList.pRegDate}</p>
 		</div>
 		<div class="span4 alignR">
 		<form class="form-horizontal qtyFrm">

@@ -169,4 +169,40 @@ public class ProductBiz {
 			JdbcTemplate.close(conn);
 		}		
 	}
+	
+	/**
+	 * 상품 마지막번호 반환 메서드
+	 * @return 상품 마지막번호 반환
+	 */
+	public int getMaxProductNum() throws Exception{
+		Connection conn = JdbcTemplate.getConnection();
+		
+		try {
+			int count = ProductDao.getInstance().getMaxProductNum(conn);
+			return count;
+		} catch(SQLException e) {
+			throw e;
+		} finally {
+			JdbcTemplate.close(conn);
+		}	
+	}
+
+	/**
+	 * 상품등록 메서드
+	 * @param product
+	 * @throws Exception
+	 */
+	public void addProduct(Product product) throws Exception {
+		Connection conn = JdbcTemplate.getConnection();
+		
+		try {
+			ProductDao.getInstance().addProduct(conn, product);
+			JdbcTemplate.commit(conn);
+		} catch(SQLException e) {
+			JdbcTemplate.rollback(conn);
+			throw e;
+		} finally {
+			JdbcTemplate.close(conn);
+		}	
+	}
 }

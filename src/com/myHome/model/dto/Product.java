@@ -29,6 +29,8 @@ public class Product implements Serializable {
 	private int pSales;
 	/** 재고 */
 	private int pCount;
+	/** 상품등록날짜 */
+	private String pRegDate;
 	
 	/** 기본생성자 */
 	public Product() {}
@@ -46,9 +48,10 @@ public class Product implements Serializable {
 	 * @param pScore
 	 * @param pSales
 	 * @param pCount
+	 * @param pRegDate
 	 */
 	public Product(int pNo, String pName, int pPrice, String pImg, String pDescribe, int deliveryFee,
-			String companyName, int categoryId, float pScore, int pSales, int pCount) {
+			String companyName, int categoryId, float pScore, int pSales, int pCount, String pRegDate) {
 		this.pNo = pNo;
 		this.pName = pName;
 		this.pPrice = pPrice;
@@ -60,6 +63,7 @@ public class Product implements Serializable {
 		this.pScore = pScore;
 		this.pSales = pSales;
 		this.pCount = pCount;
+		this.pRegDate = pRegDate;
 	}
 
 	/** getter/setter */
@@ -150,11 +154,19 @@ public class Product implements Serializable {
 	public void setpCount(int pCount) {
 		this.pCount = pCount;
 	}
+	
+	public String getpRegDate() {
+		return pRegDate;
+	}
+	
+	public void setpRegDate(String pRegDate) {
+		this.pRegDate = pRegDate;
+	}
 
 	@Override
 	public String toString() {
 		return "Product [pNo=" + pNo + ", pName=" + pName + ", pPrice=" + pPrice + ", pImg=" + pImg + ", pDescribe="
 				+ pDescribe + ", deliveryFee=" + deliveryFee + ", companyName=" + companyName + ", categoryId="
-				+ categoryId + ", pScore=" + pScore + ", pSales=" + pSales + ", pCount=" + pCount + "]";
+				+ categoryId + ", pScore=" + pScore + ", pSales=" + pSales + ", pCount=" + pCount + ", pRegDate=" + pRegDate + "]";
 	}
 }
