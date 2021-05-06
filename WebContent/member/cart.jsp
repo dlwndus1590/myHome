@@ -44,7 +44,7 @@
 				</h2>
 				<hr class="soften" />
 
-					<form class="form-horizontal" name="cartfrm" action="${CONTEXT_PATH}/member/ordersController?action=ordersPage" method="post">
+					<form class="form-horizontal" name="cartfrm" action="${CONTEXT_PATH}/member/ordersController?action=cartOrdersPage" method="post">
 						<table class="table table-bordered table-condensed">
 							<thead>
 								<tr>
@@ -60,7 +60,7 @@
 								<c:set var="test" value="0" /> 
 								<c:forEach var="dto" items="${cartList }">
 									<tr>
-										<td><img width="100" src="${CONTEXT_PATH }/${dto.pImg }"></td>
+										<td><input type="hidden" name="pNo" value="${dto.pNo }"><img width="100" src="${CONTEXT_PATH }/${dto.pImg }"></td>
 										<td width="150">${dto.pName }</td>
 										<td width="120">
 											<input class="input-small" type="text" name="itemPrice" value="${dto.pPrice }">원
@@ -74,7 +74,6 @@
 											value="${dto.cCount }" min="1" id="itemCount"
 											name="itemCount">
 											<div class="input-append">
-												<!-- 클릭하면 장바구니 목록에서 삭제 -->
 												<a class="btn btn-mini btn-danger" type="button"
 													href="${CONTEXT_PATH}/member/ordersController?action=cartDelete&pNo=${dto.pNo}">
 													<span class="icon-remove"></span>
@@ -84,7 +83,7 @@
 											<input class="input-small" type="text" name="totalPrice" value="${dto.totalPrice }">원
 										</td>
 									</tr>
-									<input type="text" name="totalCost" value="${(dto.pPrice * dto.cCount) + dto.deliveryFee }">
+									<input type="hidden" name="totalCost[]" value="${(dto.pPrice * dto.cCount) + dto.deliveryFee }">
 								</c:forEach>
 								<tr>
 									<c:set var="total" value="0" />
@@ -95,7 +94,7 @@
 									</c:forEach>
 									<td class="label label-primary" style="font-size: 20px">
 										<%-- <c:out value="${total}" />원 --%>
-										<%-- <fmt:formatNumber value="${total }" pattern="#,###" />원 --%>
+										<%-- <fmt:formatNumber value="${total }" pattern="#,###" />원  --%>
 										<input class="input-small" type="text" name="sum_qty" value="${total }" 
 										style="background-color: #999999; 
 										color: #FFFFFF; font-size: 20px; border: none;">원
@@ -150,21 +149,23 @@
 					//console.log("totalPrice : " + totalPrice);
 					var totalCost = totalPrice + parseInt(deliveryFee);
 					//console.log("totalCost : " + totalCost);
-					$("input[name=totalCost]:eq(" + index + ")").val(totalCost);
+					$("input[name='totalCost[]']:eq(" + index + ")").val(totalCost);
 				});
 			});
 			
 			$("input[name=itemCount]").change(function() {
-				var obj = document.cartfrm;
+				var obj = $("input[name='totalCost[]']");
+				console.log("obj.length : " + obj.length);
+				var frm = document.cartfrm;
 			    var sum = 0;
-			    var count = obj.totalCost.length;
-			    console.log(count);
-			    for (i = 0; i < obj.totalCost.length; i++) {
-			        if (obj.totalCost[i].value * 0 == 0) {
-			            sum += obj.totalCost[i].value * 1;
-			        }
-			    }
-			    obj.sum_qty.value = sum;
+			    if(obj.length) {
+				    for (i = 0; i < obj.length; i++) {
+				        if (obj[i].value * 0 == 0) {
+				        	sum += obj[i].value * 1;
+				        }
+				    }
+				    frm.sum_qty.value = sum;
+				}
 			});
 		});
 	</script>

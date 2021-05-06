@@ -753,5 +753,5 @@ public class FrontMember extends HttpServlet {
 			request.getRequestDispatcher("/member/memberList.jsp").forward(request, response);
 		}
 	}
-
+}
 }

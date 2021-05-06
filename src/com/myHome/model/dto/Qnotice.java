@@ -1,12 +1,14 @@
 package com.myHome.model.dto;
 
+import java.io.Serializable;
+
 /**질문게시판 도메인 클래스
  * @author 김보성
  * @since jdk1.8
  * @version 1.0
  */
 
-public class Qnotice {
+public class Qnotice implements Serializable {
 	private int qNo;
 	private String qTitle;
 	private String qContent;
