@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import com.myHome.model.biz.OrderListBiz;
 import com.myHome.model.dto.OrderList;
+import com.myHome.model.dto.OrdersDetail;
 
 /**
  * 구매 이력 및 후기 및 평점 관리 서비스
@@ -79,6 +80,16 @@ public class FrontOrderList extends HttpServlet {
 	 */
 	private void orderDetail(HttpServletRequest request, HttpServletResponse response) {
 		int oNo = Integer.parseInt(request.getParameter("oNo"));
+		String oDate = request.getParameter("oDate");
+		OrderListBiz biz = new OrderListBiz();
+		ArrayList<OrdersDetail> orderDetailList = new ArrayList<OrdersDetail>();
+		
+		biz.getOrderDetailList(oNo, orderDetailList);
+		int length = orderDetailList.size() * 2;
+		request.setAttribute("oNo", oNo);
+		request.setAttribute("oDate", oDate);
+		request.setAttribute("orderDetailList", orderDetailList);
+		request.setAttribute("length", length);
 		try {
 			request.getRequestDispatcher("/orderList/orderDetail.jsp").forward(request, response);
 		} catch (ServletException | IOException e) {

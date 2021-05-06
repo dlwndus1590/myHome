@@ -54,11 +54,11 @@ insert into orders_method values (1, '무통장입금');
 insert into orders_method values (2, '신용카드');
 insert into orders_method values (3, '휴대폰결제');
 
+-- orders 초기화데이터
+INSERT INTO orders VALUES (1, 'user01', 2, 238000, to_char(sysdate, 'yyyy-mm-dd'), 2500, 0, 500, 47212, '서울특별시 보라매로 21길 38', '보라매병원앞');
+
 -- orders_detail 초기화데이터
 INSERT INTO orders_detail VALUES (1, 2, 2, 1);
-
--- orders 초기화데이터
-INSERT INTO orders VALUES (1, 'user01', 2, 50000, to_char(sysdate, 'yyyy-mm-dd'), 2500, 0, 500);
 
 -- interior 초기화데이터
 insert into interior values (1, '유캠프인테리어', 5, '설명 대체', '서울시 태해란로 11길 5');

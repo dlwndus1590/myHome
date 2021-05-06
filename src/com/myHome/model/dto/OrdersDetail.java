@@ -7,14 +7,17 @@ import java.io.Serializable;
  * @author 김보성
  */
 public class OrdersDetail implements Serializable {
-	private String oDATE;
-	private int oNO;
-	private int dNO;
+	private int dNo;
 	private String memberId;
 	private String pName;
 	private String pImg;
+	private String pPrice;
 	private int dCount;
-	private int oDeliveryFee;
+	private String oDeliveryFee;
+	private String usedMileage;
+	private String accumulateMileage;
+	private String oTotalPrice;
+	private String totalAmount;
 	
 	/**
 	 * 기본 생성자
@@ -22,69 +25,45 @@ public class OrdersDetail implements Serializable {
 	public OrdersDetail() {}
 
 	/** 주문 상세 내역 생성자 메서드
-	 * @param oDATE 구매 날짜
-	 * @param oNO 구매 번호
 	 * @param dNO 구매 상세 번호
 	 * @param memberId 구매자 아이디
 	 * @param pName 구매 상품 이름
 	 * @param pImg 구매 상품 사진
+	 * @param pPrice 구매 상품 가격
 	 * @param dCount 구매 상품 수량
 	 * @param oDeliveryFee 배송비
+	 * @param usedMileage 사용 마일리지
+	 * @param accumulateMileage 적립 마일리지
+	 * @param oTotalPrice 총 구매 합계
 	 */
-	public OrdersDetail(String oDATE, int oNO, int dNO, String memberId, String pName, String pImg, int dCount,
-			int oDeliveryFee) {
+	public OrdersDetail(int dNo, String memberId, String pName, String pImg, String pPrice, int dCount,
+			String oDeliveryFee, String usedMileage, String accumulateMileage, String oTotalPrice, String totalAmount) {
 		super();
-		this.oDATE = oDATE;
-		this.oNO = oNO;
-		this.dNO = dNO;
+		this.dNo = dNo;
 		this.memberId = memberId;
 		this.pName = pName;
 		this.pImg = pImg;
+		this.pPrice = pPrice;
 		this.dCount = dCount;
 		this.oDeliveryFee = oDeliveryFee;
-	}
-
-	
-	/**
-	 * @return the oDATE
-	 */
-	public String getoDATE() {
-		return oDATE;
+		this.usedMileage = usedMileage;
+		this.accumulateMileage = accumulateMileage;
+		this.oTotalPrice = oTotalPrice;
+		this.totalAmount = totalAmount;
 	}
 
 	/**
-	 * @param oDATE the oDATE to set
+	 * @return the dNo
 	 */
-	public void setoDATE(String oDATE) {
-		this.oDATE = oDATE;
+	public int getdNo() {
+		return dNo;
 	}
 
 	/**
-	 * @return the oNO
+	 * @param dNo the dNo to set
 	 */
-	public int getoNO() {
-		return oNO;
-	}
-
-	/**
-	 * @param oNO the oNO to set
-	 */
-	public void setoNO(int oNO) {
-		this.oNO = oNO;
-	}
-
-	/**
-	 * @return the dNO
-	 */
-	public int getdNO() {
-		return dNO;
-	}
-
-	/**
-	 * @param dNO the dNO to set
-	 */
-	public void setdNO(int dNO) {
-		this.dNO = dNO;
+	public void setdNO(int dNo) {
+		this.dNo = dNo;
 	}
 
 	/**
@@ -128,6 +107,20 @@ public class OrdersDetail implements Serializable {
 	public void setpImg(String pImg) {
 		this.pImg = pImg;
 	}
+	
+	/**
+	 * @return the pPrice
+	 */
+	public String getpPrice() {
+		return pPrice;
+	}
+
+	/**
+	 * @param pPrice the pPrice to set
+	 */
+	public void setpPrice(String pPrice) {
+		this.pPrice = pPrice;
+	}
 
 	/**
 	 * @return the dCount
@@ -146,14 +139,78 @@ public class OrdersDetail implements Serializable {
 	/**
 	 * @return the oDeliveryFee
 	 */
-	public int getoDeliveryFee() {
+	public String getoDeliveryFee() {
 		return oDeliveryFee;
 	}
 
 	/**
 	 * @param oDeliveryFee the oDeliveryFee to set
 	 */
-	public void setoDeliveryFee(int oDeliveryFee) {
+	public void setoDeliveryFee(String oDeliveryFee) {
 		this.oDeliveryFee = oDeliveryFee;
 	}
+
+	/**
+	 * @return the usedMileage
+	 */
+	public String getUsedMileage() {
+		return usedMileage;
+	}
+
+	/**
+	 * @param usedMileage the usedMileage to set
+	 */
+	public void setUsedMileage(String usedMileage) {
+		this.usedMileage = usedMileage;
+	}
+
+	/**
+	 * @return the accumulateMileage
+	 */
+	public String getAccumulateMileage() {
+		return accumulateMileage;
+	}
+
+	/**
+	 * @param accumulateMileage the accumulateMileage to set
+	 */
+	public void setAccumulateMileage(String accumulateMileage) {
+		this.accumulateMileage = accumulateMileage;
+	}
+
+	/**
+	 * @return the oTotalPrice
+	 */
+	public String getoTotalPrice() {
+		return oTotalPrice;
+	}
+
+	/**
+	 * @param oTotalPrice the oTotalPrice to set
+	 */
+	public void setoTotalPrice(String oTotalPrice) {
+		this.oTotalPrice = oTotalPrice;
+	}
+
+	/**
+	 * @return the totalAmount
+	 */
+	public String getTotalAmount() {
+		return totalAmount;
+	}
+
+	/**
+	 * @param totalAmount the totalAmount to set
+	 */
+	public void setTotalAmount(String totalAmount) {
+		this.totalAmount = totalAmount;
+	}
+
+	/**
+	 * @param dNo the dNo to set
+	 */
+	public void setdNo(int dNo) {
+		this.dNo = dNo;
+	}
+	
 }

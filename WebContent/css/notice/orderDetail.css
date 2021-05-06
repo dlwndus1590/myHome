@@ -1,48 +1,155 @@
 @charset "UTF-8";
 
-#headerTitle{
-	margin : 30px 0px 0px 50px;
+.headerTitle {
+	margin: 30px 0px 0px 50px;
 }
 
-#orderInfoTable{
-	border : 5px solid 	#EFF0F2;
-
+#orderInfoTable {
+	border: 5px solid #EFF0F2;
 	height: 40px;
-	margin : 5px 0px 10px 50px;
+	margin: 5px 0px 10px 50px;
 }
 
-#orderInfoTableTd{
-	width : 900px;
-	padding : 17px 0px 16px 0px;
+#orderInfoTableTd {
+	width: 900px;
+	padding: 17px 0px 16px 0px;
 }
 
-.orderInfoTitle{
+.orderInfoTitle {
 	padding-left: 10px;
 	font-size: 16px;
 	font-weight: bolder;
 }
 
-#orderDate{
+#orderDate {
 	padding-left: 15px;
 	font-size: 16px;
 }
 
-#orderNum{
+#orderNum {
 	padding-left: 15px;
 	font-size: 16px;
 	color: #00884F;
 }
-#division{
-	padding : 0px 10px 0px 10px;
+
+#division {
+	padding: 0px 10px 0px 10px;
 	font-size: 20px;
 	opacity: 0.3;
 }
 
-#hrBold{
-	border : 0;
-	margin-left : 50px;
-	width : 900px;
+.hrBold {
+	border: 0;
+	margin: 0px 0px 0px 50px;
+	width: 900px;
 	height: 2px;
 	background-color: black;
 }
 
+#productDetailTable {
+	width: 900px;
+}
+
+#productNum {
+	width: 130px;
+	height: 20px;
+	padding-left: 50px;
+	text-align: center;
+}
+
+#productInfo {
+	width: 336px;
+	height: 20px;
+	text-align: center;
+}
+
+#productPrice {
+	width: 97px;
+	height: 20px;
+	text-align: center;
+}
+
+#DeliveryFee {
+	padding: 0px; width : 99px;
+	height: 40px;
+	text-align: center;
+	background-color: #F7F7F7;
+	width: 99px;
+}
+
+#currentStatus {
+	width: 198px;
+	height: 40px;
+	text-align: center;
+	background-color: #F7F7F7;
+}
+
+.hrSoft {
+	width: 900px;
+	margin: 0px 0px 0px 50px;
+}
+
+.productPicture {
+	width: 80px;
+	height: 80px;
+}
+
+.grayColor {
+	background-color: #F7F7F7;
+}
+
+#receiptTable1{
+	width: 638px; 
+	border-right: solid 1px #EFEEF1;
+	border-bottom: solid 1px #EFEEF1;
+	float: left;
+}
+
+#receiptTable2{
+	width: 300px;
+	height : 130px; 
+	border-right: solid 1px #EFEEF1;
+	border-bottom: solid 1px #EFEEF1;
+}
+
+.priceTableInfo{
+	padding: 0px 0px 10px 47px;
+}
+
+#receipt{
+	width : 300px;
+	height: 130px;
+	background-color: #04AD00;
+	color : white;
+	float: right;
+}
+
+#receiptPrice1{
+	font-size : 20px;
+	font-weight : bolder;
+	margin : 20px 0px 10px 10px;
+}
+
+#receiptPrice2{
+	text-align: right;
+	font-size : 20px;
+	font-weight : bolder;
+	padding-left: 120px;
+}
+
+#receiptPoint1{
+	font-size : 18px;
+	font-weight: bolder;
+	margin : 20px 0px 10px 10px;
+}
+
+#receiptPoint2{
+	text-align: right;
+	font-size : 20px;
+	font-weight : bolder;
+	padding-left: 155px;
+}
+
+#lineSpace{
+	padding: 300px 0px 300px 0px;
+}
