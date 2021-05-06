@@ -149,7 +149,7 @@ public class ProductDao {
 	 * @param product
 	 * @throws Exception
 	 */
-	public void selectProductOne(Connection conn, int pNo, Product product) throws Exception {
+	public void selectProductOne(Connection conn, Product product) throws Exception {
 		String sql = "select * from product where p_no=?";
 		
 		PreparedStatement pstmt = null;
@@ -157,7 +157,7 @@ public class ProductDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, pNo);
+			pstmt.setInt(1, product.getpNo());
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
@@ -270,7 +270,7 @@ public class ProductDao {
 	 * @throws Exception
 	 */
 	public void productListByBest(Connection conn, ArrayList<Product> productList) throws Exception {
-		String sql = "select * from product where rownum<=30 order by p_score*p_sales desc";
+		String sql = "select * from product order by p_score*p_sales desc";
 		
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;

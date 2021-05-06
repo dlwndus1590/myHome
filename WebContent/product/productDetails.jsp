@@ -5,7 +5,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Twitter Bootstrap shopping cart</title>
+    <title>My Home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -26,12 +26,14 @@
     		var countElement = document.getElementById("count");
     		var count = countElement.value;
     		count = count.trim();
+    		var price = count* ${product.pPrice};
+    		price = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     		
     		if(count.length == 0) {
     			messageElement.innerHTML = "주문금액 : 0 원";
     		} else {
     			count = parseInt(count);
-    			messageElement.innerHTML = "주문금액 : " + (count* ${product.pPrice}) + " 원";
+    			messageElement.innerHTML = "주문금액 : " + price + " 원";
     		}
     	}
     </script>
@@ -50,7 +52,7 @@
    		<li class="active">${category.categoryName}</li>
     </ul>
     	
-	<div class="well well-small" style="width:940px;">
+	<div class="well well-small" style="width:960px;">
 	<div class="row-fluid">
 		<div class="span5">
         	<div class="carousel-inner">
@@ -62,8 +64,8 @@
 		<div class="span7">
 			<h2>${product.pName}</h2>
 			<p><img src="${CONTEXT_PATH}/img/star.png">${product.pScore}</p><br>
-			<h3>가격 : ${product.pPrice }</h3>
-			<p> 배송비 : ${product.deliveryFee }</p>
+			<h3>가격 : <fmt:formatNumber value="${product.pPrice }" pattern="###,###"/> 원</h3>
+			<p> 배송비 : <fmt:formatNumber value="${product.deliveryFee}" pattern="###,###"/></p>
 			<p> 회사/점포명 : ${product.companyName}</p>
 			<hr class="soft"/>
 				
@@ -72,7 +74,7 @@
 				<label class="control-label"> 수량</label>
 				<input type="number" id="count" class="span6" placeholder="1" min="1" style="width:100px" onmouseup="messageChange()" onkeyup="messageChange()">
 			  </div>
-			  <h5> 재고수량 : ${product.pCount} </h5>
+			  <h5> 재고수량 : <fmt:formatNumber value="${product.pCount }" pattern="###,###"/> </h5>
 			  <button type="button" class="defaultBtn"><span class=" icon-shopping-cart"></span> 장바구니 </button>
 			  <button type="submit" class="shopBtn"><span class=" icon-shopping-cart"></span> 바로구매 </button>
 			</form>
@@ -96,7 +98,7 @@
 		</div>
 		
 		<div class="tab-pane fade" id="profile">
-		<c:forEach var="productList" items="${productList1}"> 
+		<c:forEach var="productList" items="${productList2}"> 
 			<div class="row-fluid">	  
 				<div class="span2">
 					<img src="${CONTEXT_PATH}/${productList.pImg}">
@@ -105,11 +107,11 @@
 				<div class="span6">
 				<h5> ${productList.pName} </h5>
 					<p> <img src="${CONTEXT_PATH}/img/star.png">${productList.pScore} </p>
-					<p>배송비 : ${productList.deliveryFee }</p>
+					<p>배송비 : <fmt:formatNumber value="${productList.deliveryFee }" pattern="###,###"/></p>
 				</div>
 				<div class="span4 alignR">
 					<form class="form-horizontal qtyFrm">
-						<h3> ${productList.pPrice } </h3>
+						<h3> <fmt:formatNumber value="${productList.pPrice }" pattern="###,###"/> 원 </h3>
 						<div class="btn-group">
 						  <a href="product_details.html" class="defaultBtn"><span class=" icon-shopping-cart"></span> 장바구니 추가</a>
 				 		  <a href="product_details.html" class="shopBtn">상세보기</a>

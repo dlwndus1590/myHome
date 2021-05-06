@@ -43,7 +43,7 @@
 	<div class="well well-small">
 		<a href="${CONTEXT_PATH}/product/productController?action=productListByBestForm" style="padding-right:30px; color:#385723; font-weight:bold;">
 			<img src="${CONTEXT_PATH}/img/circle.png" style="padding-right:5px;">전체</a>
-		<c:forEach var="categoryList" items="${categoryList}"> 
+		<c:forEach var="categoryList" items="${categoryList2}"> 
 		<a href="${CONTEXT_PATH}/product/productController?action=productListByBest&categoryId=${categoryList.categoryId}" style="padding-right:30px; color:#385723; font-weight:bold;">
 			<img src="${CONTEXT_PATH}/img/circle.png" style="padding-right:5px;">${categoryList.categoryName}</a>
 		</c:forEach>
@@ -54,10 +54,10 @@
 		<div class="row-fluid">
 		  <ul class="thumbnails">
 		  <% int number = (int)session.getAttribute("number"); %>
-		  <c:forEach var="productList" items="${productList}">
+		  <c:forEach var="productList" items="${productList3}" begin="0" end="29" step="1">
 			<li class="span4" style="width:22%;">
 			  <div class="thumbnail">
-				<a class="zoomTool" href="${CONTEXT_PATH}/product/productController?action=productDetail&pNo=${productList.pNo}"><span class="icon-search"></span> ${productList.pPrice}원 </a>
+				<a class="zoomTool" href="${CONTEXT_PATH}/product/productController?action=productDetail&pNo=${productList.pNo}"><span class="icon-search"></span> <fmt:formatNumber value="${productList.pPrice }" pattern="###,###"/> 원 </a>
 				<div class="img">
 					<div class="img_content">
 						<h3><%= number++ %></h3>
