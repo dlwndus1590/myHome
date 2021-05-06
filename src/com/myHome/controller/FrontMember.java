@@ -15,8 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.myHome.model.biz.MemberBiz;
-import com.myHome.model.biz.ProductBiz;
-import com.myHome.model.dto.Category;
 import com.myHome.model.dto.Member;
 import com.myHome.model.dto.MessageEntity;
 
@@ -24,7 +22,7 @@ import com.myHome.model.dto.MessageEntity;
 /**
  * 회원관리 시스템
  */
-@WebServlet(urlPatterns = {"/member/memberController"},loadOnStartup = 2)
+@WebServlet(urlPatterns = {"/member/memberController"},loadOnStartup = 1)
 public class FrontMember extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -123,6 +121,7 @@ public class FrontMember extends HttpServlet {
 		case "memberDetail":	
 			memberDetail(request,response);
 			break;
+			
 		}
 	}
 
@@ -755,5 +754,5 @@ public class FrontMember extends HttpServlet {
 			request.getRequestDispatcher("/member/memberList.jsp").forward(request, response);
 		}
 	}
-}
 
+}
