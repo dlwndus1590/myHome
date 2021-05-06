@@ -355,7 +355,6 @@ public class FrontNotice extends HttpServlet {
 					new DefaultFileRenamePolicy());
 			String qTitle = multipartRequest.getParameter("qTitle");
 			String imgUrl = "/img/qNotice/" + multipartRequest.getOriginalFileName("imgUrl");
-			;
 			String qContent = multipartRequest.getParameter("qContent");
 			Qnotice dto = new Qnotice(qTitle, qContent, imgUrl, "user01");
 			biz.addQnotice(dto);
