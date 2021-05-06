@@ -1,8 +1,11 @@
 package com.myHome.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -226,6 +229,7 @@ public class FrontMember extends HttpServlet {
 				session.setAttribute("memberId", memberId);
 				session.setAttribute("grade", dto.getGrade());
 				session.setAttribute("name", dto.getName());
+				session.setAttribute("companyName", dto.getCompanyName());
 				session.setAttribute("dto", dto);				
 				request.getRequestDispatcher("/index.jsp").forward(request, response);
 			}else {
