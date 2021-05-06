@@ -63,6 +63,10 @@ hr {
   opacity: 0.9;
 }
 
+.registerbtn:hover{
+  opacity: 1;
+}
+
 .btn-group {
 	opacity: 1;
 	width: 160px;
@@ -71,9 +75,6 @@ hr {
 	padding: 15px;
 }
 
-.registerbtn:hover{
-  opacity: 1;
-}
 
 a {
   color: dodgerblue;

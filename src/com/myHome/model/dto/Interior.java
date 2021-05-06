@@ -24,6 +24,22 @@ public class Interior {
 	 * @param idetail		인테리어 업체 설명
 	 * @param ilocation	인테리어 근무 위치
 	 */
+	public Interior(String iname, int icareer, String idetail, String ilocation) {
+		super();		
+		this.iname = iname;
+		this.icareer = icareer;
+		this.idetail = idetail;
+		this.ilocation = ilocation;
+	}
+	
+	/**
+	 * 인체리어 업체 상세 조회
+	 * @param ino			인테리어 등록번호
+	 * @param iname		인테리어 업체명
+	 * @param icareer		경력
+	 * @param idetail		인테리어 업체 설명
+	 * @param ilocation	인테리어 근무 위치
+	 */
 	public Interior(int ino, String iname, int icareer, String idetail, String ilocation) {
 		super();
 		this.ino = ino;

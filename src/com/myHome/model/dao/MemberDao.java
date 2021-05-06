@@ -106,7 +106,7 @@ public class MemberDao implements Serializable{
 			stmt.setString(11, dto.getEntryDate());			
 			stmt.setInt(12, dto.getMileage());
 			stmt.setString(13, dto.getGrade());	
-			System.out.println("");
+			
 			stmt.executeUpdate();	
 								
 		} catch (Exception e) {
