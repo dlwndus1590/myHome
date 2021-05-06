@@ -51,7 +51,7 @@
 	</fieldset>
 	<c:set var="orders" value="${ordersList }" />
 	<c:if test="${orders != null }">
-		<form class="form-horizontal" action="#" method="post">
+		<form class="form-horizontal" action="${CONTEXT_PATH}/member/ordersController?action=orders" method="post">
 			<table class="table table-bordered table-condensed">
 				<thead>
 					<tr>
@@ -64,30 +64,22 @@
 					</tr>
 				</thead>
 				<tbody>
-					<%-- <c:forEach var="map" items="${map }">
-						<c:set var="value" value=" ${map.value }"/>
-					</c:forEach> --%>
 					<c:forEach var="dto" items="${ordersList }" varStatus="status">
 						<tr>
 							<td><img width="100" src="${CONTEXT_PATH }/${dto.pImg }"></td>
 							<td>${dto.pName }</td>
 							<td>${dto.pPrice }원</td>
-							<td>${dto.deliveryFee }원</td>
-							<td><input class="span1" style="max-width: 34px"
+							<td><input type="hidden" name="deliveryFee" value="${dto.deliveryFee }">${dto.deliveryFee }원</td>
+							<td><input class="span1" style="max-width: 40px"
 								placeholder="1" size="16" type="number" value="${dto.cCount }"
 								min="1"></td>
-							<%-- <td>${map.get(status.index).value}</td> --%>
-							<%-- <td>${i.value }원</td> --%>
-							<%-- <td>${value }</td> --%>
+							<td><input type="hidden" name="totalPrice" value="${dto.totalPrice }">${dto.totalPrice }원</td>
 						</tr>
 					</c:forEach>
 					<tr>
 						<c:set var="total" value="0" />
 						<td colspan="6" class="alignR"
 							style="text-align: right; font-size: 20px;">총 금액 :</td>
-						<%-- <c:forEach var="i" begin="0" end="${fn:length(ordersList) - 1}">
-							<c:set var="total" value="${total + orders[i].totalPrice }" />
-						</c:forEach> --%>
 						<td class="label label-primary" style="font-size: 20px"><c:out
 								value="${totalCost}원" /></td>
 					</tr>
@@ -149,12 +141,12 @@
 
 				<tr>
 					<td>주소</td>
-					<td><input type="text" name="address" id="address1" size="70"
+					<td><input type="text" name="address1" id="address1" size="70"
 						readonly="readonly" placeholder="도로명주소"> <input
-						type="text" name="address" id="address2" size="70"
+						type="text" name="address2" id="address2" size="70"
 						readonly="readonly" placeholder="지번주소"
 						value="${orders[0].address1 }"> <input type="text"
-						name="address" id="address3" size="70" placeholder="상세주소"
+						name="address3" id="address3" size="70" placeholder="상세주소"
 						value="${orders[0].address2 }"></td>
 				</tr>
 			</table>
@@ -165,14 +157,14 @@
 			<div class="control-group">
 				<label class="control-label">보유 마일리지</label>
 				<div class="controls">
-					<input type="text" id="currentMileage"
+					<input type="text" name="accumulateMileage" id="accumulateMileage"
 						value="${orders[0].mileage }" readonly="readonly">
 				</div>
 				<label class="control-label">사용할 마일리지</label>
 				<div class="controls">
-					<input type="text" name="useMileage" id="useMileage" value="0"
-						min="0" max="${orders[0].mileage }"> <input
-						class="checkbox" id="checkedMileage" type="checkbox">전액 사용
+					<input type="text" name="usedMileage" id="usedMileage" value="0"
+						min="0" max="${orders[0].mileage }"> 
+					<input class="checkbox" id="checkedMileage" type="checkbox">전액 사용
 				</div>
 			</div>
 			<fieldset>
