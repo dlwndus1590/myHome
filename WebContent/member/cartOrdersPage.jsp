@@ -39,14 +39,20 @@
 </script>
 </head>
 <body>
+	
 	<!-- header -->
 	<jsp:include page="/inc/header.jsp" />
+	
+	<div class="row">
+	<div class="span9" style="width:960px;">
 
 	<ul class="breadcrumb">
 		<li><a href="${CONTEXT_PATH}/index.jsp">Home</a> <span
 			class="divider">/</span></li>
 		<li class="active">결제하기</li>
 	</ul>
+	
+	<<div class="well well-small">
 	<fieldset>
 		<legend>상품정보</legend>
 	</fieldset>
@@ -174,6 +180,9 @@
 			</div>
 		</form>
 	</c:if>
+	</div>
+	</div>
+	</div>
 	
 	<!-- footer -->
 	<jsp:include page="/inc/footer.jsp" />

@@ -96,7 +96,7 @@
 		  <div class="row-fluid">
 		  <ul class="thumbnails">
 		  <c:forEach var="bestProduct" items="${productList4}"  begin="0" end="3" step="1">
-			<li class="span4" style="width:220px;">
+			<li class="span4" style="width:219px;">
 			  <div class="thumbnail">
 				<a class="zoomTool" href="${CONTEXT_PATH}/product/productController?action=productDetail&pNo=${bestProduct.pNo}" title="add to cart"><span class="icon-search"></span> <fmt:formatNumber value="${bestProduct.pPrice }" pattern="###,###"/> 원</a>
 				<a  href="${CONTEXT_PATH}/product/productController?action=productDetail&pNo=${bestProduct.pNo}"><img src="${CONTEXT_PATH}/${bestProduct.pImg}"></a>
