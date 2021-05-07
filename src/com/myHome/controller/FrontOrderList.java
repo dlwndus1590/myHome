@@ -94,12 +94,9 @@ public class FrontOrderList extends HttpServlet {
 		int oNo = Integer.parseInt(request.getParameter("oNo"));
 		String oDate = request.getParameter("oDate");
 		OrderListBiz biz = new OrderListBiz();
-		
 		ArrayList<OrdersDetail> orderDetailList = new ArrayList<OrdersDetail>();
 		biz.getOrderDetailList(oNo, orderDetailList);
 		
-		ArrayList<Integer> reviewList = new ArrayList<Integer>();
-		biz.getReviewList(reviewList,memberId);
 		int length = orderDetailList.size() * 2;
 		request.setAttribute("oNo", oNo);
 		request.setAttribute("oDate", oDate);
@@ -111,12 +108,18 @@ public class FrontOrderList extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-
+	
+	/**
+	 * 리뷰 작성 화면 요청 서비스
+	 */
 	private void reviewInputForm(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		int oNo = Integer.parseInt(request.getParameter("oNo"));
 		int pNo = Integer.parseInt(request.getParameter("pNo"));
 		String pImg = request.getParameter("pImg");
 		String pName = request.getParameter("pName");
 		String oDate = request.getParameter("oDate");
+		session.setAttribute("oNo", oNo);
 		request.setAttribute("pNo", pNo);
 		request.setAttribute("pImg", pImg);
 		request.setAttribute("pName", pName);
@@ -128,10 +131,15 @@ public class FrontOrderList extends HttpServlet {
 		}
 	}
 
+	/**
+	 * 리뷰 작성 요청 서비스
+	 */
 	private void reviewInput(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
 		String memberId = request.getParameter("memberId");
 		String oDate = request.getParameter("oDate");
 		int pNo = Integer.parseInt(request.getParameter("pNo"));
+		int oNo = (int)session.getAttribute("oNo");
 		String pImg = request.getParameter("pImg");
 		String reviewContent = request.getParameter("reviewContent");
 		int score = Integer.parseInt(request.getParameter("score"));
@@ -139,6 +147,7 @@ public class FrontOrderList extends HttpServlet {
 		OrderListBiz biz = new OrderListBiz();
 		
 		biz.addReview(dto);
+		biz.reviewCheckTrue(pNo, oNo);
 		PrintWriter writer;
 		try {
 			response.setContentType("text/html;charset=UTF-8");

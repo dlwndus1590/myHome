@@ -60,7 +60,7 @@
 		<tr><td colspan="5"><hr class="hrSoft"></td></tr>
 		<c:set var="flag" value= "미입력" />
 		<c:forEach var="index" items="${orderDetailList}">
-		<form action="${CONTEXT_PATH}/orderList/orderListController?action=reviewInputForm&pNo=${index.pNo}&pName=${index.pName}&pImg=${index.pImg}&oDate=${index.oDate}" method="post">
+		<form action="${CONTEXT_PATH}/orderList/orderListController?action=reviewInputForm&oNo=${index.oNo}&pNo=${index.pNo}&pName=${index.pName}&pImg=${index.pImg}&oDate=${index.oDate}" method="post">
 			<tr>
 				<td style="text-align: center; padding-left: 40px;">${index.dNo}</td>
 				<td><img src="${CONTEXT_PATH}/${index.pImg}" class="productPicture">${index.pName}</td>
@@ -69,11 +69,18 @@
 				<td style="text-align: center" class="grayColor" rowspan="${length}">${index.oDeliveryFee}원</td>
 				<c:set var="flag" value="입력"/>
 				</c:if>
+				<c:choose>
+					<c:when test="${index.reviewCheck == '미평가'}">
 						<td class="grayColor">구매확정<span style="padding-left: 50px;"><input type="submit" value="후기작성"></span></td>
-				</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<td class="grayColor">구매확정<input type="text" value="작성완료" readonly="readonly" style="width: 80px; margin-left: 50px; height: 30px;"></td>
+					</c:otherwise>
+				</c:choose>
 			</tr>
 			<tr><td colspan="5"><hr class="hrSoft"></td></tr>
 		</form>
+				</c:forEach>
 	</table>
 	
 	<h3 class="headerTitle">주문/결제 금액 정보</h3>
