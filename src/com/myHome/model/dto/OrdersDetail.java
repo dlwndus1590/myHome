@@ -7,6 +7,7 @@ import java.io.Serializable;
  * @author 김보성
  */
 public class OrdersDetail implements Serializable {
+	private int oNo;
 	private int dNo;
 	private String memberId;
 	private String oDate;
@@ -26,6 +27,7 @@ public class OrdersDetail implements Serializable {
 	private String address2;
 	private String memberName;
 	private String mobile;
+	private String reviewCheck = "미평가";
 	
 	/**
 	 * 기본 생성자
@@ -55,9 +57,10 @@ public class OrdersDetail implements Serializable {
 	 * @param memberName 구매자 이름
 	 * @param mobile 구매자 핸드폰번호
 	 */
-	public OrdersDetail(int dNo, String memberId, String oDate,int pNo ,String pName, String pImg, String pPrice, int dCount,
-			String oDeliveryFee, String usedMileage, String accumulateMileage, String oTotalPrice, String oTotalPricePlusFee, String totalAmount, int zipCode, String address1, String address2, String memberName, String mobile) {
+	public OrdersDetail(int oNo, int dNo, String memberId, String oDate,int pNo ,String pName, String pImg, String pPrice, int dCount,
+			String oDeliveryFee, String usedMileage, String accumulateMileage, String oTotalPrice, String oTotalPricePlusFee, String totalAmount, int zipCode, String address1, String address2, String memberName, String mobile, String reviewCheck) {
 		super();
+		this.oNo = oNo;
 		this.dNo = dNo;
 		this.memberId = memberId;
 		this.oDate = oDate;
@@ -77,7 +80,23 @@ public class OrdersDetail implements Serializable {
 		this.address2 = address2;
 		this.memberName = memberName;
 		this.mobile = mobile;
+		this.reviewCheck = reviewCheck;
 	}
+	
+	/**
+	 * @return the oNo
+	 */
+	public int getoNo() {
+		return oNo;
+	}
+
+	/**
+	 * @param oNo the oNo to set
+	 */
+	public void setoNo(int oNo) {
+		this.oNo = oNo;
+	}
+
 
 	/**
 	 * @return the dNo
@@ -350,5 +369,19 @@ public class OrdersDetail implements Serializable {
 	 */
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
+	}
+
+	/**
+	 * @return the reviewCheck
+	 */
+	public String getReviewCheck() {
+		return reviewCheck;
+	}
+
+	/**
+	 * @param reviewCheck the reviewCheck to set
+	 */
+	public void setReviewCheck(String reviewCheck) {
+		this.reviewCheck = reviewCheck;
 	}
 }
