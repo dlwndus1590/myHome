@@ -153,7 +153,7 @@ create table orders_detail (
     d_count number not null,
     p_no number,
     o_no number,
-    r_content varchar2(30),
+    reviewCheck varchar2(20),
     constraint p_no_fk3 foreign key(p_no) references product(p_no) on delete cascade,
     constraint o_no_pk foreign key(o_no) references orders(o_no) on delete cascade
 );
