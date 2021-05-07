@@ -68,9 +68,9 @@ public class OrderListDao {
 	 */
 	public void getOrderDetailList(int oNo, ArrayList<OrdersDetail> orderDetailList) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("SELECT od.D_NO, o.MEMBER_ID, TO_CHAR(o.O_DATE,'yyyy-mm-dd'),p.p_No ,p.P_NAME, p.P_IMG , p.P_PRICE * od.D_COUNT AS total, od.D_COUNT, o.O_DELIVERY_FEE ");
+		sql.append("SELECT o.O_NO, od.D_NO, o.MEMBER_ID, TO_CHAR(o.O_DATE,'yyyy-mm-dd'),p.p_No ,p.P_NAME, p.P_IMG , p.P_PRICE * od.D_COUNT AS total, od.D_COUNT, o.O_DELIVERY_FEE ");
 		sql.append(", o.usedMileage, o.accumulateMileage,o.O_TOTAL_PRICE, o.O_TOTAL_PRICE + o.O_DELIVERY_FEE AS oTotalPricePlusFee ");
-		sql.append(", o.O_TOTAL_PRICE, o.o_total_price + o.o_delivery_fee - o.usedmileage As totalAmount,o.ZIP_CODE, o.ADDRESS1, o.ADDRESS2, m.NAME, m.MOBILE ");
+		sql.append(", o.O_TOTAL_PRICE, o.o_total_price + o.o_delivery_fee - o.usedmileage As totalAmount,o.ZIP_CODE, o.ADDRESS1, o.ADDRESS2, m.NAME, m.MOBILE, od.REVIEWCHECK ");
 		sql.append("FROM ORDERS o, ORDERS_DETAIL od, PRODUCT p, MEMBER m ");
 		sql.append("WHERE o.O_NO = od.O_NO and p.P_NO = od.P_NO and m.MEMBER_ID = o.MEMBER_ID and o.O_NO = ? ");
 		sql.append("ORDER BY od.D_NO ASC");
@@ -85,7 +85,8 @@ public class OrderListDao {
 			OrdersDetail dto = null;
 			while(rs.next()) {
 				dto = new OrdersDetail(
-						  rs.getInt("D_NO")
+						  rs.getInt("O_NO")
+						 ,rs.getInt("D_NO")
 						 ,rs.getString("MEMBER_ID")
 						 ,rs.getString("TO_CHAR(o.O_DATE,'yyyy-mm-dd')")
 						 ,rs.getInt("p_No")
@@ -104,6 +105,7 @@ public class OrderListDao {
 						 ,rs.getString("ADDRESS2")
 						 ,rs.getString("NAME")
 						 ,rs.getString("MOBILE")
+						 ,rs.getString("REVIEWCHECK")
 						);
 				orderDetailList.add(dto);
 			}
@@ -209,32 +211,25 @@ public class OrderListDao {
 	}
 
 	/**
-	 * 현재 회원이 이미 후기를 등록한 상품 번호 리스트 요청 메서드 
-	 * @param reviewList 후기등록된 상품 번호 리스트
-	 * @param memberId 로그인한 회원 아이디
+	 * 후기 작성 완료 후 주문 상세 테이블에 주문체크를 평가로 업데이트 요청 메서드
+	 * @param pNo 주문할 상품 번호
+	 * @param oNo 주문 번호
 	 */
-	public void getReviewList(ArrayList<Integer> reviewList, String memberId) {
-		String sql = "SELECT P_NO FROM REVIEW WHERE MEMBER_ID = ?";
+	public void reviewCheckTrue(int pNo, int oNo) {
+		String sql = "UPDATE ORDERS_DETAIL SET REVIEWCHECK = '평가완료' WHERE P_No = ? AND O_NO = ?";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		ResultSet rs = null;
 		try {
-			conn = JdbcTemplate.getConnection();
+			conn =JdbcTemplate.getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, memberId);
-			rs = pstmt.executeQuery();
-			int pNo = 0;
-			while(rs.next()) {
-				pNo = rs.getInt("P_NO");
-				reviewList.add(pNo);
-			}
+			pstmt.setInt(1, pNo);
+			pstmt.setInt(2, oNo);
+			pstmt.executeUpdate();
+			JdbcTemplate.commit(conn);
 		}catch(SQLException e) {
+			JdbcTemplate.rollback(conn);
 			System.out.println("Message : " + e.getMessage());
 			e.printStackTrace();
-		}finally {
-			JdbcTemplate.close(rs);
-			JdbcTemplate.close(pstmt);
-			JdbcTemplate.close(conn);
 		}
 	}
 }
