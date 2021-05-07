@@ -88,10 +88,9 @@ Create table cart(
 create table review (
     r_no number primary key,
     p_no number,
-    r_title varchar2(100) not null,
-    r_img blob,
+    r_img varchar2(100),
     r_content clob not null,
-    r_score number(2,1),
+    r_score number(2),
     member_id varchar2(20),
     r_reg_date date,
     
@@ -154,7 +153,7 @@ create table orders_detail (
     d_count number not null,
     p_no number,
     o_no number,
-    
+    r_content varchar2(30),
     constraint p_no_fk3 foreign key(p_no) references product(p_no) on delete cascade,
     constraint o_no_pk foreign key(o_no) references orders(o_no) on delete cascade
 );

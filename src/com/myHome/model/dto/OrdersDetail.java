@@ -9,6 +9,7 @@ import java.io.Serializable;
 public class OrdersDetail implements Serializable {
 	private int dNo;
 	private String memberId;
+	private String oDate;
 	private int pNo;
 	private String pName;
 	private String pImg;
@@ -36,6 +37,7 @@ public class OrdersDetail implements Serializable {
 	 * 주문 상세 내역 생성자 메서드
 	 * @param dNo 결제 상세 번호
 	 * @param memberId 결제 아이디
+	 * @param memberId 구매 날짜
 	 * @param pNo 상품번호
 	 * @param pName 상품이름
 	 * @param pImg 상품사진
@@ -53,11 +55,12 @@ public class OrdersDetail implements Serializable {
 	 * @param memberName 구매자 이름
 	 * @param mobile 구매자 핸드폰번호
 	 */
-	public OrdersDetail(int dNo, String memberId, int pNo ,String pName, String pImg, String pPrice, int dCount,
+	public OrdersDetail(int dNo, String memberId, String oDate,int pNo ,String pName, String pImg, String pPrice, int dCount,
 			String oDeliveryFee, String usedMileage, String accumulateMileage, String oTotalPrice, String oTotalPricePlusFee, String totalAmount, int zipCode, String address1, String address2, String memberName, String mobile) {
 		super();
 		this.dNo = dNo;
 		this.memberId = memberId;
+		this.oDate = oDate;
 		this.pNo = pNo;
 		this.pName = pName;
 		this.pImg = pImg;
@@ -102,6 +105,20 @@ public class OrdersDetail implements Serializable {
 	 */
 	public void setMemberId(String memberId) {
 		this.memberId = memberId;
+	}
+
+	/**
+	 * @return the oDate
+	 */
+	public String getoDate() {
+		return oDate;
+	}
+
+	/**
+	 * @param oDate the oDate to set
+	 */
+	public void setoDate(String oDate) {
+		this.oDate = oDate;
 	}
 
 	/**

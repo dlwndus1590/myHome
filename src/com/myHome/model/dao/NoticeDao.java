@@ -89,7 +89,6 @@ public class NoticeDao {
 	 * @return 마지막 게시글 번호
 	 */
 	public int noticeLastNum() {
-		ArrayList<Notice> list = new ArrayList<Notice>();
 		String sql = "SELECT MAX(N_NO) FROM NOTICE";
 		Connection conn = null;
 		PreparedStatement stmt = null;

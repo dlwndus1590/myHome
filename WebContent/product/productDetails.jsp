@@ -75,7 +75,7 @@
 				<input type="number" id="count" class="span6" placeholder="1" min="1" style="width:100px" onmouseup="messageChange()" onkeyup="messageChange()">
 			  </div>
 			  <h5> 재고수량 : <fmt:formatNumber value="${product.pCount }" pattern="###,###"/> </h5>
-			  <button type="button" class="defaultBtn"><span class=" icon-shopping-cart"></span> 장바구니 </button>
+			  <button type="button" class="defaultBtn" onclick="location.href='${CONTEXT_PATH}/member/ordersController?action=cartInsert&pNo=${product.pNo}'"><span class=" icon-shopping-cart"></span> 장바구니 </button>
 			  <button type="submit" class="shopBtn"><span class=" icon-shopping-cart"></span> 바로구매 </button>
 			</form>
 			<h3 style="float:right; padding-right:100px;"> </h3>
@@ -113,7 +113,7 @@
 					<form class="form-horizontal qtyFrm">
 						<h3> <fmt:formatNumber value="${productList.pPrice }" pattern="###,###"/> 원 </h3>
 						<div class="btn-group">
-						  <a href="product_details.html" class="defaultBtn"><span class=" icon-shopping-cart"></span> 장바구니 추가</a>
+						  <a href="${CONTEXT_PATH}/member/ordersController?action=cartInsert&pNo=${productList.pNo}" class="defaultBtn"><span class=" icon-shopping-cart"></span> 장바구니 추가</a>
 				 		  <a href="product_details.html" class="shopBtn">상세보기</a>
 						</div>
 					</form>
@@ -124,23 +124,23 @@
 		</div>
 		
 		<div class="tab-pane fade" id="review">
+			<c:forEach var="index" items="${reviewList}">
 			<div class="row-fluid">	  
 				<div class="span2">
-					<img src="${CONTEXT_PATH}/assets/img/b.jpg" alt="">
+					<img src="${CONTEXT_PATH}/${index.pImg}">
 				</div>
 				<div class="span6">
-					<h5> 리뷰제목 </h5>
-						<p>정말 좋아요!!</p>
+						<p style="font-size: 15px; font-weight: bold; padding-left: 10px;"><br>${index.reviewContent}</p>
 					</div>
 				<div class="span4 alignR">
-					<p> 작성자 : </p>
-					<p> 구매일자 : </p>
+					<p style="font-weight: bolder;"> 작성자 : ${index.memberId}</p>
+					<p style="font-weight: bolder;"> 구매일자 : ${index.oDate}</p>
 				</div>
 			</div>
+			</c:forEach>
 			<hr class="soften"/>
 		</div>
 	</div>
-
 </div>
 </div>
 </div>

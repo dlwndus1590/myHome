@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ include file="/inc/taglib_menu.jsp"%>	
 <!DOCTYPE html>
 <html>
 <head>
@@ -64,7 +65,7 @@ $(document).on("click",".star", function(){
 	<jsp:include page="/inc/header.jsp" />
 
 	<!-- contents menu -->
-	<form action="${CONTEXT_PATH}/orderList/orderListController?action=reviewInput&pNo=${pNo}" method="post">
+	<form action="${CONTEXT_PATH}/orderList/orderListController?action=reviewInput&pNo=${pNo}&memberId=${sessionScope.memberId}&pImg=${pImg}" method="post">
 		<div class="row-fluid">
 			<div class="span2" style="width: 160px;">
 				<img src="${CONTEXT_PATH}/${pImg}"
@@ -88,11 +89,11 @@ $(document).on("click",".star", function(){
  				 	 <span class="star">★</span>
 				</span>
 			</span>
-			<input type="text" value="${score}" id="score">
+			<input type="hidden" value="${score}" id="score" name="score">
+			<input type="hidden" value="${oDate}" name="oDate">
 			<br>
 			<div class="btn-group">
-				<a href="product_details.html" class="shopBtn"
-					style="margin-left: 800px;">작성완료</a>
+				<input type="submit" class="shopBtn" style="margin-left: 800px;" value="작성완료">
 			</div>
 	</form>
 	<!-- footer -->

@@ -1,6 +1,7 @@
 package com.myHome.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.ServletConfig;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import com.myHome.model.biz.OrderListBiz;
 import com.myHome.model.dto.OrderList;
 import com.myHome.model.dto.OrdersDetail;
+import com.myHome.model.dto.Review;
 
 /**
  * 구매 이력 및 후기 및 평점 관리 서비스
@@ -48,6 +50,11 @@ public class FrontOrderList extends HttpServlet {
 			case "reviewInputForm":
 				reviewInputForm(request, response);	
 				break;
+			
+			case "reviewInput":
+				reviewInput(request, response);	
+				break;
+			
 		}
 	}
 
@@ -82,12 +89,17 @@ public class FrontOrderList extends HttpServlet {
 	 * 구매 이력 상세 조회 요청 서비스
 	 */
 	private void orderDetail(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		String memberId = (String)session.getAttribute("memberId");
 		int oNo = Integer.parseInt(request.getParameter("oNo"));
 		String oDate = request.getParameter("oDate");
 		OrderListBiz biz = new OrderListBiz();
-		ArrayList<OrdersDetail> orderDetailList = new ArrayList<OrdersDetail>();
 		
+		ArrayList<OrdersDetail> orderDetailList = new ArrayList<OrdersDetail>();
 		biz.getOrderDetailList(oNo, orderDetailList);
+		
+		ArrayList<Integer> reviewList = new ArrayList<Integer>();
+		biz.getReviewList(reviewList,memberId);
 		int length = orderDetailList.size() * 2;
 		request.setAttribute("oNo", oNo);
 		request.setAttribute("oDate", oDate);
@@ -104,14 +116,36 @@ public class FrontOrderList extends HttpServlet {
 		int pNo = Integer.parseInt(request.getParameter("pNo"));
 		String pImg = request.getParameter("pImg");
 		String pName = request.getParameter("pName");
-		String dCount = request.getParameter("dCount");
+		String oDate = request.getParameter("oDate");
 		request.setAttribute("pNo", pNo);
 		request.setAttribute("pImg", pImg);
 		request.setAttribute("pName", pName);
-		request.setAttribute("dCount", dCount);
+		request.setAttribute("oDate", oDate);
 		try {
 			request.getRequestDispatcher("/orderList/reviewInputForm.jsp").forward(request, response);
 		} catch (ServletException | IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void reviewInput(HttpServletRequest request, HttpServletResponse response) {
+		String memberId = request.getParameter("memberId");
+		String oDate = request.getParameter("oDate");
+		int pNo = Integer.parseInt(request.getParameter("pNo"));
+		String pImg = request.getParameter("pImg");
+		String reviewContent = request.getParameter("reviewContent");
+		int score = Integer.parseInt(request.getParameter("score"));
+		Review dto = new Review(memberId, oDate, pNo, pImg,reviewContent, score);
+		OrderListBiz biz = new OrderListBiz();
+		
+		biz.addReview(dto);
+		PrintWriter writer;
+		try {
+			response.setContentType("text/html;charset=UTF-8");
+			writer = response.getWriter();
+			writer.println("<script>alert('후기 작성이 완료되었습니다.'); location.href= '"+CONTEXT_PATH+"/member/memberMyPage.jsp';</script>");
+			writer.close();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}

@@ -13,10 +13,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.myHome.model.biz.OrderListBiz;
 import com.myHome.model.biz.ProductBiz;
 import com.myHome.model.dto.Category;
 import com.myHome.model.dto.Member;
 import com.myHome.model.dto.Product;
+import com.myHome.model.dto.Review;
 import com.myHome.util.Utility;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
@@ -147,6 +149,8 @@ public class FrontProduct extends HttpServlet {
 		ProductBiz biz = new ProductBiz();
 		product.setpNo(pNo);
 		
+		ArrayList<Review> reviewList = new ArrayList<Review>();
+		OrderListBiz reviewBiz = new OrderListBiz();
 		try {
 			biz.selectProductOne(product);
 			HttpSession session = request.getSession();
@@ -159,6 +163,8 @@ public class FrontProduct extends HttpServlet {
 			biz.getRelatedProductList(product.getCategoryId(), product.getpNo(), productList2);
 			request.setAttribute("productList2", productList2);
 			
+			reviewBiz.reviewList(pNo, reviewList);
+			request.setAttribute("reviewList", reviewList);
 			request.getRequestDispatcher("/product/productDetails.jsp").forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
