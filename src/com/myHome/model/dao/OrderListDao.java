@@ -29,7 +29,7 @@ public class OrderListDao {
 		sql.append("SELECT o.O_NO, o.MEMBER_ID, TO_CHAR(o.O_DATE,'yyyy-mm-dd'), p.P_NAME, p.P_IMG , p.P_PRICE, p.P_SCORE ");
 		sql.append("FROM ORDERS o, ORDERS_DETAIL od, PRODUCT p ");
 		sql.append("WHERE o.O_NO = od.O_NO and p.P_NO = od.P_NO ");
-		sql.append("ORDER BY o.O_NO");
+		sql.append("ORDER BY o.O_NO desc");
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -67,9 +67,11 @@ public class OrderListDao {
 	 */
 	public void getOrderDetailList(int oNo, ArrayList<OrdersDetail> orderDetailList) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("SELECT od.D_NO, o.MEMBER_ID, p.P_NAME, p.P_IMG , p.P_PRICE * od.D_COUNT AS total, od.D_COUNT, o.O_DELIVERY_FEE, o.usedMileage, o.accumulateMileage,o.O_TOTAL_PRICE,o.O_TOTAL_PRICE, o.o_total_price + o.o_delivery_fee - o.usedmileage As totalAmount ");
-		sql.append("FROM ORDERS o, ORDERS_DETAIL od, PRODUCT p ");
-		sql.append("WHERE o.O_NO = od.O_NO and p.P_NO = od.P_NO and o.O_NO = ? ");
+		sql.append("SELECT od.D_NO, o.MEMBER_ID, p.P_NAME, p.P_IMG , p.P_PRICE * od.D_COUNT AS total, od.D_COUNT, o.O_DELIVERY_FEE ");
+		sql.append(", o.usedMileage, o.accumulateMileage,o.O_TOTAL_PRICE, o.O_TOTAL_PRICE + o.O_DELIVERY_FEE AS oTotalPricePlusFee ");
+		sql.append(", o.O_TOTAL_PRICE, o.o_total_price + o.o_delivery_fee - o.usedmileage As totalAmount,o.ZIP_CODE, o.ADDRESS1, o.ADDRESS2, m.NAME, m.MOBILE ");
+		sql.append("FROM ORDERS o, ORDERS_DETAIL od, PRODUCT p, MEMBER m ");
+		sql.append("WHERE o.O_NO = od.O_NO and p.P_NO = od.P_NO and m.MEMBER_ID = o.MEMBER_ID and o.O_NO = ? ");
 		sql.append("ORDER BY od.D_NO ASC");
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -92,7 +94,13 @@ public class OrderListDao {
 						 ,Utility.convertNumberString(rs.getInt("usedMileage"))
 						 ,Utility.convertNumberString(rs.getInt("accumulateMileage"))
 						 ,Utility.convertNumberString(rs.getInt("O_TOTAL_PRICE"))
+						 ,Utility.convertNumberString(rs.getInt("oTotalPricePlusFee"))
 						 ,Utility.convertNumberString(rs.getInt("totalAmount"))
+						 ,rs.getInt("ZIP_CODE")
+						 ,rs.getString("ADDRESS1")
+						 ,rs.getString("ADDRESS2")
+						 ,rs.getString("NAME")
+						 ,rs.getString("MOBILE")
 						);
 				orderDetailList.add(dto);
 			}

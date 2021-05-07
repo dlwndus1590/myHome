@@ -27,15 +27,14 @@
 
 	<div align="center">
 		<table class="commonTable">
-		<c:if test="${sessionScope.memberId == 'admin'}">
-			<tr>
-				<td align="right" colspan="8">
-				<a href="${CONTEXT_PATH}/notice/noticeController?action=noticeInputForm">
-						<input type="button" value="글쓰기" id="write">
-				</a>
-				</td>
-			</tr>
-		</c:if>
+			<c:if test="${sessionScope.memberId == 'admin'}">
+				<tr>
+					<td align="right" colspan="8"><a
+						href="${CONTEXT_PATH}/notice/noticeController?action=noticeInputForm">
+							<input type="button" value="글쓰기" id="write">
+					</a></td>
+				</tr>
+			</c:if>
 			<tr>
 				<th align="center" class="nTitle" id="nNo"></th>
 				<th align="center" class="nTitle">아이디</th>
@@ -57,11 +56,12 @@
 						</tr>
 					</c:forEach>
 				</c:when>
-				
+
 				<c:otherwise>
-				<tr>
-					<td rowspan="5" colspan="5" align="center" id ="noInfo">등록된 게시글이 없습니다. </td>
-				</tr>
+					<tr>
+						<td rowspan="5" colspan="5" align="center" id="noInfo">등록된
+							게시글이 없습니다.</td>
+					</tr>
 				</c:otherwise>
 			</c:choose>
 		</table>
@@ -69,7 +69,7 @@
 	<br />
 
 	<form
-		action="${CONTEXT_PATH}//notice/noticeController?action=noticeSearch"
+		action="${CONTEXT_PATH}/notice/noticeController?action=noticeSearch"
 		method="post">
 		<div align="center">
 			<table class="commonTable">
@@ -90,5 +90,11 @@
 
 	<!-- footer -->
 	<jsp:include page="/inc/footer.jsp" />
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="${CONTEXT_PATH}/assets/js/jquery.js"></script>
+	<script src="${CONTEXT_PATH}/assets/js/bootstrap.min.js"></script>
+	<script src="${CONTEXT_PATH}/assets/js/jquery.easing-1.3.min.js"></script>
+	<script src="${CONTEXT_PATH}/assets/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+	<script src="${CONTEXT_PATH}/assets/js/shop.js"></script>
 </body>
 </html>

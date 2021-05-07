@@ -49,7 +49,7 @@
 			</td>
 			
 			<td id="DeliveryFee" >
-				배송비
+				총배송비
 			</td>
 			
 			<td id="currentStatus">
@@ -58,20 +58,21 @@
 		</tr>
 		
 		<tr><td colspan="5"><hr class="hrSoft"></td></tr>
-		
-		<c:set var="flag" value="0" />
+		<c:set var="flag" value= "미입력" />
 		<c:forEach var="index" items="${orderDetailList}">
+		<form action="${CONTEXT_PATH}/orderList/orderListController?action=reviewInputForm&pName=${index.pName}" method="post">
 			<tr>
 				<td style="text-align: center; padding-left: 40px;">${index.dNo}</td>
 				<td><img src="${CONTEXT_PATH}/${index.pImg}" class="productPicture">${index.pName}</td>
 				<td style="text-align: center">${index.pPrice}원<p></p>(${index.dCount}개)</td>
-				<c:if test="${flag == 0}">
-				<td style="text-align: center" class="grayColor" rowspan="${length}">${index.oDeliveryFee}</td>
-				<c:set var="flag" value="1" />
+				<c:if test="${flag == '미입력'}">
+				<td style="text-align: center" class="grayColor" rowspan="${length}">${index.oDeliveryFee}원</td>
+				<c:set var="flag" value="입력"/>
 				</c:if>
-				<td class="grayColor">구매확정<span style="padding-left: 50px;"><input type="submit" value="리뷰쓰기"></span></td>
+				<td class="grayColor">구매확정<span style="padding-left: 50px;"><input type="submit" value="후기작성"></span></td>
 			</tr>
 			<tr><td colspan="5"><hr class="hrSoft"></td></tr>
+		</form>
 		</c:forEach>
 	</table>
 	
@@ -93,10 +94,9 @@
 			<td style="text-align: right; padding-right: 10px;">${orderDetailList.get(0).usedMileage}원</td>
 		</tr>
 		
-
 		<tr>
 			<td class="priceTableInfo">배송비</td>
-			<td style="text-align: right">+${orderDetailList.get(0).oDeliveryFee}원</td>
+			<td style="text-align: right;">+${orderDetailList.get(0).oDeliveryFee}원</td>
 			<td class="priceTableInfo">포인트 적립</td>
 			<td style="text-align: right; padding-right: 10px;">+${orderDetailList.get(0).accumulateMileage}원</td>
 		</tr>
@@ -104,16 +104,46 @@
 	
 	<div id="receipt">
 				<br>
-				<span id="receiptPrice1">주문금액</span>
-				<span id="receiptPrice2">${orderDetailList.get(0).totalAmount}원</span>
+				<span id="receiptOrderPrice1">주문금액</span>
+				<span id="receiptOrderPrice2">${orderDetailList.get(0).oTotalPricePlusFee}원</span>
 				<br><br>
 				<span id="receiptPoint1">포인트 사용</span>
 				<span id="receiptPoint2">${orderDetailList.get(0).usedMileage}원</span>
 				<hr>
+				<span id="receiptPrice1">결제 금액</span>
+				<span id="receiptPrice2">${orderDetailList.get(0).totalAmount}원</span>
 	</div>
 	
-	<div id="lineSpace"></div>
+	<div id="lineSpaceTop"></div>
+	
+	<h3 class="headerTitle">배송지 정보</h3>
+	<hr class="hrBold">
+	<table style="width: 400px;">
+		<tr>
+			<th style="padding : 30px 0px 15px 80px; width: 150px; font-weight: bolder;">수령인</th>
+			<td style="padding : 30px 0px 15px 10px;">${orderDetailList.get(0).memberName}</td>
+		</tr>
+		
+		<tr>
+			<th style="padding : 0px 0px 15px 80px; width: 150px; font-weight: bolder;">연락처</th>
+			<td style="padding : 0px 0px 15px 10px;">${orderDetailList.get(0).mobile}</td>
+		</tr>
+		
+		<tr>
+			<th style="padding : 0px 0px 15px 80px; width: 150px; font-weight: bolder;">배송지</th>
+			<td style="padding : 0px 0px 15px 10px;">${orderDetailList.get(0).zipCode}
+				<br>${orderDetailList.get(0).address1}
+				<br>${orderDetailList.get(0).address2}
+			</td>
+		</tr>
+	</table>
 	<!-- footer -->
 	<jsp:include page="/inc/footer.jsp" />
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="${CONTEXT_PATH}/assets/js/jquery.js"></script>
+	<script src="${CONTEXT_PATH}/assets/js/bootstrap.min.js"></script>
+	<script src="${CONTEXT_PATH}/assets/js/jquery.easing-1.3.min.js"></script>
+	<script src="${CONTEXT_PATH}/assets/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+	<script src="${CONTEXT_PATH}/assets/js/shop.js"></script>
 </body>
 </html>

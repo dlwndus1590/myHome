@@ -129,5 +129,11 @@
 
 	<!-- footer -->
 	<jsp:include page="/inc/footer.jsp" />
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="${CONTEXT_PATH}/assets/js/jquery.js"></script>
+	<script src="${CONTEXT_PATH}/assets/js/bootstrap.min.js"></script>
+	<script src="${CONTEXT_PATH}/assets/js/jquery.easing-1.3.min.js"></script>
+	<script src="${CONTEXT_PATH}/assets/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+	<script src="${CONTEXT_PATH}/assets/js/shop.js"></script>
 </body>
 </html>

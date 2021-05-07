@@ -32,7 +32,7 @@
 							<div class="thumbnail">
 								<a class="zoomTool"
 									href="${CONTEXT_PATH}/orderList/orderListController?action=orderDetail&oNo=${index.oNo}&oDate=${index.oDate}"><span
-									class="icon-search"></span> 구매 이력 상세 조회</a> <a
+									class="icon-search"></span> 구매 이력 상세</a> <a
 									href="${CONTEXT_PATH}/orderList/orderListController?action=orderDetail&oNo=${index.oNo}&oDate=${index.oDate}"><img
 									src="${CONTEXT_PATH}/${index.pImg}"></a>
 								<div class="caption cntr">
@@ -43,8 +43,11 @@
 										<a class="shopBtn" href="#" title="review"> 후기 작성 </a>
 									</h4>
 									<div class="actionList">
-										<p>
+										<p style="margin-top: 5px;">
 											<img src="${CONTEXT_PATH}/img/star.png">${index.pScore}
+										</p>
+										<p style="margin-top: 15px;">
+											구매일 : ${index.oDate}
 										</p>
 									</div>
 									<br class="clr">
