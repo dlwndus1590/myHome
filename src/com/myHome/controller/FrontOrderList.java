@@ -101,7 +101,18 @@ public class FrontOrderList extends HttpServlet {
 	}
 
 	private void reviewInputForm(HttpServletRequest request, HttpServletResponse response) {
+		int pNo = Integer.parseInt(request.getParameter("pNo"));
+		String pImg = request.getParameter("pImg");
 		String pName = request.getParameter("pName");
-		System.out.println(pName);
+		String dCount = request.getParameter("dCount");
+		request.setAttribute("pNo", pNo);
+		request.setAttribute("pImg", pImg);
+		request.setAttribute("pName", pName);
+		request.setAttribute("dCount", dCount);
+		try {
+			request.getRequestDispatcher("/orderList/reviewInputForm.jsp").forward(request, response);
+		} catch (ServletException | IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

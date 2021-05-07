@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>my Home</title>
+<title>My Home</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="주문 상세 내역">
 <meta name="author" content="김보성">
@@ -60,7 +60,7 @@
 		<tr><td colspan="5"><hr class="hrSoft"></td></tr>
 		<c:set var="flag" value= "미입력" />
 		<c:forEach var="index" items="${orderDetailList}">
-		<form action="${CONTEXT_PATH}/orderList/orderListController?action=reviewInputForm&pName=${index.pName}" method="post">
+		<form action="${CONTEXT_PATH}/orderList/orderListController?action=reviewInputForm&pNo=${index.pNo}&pName=${index.pName}&pImg=${index.pImg}&dCount=${index.dCount}" method="post">
 			<tr>
 				<td style="text-align: center; padding-left: 40px;">${index.dNo}</td>
 				<td><img src="${CONTEXT_PATH}/${index.pImg}" class="productPicture">${index.pName}</td>
