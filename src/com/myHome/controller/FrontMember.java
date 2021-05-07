@@ -121,6 +121,9 @@ public class FrontMember extends HttpServlet {
 		case "memberDetail":	
 			memberDetail(request,response);
 			break;
+		case "memberMyQNoticeList":	
+			memberMyQNoticeList(request,response);
+			break;
 		}
 	}
 
@@ -772,6 +775,14 @@ public class FrontMember extends HttpServlet {
 		} catch (Exception e) {
 			request.getRequestDispatcher("/member/memberList.jsp").forward(request, response);
 		}
+	}
+
+	/**
+	 * 내 게시글 리스트 화면 요청 서비스
+	 * @author 김보성
+	 */
+	private void memberMyQNoticeList(HttpServletRequest request, HttpServletResponse response) {
+			
 	}
 }
 
