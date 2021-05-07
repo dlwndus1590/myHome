@@ -14,6 +14,13 @@
 <!-- header menu -->
 <jsp:include page="/inc/header.jsp" />
 
+<style type="text/css">
+	input[type=text], input[type=password]{
+		height: 35px;		
+	}
+	
+</style>
+
 <script type="text/javascript" src="${CONTEXT_PATH}/js/member_input.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script type="text/javascript">
@@ -75,7 +82,7 @@ function postcodeTest() {
     <hr>
 
     <input type="submit" class="registerbtn" value="내 정보 변경"></input>
-    <button type="submit" class="registerbtn" onclick="location.href='history.back()'">취소하기</button>
+    <input type="submit" class="registerbtn" onclick="location.href='history.back()'" value="취소하기"></input>
   </div>
 	
 </form>

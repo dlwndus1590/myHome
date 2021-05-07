@@ -24,7 +24,7 @@
 table {
   border-collapse: collapse;
   border-spacing: 0;
-  width: 1250px;
+  width: 100%;
   border: 1px solid #ddd;
   margin-right: 50px;
 }
@@ -81,7 +81,7 @@ tr:nth-child(even) {
 		  <tr>	    
 		  	<td><%=num++ %></td>
 		    <td><a href="${CONTEXT_PATH}/member/memberController?action=memberDetail&memberId=${dto.memberId}">${dto.memberId}</a></td>
-		    <td>${dto.memberPw}</td>
+		    <td><%=Utility.convertSecurePw("${dto.memberPw}") %></td>
 		    <td>${dto.name}</td>
 		    <td>${dto.email}</td>
 		    <td>${dto.mobile}</td>

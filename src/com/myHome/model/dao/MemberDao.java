@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 import com.myHome.common.JdbcTemplate;
 import com.myHome.model.dto.Member;
+import com.myHome.util.Utility;
 
 
 /**
@@ -103,7 +104,7 @@ public class MemberDao implements Serializable{
 			stmt.setString(8, dto.getAddress2());	
 			stmt.setString(9, dto.getBusinessNumber());
 			stmt.setString(10, dto.getCompanyName());
-			stmt.setString(11, dto.getEntryDate());			
+			stmt.setString(11, Utility.getCurrentDate(dto.getEntryDate()));			
 			stmt.setInt(12, dto.getMileage());
 			stmt.setString(13, dto.getGrade());	
 			
@@ -142,7 +143,7 @@ public class MemberDao implements Serializable{
 			stmt.setString(8, member.getAddress2());
 			stmt.setString(9, member.getBusinessNumber());
 			stmt.setString(10, member.getCompanyName());
-			stmt.setString(11, member.getEntryDate());
+			stmt.setString(11, Utility.getCurrentDate(member.getEntryDate()));
 			stmt.setString(12, member.getGrade());	
 
 			JdbcTemplate.commit(conn);			

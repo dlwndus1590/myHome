@@ -29,6 +29,15 @@ public class Utility {
 	}
 	
 	/**
+	 * 현재날짜를 기본형식(년도4자리-월2자리-일2자리)의 문자열 반환 메서드
+	 * @return 현재날짜 기본형식 문자열
+	 */
+	public static String getCurrentDate() {
+		SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+		return date.format(new Date());
+	}
+	
+	/**
 	 * <pre>
 	 * 아규먼트로 받은 숫자데이터를 천단위 컴마표기로 변환 문자열 반환 메서드
 	 * </pre>

@@ -31,6 +31,7 @@ input[type=text], input[type=password] {
   display: inline-block;
   border: none;
   background: #f1f1f1;
+  height: 35px;
 }
 
 #zipcode, #memberid{
@@ -98,6 +99,7 @@ function postcodeTest() {
 		    }
 		}).open();
 }
+</script>
 </head>
 <body>
 
@@ -144,10 +146,11 @@ function postcodeTest() {
     <hr>
 
 	<input type="submit" class="registerbtn" value="내 정보 변경"></input>
-    <button type="submit" class="registerbtn" onclick="location.href='history.back()'">취소하기</button>
+	<input type="submit" class="registerbtn" onclick="location.href='history.back()'" value="취소하기"></input>
   </div>
   	
 </form>
+
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="${CONTEXT_PATH}/assets/js/jquery.js"></script>
 <script src="${CONTEXT_PATH}/assets/js/bootstrap.min.js"></script>

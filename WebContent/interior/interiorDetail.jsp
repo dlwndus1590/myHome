@@ -107,7 +107,7 @@ hr {
 		  		관리자 로그인 시에만 보이는 버튼  
 		  		-->
 	      <div class="clearfix">        
-			  <input type="submit"  value="수정하기">			         
+			  <input type="submit"  value="수정하기" >			         
 	      </div>
     </div>
     

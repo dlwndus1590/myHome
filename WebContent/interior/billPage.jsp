@@ -1,10 +1,11 @@
+<%@page import="com.myHome.util.Utility"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>myHome</title>
+<title>my Home</title>
 
 <!-- header menu -->
 <jsp:include page="/inc/header.jsp" />
@@ -98,11 +99,12 @@ h3{
 	var num7 = 0;	
 	
 	function totalPrice(clickValue){
+		
 		var action = $(clickValue.parentNode).attr("class");					
 		
 		switch(action) {
 		case "title":
-			num1 = parseInt(clickValue.value);
+			num1 = parseInt(clickValue.value);			
 			break;
 		case "width":
 			num2 = parseInt(clickValue.value);
@@ -121,8 +123,9 @@ h3{
 			break;			
 		}
 		
-		total = num1 + num2 + num3 + num4 + num5 + num6;		
-		document.getElementById("innerText").innerHTML = total;
+		total = num1 + num2 + num3 + num4 + num5 + num6;	
+		total = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+		document.getElementById("innerText").innerHTML = total+" 원";		
 	}
 
 	function sangdamCheck(){
@@ -145,8 +148,7 @@ h3{
 			alert("주방을 선택해 주세요.");
 			return false;
 		} else if(num1 !=0 || num2 != 0 || num3 !=0 || num4 !=0 || num5 != 0 || num6 != 0){
-			return true;
-			//form.submit();				
+			return true;						
 		}
 	}
 </script>

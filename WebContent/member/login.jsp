@@ -10,6 +10,14 @@
 
 <!-- header menu -->
 <jsp:include page="/inc/header.jsp" />
+
+<style>
+	#memberId, #memberPw{
+		height: 50px;
+		font-size: 20px;
+	}
+</style>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script type="text/javascript" src="${CONTEXT_PATH}/js/member_input.js"></script>
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
@@ -56,13 +64,11 @@ function kakaoLogin() {
     <h1>로그인</h1>
     <hr>
 
-    <label><b>아이디</b></label>
-    <br>
+    <label><b>아이디</b></label>    
     <input type="text" id="memberId" name="memberId" required>
     
     <br>
-    <label><b>비밀번호</b></label>
-    <br>
+    <label><b>비밀번호</b></label>    
     <input type="password" id="memberPw" name="memberPw" required>
     <div id="memberPwConfirmMessage"></div>	
 

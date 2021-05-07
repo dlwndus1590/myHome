@@ -109,7 +109,7 @@ a {
 						alert("해당 아이디는 사용중입니다.");	
 						idcheck=false;
 					}else {
-						$("#memberId").attr("value","Y");						
+						//$("#memberId").attr("value","Y");						
 						alert("사용가능한 아이디입니다.");
 						idcheck=true;
 					}			
