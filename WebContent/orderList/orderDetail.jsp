@@ -71,10 +71,10 @@
 				</c:if>
 				<c:choose>
 					<c:when test="${index.reviewCheck == '미평가'}">
-						<td class="grayColor">구매확정<span style="padding-left: 50px;"><input type="submit" value="후기작성"></span></td>
+						<td class="grayColor">구매확정<span style="padding-left: 60px;"><input type="submit" value="후기작성"></span></td>
 					</c:when>
 					<c:otherwise>
-						<td class="grayColor">구매확정<input type="text" value="작성완료" readonly="readonly" style="width: 80px; margin-left: 50px; height: 30px;"></td>
+						<td class="grayColor">구매확정<input type="text" value="후기작성완료" readonly="readonly" style="width: 100px; margin-left: 50px; height: 30px;"></td>
 					</c:otherwise>
 				</c:choose>
 			</tr>

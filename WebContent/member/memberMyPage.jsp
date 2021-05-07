@@ -78,8 +78,8 @@
 		  
 		  <div class="column">
 		    <div class="card">
-		      <h3>myboard</h3>
-		      <a href="#"><p>내 게시글</p></a>  
+		      <h3>myQboard</h3>
+		      <a href="${CONTEXT_PATH}/member/memberController?action=memberMyQNoticeList"><p>내 질문 게시글</p></a>  
 		    </div>
 		  </div>
 		</div> 
