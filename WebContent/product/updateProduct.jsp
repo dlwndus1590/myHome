@@ -68,11 +68,11 @@
     <ul class="breadcrumb">
    		<li><a href="${CONTEXT_PATH}/index.jsp">Home</a> <span class="divider"></span></li>
    		<li><a href="${CONTEXT_PATH}/member/memberController?action=sellerMyPage">마이페이지</a> <span class="divider"></span></li>
-   		<li class="active">상품등록</li>
+   		<li class="active">상품수정</li>
     </ul>
 	<div class="well">
 	<form class="form-horizontal" action="${CONTEXT_PATH}/product/productController?action=productUpdate&pNo=${product.pNo}" method="post">
-		<h3>상품 등록</h3>
+		<h3>상품 수정</h3>
 		<div class="control-group">
 		<label class="control-label">상품명 <sup>*</sup></label>
 		<div class="controls">
