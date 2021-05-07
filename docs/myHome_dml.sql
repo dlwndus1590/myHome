@@ -58,9 +58,9 @@ insert into orders_method values (3, '휴대폰결제');
 INSERT INTO orders VALUES (1, 'user01', 2, 314800, to_char(sysdate, 'yyyy-mm-dd'), 7500, 300, 3148, 47212, '서울특별시보라매로21길38', '보라매병원앞');
 
 -- orders_detail 초기화데이터
-INSERT INTO orders_detail VALUES (1, 2, 1, 1);
-INSERT INTO orders_detail VALUES (2, 2, 2, 1);
-INSERT INTO orders_detail VALUES (3, 2, 3, 1);
+INSERT INTO orders_detail VALUES (1, 2, 1, 1,'미평가');
+INSERT INTO orders_detail VALUES (2, 2, 2, 1, '평가완료');
+INSERT INTO orders_detail VALUES (3, 2, 3, 1, '미평가');
 
 -- interior 초기화데이터
 insert into interior values (1, '유캠프인테리어', 5, '설명 대체', '서울시 태해란로 11길 5');
