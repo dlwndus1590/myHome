@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>인테리어 업체 </title>
+<title>myHome</title>
 <!-- header menu -->
 <jsp:include page="/inc/header.jsp" />
 <style>
@@ -119,6 +119,12 @@ hr {
 			  <input type="submit"  value="삭제하기">		         
 	</div>	 
 </form>
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="${CONTEXT_PATH}/assets/js/jquery.js"></script>
+<script src="${CONTEXT_PATH}/assets/js/bootstrap.min.js"></script>
+<script src="${CONTEXT_PATH}/assets/js/jquery.easing-1.3.min.js"></script>
+<script src="${CONTEXT_PATH}/assets/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+<script src="${CONTEXT_PATH}/assets/js/shop.js"></script>
 <!-- footer menu -->
 <jsp:include page="/inc/footer.jsp"/>
 </body>
