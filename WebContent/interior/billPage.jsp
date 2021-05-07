@@ -88,8 +88,18 @@ h3{
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script type="text/javascript">
+
+	function getParameterByName(name) {
+	    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+	    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+	            results = regex.exec(location.search);
+	    return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+	}
+	
+	var param = getParameterByName('icareer');	
 	
 	var total = 0;
+	var sum  = 0;
 	var num1 = 0;
 	var num2 = 0;
 	var num3 = 0;
@@ -98,10 +108,8 @@ h3{
 	var num6 = 0;		
 	var num7 = 0;	
 	
-	function totalPrice(clickValue){
-		
-		var action = $(clickValue.parentNode).attr("class");					
-		
+	function totalPrice(clickValue){		
+		var action = $(clickValue.parentNode).attr("class");		
 		switch(action) {
 		case "title":
 			num1 = parseInt(clickValue.value);			
@@ -123,11 +131,14 @@ h3{
 			break;			
 		}
 		
-		total = num1 + num2 + num3 + num4 + num5 + num6;	
+		total = num1 + num2 + num3 + num4 + num5 + num6;		
+		total = total * (param * 0.21);		
 		total = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+		
 		document.getElementById("innerText").innerHTML = total+" 원";		
 	}
 
+	
 	function sangdamCheck(){
 		if(num1==0){
 			alert("주거유형을 선택해 주세요.");
