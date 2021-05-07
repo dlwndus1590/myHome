@@ -95,7 +95,7 @@
 		<div class="column">
 		   <div class="card">
 		     <h3>widthdraw</h3>
-		     <a href="${CONTEXT_PATH}/member/memberController?action=memberDelete"><p>탈퇴하기</p></a>  
+		     <a href="${CONTEXT_PATH}/member/memberDelete.jsp"><p>탈퇴하기</p></a>  
 		   </div>
 		</div>
 </div>
