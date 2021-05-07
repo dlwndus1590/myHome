@@ -30,8 +30,8 @@
 				// data.zonecode에 우편번호값, data.roadAddress에 도로명주소값, data.jibunAddress에 지번주소값 담겨있습니다.
 				document.getElementById('zipcode').value = data.zonecode;
 				document.getElementById("address1").value = data.roadAddress;
-				document.getElementById("address2").value = data.jibunAddress;
-				document.getElementById("address3").focus();
+				//document.getElementById("address2").value = data.jibunAddress;
+				document.getElementById("address2").focus();
 			}
 		}).open();
 	}
@@ -110,26 +110,6 @@
 			<fieldset>
 				<legend>배송지정보</legend>
 			</fieldset>
-			<%-- 
-			<div class="control-group">
-				<label class="control-label">우편번호</label>
-				<div class="controls">
-					<input type="text" value="${orders[0].zipCode }">
-				</div>
-			</div>
-			<div class="control-group">
-				<label class="control-label">지번주소</label>
-				<div class="controls">
-					<input type="text" value="${orders[0].address1 }">
-				</div>
-			</div>
-			<div class="control-group">
-				<label class="control-label">상세주소</label>
-				<div class="controls">
-					<input type="text" value="${orders[0].address2 }">
-				</div>
-			</div>
-			--%>
 			<table width="700" border="1" cellspacing="0" cellpadding="3"
 				align="center">
 				<tr>
@@ -142,12 +122,10 @@
 				<tr>
 					<td>주소</td>
 					<td><input type="text" name="address1" id="address1" size="70"
-						readonly="readonly" placeholder="도로명주소"> <input
-						type="text" name="address2" id="address2" size="70"
-						readonly="readonly" placeholder="지번주소"
-						value="${orders[0].address1 }"> <input type="text"
-						name="address3" id="address3" size="70" placeholder="상세주소"
-						value="${orders[0].address2 }"></td>
+						readonly="readonly" placeholder="도로명주소" value="${orders[0].address1 }"> <input type="text"
+						name="address2" id="address2" size="70" placeholder="상세주소"
+						value="${orders[0].address2 }">
+					</td>
 				</tr>
 			</table>
 
@@ -197,7 +175,6 @@
 	<script src="${CONTEXT_PATH}/assets/js/jquery.easing-1.3.min.js"></script>
 	<script src="${CONTEXT_PATH}/assets/js/jquery.scrollTo-1.4.3.1-min.js"></script>
 	<script src="${CONTEXT_PATH}/assets/js/shop.js"></script>
-	<%-- <script src="${CONTEXT_PATH}/js/orders/ordersPage.js"></script> --%>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#checkedMileage").change(function() {
