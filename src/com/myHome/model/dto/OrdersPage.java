@@ -22,7 +22,7 @@ public class OrdersPage {
 	}
 
 	
-	public OrdersPage(int pNo, String pName, int pPrice, int cCount, String pImg, int deliveryFee, int totalPrice) {
+	public OrdersPage(int pNo, String pName, int pPrice, int cCount, String pImg, int deliveryFee, int totalPrice, int stock) {
 		this.pNo = pNo;
 		this.pName = pName;
 		this.pPrice = pPrice;
@@ -30,6 +30,7 @@ public class OrdersPage {
 		this.pImg = pImg;
 		this.deliveryFee = deliveryFee;
 		this.totalPrice = totalPrice;
+		this.stock = stock;
 	}
 
 

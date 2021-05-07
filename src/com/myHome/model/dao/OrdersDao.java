@@ -25,7 +25,7 @@ public class OrdersDao {
 	 * 장바구니 페이지 조회
 	 */
 	public void getCartPage(Connection conn, String memberId, ArrayList<OrdersPage> cartList) throws Exception {
-		String sql = "select p.p_no, p.p_name, p.p_price, c.c_count, p.p_img, p.delivery_fee,(p.p_price * c.c_count) as total_price " + 
+		String sql = "select p.p_no, p.p_name, p.p_price, c.c_count, p.p_img, p.delivery_fee,(p.p_price * c.c_count) as total_price, p.p_count " + 
 				"from cart c join product p on (c.p_no = p.p_no) " + 
 				"where member_id = ?";
 		
@@ -41,7 +41,7 @@ public class OrdersDao {
 			
 			while(rs.next()) {
 				ordersPage = new OrdersPage(
-						rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getString(5), rs.getInt(6), rs.getInt(7));
+						rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getString(5), rs.getInt(6), rs.getInt(7), rs.getInt(8));
 				
 				cartList.add(ordersPage);
 			}

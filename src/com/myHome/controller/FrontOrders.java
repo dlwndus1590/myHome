@@ -1,6 +1,7 @@
 package com.myHome.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.ServletContext;
@@ -76,8 +77,7 @@ public class FrontOrders extends HttpServlet {
 	 */
 	private void cartPage(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
-		//String memberId = (String) session.getAttribute("memberId");
-		String memberId = "user01";
+		String memberId = (String) session.getAttribute("memberId");
 		ArrayList<OrdersPage> cartList = new ArrayList<OrdersPage>();
 		OrdersBiz ordersBiz = new OrdersBiz();
 		try {
@@ -97,10 +97,8 @@ public class FrontOrders extends HttpServlet {
 	 */
 	private void cartDelete(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
-		//String memberId = (String) session.getAttribute("memberId");
+		String memberId = (String) session.getAttribute("memberId");
 		int pNo = Integer.parseInt(request.getParameter("pNo"));
-		System.out.println(pNo);
-		String memberId = "user01";
 		OrdersBiz ordersBiz = new OrdersBiz();
 		try {
 			ordersBiz.cartDelete(memberId, pNo);
@@ -116,8 +114,7 @@ public class FrontOrders extends HttpServlet {
 	 */
 	private void cartOrdersPage(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
-		// String memberId = (String) session.getAttribute("memberId");
-		String memberId = "user01";
+		String memberId = (String) session.getAttribute("memberId");
 		String[] pNo = request.getParameterValues("pNo");
 		String[] count = request.getParameterValues("itemCount");
 		String[] totalCost = request.getParameterValues("totalCost[]");
@@ -149,7 +146,7 @@ public class FrontOrders extends HttpServlet {
 	 */
 	private void ordersPage(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
-		//String memberId = (String) session.getAttribute("memberId");
+		String memberId = (String) session.getAttribute("memberId");
 		//String[] totalPrice = request.getParameterValues("totalPrice");
 		String[] totalCost = request.getParameterValues("totalCost[]");
 		//String[] count = request.getParameterValues("itemCount");
@@ -160,7 +157,7 @@ public class FrontOrders extends HttpServlet {
 			total += Integer.parseInt(totalCost[i]);
 		}
 		System.out.println("total : " + total);
-		String memberId = "user01";
+		//String memberId = "user01";
 		ArrayList<OrdersPage> ordersList = new ArrayList<OrdersPage>();
 		OrdersBiz ordersBiz = new OrdersBiz();
 		try {
@@ -181,8 +178,8 @@ public class FrontOrders extends HttpServlet {
 	 */
 	private void orders(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
-		//String memberId = (String) session.getAttribute("memberId");
-		String memberId = "user01";
+		String memberId = (String) session.getAttribute("memberId");
+		// 회원 정보 받아오기
 		String optionsRadios = request.getParameter("optionsRadios");
 		String usedMileage = request.getParameter("usedMileage");
 		String currentMileage = request.getParameter("accumulateMileage");
@@ -201,12 +198,16 @@ public class FrontOrders extends HttpServlet {
 		System.out.println("zipCode : " + zipCode);
 		System.out.println("address1 : " + address1);
 		System.out.println("address2 : " + address2);
+		String[] stock1 = request.getParameterValues("stock");
+		OrdersBiz ordersBiz = new OrdersBiz();
 		
 		for (int index = 0; index < totalPrice.length; index++) {
 			System.out.println("totalPrice : " + totalPrice[index]);
 			System.out.println("deliveryFee : " + deliveryFee[index]);
+			int stock = Integer.parseInt(stock1[index]);
+			System.out.println("stock : " + stock);
 			// insert 처리
-			if (accumulateMileage > 0) {
+			if (memberId != null && accumulateMileage >= 0 && stock > 0) {
 				
 			}
 		}
@@ -217,14 +218,18 @@ public class FrontOrders extends HttpServlet {
 	 */
 	private void cartInsert(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
-		//String memberId = (String) session.getAttribute("memberId");
-		String memberId = "user01";
+		String memberId = (String) session.getAttribute("memberId");
 		int pNo = Integer.parseInt(request.getParameter("pNo"));
 		int count = 1;
 		
 		OrdersBiz ordersBiz = new OrdersBiz();
 		try {
 			ordersBiz.cartInsert(memberId, pNo, count);
+			
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter writer = response.getWriter();
+			writer.println("<script>alert('장바구니에 등록되었습니다.'); location.href='" + CONTEXT_PATH + "/product/productController?action=productListByCategoryForm';</script>");
+			writer.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 			// 에러처리 페이지로 이동
@@ -236,8 +241,7 @@ public class FrontOrders extends HttpServlet {
 	 */
 	private void DetailsCartInsert(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
-		//String memberId = (String) session.getAttribute("memberId");
-		String memberId = "user01";
+		String memberId = (String) session.getAttribute("memberId");
 		int pNo = Integer.parseInt(request.getParameter("pNo"));
 		int count = Integer.parseInt(request.getParameter("count"));
 		

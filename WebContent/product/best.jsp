@@ -66,7 +66,7 @@
 				</div>
 				<div class="caption cntr">
 					<p><strong>${productList.pName}</strong></p>
-					<h4><a class="shopBtn" href="#" title="add to cart"> 장바구니 담기 </a></h4>
+					<h4><a class="shopBtn" href="${CONTEXT_PATH}/member/ordersController?action=cartInsert&pNo=${productList.pNo}" title="add to cart"> 장바구니 담기 </a></h4>
 					<div class="actionList">
 						<p><img src="${CONTEXT_PATH}/img/star.png">${productList.pScore} </p> 
 					</div> 
