@@ -17,27 +17,42 @@ public class OrdersDetail implements Serializable {
 	private String usedMileage;
 	private String accumulateMileage;
 	private String oTotalPrice;
+	private String oTotalPricePlusFee;
 	private String totalAmount;
+	private int zipCode;
+	private String address1;
+	private String address2;
+	private String memberName;
+	private String mobile;
 	
 	/**
 	 * 기본 생성자
 	 */
 	public OrdersDetail() {}
 
-	/** 주문 상세 내역 생성자 메서드
-	 * @param dNO 구매 상세 번호
-	 * @param memberId 구매자 아이디
-	 * @param pName 구매 상품 이름
-	 * @param pImg 구매 상품 사진
-	 * @param pPrice 구매 상품 가격
-	 * @param dCount 구매 상품 수량
-	 * @param oDeliveryFee 배송비
+
+	/**
+	 * 주문 상세 내역 생성자 메서드
+	 * @param dNo 결제 상세 번호
+	 * @param memberId 결제 아이디
+	 * @param pName 상품이름
+	 * @param pImg 상품사진
+	 * @param pPrice 상품가격
+	 * @param dCount 구매 수량
+	 * @param oDeliveryFee 배달비
 	 * @param usedMileage 사용 마일리지
 	 * @param accumulateMileage 적립 마일리지
-	 * @param oTotalPrice 총 구매 합계
+	 * @param oTotalPrice 상품 총 가격
+	 * @param oTotalPricePlusFee 상품 총 가격 + 배달비
+	 * @param totalAmount (상품 총 가격 + 배달비) - (사용 마일리지)
+	 * @param zipCode 우편 번호
+	 * @param address1 주소
+	 * @param address2 상세 주소
+	 * @param memberName 구매자 이름
+	 * @param mobile 구매자 핸드폰번호
 	 */
 	public OrdersDetail(int dNo, String memberId, String pName, String pImg, String pPrice, int dCount,
-			String oDeliveryFee, String usedMileage, String accumulateMileage, String oTotalPrice, String totalAmount) {
+			String oDeliveryFee, String usedMileage, String accumulateMileage, String oTotalPrice, String oTotalPricePlusFee, String totalAmount, int zipCode, String address1, String address2, String memberName, String mobile) {
 		super();
 		this.dNo = dNo;
 		this.memberId = memberId;
@@ -49,7 +64,13 @@ public class OrdersDetail implements Serializable {
 		this.usedMileage = usedMileage;
 		this.accumulateMileage = accumulateMileage;
 		this.oTotalPrice = oTotalPrice;
+		this.oTotalPricePlusFee = oTotalPricePlusFee;
 		this.totalAmount = totalAmount;
+		this.zipCode = zipCode;
+		this.address1 = address1;
+		this.address2 = address2;
+		this.memberName = memberName;
+		this.mobile = mobile;
 	}
 
 	/**
@@ -191,6 +212,20 @@ public class OrdersDetail implements Serializable {
 	public void setoTotalPrice(String oTotalPrice) {
 		this.oTotalPrice = oTotalPrice;
 	}
+	
+	/**
+	 * @return the oTotalPricePlusFee
+	 */
+	public String getoTotalPricePlusFee() {
+		return oTotalPricePlusFee;
+	}
+
+	/**
+	 * @param oTotalPricePlusFee the oTotalPricePlusFee to set
+	 */
+	public void setoTotalPricePlusFee(String oTotalPricePlusFee) {
+		this.oTotalPricePlusFee = oTotalPricePlusFee;
+	}
 
 	/**
 	 * @return the totalAmount
@@ -212,5 +247,74 @@ public class OrdersDetail implements Serializable {
 	public void setdNo(int dNo) {
 		this.dNo = dNo;
 	}
-	
+
+	/**
+	 * @return the zipCode
+	 */
+	public int getZipCode() {
+		return zipCode;
+	}
+
+	/**
+	 * @param zipCode the zipCode to set
+	 */
+	public void setZipCode(int zipCode) {
+		this.zipCode = zipCode;
+	}
+
+	/**
+	 * @return the address1
+	 */
+	public String getAddress1() {
+		return address1;
+	}
+
+	/**
+	 * @param address1 the address1 to set
+	 */
+	public void setAddress1(String address1) {
+		this.address1 = address1;
+	}
+
+	/**
+	 * @return the address2
+	 */
+	public String getAddress2() {
+		return address2;
+	}
+
+	/**
+	 * @param address2 the address2 to set
+	 */
+	public void setAddress2(String address2) {
+		this.address2 = address2;
+	}
+
+	/**
+	 * @return the memberName
+	 */
+	public String getMemberName() {
+		return memberName;
+	}
+
+	/**
+	 * @param memberName the memberName to set
+	 */
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
+	}
+
+	/**
+	 * @return the mobile
+	 */
+	public String getMobile() {
+		return mobile;
+	}
+
+	/**
+	 * @param mobile the mobile to set
+	 */
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
 }

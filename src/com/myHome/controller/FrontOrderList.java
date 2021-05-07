@@ -45,6 +45,9 @@ public class FrontOrderList extends HttpServlet {
 				orderDetail(request, response);
 				break;
 		
+			case "reviewInputForm":
+				reviewInputForm(request, response);	
+				break;
 		}
 	}
 
@@ -95,6 +98,10 @@ public class FrontOrderList extends HttpServlet {
 		} catch (ServletException | IOException e) {
 			e.printStackTrace();
 		}
-		
+	}
+
+	private void reviewInputForm(HttpServletRequest request, HttpServletResponse response) {
+		String pName = request.getParameter("pName");
+		System.out.println(pName);
 	}
 }
