@@ -124,23 +124,23 @@
 		</div>
 		
 		<div class="tab-pane fade" id="review">
+			<c:forEach var="index" items="${reviewList}">
 			<div class="row-fluid">	  
 				<div class="span2">
-					<img src="${CONTEXT_PATH}/assets/img/b.jpg" alt="">
+					<img src="${CONTEXT_PATH}/${index.pImg}">
 				</div>
 				<div class="span6">
-					<h5> 리뷰제목 </h5>
-						<p>정말 좋아요!!</p>
+						<p style="font-size: 15px; font-weight: bold; padding-left: 10px;"><br>${index.reviewContent}</p>
 					</div>
 				<div class="span4 alignR">
-					<p> 작성자 : </p>
-					<p> 구매일자 : </p>
+					<p style="font-weight: bolder;"> 작성자 : ${index.memberId}</p>
+					<p style="font-weight: bolder;"> 구매일자 : ${index.oDate}</p>
 				</div>
 			</div>
+			</c:forEach>
 			<hr class="soften"/>
 		</div>
 	</div>
-
 </div>
 </div>
 </div>
