@@ -65,6 +65,46 @@ public class Product implements Serializable {
 		this.pCount = pCount;
 		this.pRegDate = pRegDate;
 	}
+	
+	/**
+	 * 생성자 - 상품등록
+	 * @param pName
+	 * @param pPrice
+	 * @param pImg
+	 * @param pDescribe
+	 * @param deliveryFee
+	 * @param companyName
+	 * @param categoryId
+	 * @param pCount
+	 */
+	public Product(String pName, int pPrice, String pImg, String pDescribe, int deliveryFee, String companyName, int categoryId, int pCount) {
+		this.pName = pName;
+		this.pPrice = pPrice;
+		this.pImg = pImg;
+		this.pDescribe = pDescribe;
+		this.deliveryFee = deliveryFee;
+		this.companyName = companyName;
+		this.categoryId = categoryId;
+		this.pCount = pCount;
+	}
+	
+	/**
+	 * 생성자 - 상품수정
+	 * @param pNo
+	 * @param pName
+	 * @param pPrice
+	 * @param deliveryFee
+	 * @param categoryId
+	 * @param pCount
+	 */
+	public Product(int pNo, String pName, int pPrice, int deliveryFee, int categoryId, int pCount) {
+		this.pNo = pNo;
+		this.pName = pName;
+		this.pPrice = pPrice;
+		this.deliveryFee = deliveryFee;
+		this.categoryId = categoryId;
+		this.pCount = pCount;
+	}
 
 	/** getter/setter */
 	public int getpNo() {
