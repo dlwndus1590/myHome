@@ -26,7 +26,7 @@ public class OrderListDao {
 	 */
 	public void getOrderList(ArrayList<OrderList> orderList) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("SELECT o.O_NO, o.MEMBER_ID, TO_CHAR(o.O_DATE,'yyyy-mm-dd'), p.P_NAME, p.P_IMG , p.P_PRICE, p.P_SCORE ");
+		sql.append("SELECT o.O_NO, o.MEMBER_ID, TO_CHAR(o.O_DATE,'yyyy-mm-dd') ,p.P_NAME, p.P_IMG , p.P_PRICE, p.P_SCORE ");
 		sql.append("FROM ORDERS o, ORDERS_DETAIL od, PRODUCT p ");
 		sql.append("WHERE o.O_NO = od.O_NO and p.P_NO = od.P_NO ");
 		sql.append("ORDER BY o.O_NO desc");
@@ -67,7 +67,7 @@ public class OrderListDao {
 	 */
 	public void getOrderDetailList(int oNo, ArrayList<OrdersDetail> orderDetailList) {
 		StringBuffer sql = new StringBuffer();
-		sql.append("SELECT od.D_NO, o.MEMBER_ID, p.P_NAME, p.P_IMG , p.P_PRICE * od.D_COUNT AS total, od.D_COUNT, o.O_DELIVERY_FEE ");
+		sql.append("SELECT od.D_NO, o.MEMBER_ID, p.p_No ,p.P_NAME, p.P_IMG , p.P_PRICE * od.D_COUNT AS total, od.D_COUNT, o.O_DELIVERY_FEE ");
 		sql.append(", o.usedMileage, o.accumulateMileage,o.O_TOTAL_PRICE, o.O_TOTAL_PRICE + o.O_DELIVERY_FEE AS oTotalPricePlusFee ");
 		sql.append(", o.O_TOTAL_PRICE, o.o_total_price + o.o_delivery_fee - o.usedmileage As totalAmount,o.ZIP_CODE, o.ADDRESS1, o.ADDRESS2, m.NAME, m.MOBILE ");
 		sql.append("FROM ORDERS o, ORDERS_DETAIL od, PRODUCT p, MEMBER m ");
@@ -86,6 +86,7 @@ public class OrderListDao {
 				dto = new OrdersDetail(
 						  rs.getInt("D_NO")
 						 ,rs.getString("MEMBER_ID")
+						 ,rs.getInt("p_No")
 						 ,rs.getString("P_NAME")
 						 ,rs.getString("P_IMG")
 						 ,Utility.convertNumberString(rs.getInt("total")) 
