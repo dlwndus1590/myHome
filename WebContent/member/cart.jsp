@@ -63,11 +63,13 @@
 										<td><input type="hidden" name="pNo" value="${dto.pNo }"><img width="100" src="${CONTEXT_PATH }/${dto.pImg }"></td>
 										<td width="150">${dto.pName }</td>
 										<td width="120">
-											<input class="input-small" type="text" name="itemPrice" value="${dto.pPrice }">원
+											<input class="input-small" type="hidden" name="itemPrice" value="${dto.pPrice }">
+											<fmt:formatNumber value="${dto.pPrice }" pattern="###,###" />원
 										</td>
 										
 										<td width="120">
-											<input class="input-small" type="text" name="deliveryFee" value="${dto.deliveryFee }">원
+											<input class="input-small" type="hidden" name="deliveryFee" value="${dto.deliveryFee }">
+											<fmt:formatNumber value="${dto.deliveryFee }" pattern="###,###" />원
 										</td>
 										<td width="90"><input class="span1" style="max-width: 50px"
 											placeholder="1" size="16" type="number"
