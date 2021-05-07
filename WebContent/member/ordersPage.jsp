@@ -141,6 +141,7 @@
 					<input type="text" id="currentMileage"
 						value="${orders[0].mileage }" readonly="readonly">
 				</div>
+				<br>
 				<label class="control-label">사용할 마일리지</label>
 				<div class="controls">
 					<input type="text" name="useMileage" id="useMileage" value="0"

@@ -55,45 +55,6 @@ public class OrdersDao {
 		}
 	}
 	
-	/*
-	 * 장바구니 상품 정보
-	 */
-	public void getCartInfo(Connection conn, ArrayList<Product> list) {
-		String sql = "select * from cart c join product p on (c.p_no = p.p_no)";
-	}
-	
-	/*
-	 * 결제수단 리스트 조회
-	 */
-	public void getMethodList(Connection conn, ArrayList<OrdersMethod> methodList) throws Exception {
-		String sql = "select * from orders_method";
-		
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		
-		try {
-			stmt = conn.prepareStatement(sql);
-			rs = stmt.executeQuery();
-			
-			OrdersMethod ordersMethod = null;
-			
-			while(rs.next()) {
-				ordersMethod = new OrdersMethod();
-				ordersMethod.setoMethodId(rs.getInt("o_method_id"));
-				ordersMethod.setoMethodName(rs.getString("o_method_name"));
-				
-				methodList.add(ordersMethod);
-			}
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			e.printStackTrace();
-			throw new Exception();
-		} finally {
-			JdbcTemplate.close(rs);
-			JdbcTemplate.close(stmt);
-		}
-	}
-
 	/**
 	 * 결제 페이지 조회
 	 */
@@ -185,6 +146,32 @@ public class OrdersDao {
 			stmt.setInt(1, count1);
 			stmt.setInt(2, pNo1);
 			stmt.setString(3, memberId);
+			int rows = stmt.executeUpdate();
+			if (rows == 0) {
+				throw new Exception();
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			throw new Exception();
+		} finally {
+			JdbcTemplate.close(stmt);
+		}
+	}
+
+	/**
+	 * 장바구니 담기
+	 */
+	public void cartInsert(Connection conn, String memberId, int pNo, int count) throws Exception {
+		String sql = "insert into cart values((select max(nvl(c_no, 0)) + 1 from cart), ?, ?, ?)";
+		
+		PreparedStatement stmt = null;
+		
+		try {
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, memberId);
+			stmt.setInt(2, pNo);
+			stmt.setInt(3, count);
 			int rows = stmt.executeUpdate();
 			if (rows == 0) {
 				throw new Exception();

@@ -48,6 +48,12 @@ public class FrontOrders extends HttpServlet {
 		case "cartDelete":
 			cartDelete(request, response);	
 			break;
+		case "cartInsert":
+			cartInsert(request, response);	
+			break;
+		case "DetailsCartInsert":
+			DetailsCartInsert(request, response);	
+			break;
 		}
 	}
 
@@ -171,7 +177,7 @@ public class FrontOrders extends HttpServlet {
 	}
 	
 	/**
-	 * 결제하기
+	 * 다중 결제하기
 	 */
 	private void orders(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
@@ -180,14 +186,11 @@ public class FrontOrders extends HttpServlet {
 		String optionsRadios = request.getParameter("optionsRadios");
 		String usedMileage = request.getParameter("usedMileage");
 		String currentMileage = request.getParameter("accumulateMileage");
-		// 배달비 포함한 가격 or 배달비 포함 x 가격? => 현재는 배달비 포함 x
 		String[] totalPrice = request.getParameterValues("totalPrice");
 		String[] deliveryFee = request.getParameterValues("deliveryFee");
-		// address1 or address2 어떤거 받을지 확인? 도로명 or 지번
 		String zipCode = request.getParameter("zipcode");
 		String address1 = request.getParameter("address1");
 		String address2 = request.getParameter("address2");
-		String address3 = request.getParameter("address3");
 		int i = Integer.parseInt(currentMileage);
 		int j = Integer.parseInt(usedMileage);
 		System.out.println("optionsRadios : " + optionsRadios);
@@ -198,7 +201,6 @@ public class FrontOrders extends HttpServlet {
 		System.out.println("zipCode : " + zipCode);
 		System.out.println("address1 : " + address1);
 		System.out.println("address2 : " + address2);
-		System.out.println("address3 : " + address3);
 		
 		for (int index = 0; index < totalPrice.length; index++) {
 			System.out.println("totalPrice : " + totalPrice[index]);
@@ -207,6 +209,44 @@ public class FrontOrders extends HttpServlet {
 			if (accumulateMileage > 0) {
 				
 			}
+		}
+	}
+	
+	/**
+	 * 카테고리, 베스트 페이지에서 장바구니 담기
+	 */
+	private void cartInsert(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		//String memberId = (String) session.getAttribute("memberId");
+		String memberId = "user01";
+		int pNo = Integer.parseInt(request.getParameter("pNo"));
+		int count = 1;
+		
+		OrdersBiz ordersBiz = new OrdersBiz();
+		try {
+			ordersBiz.cartInsert(memberId, pNo, count);
+		} catch (Exception e) {
+			e.printStackTrace();
+			// 에러처리 페이지로 이동
+		}
+	}
+	
+	/**
+	 * 상품 상세 페이지에서 장바구니 담기
+	 */
+	private void DetailsCartInsert(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		//String memberId = (String) session.getAttribute("memberId");
+		String memberId = "user01";
+		int pNo = Integer.parseInt(request.getParameter("pNo"));
+		int count = Integer.parseInt(request.getParameter("count"));
+		
+		OrdersBiz ordersBiz = new OrdersBiz();
+		try {
+			ordersBiz.cartInsert(memberId, pNo, count);
+		} catch (Exception e) {
+			e.printStackTrace();
+			// 에러처리 페이지로 이동
 		}
 	}
 }
