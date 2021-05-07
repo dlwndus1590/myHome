@@ -89,6 +89,7 @@ $(document).on("click",".star", function(){
  				 	 <span class="star">★</span>
 				</span>
 			</span>
+			<br>
 			<input type="hidden" value="${score}" id="score" name="score">
 			<input type="hidden" value="${oDate}" name="oDate">
 			<br>
