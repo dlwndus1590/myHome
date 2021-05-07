@@ -230,10 +230,7 @@ public class FrontMember extends HttpServlet {
 				session.setAttribute("companyName", dto.getCompanyName());
 				session.setAttribute("dto", dto);	
 				
-				response.setContentType("text/html;charset=UTF-8");
-				PrintWriter writer = response.getWriter();
-				writer.println("<script>alert('로그인이 완료되었습니다.'); location.href= '"+CONTEXT_PATH+"/index.jsp';</script>");
-				writer.close();
+				request.getRequestDispatcher("/index.jsp").forward(request,response);		
 				
 			}else {
 				response.setContentType("text/html;charset=UTF-8");
@@ -266,7 +263,7 @@ public class FrontMember extends HttpServlet {
 			}			
 			session.invalidate();
 		}		
-		response.sendRedirect(CONTEXT_PATH + "/member/memberController?action=loginForm"); 
+		response.sendRedirect(CONTEXT_PATH + "/index.jsp"); 
 	}
 		
 	/**
