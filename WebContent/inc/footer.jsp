@@ -11,7 +11,7 @@
 <!-- Clients -->
 <section class="our_client">
 	<hr class="soften"/>
-	<h4 class="title cntr"><span class="text">Supporter</span></h4>
+	<h4 class="title cntr"><span class="text" style="color:black;">Supporter</span></h4>
 	<hr class="soften"/>
 	<div class="row" style="margin: 30px; 0px; 30px; 0px;">
 		<div class="span2">

@@ -14,10 +14,8 @@
 <link href="${CONTEXT_PATH}/assets/font-awesome/css/font-awesome.css"
 	rel="stylesheet">
 <link href="${CONTEXT_PATH}/css/notice/qNotice.css" rel="stylesheet" />
-<link rel="shortcut icon" href="assets/ico/favicon.ico">
 <style>
 #userIcon {
-	padding-bottom : 20px;
 	width: 30px;
 	height: 30px;
 	margin-right: 10px;
@@ -30,11 +28,20 @@
 	<jsp:include page="/inc/header.jsp" />
 
 	<!-- contents menu -->
+<div class="row">
+<div class="span9" style="width:960px;">
+    <ul class="breadcrumb">
+   		<li><a href="${CONTEXT_PATH}/product/productController?action=storeHome">Home</a> <span class="divider">></span></li>
+   		<li class="active">질문과 답변</li>
+    </ul>
+
+	<div class="well well-small">
+	
 	<section id="qHeader">
 		<form
 			action="${CONTEXT_PATH}/notice/noticeController?action=qNoticeSearch"
 			method="post">
-			<table id="qtable">
+			<table id="qtable"">
 				<tr>
 					<td><br></td>
 				</tr>
@@ -55,8 +62,8 @@
 			</table>
 		</form>
 	</section>
-	<br>
-
+	
+	<div class="sub">
 	<div align="right">
 		<a
 			href="${CONTEXT_PATH}/notice/noticeController?action=qNoticeInputForm">
@@ -65,7 +72,7 @@
 	</div>
 	<ul style="list-style: none; padding-left: 0px;">
 		<li class="dropdown"><a data-toggle="dropdown"
-			class="dropdown-toggle" href="#">정렬 <b class="caret"></b></a>
+			class="dropdown-toggle" href="#"><span>정렬</span> <b class="caret"></b></a>
 			<div class="dropdown-menu">
 				<a
 					href="${CONTEXT_PATH}/notice/noticeController?action=qNoticeNewList">최신순</a>
@@ -90,23 +97,22 @@
 				<article class="qItem">
 					<table class="qTable">
 						<tr>
-							<td style="width: 820px">
+							<td style="width: 680px">
 								<h3>
-									<a
-										href="${CONTEXT_PATH}/notice/noticeController?action=qNoticeDetail&qNo=${index.qNo}&writeMemberId=${index.memberId}">${index.qTitle}</a>
+									<a href="${CONTEXT_PATH}/notice/noticeController?action=qNoticeDetail&qNo=${index.qNo}&writeMemberId=${index.memberId}"><span>${index.qTitle}</span></a>
 								</h3>
 							</td>
 							<td></td>
 						</tr>
 
 						<tr>
-							<td style="width: 820px"><span class="qContent">${index.qContent}</span></td>
+							<td style="width: 680px"><span class="qContent">${index.qContent}</span></td>
 							<td><img src="${CONTEXT_PATH}${index.qImg}" class="picture">
 							</td>
 						</tr>
 
 						<tr>
-							<td style="width: 820px"><img
+							<td style="width: 680px"><img
 								src="${CONTEXT_PATH}/img/qNotice/userIcon.png" id="userIcon" />
 								<span>${index.memberId}</span> | <span>조회수 ${index.qHits}</span> |
 								<span style="padding-left: 5px;">${index.qRegDate}</span></td>
@@ -126,6 +132,10 @@
 			</table>
 		</c:otherwise>
 	</c:choose>
+	</div>
+</div>	
+</div>
+</div>
 
 	<!-- footer -->
 	<jsp:include page="/inc/footer.jsp" />

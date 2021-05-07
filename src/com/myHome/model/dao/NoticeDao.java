@@ -39,6 +39,7 @@ public class NoticeDao {
 			System.out.println("Message : " + e.getMessage());
 			e.printStackTrace();
 		} finally {
+			JdbcTemplate.close(conn);
 			JdbcTemplate.close(rs);
 			JdbcTemplate.close(stmt);
 		}

@@ -15,13 +15,20 @@
 <link href="${CONTEXT_PATH}/assets/font-awesome/css/font-awesome.css"
 	rel="stylesheet">
 <link href="${CONTEXT_PATH}/css/notice/noticeList.css" rel="stylesheet" />
-<link rel="shortcut icon" href="assets/ico/favicon.ico">
 </head>
 <body>
 	<!-- header -->
 	<jsp:include page="/inc/header.jsp" />
 
 	<!-- contents menu -->
+<div class="row">
+<div class="span9" style="width:960px;">
+    <ul class="breadcrumb">
+   		<li><a href="${CONTEXT_PATH}/product/productController?action=storeHome">Home</a> <span class="divider">></span></li>
+   		<li class="active">공지사항</li>
+    </ul>
+
+<div class="well well-small">   
 	<h3 align="left" style="padding-left: 50px;">공지사항</h3>
 	<hr>
 
@@ -87,7 +94,9 @@
 			</table>
 		</div>
 	</form>
-
+</div>
+</div>
+</div>
 	<!-- footer -->
 	<jsp:include page="/inc/footer.jsp" />
 	<!-- Placed at the end of the document so the pages load faster -->

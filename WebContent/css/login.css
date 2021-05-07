@@ -21,7 +21,7 @@ hr {
   margin-bottom: 25px;
 }
 .mypagebtn{
-  background-color: #04AA6D;
+  background-color: #548235;
   color: white;
   padding: 14px 20px;
   margin: 8px 0;
@@ -29,9 +29,10 @@ hr {
   cursor: pointer;
   width: 50%;
   opacity: 0.9;
+  border-radius:5px;
 }
 button{
-  background-color: #04AA6D;
+  background-color: #548235;
   color: white;
   padding: 14px 20px;
   margin: 8px 0;
@@ -39,6 +40,7 @@ button{
   cursor: pointer;
   width: 100%;
   opacity: 0.9;
+  border-radius:5px;
 }
 
 button:hover {
