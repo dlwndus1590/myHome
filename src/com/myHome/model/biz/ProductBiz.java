@@ -8,6 +8,7 @@ import com.myHome.common.JdbcTemplate;
 import com.myHome.model.dao.ProductDao;
 import com.myHome.model.dto.Category;
 import com.myHome.model.dto.Product;
+import com.myHome.util.Utility;
 
 public class ProductBiz {
 	
@@ -169,23 +170,6 @@ public class ProductBiz {
 			JdbcTemplate.close(conn);
 		}		
 	}
-	
-	/**
-	 * 상품 마지막번호 반환 메서드
-	 * @return 상품 마지막번호 반환
-	 */
-	public int getMaxProductNum() throws Exception{
-		Connection conn = JdbcTemplate.getConnection();
-		
-		try {
-			int count = ProductDao.getInstance().getMaxProductNum(conn);
-			return count;
-		} catch(SQLException e) {
-			throw e;
-		} finally {
-			JdbcTemplate.close(conn);
-		}	
-	}
 
 	/**
 	 * 상품등록 메서드
@@ -196,6 +180,11 @@ public class ProductBiz {
 		Connection conn = JdbcTemplate.getConnection();
 		
 		try {
+			int num = ProductDao.getInstance().getMaxProductNum(conn);
+			product.setpNo(++num);
+			product.setpRegDate(Utility.getCurrentDate("yyyy-MM-dd"));
+			product.setpScore(0);
+			product.setpSales(0);
 			ProductDao.getInstance().addProduct(conn, product);
 			JdbcTemplate.commit(conn);
 		} catch(SQLException e) {
@@ -204,5 +193,42 @@ public class ProductBiz {
 		} finally {
 			JdbcTemplate.close(conn);
 		}	
+	}
+
+	/**
+	 * 상품수정 메서드
+	 * @param product
+	 * @throws Exception
+	 */
+	public void updateProduct(Product product) throws Exception {
+		Connection conn = JdbcTemplate.getConnection();
+		
+		try {
+			ProductDao.getInstance().updateProduct(conn, product);
+			JdbcTemplate.commit(conn);
+		} catch(SQLException e) {
+			JdbcTemplate.rollback(conn);
+			throw e;
+		} finally {
+			JdbcTemplate.close(conn);
+		}
+	}
+
+	/**
+	 * 상품삭제 메서드
+	 * @param pNo
+	 */
+	public void deleteProduct(int pNo) throws Exception {
+		Connection conn = JdbcTemplate.getConnection();
+		
+		try {
+			ProductDao.getInstance().deleteProduct(conn, pNo);
+			JdbcTemplate.commit(conn);
+		} catch(SQLException e) {
+			JdbcTemplate.rollback(conn);
+			throw e;
+		} finally {
+			JdbcTemplate.close(conn);
+		}
 	}
 }

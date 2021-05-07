@@ -71,7 +71,7 @@
    		<li class="active">상품등록</li>
     </ul>
 	<div class="well">
-	<form class="form-horizontal" action="${CONTEXT_PATH}/product/productController?action=productRegist" method="post" enctype="multipart/form-data">
+	<form class="form-horizontal" action="${CONTEXT_PATH}/product/productController?action=productUpdate&pNo=${product.pNo}" method="post">
 		<h3>상품 등록</h3>
 		<div class="control-group">
 		<label class="control-label">상품명 <sup>*</sup></label>
@@ -122,7 +122,7 @@
 	   </div>
 	<div class="control-group">
 		<div class="controls">
-		 <input type="submit" value="상품 등록" class="exclusive shopBtn">
+		 <input type="submit" value="상품 수정" class="exclusive shopBtn">
 		</div>
 	</div>
 	</form>

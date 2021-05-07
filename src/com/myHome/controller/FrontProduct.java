@@ -1,5 +1,6 @@
 package com.myHome.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -70,6 +71,12 @@ public class FrontProduct extends HttpServlet {
 				break;
 			case "updateProductForm":
 				updateProductForm(request, response);
+				break;
+			case "productUpdate":
+				productUpdate(request, response);
+				break;
+			case "deleteProduct":
+				deleteProduct(request, response);
 				break;
 		}
 	}
@@ -220,7 +227,6 @@ public class FrontProduct extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.setAttribute("categoryList3", categoryList3);
 			session.setAttribute("productList4", productList4);
-			System.out.println("확인");
 			
 			request.getRequestDispatcher("/product/storeHome.jsp").forward(request, response);
 		} catch (Exception e) {
@@ -300,7 +306,6 @@ public class FrontProduct extends HttpServlet {
 			return;
 		}
 		String companyName = (String)session.getAttribute("companyName");
-		String pRegDate = Utility.getCurrentDate("yyyy-mm-dd");
 		
 		ProductBiz biz = new ProductBiz();
 		String directory = "C:/student_ucamp33/workspace_teamProject/myHome/WebContent/img/product";
@@ -310,15 +315,19 @@ public class FrontProduct extends HttpServlet {
 		try {
 			multi = new MultipartRequest(request, directory, maxSize, encoding, new DefaultFileRenamePolicy());
 			String pName = multi.getParameter("pName");
-			String pPrice = multi.getParameter("pPrice");
+			String pPriceStr = multi.getParameter("pPrice");
 			String pImg = "/img/product/" + multi.getOriginalFileName("pImg");
 			String pDescribe = "/img/product/" + multi.getOriginalFileName("pDescribe");
-			String deliveryFee = multi.getParameter("deliveryFee");
-			String categoryId = multi.getParameter("categoryId");
-			String pCount = multi.getParameter("pCount");
-			int number = biz.getMaxProductNum();
+			String deliveryFeeStr = multi.getParameter("deliveryFee");
+			String categoryIdStr = multi.getParameter("categoryId");
+			String pCountStr = multi.getParameter("pCount");
 			
-			Product product = new Product(++number, pName, Integer.parseInt(pPrice), pImg, pDescribe, Integer.parseInt(deliveryFee), companyName, Integer.parseInt(categoryId), 0, 0, Integer.parseInt(pCount), pRegDate);
+			int pPrice = Integer.parseInt(pPriceStr);
+			int deliveryFee = Integer.parseInt(deliveryFeeStr);
+			int categoryId = Integer.parseInt(categoryIdStr);
+			int pCount = Integer.parseInt(pCountStr);
+			
+			Product product = new Product(pName, pPrice, pImg, pDescribe, deliveryFee, companyName, categoryId, pCount);
 			biz.addProduct(product);
 			
 			response.setContentType("text/html;charset=UTF-8");
@@ -328,6 +337,12 @@ public class FrontProduct extends HttpServlet {
 
 		} catch (Exception e) {
 			e.printStackTrace();
+			
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter writer = response.getWriter();
+			writer.println("<script>alert('상품을 등록하지 못했습니다. 다시 시도하세요.'); location.href='" + CONTEXT_PATH + "/member/memberController?action=sellerMyPage';</script>");
+			writer.close();
+
 		}
 	}
 	
@@ -363,6 +378,120 @@ public class FrontProduct extends HttpServlet {
 			response.sendRedirect(CONTEXT_PATH + "/product/updateProduct.jsp");
 		} catch (Exception e) {
 			e.printStackTrace();
+			
+			
+		}
+	}
+	
+	/**
+	 * 상품등록 요청 서비스 
+	 */
+	protected void productUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		
+		if (session == null || 
+				session.getAttribute("memberId") == null ||
+				!session.getAttribute("grade").equals("판매자")) {
+			
+			request.getRequestDispatcher("/member/login.jsp").forward(request, response);
+			return;
+		}
+		
+		String pNoStr = request.getParameter("pNo");
+		int pNo = Integer.parseInt(pNoStr);
+		
+		String pName = request.getParameter("pName");
+		
+		String pPriceStr = request.getParameter("pPrice");
+		int pPrice = Integer.parseInt(pPriceStr);
+		
+		String deliveryFeeStr = request.getParameter("deliveryFee");
+		int deliveryFee = Integer.parseInt(deliveryFeeStr);
+		
+		String categoryIdStr = request.getParameter("categoryId");
+		int categoryId = Integer.parseInt(categoryIdStr);
+		
+		String pCountStr = request.getParameter("pCount");
+		int pCount = Integer.parseInt(pCountStr);
+		
+		ProductBiz biz = new ProductBiz();
+		Product product = new Product(pNo, pName, pPrice, deliveryFee, categoryId, pCount);
+		
+		try {
+			biz.updateProduct(product);
+			
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter writer = response.getWriter();
+			writer.println("<script>alert('상품이 수정되었습니다.'); location.href='" + CONTEXT_PATH + "/member/memberController?action=sellerMyPage';</script>");
+			writer.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter writer = response.getWriter();
+			writer.println("<script>alert('상품을 수정하지 못했습니다. 다시 시도하세요.'); location.href='" + CONTEXT_PATH + "/member/memberController?action=sellerMyPage';</script>");
+			writer.close();
+		}
+	}
+	
+	/**
+	 * 상품 삭제 요청서비스
+	 */
+	protected void deleteProduct(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		
+		if (session == null || 
+				session.getAttribute("memberId") == null ||
+				!session.getAttribute("grade").equals("판매자")) {
+			
+			request.getRequestDispatcher("/member/login.jsp").forward(request, response);
+			return;
+		}
+		
+		String pNoStr = request.getParameter("pNo");
+		int pNo = Integer.parseInt(pNoStr);
+		
+		ProductBiz biz = new ProductBiz();
+		Product product = new Product();
+		product.setpNo(pNo);
+		
+		try {
+			biz.selectProductOne(product);
+			
+			biz.deleteProduct(pNo);
+			
+			System.out.println("상품 : " + product);
+			
+			File file1 = new File("C:/student_ucamp33/workspace_teamProject" + CONTEXT_PATH + "/WebContent/" + product.getpImg());
+			File file2 = new File("C:/student_ucamp33/workspace_teamProject" + CONTEXT_PATH + "/WebContent/" + product.getpDescribe());
+			System.out.println(file1 + "        " + file2);
+			
+			if(file1.exists() && file2.exists()) {
+				if(file1.delete() && file2.delete()) {
+					response.setContentType("text/html;charset=UTF-8");
+					PrintWriter writer = response.getWriter();
+					writer.println("<script>alert('상품 삭제가 완료되었습니다.'); location.href='" + CONTEXT_PATH + "/member/memberController?action=sellerMyPage';</script>");
+					writer.close();
+				} else {
+					response.setContentType("text/html;charset=UTF-8");
+					PrintWriter writer = response.getWriter();
+					writer.println("<script>alert('상품을 삭제하지 못했습니다. 다시 시도하세요.'); location.href='" + CONTEXT_PATH + "/member/memberController?action=sellerMyPage';</script>");
+					writer.close();
+				}
+			} else {
+				response.setContentType("text/html;charset=UTF-8");
+				PrintWriter writer = response.getWriter();
+				writer.println("<script>alert('상품이 존재하지 않습니다.'); location.href='" + CONTEXT_PATH + "/member/memberController?action=sellerMyPage';</script>");
+				writer.close();
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter writer = response.getWriter();
+			writer.println("<script>alert('상품을 삭제하지 못했습니다. 다시 시도하세요.'); location.href='" + CONTEXT_PATH + "/member/memberController?action=sellerMyPage';</script>");
+			writer.close();
 		}
 	}
 }

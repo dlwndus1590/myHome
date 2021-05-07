@@ -17,14 +17,14 @@ insert into category values (6, '주방', 'img/category/category6.jpg');
 insert into category values (7, 'DIY/공구', 'img/category/category7.jpg');
 
 -- product 초기화데이터
-insert into product values (1, '박나래 기절베개 - 호텔식베개 커버포함 2종',  25900, 'img/product/1.jpg', 'img/product/describe1.png', 0, 'KCC', 2, 4.87, 4979 , 2000, '2019-04-21');
-insert into product values (2, '프란시스 Y3.3 커피머신 + 웰컴캡슐 14개',  119000, 'img/product/2.jpg', 'img/product/describe2.png', 5000, 'KCC', 1, 4.9, 1632, 1000, '2019-05-17');
-insert into product values (3, '헤링본 발탄 사이잘룩 러그 카페트',  12800, 'img/product/3.jpg', 'img/product/describe3.png', 0, 'KCC', 2, 4.85, 12614, 1000, '2020-02-02');
-insert into product values (4, '스마트전구 (LED 컬러 전구 / 앱연동)',  19900, 'img/product/4.jpg', 'img/product/describe4.png', 3000, 'KCC', 3, 3.85, 8, 100, '2020-11-13');
-insert into product values (5, 'RASKOG 로스코그 키친 카트 트롤리 웨건',  34900, 'img/product/5.jpg', 'img/product/describe5.png', 0, 'KCC', 4, 4.55, 1106, 1000, '2020-09-16');
-insert into product values (6, '비바체 100매 20팩 캡형 물티슈',  14900, 'img/product/6.jpg', 'img/product/describe6.png', 0, 'KCC', 5, 4.78, 1178, 1000, '2021-10-03');
-insert into product values (7, '놋담 달수저 외 인기 커트러리 모음',  25800, 'img/product/7.jpg', 'img/product/describe7.png', 2500, 'KCC', 6, 4.45, 1086, 1000, '2021-04-29');
-insert into product values (8, '3.7V 전동 드라이버 WW-D1',  29900, 'img/product/8.jpg', 'img/product/describe8.png', 0, 'KCC', 7, 4.3, 184, 300, '2021-05-06');
+insert into product values (1, '박나래 기절베개 - 호텔식베개 커버포함 2종',  25900, 'img/product/1.jpg', 'img/product/describe1.png', 0, 'KCC', 2, 4.87, 4979 , 2000, to_char('2019-04-21', 'yyyy-mm-dd'));
+insert into product values (2, '프란시스 Y3.3 커피머신 + 웰컴캡슐 14개',  119000, 'img/product/2.jpg', 'img/product/describe2.png', 5000, 'KCC', 1, 4.9, 1632, 1000, to_char('2019-05-17', 'yyyy-mm-dd'));
+insert into product values (3, '헤링본 발탄 사이잘룩 러그 카페트',  12800, 'img/product/3.jpg', 'img/product/describe3.png', 0, 'KCC', 2, 4.85, 12614, 1000, to_char('2020-02-02', 'yyyy-mm-dd'));
+insert into product values (4, '스마트전구 (LED 컬러 전구 / 앱연동)',  19900, 'img/product/4.jpg', 'img/product/describe4.png', 3000, 'KCC', 3, 3.85, 8, 100, to_char('2020-11-13', 'yyyy-mm-dd'));
+insert into product values (5, 'RASKOG 로스코그 키친 카트 트롤리 웨건',  34900, 'img/product/5.jpg', 'img/product/describe5.png', 0, 'KCC', 4, 4.55, 1106, 1000, to_char('2020-09-16', 'yyyy-mm-dd'));
+insert into product values (6, '비바체 100매 20팩 캡형 물티슈',  14900, 'img/product/6.jpg', 'img/product/describe6.png', 0, 'KCC', 5, 4.78, 1178, 1000, to_char('2021-10-03', 'yyyy-mm-dd'));
+insert into product values (7, '놋담 달수저 외 인기 커트러리 모음',  25800, 'img/product/7.jpg', 'img/product/describe7.png', 2500, 'KCC', 6, 4.45, 1086, 1000, to_char('2021-04-29', 'yyyy-mm-dd'));
+insert into product values (8, '3.7V 전동 드라이버 WW-D1',  29900, 'img/product/8.jpg', 'img/product/describe8.png', 0, 'KCC', 7, 4.3, 184, 300, to_char('2021-05-06','yyyy-mm-dd'));
 
 -- cart 초기화데이터
 insert into cart values (1, 'user01', 2, 2);

@@ -57,7 +57,8 @@
 		<h3> <fmt:formatNumber value="${productList.pPrice}" pattern="###,###" /> 원</h3>
 		<div class="btn-group">
 		  <a href="${CONTEXT_PATH}/product/productController?action=updateProductForm&pNo=${productList.pNo}" class="defaultBtn">수정</a>
-		  <a href="" class="shopBtn">삭제</a>
+		  <a href="${CONTEXT_PATH}/product/productController?action=deleteProduct&pNo=${productList.pNo}"
+		  		 class="shopBtn" onclick="return confirm('한번 삭제한 상품은 다시 되돌릴 수 없습니다. 해당 상품을 정말 삭제하시겠습니까? ')">삭제</a>
 		</div>
 		</form>
 		</div>

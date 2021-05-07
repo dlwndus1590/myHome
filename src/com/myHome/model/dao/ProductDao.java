@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import com.myHome.common.JdbcTemplate;
 import com.myHome.model.dto.Category;
 import com.myHome.model.dto.Product;
+import com.myHome.util.Utility;
 
 /**
  * 상품 dao
@@ -174,6 +175,7 @@ public class ProductDao {
 				product.setpCount(rs.getInt(11));
 				product.setpRegDate(rs.getString(12));
 			}
+			System.out.println("dao 확인 " + product);
 		} catch(SQLException e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
@@ -432,7 +434,7 @@ public class ProductDao {
 	 * @throws Exception
 	 */
 	public void addProduct(Connection conn, Product product) throws Exception {
-		String sql = "insert into product values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "insert into product values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, to_date(?, 'yyyy-mm-dd'))";
 		
 		PreparedStatement pstmt = null;
 		
@@ -455,6 +457,65 @@ public class ProductDao {
 			if(rows == 0) {
 				throw new Exception();
 			}
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			throw new Exception();
+		} finally {
+			JdbcTemplate.close(pstmt);
+		}
+	}
+
+	/**
+	 * 상품 수정
+	 * @param conn
+	 * @param product
+	 */
+	public void updateProduct(Connection conn, Product product) throws Exception {
+		String sql = "update product set p_name=?, p_price=?, delivery_fee=?, category_id=?, p_count=? where p_no=?";
+		
+		PreparedStatement pstmt = null;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, product.getpName());
+			pstmt.setInt(2, product.getpPrice());
+			pstmt.setInt(3, product.getDeliveryFee());
+			pstmt.setInt(4, product.getCategoryId());
+			pstmt.setInt(5, product.getpCount());
+			pstmt.setInt(6, product.getpNo());
+			
+			int rows = pstmt.executeUpdate();
+			if(rows == 0) {
+				throw new Exception();
+			}
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			throw new Exception();
+		} finally {
+			JdbcTemplate.close(pstmt);
+		}
+	}
+
+	/**
+	 * 상품 삭제
+	 * @param conn
+	 * @param pNo
+	 */
+	public void deleteProduct(Connection conn, int pNo) throws Exception {
+		String sql = "delete from product where p_no=?";
+		
+		PreparedStatement pstmt = null;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, pNo);
+			
+			int rows = pstmt.executeUpdate();
+			if(rows == 0) {
+				throw new Exception();
+			} 
 		} catch(Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
