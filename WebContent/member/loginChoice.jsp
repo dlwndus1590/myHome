@@ -5,11 +5,21 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원가입 | Choice</title>
-<link type="text/css" rel="stylesheet" href="${CONTEXT_PATH}/css/input.css">
-
-<!-- header menu -->
-<jsp:include page="/inc/header.jsp" />
+<title>My Home</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="마이 페이지">
+    <meta name="author" content="강하영">
+    <!-- Bootstrap styles -->
+    <link href="${CONTEXT_PATH}/assets/css/bootstrap.css" rel="stylesheet"/>
+    <!-- Customize styles -->
+    <link href="${CONTEXT_PATH}/assets/style/style.css" rel="stylesheet"/>
+    <!-- font awesome styles -->
+	<link href="${CONTEXT_PATH}/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
+	<!-- Favicons -->
+    <link rel="shortcut icon" href="${CONTEXT_PATH}/assets/ico/favicon.ico">
+    
+	<!-- header menu -->
+	<jsp:include page="/inc/header.jsp" />
 
 <style type="text/css">
 .line {
@@ -31,6 +41,7 @@
 	  <button type="button" style="width:50%; height: 80px" onclick="location.href='sellerInput.jsp'" value="판매자 회원가입">판매자 회원가입</button>
 	</div>
 </center>
+
 <br>
 <br>
 
