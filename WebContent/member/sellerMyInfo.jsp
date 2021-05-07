@@ -87,6 +87,17 @@ a {
 </style>
 
 <script type="text/javascript" src="${CONTEXT_PATH}/js/member_input.js"></script>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script type="text/javascript">
+function postcodeTest() {
+	   new daum.Postcode({
+		    oncomplete: function(data) {			    	
+		    	 document.getElementById('zipcode').value = data.zonecode;			    	 
+		    	 document.getElementById("address1").value = data.roadAddress;
+		         document.getElementById("address2").focus();
+		    }
+		}).open();
+}
 </head>
 <body>
 
@@ -137,6 +148,12 @@ a {
   </div>
   	
 </form>
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="${CONTEXT_PATH}/assets/js/jquery.js"></script>
+<script src="${CONTEXT_PATH}/assets/js/bootstrap.min.js"></script>
+<script src="${CONTEXT_PATH}/assets/js/jquery.easing-1.3.min.js"></script>
+<script src="${CONTEXT_PATH}/assets/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+<script src="${CONTEXT_PATH}/assets/js/shop.js"></script>
 <!-- footer menu -->
 <jsp:include page="/inc/footer.jsp"/>
 </body>

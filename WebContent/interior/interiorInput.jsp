@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>myHome</title>
 <!-- header menu -->
 <jsp:include page="/inc/header.jsp" />
 <style>
@@ -107,6 +107,12 @@ hr {
       </div>
     </div>
   </form>
+  <!-- Placed at the end of the document so the pages load faster -->
+<script src="${CONTEXT_PATH}/assets/js/jquery.js"></script>
+<script src="${CONTEXT_PATH}/assets/js/bootstrap.min.js"></script>
+<script src="${CONTEXT_PATH}/assets/js/jquery.easing-1.3.min.js"></script>
+<script src="${CONTEXT_PATH}/assets/js/jquery.scrollTo-1.4.3.1-min.js"></script>
+<script src="${CONTEXT_PATH}/assets/js/shop.js"></script>
   <!-- footer menu -->
 <jsp:include page="/inc/footer.jsp"/>
 </body>

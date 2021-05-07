@@ -79,8 +79,7 @@ public class FrontInterior extends HttpServlet {
 		
 		try {
 			biz.selectInteriorList(list);
-			request.setAttribute("list", list);
-			System.out.println("인테리어 목록 : "+list);
+			request.setAttribute("list", list);			
 			request.getRequestDispatcher("/interior/interiorList.jsp").forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -92,8 +91,7 @@ public class FrontInterior extends HttpServlet {
 	 * 인테리어 업체 견적서 작성 화면
 	 */
 	protected void billPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("[dubug] 견적 페이지 신청");
-		
+		System.out.println("[dubug] 견적 페이지 신청");		
 		String url = CONTEXT_PATH + "/interior/billPage.jsp";
 		response.sendRedirect(url);
 	}
@@ -121,8 +119,7 @@ public class FrontInterior extends HttpServlet {
 		Interior interior = new Interior(ino,iname, icareer, idetail, ilocation);
 							
 		try {
-			biz.insertInterior(interior);		
-			System.out.println("인테리어 등록 테스트 : "+interior);
+			biz.insertInterior(interior);			
 			request.getRequestDispatcher("/interior/interiorController?action=interiorList").forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -154,14 +151,14 @@ public class FrontInterior extends HttpServlet {
 
 		InteriorBiz biz = new InteriorBiz();
 		Interior interior = new Interior(ino,iname, icareer, idetail, ilocation);
-		System.out.println("인테리어 수정 전 테스트 : "+interior);
+		
 		try {
 			biz.updateInterior(interior);
 			session.setAttribute("iname", iname);
 			session.setAttribute("ino", ino);
-			System.out.println("인테리어 수정 후 테스트 : "+interior);
+			
 			session.setAttribute("interiordto", interior);
-			request.getRequestDispatcher("/interior/interiorController?action=selectInterior&iname="+iname).forward(request, response);
+			request.getRequestDispatcher("/interior/interiorController?action=interiorList").forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 			e.getMessage();
@@ -185,7 +182,7 @@ public class FrontInterior extends HttpServlet {
 		}
 		
 		String iname = request.getParameter("iname");
-		System.out.println("상세조회 회사명 : "+iname);
+		
 		InteriorBiz biz = new InteriorBiz();
 		Interior interior = new Interior();
 		interior.setIname(iname);
@@ -194,7 +191,7 @@ public class FrontInterior extends HttpServlet {
 			biz.selectInterior(interior);		
 			session.setAttribute("iname", iname);
 			session.setAttribute("interiordto", interior);
-			System.out.println("인테리어 상세조회 테스트 : "+interior); 
+			
 			request.getRequestDispatcher("/interior/interiorDetail.jsp").forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -218,12 +215,11 @@ public class FrontInterior extends HttpServlet {
 			return;
 		}
 		String iname = (String)session.getAttribute("iname");
-		//String iname = request.getParameter("iname");
-		
+
 		InteriorBiz biz = new InteriorBiz();	
 		try{			
 			biz.deleteInterior(iname);
-			System.out.println("인테리어 삭제 테스트 :"+iname);
+			
 			session.invalidate();
 			response.sendRedirect(CONTEXT_PATH+"/index.jsp");
 		} catch(Exception e) {
