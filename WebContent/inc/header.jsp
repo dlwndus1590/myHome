@@ -283,7 +283,7 @@
                   } else {
                      mainMember = (Member)session.getAttribute("dto");                     
                %>
-                  <a href="${CONTEXT_PATH}/member/memberController?action=logout"><span class="icon-lock"></span> Logout </a>                  
+                  <a href="${CONTEXT_PATH}/member/memberController?action=logout" onclick="javascript:alert('로그아웃 되었습니다.')"><span class="icon-lock"></span> Logout </a>                  
                <%
                      if(mainMember.getGrade().equals("일반회원")){%>
                         <a href="${CONTEXT_PATH}/member/memberController?action=memberMyPage"><span class="icon-user"></span> 마이페이지</a>

@@ -9,28 +9,17 @@
 <head>
 <meta charset="UTF-8">
 <title>회원 탈되</title>
-<link type="text/css" rel="stylesheet" href="${CONTEXT_PATH}/css/find.css">
-
+<link type="text/css" rel="stylesheet" href="${CONTEXT_PATH}/css/login.css">
 <!-- header menu -->
 <jsp:include page="/inc/header.jsp" />
 
-<script type="text/javascript" src="${CONTEXT_PATH}/js/member_input.js"></script>
-<script type="text/javascript">
-	<!-- 제이쿼리 이용해서 회원 탈퇴 시도해보기 -->
-//	$(function(){		
-//		var bt_del=$("input[type='button']")[0]; //삭제
-//		$(bt_del).click(function(){
-//			del();
-//		});
-		
-//	});
-	
-//	function del(){
-//		if(confirm("삭제하시겠어요?")){
-//			location.href="/member/memberDelete?member_id=<%=dto.getMemberId()%>";		
-//		}	
-//	}
-</script>
+<style>
+	#memberId, #memberPw,#memberPwConfirm{
+		height: 50px;
+		font-size: 20px;
+	}
+</style>
+
 </head>
 <body>
 <!-- main menu : 로그인 전 메뉴 -->

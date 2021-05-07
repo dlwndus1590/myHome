@@ -59,9 +59,6 @@ public class FrontInterior extends HttpServlet {
 		case "deleteInterior":
 			deleteInterior(request, response);
 			break;
-		case "sangdamApply":
-			sangdamApply(request, response);
-			break;
 		case "billPage":
 			billPage(request, response);
 			break;
@@ -119,7 +116,8 @@ public class FrontInterior extends HttpServlet {
 		Interior interior = new Interior(ino,iname, icareer, idetail, ilocation);
 							
 		try {
-			biz.insertInterior(interior);			
+			biz.insertInterior(interior);	
+			
 			request.getRequestDispatcher("/interior/interiorController?action=interiorList").forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -150,15 +148,13 @@ public class FrontInterior extends HttpServlet {
 		String ilocation = request.getParameter("ilocation");			
 
 		InteriorBiz biz = new InteriorBiz();
-		Interior interior = new Interior(ino,iname, icareer, idetail, ilocation);
-		
+		Interior interior = new Interior(ino,iname, icareer, idetail, ilocation);		
 		try {
 			biz.updateInterior(interior);
 			session.setAttribute("iname", iname);
 			session.setAttribute("ino", ino);
-			
 			session.setAttribute("interiordto", interior);
-			request.getRequestDispatcher("/interior/interiorController?action=interiorList").forward(request, response);
+			request.getRequestDispatcher("/interior/interiorController?action=selectInterior&iname="+iname).forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 			e.getMessage();
@@ -182,7 +178,6 @@ public class FrontInterior extends HttpServlet {
 		}
 		
 		String iname = request.getParameter("iname");
-		
 		InteriorBiz biz = new InteriorBiz();
 		Interior interior = new Interior();
 		interior.setIname(iname);
@@ -191,7 +186,6 @@ public class FrontInterior extends HttpServlet {
 			biz.selectInterior(interior);		
 			session.setAttribute("iname", iname);
 			session.setAttribute("interiordto", interior);
-			
 			request.getRequestDispatcher("/interior/interiorDetail.jsp").forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -215,30 +209,16 @@ public class FrontInterior extends HttpServlet {
 			return;
 		}
 		String iname = (String)session.getAttribute("iname");
-
+	
 		InteriorBiz biz = new InteriorBiz();	
 		try{			
 			biz.deleteInterior(iname);
-			
+			System.out.println("인테리어 삭제 테스트 :"+iname);
 			session.invalidate();
 			response.sendRedirect(CONTEXT_PATH+"/index.jsp");
 		} catch(Exception e) {
 			request.getRequestDispatcher("/interior/interiorDetail.jsp").forward(request, response);
 		}
 	}
-	
-	/**
-	 *	관리자 권한
-	 *		-- 인테리어 업체 등록 서비스
-	 */
-	protected void sangdamApply(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
-		/** 인코딩 설정 */
-		System.out.println("[dubug] 인테리어 상담신청 요청");
-		
-		// billPage에서 입력받은 값 추출
-		
-		// 계산한 비즈 호출
-		
-		// 체크 유무 확인 
-	}
+
 }

@@ -102,7 +102,7 @@ hr {
 
       <div class="clearfix">
         <input type="reset" class="cancelbtn" value="초기화"></input>
-        <input type="submit" class="signupbtn" value="등록하기"></input>
+        <input type="submit" class="signupbtn" value="등록하기" onclick="javascript:alert('등록이 완료되었습니다.')"></input>
         <input type="submit" class="signupbtn" value="이전으로"  onclick="goBack()"></input>
       </div>
     </div>

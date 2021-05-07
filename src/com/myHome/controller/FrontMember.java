@@ -231,21 +231,19 @@ public class FrontMember extends HttpServlet {
 				session.setAttribute("dto", dto);	
 				
 				response.setContentType("text/html;charset=UTF-8");
-				//PrintWriter writer = response.getWriter();
-				//writer.println("<script>alert('로그인이 완료되었습니다.'); location.href= ' \"CONTEXT_PATH\"+ /index.jsp';</script>");
-				//writer.close();
+				PrintWriter writer = response.getWriter();
+				writer.println("<script>alert('로그인이 완료되었습니다.'); location.href= '"+CONTEXT_PATH+"/index.jsp';</script>");
+				writer.close();
 				
-				request.getRequestDispatcher("/index.jsp").forward(request, response);
 			}else {
-				request.getRequestDispatcher("/member/login.jsp").forward(request, response);
+				response.setContentType("text/html;charset=UTF-8");
+				PrintWriter writer = response.getWriter();
+				writer.println("<script>alert('로그인에 실패하셨습니다.'); location.href= '"+CONTEXT_PATH+"/member/login.jsp';</script>");
+				writer.close();
+				
 			}
 		} catch (Exception e) {
-			HttpSession session = request.getSession(true); // true
-			session.setAttribute("memberId", memberId);
-			session.setAttribute("grade", dto.getGrade());
-			session.setAttribute("name", dto.getName());
-			session.setAttribute("dto", dto);	
-			request.getRequestDispatcher("/index.jsp").forward(request, response);
+			e.printStackTrace();
 		}
 		
 		
@@ -353,10 +351,17 @@ public class FrontMember extends HttpServlet {
 								
 			try {
 				biz.insertMember(dto);	
-				request.getRequestDispatcher("/member/memberController?action=loginForm").forward(request, response);
+				response.setContentType("text/html;charset=UTF-8");
+				PrintWriter writer = response.getWriter();
+				writer.println("<script>alert('회원가입에 성공하셨습니다.'); location.href= '"+CONTEXT_PATH+"/member/memberController?action=loginForm';</script>");
+				writer.close();
+				
 			} catch (Exception e) {
 				e.printStackTrace();
-				request.getRequestDispatcher("/member/memberController?action=loginChoice").forward(request, response);
+				response.setContentType("text/html;charset=UTF-8");
+				PrintWriter writer = response.getWriter();
+				writer.println("<script>alert('회원가입에 실패하셨습니다.'); location.href= '"+CONTEXT_PATH+"/member/memberController?action=loginChoice';</script>");
+				writer.close();				
 			}			
 		}
 	}
@@ -425,11 +430,16 @@ public class FrontMember extends HttpServlet {
 								
 			try {
 				biz.insertMember(dto);
-				
-				request.getRequestDispatcher("/member/login.jsp").forward(request, response);
+				response.setContentType("text/html;charset=UTF-8");
+				PrintWriter writer = response.getWriter();
+				writer.println("<script>alert('회원가입에 성공하셨습니다.'); location.href= '"+CONTEXT_PATH+"/member/memberController?action=loginForm';</script>");
+				writer.close();
 			} catch (Exception e) {
 				e.printStackTrace();
-				request.getRequestDispatcher("/member/loginChoice.jsp").forward(request, response);
+				response.setContentType("text/html;charset=UTF-8");
+				PrintWriter writer = response.getWriter();
+				writer.println("<script>alert('회원가입에 실패하셨습니다.'); location.href= '"+CONTEXT_PATH+"/member/memberController?action=loginChoice';</script>");
+				writer.close();	
 			}
 		}
 	}
@@ -592,8 +602,7 @@ public class FrontMember extends HttpServlet {
 			
 			request.getRequestDispatcher("/member/memberController?action=memberMyPage&memberId="+memberId).forward(request, response);
 		} catch (Exception e) {
-			e.printStackTrace();
-			e.getMessage();
+			e.printStackTrace();			
 			request.getRequestDispatcher("/member/memberMyInfo.jsp").forward(request, response);
 		}
 	}
@@ -669,7 +678,7 @@ public class FrontMember extends HttpServlet {
 			
 			request.getRequestDispatcher("/member/memberController?action=sellerMyPage&memberId="+memberId).forward(request, response);
 		} catch (Exception e) {
-			e.getMessage();
+			e.getMessage();			
 			request.getRequestDispatcher("/member/sellerMyInfo.jsp").forward(request, response);
 		}
 	}	
@@ -697,9 +706,17 @@ public class FrontMember extends HttpServlet {
 		
 		if (result) {
 			session.invalidate();
-			response.sendRedirect(CONTEXT_PATH+"/index.jsp");
+			
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter writer = response.getWriter();
+			writer.println("<script>alert('회원탈퇴가 완료되었습니다.'); location.href= '"+CONTEXT_PATH+"/index.jsp';</script>");
+			writer.close();
+			//response.sendRedirect(CONTEXT_PATH+"/index.jsp");
 		} else {
-			request.getRequestDispatcher("/member/memberMyPage.jsp").forward(request, response);
+			PrintWriter writer = response.getWriter();
+			writer.println("<script>alert('회원탈퇴가 완료되었습니다.'); location.href= '"+CONTEXT_PATH+"/member/memberMyPage.jsp';</script>");
+			writer.close();
+			//request.getRequestDispatcher("/member/memberMyPage.jsp").forward(request, response);
 		}
 	}
 	
