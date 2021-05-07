@@ -53,11 +53,11 @@ public class OrderListBiz {
 	}
 
 	/**
-	 * 현재 회원이 이미 후기를 등록한 상품 번호 리스트 요청 메서드 
-	 * @param reviewList 후기등록된 상품 번호 리스트
-	 * @param memberId 로그인한 회원 아이디
+	 * 후기 작성 완료 후 주문 상세 테이블에 주문체크를 평가로 업데이트 요청 메서드
+	 * @param pNo 주문할 상품 번호
+	 * @param oNo 주문 번호
 	 */
-	public void getReviewList(ArrayList<Integer> reviewList, String memberId) {
-		dao.getInstance().getReviewList(reviewList, memberId);
+	public void reviewCheckTrue(int pNo, int oNo) {
+		dao.getInstance().reviewCheckTrue(pNo, oNo);
 	}
 }
