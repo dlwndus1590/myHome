@@ -67,7 +67,7 @@
 				<tbody>
 					<c:forEach var="dto" items="${ordersList }" varStatus="status">
 						<tr>
-							<td><img width="100" src="${CONTEXT_PATH }/${dto.pImg }"></td>
+							<td><input type="hidden" name="stock" value="${dto.stock }"><img width="100" src="${CONTEXT_PATH }/${dto.pImg }"></td>
 							<td>${dto.pName }</td>
 							<td>
 								<fmt:formatNumber value="${dto.pPrice }" pattern="###,###" />원

@@ -60,7 +60,11 @@
 								<c:set var="test" value="0" /> 
 								<c:forEach var="dto" items="${cartList }">
 									<tr>
-										<td><input type="hidden" name="pNo" value="${dto.pNo }"><img width="100" src="${CONTEXT_PATH }/${dto.pImg }"></td>
+										<td>
+											<input type="hidden" name="pNo" value="${dto.pNo }">
+											<%-- <input type="text" name="pCount" value=${dto.pCount }> --%>
+											<img width="100" src="${CONTEXT_PATH }/${dto.pImg }">
+										</td>
 										<td width="150">${dto.pName }</td>
 										<td width="120">
 											<input class="input-small" type="hidden" name="itemPrice" value="${dto.pPrice }">
@@ -95,8 +99,6 @@
 										<c:set var="total" value="${total + cart[i].totalPrice + cart[i].deliveryFee }" />
 									</c:forEach>
 									<td class="label label-primary" style="font-size: 20px">
-										<%-- <c:out value="${total}" />원 --%>
-										<%-- <fmt:formatNumber value="${total }" pattern="#,###" />원  --%>
 										<input class="input-small" type="text" name="sum_qty" value="${total }" 
 										style="background-color: #999999; 
 										color: #FFFFFF; font-size: 20px; border: none;">원
@@ -145,12 +147,15 @@
 					var deliveryFee = $("input[name=deliveryFee]:eq(" + index + ")").val();
 					//console.log(index + ", deliveryFee : " + deliveryFee);
 					var price = itemCount * itemPrice;
+					//price = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 					//console.log("price : " + price);
 					var totalPrice = $("input[name=totalPrice]:eq(" + index + ")").val(price);
+					//totalPrice = totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 					totalPrice = parseInt(totalPrice.val());
 					//console.log("totalPrice : " + totalPrice);
 					var totalCost = totalPrice + parseInt(deliveryFee);
 					//console.log("totalCost : " + totalCost);
+					//totalCost = totalCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 					$("input[name='totalCost[]']:eq(" + index + ")").val(totalCost);
 				});
 			});
@@ -166,6 +171,7 @@
 				        	sum += obj[i].value * 1;
 				        }
 				    }
+				    //sum = sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 				    frm.sum_qty.value = sum;
 				}
 			});
