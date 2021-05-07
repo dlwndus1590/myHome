@@ -6,17 +6,29 @@
 %>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>마이 페이지</title>
-<link type="text/css" rel="stylesheet" href="${CONTEXT_PATH}/css/login.css">
+  <head>
+    <meta charset="utf-8">
+    <title>My Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="마이 페이지">
+    <meta name="author" content="강하영">
+    <!-- Bootstrap styles -->
+    <link href="${CONTEXT_PATH}/assets/css/bootstrap.css" rel="stylesheet"/>
+    <!-- Customize styles -->
+    <link href="${CONTEXT_PATH}/assets/style/style.css" rel="stylesheet"/>
+    <!-- font awesome styles -->
+	<link href="${CONTEXT_PATH}/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
 
+	<!-- Favicons -->
+    <link rel="shortcut icon" href="${CONTEXT_PATH}/assets/ico/favicon.ico">
+    
+    <link type="text/css" rel="stylesheet" href="${CONTEXT_PATH}/css/login.css">
+    <link type="text/css" rel="stylesheet" href="${CONTEXT_PATH}/css/mypage.css">
+  </head>
+<body>
 <!-- header menu -->
 <jsp:include page="/inc/header.jsp" />
 
-<link type="text/css" rel="stylesheet" href="${CONTEXT_PATH}/css/mypage.css">
-</head>
-<body>
 <!-- main menu : 로그인 전 메뉴 -->
 
 <!-- contents menu -->
@@ -40,10 +52,12 @@
 	
 	</center>
 </div>
+
 <br>
 <br>
 <br>
 <div class="mypageForm">
+
 	<div class="row">
 	  <div class="column">
 	    <div class="card">
@@ -84,15 +98,15 @@
 		     <a href="${CONTEXT_PATH}/member/memberController?action=memberDelete"><p>탈퇴하기</p></a>  
 		   </div>
 		</div>
-	</div>
 </div>
+<!-- footer menu -->
+<jsp:include page="/inc/footer.jsp"/>
+
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="${CONTEXT_PATH}/assets/js/jquery.js"></script>
 <script src="${CONTEXT_PATH}/assets/js/bootstrap.min.js"></script>
 <script src="${CONTEXT_PATH}/assets/js/jquery.easing-1.3.min.js"></script>
 <script src="${CONTEXT_PATH}/assets/js/jquery.scrollTo-1.4.3.1-min.js"></script>
 <script src="${CONTEXT_PATH}/assets/js/shop.js"></script>
-<!-- footer menu -->
-<jsp:include page="/inc/footer.jsp"/>
 </body>
 </html>

@@ -5,10 +5,10 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>상품 등록내역</title>
+    <title>My Home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="상품 등록내역">
+    <meta name="author" content="이주연">
     <!-- Bootstrap styles -->
     <link href="${CONTEXT_PATH}/assets/css/bootstrap.css" rel="stylesheet"/>
     <!-- Customize styles -->
@@ -35,7 +35,7 @@
 
 <div class="span9" style="width:960px;">
     <ul class="breadcrumb">
-   		<li><a href="${CONTEXT_PATH}/index.jsp">Home</a> <span class="divider">></span></li>
+   		<li><a href="${CONTEXT_PATH}/product/productController?action=storeHome">Home</a> <span class="divider">></span></li>
    		<li><a href="${CONTEXT_PATH}/member/memberController?action=sellerMyPage">마이페이지</a> <span class="divider">></span></li>
    		<li class="active">내 상품 관리 [회사명 : ${companyName}]</li>
     </ul>

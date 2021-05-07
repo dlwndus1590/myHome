@@ -271,38 +271,12 @@
 		<%}else{ %>
 			<b>[<%=session.getAttribute("name") %>님]</b>
 		<%} %>
-					
-						
-               <!-- 로그인 / 미 로그인 상태 변화 -->
-               <%
-                  Member mainMember = null;
-                  if(session.getAttribute("dto")==null){
-               %>   
-                  <a href="${CONTEXT_PATH}/member/login.jsp"><span class="icon-lock"></span> Login </a>                            
-               <%
-                  } else {
-                     mainMember = (Member)session.getAttribute("dto");                     
-               %>
-                  <a href="${CONTEXT_PATH}/member/memberController?action=logout" onclick="javascript:alert('로그아웃 되었습니다.')"><span class="icon-lock"></span> Logout </a>                  
-               <%
-                     if(mainMember.getGrade().equals("일반회원")){%>
-                        <a href="${CONTEXT_PATH}/member/memberController?action=memberMyPage"><span class="icon-user"></span> 마이페이지</a>
-               <%
-                     } else if(mainMember.getGrade().equals("판매자")){%>
-                        <a href="${CONTEXT_PATH}/member/memberController?action=sellerMyPage"><span class="icon-user"></span> 마이페이지</a>                   
-               <%
-                     } else if(mainMember.getGrade().equals("관리자")){%>
-                        <a href="${CONTEXT_PATH}/member/memberController?action=adminMyPage"><span class="icon-user"></span> 마이페이지</a>
-               <%
-                     }
-                  }
-               %>   
-
+               						
                <!-- 회원가입 요청 서비스 -->   
                <%                  
                   if(session.getAttribute("memberId")==null){
                %>   
-                  <a href="${CONTEXT_PATH}/member/loginChoice.jsp"><span class="icon-edit"></span> 회원가입 </a> 
+                  <a href="${CONTEXT_PATH}/member/loginChoice.jsp"><span class="icon-edit" style="color:black;"></span> 회원가입 </a> 
                <%
                   } else {                     
                %>
@@ -312,8 +286,32 @@
                %>
                
                
-               <a href="${CONTEXT_PATH}/member/ordersController?action=cartPage"><span class="icon-shopping-cart"></span> 장바구니</a>
-
+               <!-- 로그인 / 미 로그인 상태 변화 -->
+               <%
+                  Member mainMember = null;
+                  if(session.getAttribute("dto")==null){
+               %>   
+                  <a href="${CONTEXT_PATH}/member/login.jsp"><span class="icon-lock" style="color:black;"></span> Login </a>                            
+               <%
+                  } else {
+                     mainMember = (Member)session.getAttribute("dto");                     
+               %>
+                  <a href="${CONTEXT_PATH}/member/memberController?action=logout" onclick="javascript:alert('로그아웃 되었습니다.')"><span class="icon-lock" style="color:black;"></span> Logout </a>                               
+               <%
+                     if(mainMember.getGrade().equals("일반회원")){%>
+                        <a href="${CONTEXT_PATH}/member/memberController?action=memberMyPage"><span class="icon-user" style="color:black;"></span> 마이페이지</a>
+               <%
+                     } else if(mainMember.getGrade().equals("판매자")){%>
+                        <a href="${CONTEXT_PATH}/member/memberController?action=sellerMyPage"><span class="icon-user" style="color:black;"></span> 마이페이지</a>                   
+               <%
+                     } else if(mainMember.getGrade().equals("관리자")){%>
+                        <a href="${CONTEXT_PATH}/member/memberController?action=adminMyPage"><span class="icon-user" style="color:black;"></span> 마이페이지</a>
+               <%
+                     }
+                  }
+               %>   
+               
+                <a href="${CONTEXT_PATH}/member/ordersController?action=cartPage"><span class="icon-shopping-cart" style="color:black;"></span> 장바구니 </a>
                
          </div>
       </div>

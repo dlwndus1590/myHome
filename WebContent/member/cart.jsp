@@ -7,10 +7,10 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>My Home cart</title>
+<title>My Home</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="">
-<meta name="author" content="">
+<meta name="description" content="장바구니">
+<meta name="author" content="최인묵">
 <!-- Bootstrap styles -->
 <link href="${CONTEXT_PATH}/assets/css/bootstrap.css" rel="stylesheet" />
 <!-- Customize styles -->
@@ -29,10 +29,9 @@
 
 	<!-- Body Section -->
 	<div class="row">
-		<div class="span12">
+		<div class="span12" style="width:960px;">
 			<ul class="breadcrumb">
-				<li><a href="${CONTEXT_PATH}/index.jsp">Home</a> <span
-					class="divider">/</span></li>
+				<li><a href="${CONTEXT_PATH}/product/productController?action=storeHome">Home</a> <span class="divider">/</span></li>
 				<li class="active">장바구니</li>
 			</ul>
 			<div class="well well-small">
