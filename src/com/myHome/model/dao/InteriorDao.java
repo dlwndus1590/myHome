@@ -83,6 +83,7 @@ public class InteriorDao implements Serializable{
 			JdbcTemplate.close(stmt);			
 		}		
 	}
+	
 	/**
 	 * 인테리어 업체 상세조회
 	 * @param iname 회사명
@@ -105,8 +106,7 @@ public class InteriorDao implements Serializable{
 				interior.setIcareer(rs.getInt("i_career"));
 				interior.setIdetail(rs.getString("i_detail"));
 				interior.setIlocation(rs.getString("i_location"));
-			}
-			System.out.println("인테리어 상세조회 테스트 dao : "+interior);
+			}			
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception();
@@ -116,6 +116,8 @@ public class InteriorDao implements Serializable{
 			JdbcTemplate.close(stmt);
 		}		
 	}
+
+	
 	/**
 	 * 인테리어 업체 삭제
 	 * @param memberId

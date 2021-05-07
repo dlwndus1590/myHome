@@ -62,6 +62,9 @@ public class FrontInterior extends HttpServlet {
 		case "billPage":
 			billPage(request, response);
 			break;
+		case "interiorSuccess":
+			interiorSuccess(request, response);
+			break;
 		}
 	}
 	
@@ -88,11 +91,35 @@ public class FrontInterior extends HttpServlet {
 	 * 인테리어 업체 견적서 작성 화면
 	 */
 	protected void billPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("[dubug] 견적 페이지 신청");		
-		String url = CONTEXT_PATH + "/interior/billPage.jsp";
-		response.sendRedirect(url);
+		System.out.println("[dubug] 견적 페이지 신청");
+		HttpSession session = request.getSession(false);
+		
+		String icareer = request.getParameter("icareer");
+		InteriorBiz biz = new InteriorBiz();
+		Interior interior = new Interior();
+		interior.setIname(icareer);
+		
+		try {
+			biz.selectInterior(interior);		
+			session.setAttribute("icareer", icareer);
+			
+			request.getRequestDispatcher("/interior/billPage.jsp").forward(request, response);
+		} catch (Exception e) {
+			e.printStackTrace();
+			e.getMessage();
+			request.getRequestDispatcher("/interior/interiorList.jsp").forward(request, response);
+		}
 	}
 		
+	/**
+	 * 인테리어 상담신청 메일발송
+	 */
+	protected void interiorSuccess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("[dubug] 상담신청 메일 발송 신청");
+		String url = CONTEXT_PATH + "/interior/interiorSuccess.jsp";
+		response.sendRedirect(url); 
+	}
+	
 	/**
 	 *	관리자 권한
 	 *		-- 인테리어 업체 등록 서비스

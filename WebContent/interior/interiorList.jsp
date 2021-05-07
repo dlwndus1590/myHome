@@ -102,7 +102,7 @@ button:hover {
 	        <td><%=dto.getIcareer() %></td>
 	        <td><%=dto.getIdetail() %></td>
 	        <td><%=dto.getIlocation() %></td>
-	        <td class="applyBtn"><a class="applyBtn" href="${CONTEXT_PATH}/interior/billPage.jsp">견적</a></td>
+	        <td class="applyBtn"><a class="applyBtn" href="${CONTEXT_PATH}/interior/interiorController?action=billPage&icareer=<%=dto.getIcareer()%>">견적</a></td>
 	      </tr>
       <%} %>
     </table>
