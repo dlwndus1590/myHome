@@ -9,8 +9,8 @@
 <meta charset="utf-8">
 <title>My Home</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="">
-<meta name="author" content="">
+<meta name="description" content="단일 결제 페이지">
+<meta name="author" content="최인묵">
 <!-- Bootstrap styles -->
 <link href="${CONTEXT_PATH}/assets/css/bootstrap.css" rel="stylesheet" />
 <!-- Customize styles -->

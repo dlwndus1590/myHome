@@ -7,9 +7,19 @@ import com.myHome.common.JdbcTemplate;
 import com.myHome.model.dao.OrdersDao;
 import com.myHome.model.dto.OrdersPage;
 
+/**
+ * 장바구니, 결제 관련 biz
+ * @author 최인묵
+ */
 public class OrdersBiz {
 	private OrdersDao dao = OrdersDao.getInstance();
 
+	/**
+	 * 장바구니 페이지 조회
+	 * @param memberId
+	 * @param cartList
+	 * @throws Exception
+	 */
 	public void getCartPage(String memberId, ArrayList<OrdersPage> cartList) throws Exception {
 		Connection conn = JdbcTemplate.getConnection();
 		try {
@@ -22,6 +32,12 @@ public class OrdersBiz {
 		}
 	}
 	
+	/**
+	 * 다중 결제 페이지 조회
+	 * @param memberId
+	 * @param ordersList
+	 * @throws Exception
+	 */
 	public void getOrdersPage(String memberId, ArrayList<OrdersPage> ordersList) throws Exception {
 		Connection conn = JdbcTemplate.getConnection();
 		try {
@@ -34,6 +50,13 @@ public class OrdersBiz {
 		}
 	}
 	
+	/**
+	 * 단일 결제 페이지 조회
+	 * @param memberId
+	 * @param pNo
+	 * @param ordersPage
+	 * @throws Exception
+	 */
 	public void getSingleOrdersPage(String memberId, int pNo, OrdersPage ordersPage) throws Exception {
 		Connection conn = JdbcTemplate.getConnection();
 		try {
@@ -46,6 +69,12 @@ public class OrdersBiz {
 		}
 	}
 	
+	/**
+	 * 장바구니 목록 삭제
+	 * @param memberId
+	 * @param pNo
+	 * @throws Exception
+	 */
 	public void cartDelete(String memberId, int pNo) throws Exception {
 		Connection conn = JdbcTemplate.getConnection();
 		try {
@@ -60,6 +89,13 @@ public class OrdersBiz {
 		}
 	}
 
+	/**
+	 * 장바구니 수량 변경
+	 * @param pNo
+	 * @param count
+	 * @param memberId
+	 * @throws Exception
+	 */
 	public void cartUpdate(String pNo, String count, String memberId) throws Exception {
 		Connection conn = JdbcTemplate.getConnection();
 		int pNo1 = Integer.parseInt(pNo);
@@ -76,6 +112,13 @@ public class OrdersBiz {
 		}
 	}
 
+	/**
+	 * 장바구니 담기
+	 * @param memberId
+	 * @param pNo
+	 * @param count
+	 * @throws Exception
+	 */
 	public void cartInsert(String memberId, int pNo, int count) throws Exception {
 		Connection conn = JdbcTemplate.getConnection();
 		try {
@@ -90,6 +133,20 @@ public class OrdersBiz {
 		}
 	}
 
+	/**
+	 * 결제하기
+	 * @param memberId
+	 * @param orderMethod
+	 * @param totalP
+	 * @param totalDeliveryFee
+	 * @param usedMileage
+	 * @param accumulateMileage
+	 * @param zipCode
+	 * @param address1
+	 * @param address2
+	 * @return
+	 * @throws Exception
+	 */
 	public int orders(String memberId, int orderMethod, int totalP, int totalDeliveryFee, int usedMileage,
 			int accumulateMileage, int zipCode, String address1, String address2) throws Exception {
 		Connection conn = JdbcTemplate.getConnection();
@@ -106,6 +163,12 @@ public class OrdersBiz {
 		}
 	}
 
+	/**
+	 * 주문상세
+	 * @param count
+	 * @param pNo
+	 * @throws Exception
+	 */
 	public void ordersDetail(int count, int pNo) throws Exception {
 		Connection conn = JdbcTemplate.getConnection();
 		try {
@@ -120,5 +183,24 @@ public class OrdersBiz {
 		}
 	}
 
+	/**
+	 * 마일리지 적립
+	 * @param memberId
+	 * @param getMileage
+	 * @throws Exception
+	 */
+	public void updateMileage(String memberId, int getMileage) throws Exception {
+		Connection conn = JdbcTemplate.getConnection();
+		try {
+			dao.updateMileage(conn, memberId, getMileage);
+			JdbcTemplate.commit(conn);
+		} catch (Exception e) {
+			JdbcTemplate.rollback(conn);
+			e.printStackTrace();
+			throw e;
+		} finally {
+			JdbcTemplate.close(conn);
+		}
+	}
 
 }

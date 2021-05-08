@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import com.myHome.common.JdbcTemplate;
 import com.myHome.model.dto.OrdersPage;
 
+/**
+ * 장바구니, 결제 관련 dao
+ * @author 최인묵
+ */
 public class OrdersDao {
 	private static OrdersDao instance = new OrdersDao();
 	
@@ -274,8 +278,8 @@ public class OrdersDao {
 	 * 주문상세
 	 */
 	public void ordersDetail(Connection conn, int count, int pNo) throws Exception {
-		String sql = "insert into orders_detail values ((select max(nvl(d_no, 0)) + 1 from orders_detail), ?, ?, "
-				+ "(select max(nvl(o_no, 0)) from orders), 0)";
+		String sql = "insert into orders_detail values ((select nvl(max(d_no), 0) + 1 from orders_detail), ?, ?, "
+				+ "(select nvl(max(o_no), 0) from orders), 0)";
 		
 		PreparedStatement stmt = null;
 		
@@ -283,6 +287,31 @@ public class OrdersDao {
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, count);
 			stmt.setInt(2, pNo);
+			int rows = stmt.executeUpdate();
+			if (rows == 0) {
+				throw new Exception();
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			throw new Exception();
+		} finally {
+			JdbcTemplate.close(stmt);
+		}
+	}
+
+	/**
+	 * 마일리지 적립
+	 */
+	public void updateMileage(Connection conn, String memberId, int getMileage) throws Exception {
+		String sql = "update member set mileage = ? where member_id = ?";
+		
+		PreparedStatement stmt = null;
+		
+		try {
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, getMileage);
+			stmt.setString(2, memberId);
 			int rows = stmt.executeUpdate();
 			if (rows == 0) {
 				throw new Exception();
