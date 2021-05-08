@@ -346,7 +346,7 @@
    <div class="span4">
    <h1>
    <a class="logo" href="${CONTEXT_PATH}/index.jsp"><span>myHome</span> 
-      <img src="${CONTEXT_PATH}/assets/img/logo.png">
+      <img src="${CONTEXT_PATH}/assets/img/myhome.png" style="width:200px; height:70px;">
    </a>
    </h1>
    </div>
@@ -380,9 +380,6 @@
                    </div>
                 </li>
             </ul>
-         <form action="#" class="navbar-search pull-left" style="float:right">
-           <input type="text" placeholder="Search" class="search-query span2">
-         </form>
         </div>
       </div>
      </div>

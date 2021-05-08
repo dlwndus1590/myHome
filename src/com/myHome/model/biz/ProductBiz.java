@@ -3,6 +3,7 @@ package com.myHome.model.biz;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.myHome.common.JdbcTemplate;
 import com.myHome.model.dao.ProductDao;
@@ -273,5 +274,14 @@ public class ProductBiz {
 		} finally {
 			JdbcTemplate.close(conn);
 		}
+	}
+	
+	/**
+	 * 카테고리객체 목록 반환
+	 * @return HashMap<Category>
+	 */
+	public HashMap<Integer, Category> getCategoryMap() {
+		Connection conn = JdbcTemplate.getConnection();
+		return ProductDao.getInstance().selectCategoryMap(conn);
 	}
 }

@@ -47,13 +47,19 @@
 	<div class="row-fluid">	
 		<ul class="thumbnails">
 		  <c:forEach var="productList" items="${productList1}">
-			<li class="span4" style="width:220px; ">
+			<li class="span4" style="width:220px;">
 				<div class="thumbnail">
 					<a class="zoomTool" href="${CONTEXT_PATH}/product/productController?action=productDetail&pNo=${productList.pNo}"><span class="icon-search"></span> <fmt:formatNumber value="${productList.pPrice }" pattern="###,###"/> 원</a>
 					<a href="${CONTEXT_PATH}/product/productController?action=productDetail&pNo=${productList.pNo}"><img src="${CONTEXT_PATH}/${productList.pImg}"></a>
-						<div class="caption cntr">
+						<div class="caption cntr" style="height:130px;">
 							<p><strong>${productList.pName}</strong></p>
-							<h4><a class="shopBtn" href="${CONTEXT_PATH}/member/ordersController?action=cartInsert&pNo=${productList.pNo}" title="add to cart"> 장바구니 담기 </a></h4>
+									<c:if test="${dto.grade == '일반회원'}">
+										<h4><a class="shopBtn" href="${CONTEXT_PATH}/member/ordersController?action=cartInsert&pNo=${productList.pNo}" title="add to cart"> 장바구니 담기 </a></h4>
+									</c:if>
+									<c:if test="${empty dto.memberId }">
+										<h4><a class="shopBtn" href="${CONTEXT_PATH }/member/memberController?action=loginForm" title="add to cart" 
+														onclick="return confirm('로그인 후 이용해주시기 바랍니다 ')"> 장바구니 담기 </a></h4>
+									</c:if>
 								<div class="actionList">
 									<p><img src="${CONTEXT_PATH}/img/star.png">${productList.pScore}  </p> 
 								</div> 

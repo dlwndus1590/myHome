@@ -38,6 +38,6 @@
 	<span>Copyright &copy; 2021<br> myHome</span>
 </div>
 </div>
-<a href="#" class="gotop"><i class="icon-double-angle-up"></i></a>
+<button class="gotop" onClick="javascript:window.scrollTo(0,0)"><i class="icon-double-angle-up"></i></button>
 </body>
 </html>

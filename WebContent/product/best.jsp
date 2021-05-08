@@ -64,9 +64,15 @@
 					</div>
 					<a href="${CONTEXT_PATH}/product/productController?action=productDetail&pNo=${productList.pNo}"><img src="${CONTEXT_PATH}/${productList.pImg}"></a>
 				</div>
-				<div class="caption cntr">
+				<div class="caption cntr" style="height:130px;">
 					<p><strong>${productList.pName}</strong></p>
+					<c:if test="${dto.grade == '일반회원' }">
 					<h4><a class="shopBtn" href="${CONTEXT_PATH}/member/ordersController?action=cartInsert&pNo=${productList.pNo}" title="add to cart"> 장바구니 담기 </a></h4>
+					</c:if>
+					<c:if test="${empty dto.memberId }">
+					<h4><a class="shopBtn" href="${CONTEXT_PATH}/member/memberController?action=loginForm"
+											onclick="return confirm('로그인 후 이용해주시기 바랍니다 ')" title="add to cart"> 장바구니 담기 </a></h4>
+					</c:if>
 					<div class="actionList">
 						<p><img src="${CONTEXT_PATH}/img/star.png">${productList.pScore} </p> 
 					</div> 

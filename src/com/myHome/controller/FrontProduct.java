@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -259,11 +260,13 @@ public class FrontProduct extends HttpServlet {
 		
 		ArrayList<Product> productList5 = new ArrayList<Product>();
 		ProductBiz biz = new ProductBiz();
+		HashMap<Integer, Category> categoryMap = biz.getCategoryMap();
 		
 		try {
 			biz.getEnrolledProductList(companyName, productList5);
 			session.setAttribute("productList5", productList5);
 			session.setAttribute("companyName", companyName);
+			session.setAttribute("categoryMap", categoryMap);
 			
 			response.sendRedirect(CONTEXT_PATH + "/product/enrolledProductList.jsp");
 		} catch (Exception e) {

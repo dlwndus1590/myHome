@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.myHome.common.JdbcTemplate;
 import com.myHome.model.dto.Category;
@@ -372,13 +373,15 @@ public class ProductDao {
 	 * @throws Exception
 	 */
 	public void getEnrolledProductList(Connection conn, String companyName, ArrayList<Product> productList) throws Exception{
-		String sql = "select * from product where company_name=? order by p_score*p_sales desc";
+		StringBuffer sql = new StringBuffer();
+		sql.append("select p_no, p_name, p_price, p_img, p_describe, delivery_fee, company_name, category_id, p_score, p_sales, p_count, to_char(p_regdate, 'yyyy-mm-dd')");
+		sql.append(", p_reviewcount, p_totalscore from product where company_name=? order by p_score*p_sales desc");
 		
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
 		try {
-			pstmt = conn.prepareStatement(sql);
+			pstmt = conn.prepareStatement(sql.toString());
 			pstmt.setString(1, companyName);
 			rs = pstmt.executeQuery();
 			
@@ -602,5 +605,43 @@ public class ProductDao {
 		} finally {
 			JdbcTemplate.close(pstmt);
 		}
+	}
+	
+	/**
+	 * 카테고리 해시맵
+	 * @return
+	 */
+	public HashMap<Integer, Category> selectCategoryMap(Connection conn) {
+		String sql = "select * from category";
+		
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = JdbcTemplate.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			HashMap<Integer, Category> categoryMap = new HashMap<Integer, Category>();
+			Category category = null;
+			
+			while(rs.next()) {
+				category = new Category();
+				category.setCategoryId(rs.getInt("category_id"));
+				category.setCategoryName(rs.getString("category_name"));
+				
+				categoryMap.put(category.getCategoryId(), category);
+			}
+			
+			return categoryMap;
+			
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		} finally {
+			  JdbcTemplate.close(rs);
+			  JdbcTemplate.close(pstmt);
+		}
+		return null;	
 	}
 }

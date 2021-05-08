@@ -48,9 +48,9 @@
 		<div class="span6">
 			<a href="${CONTEXT_PATH}/product/productController?action=productDetail&pNo=${productList.pNo}"><h5>${productList.pName}</h5></a>
 			<p><img src="${CONTEXT_PATH}/img/star.png"> ${productList.pScore} </p>
-			<p style="font-weight:bold;"> 판매량 : <fmt:formatNumber value="${productList.pSales }" pattern="###,###" /></p>
-			<p style="font-weight:bold;"> 재고수량 : <fmt:formatNumber value="${productList.pCount }" pattern="###,###" /></p>
-			<p>상품 등록일 : ${productList.pRegDate}</p>
+			<p style="font-weight:bold;"> 판매량 ( <fmt:formatNumber value="${productList.pSales }" pattern="###,###" /> ) /  재고수량 ( <fmt:formatNumber value="${productList.pCount }" pattern="###,###" /> )</p>
+			<p style="font-weight:bold;"> 카테고리 : ${categoryMap.get(productList.categoryId).categoryName } </p>
+			<p>등록일 : ${productList.pRegDate}</p>
 		</div>
 		<div class="span4 alignR">
 		<form class="form-horizontal qtyFrm">
