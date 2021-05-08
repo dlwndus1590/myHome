@@ -103,6 +103,7 @@ public class FrontOrderList extends HttpServlet {
 		request.setAttribute("oDate", oDate);
 		request.setAttribute("orderDetailList", orderDetailList);
 		request.setAttribute("length", length);
+		System.out.println(orderDetailList);
 		try {
 			request.getRequestDispatcher("/orderList/orderDetail.jsp").forward(request, response);
 		} catch (ServletException | IOException e) {
