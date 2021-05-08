@@ -18,7 +18,8 @@ import com.myHome.model.dto.OrdersPage;
 import com.myHome.model.dto.Product;
 
 /**
- * Servlet implementation class FrontOrders
+ * 장바구니, 결제 관련 controller
+ * @author 최인묵
  */
 @WebServlet("/member/ordersController")
 public class FrontOrders extends HttpServlet {
@@ -171,7 +172,6 @@ public class FrontOrders extends HttpServlet {
 			ordersBiz.getSingleOrdersPage(memberId, pNo, ordersPage);
 			
 			session.setAttribute("ordersPage", ordersPage);
-			System.out.println(ordersPage);
 			session.setAttribute("totalCost", total);
 			response.sendRedirect(CONTEXT_PATH + "/member/ordersPage.jsp");
 		} catch (Exception e) {
@@ -184,7 +184,7 @@ public class FrontOrders extends HttpServlet {
 	/**
 	 * 다중 결제하기
 	 */
-	private void orders(HttpServletRequest request, HttpServletResponse response) {
+	private void orders(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		HttpSession session = request.getSession();
 		String memberId = (String) session.getAttribute("memberId");
 		int orderMethod = Integer.parseInt(request.getParameter("optionsRadios"));
@@ -198,6 +198,7 @@ public class FrontOrders extends HttpServlet {
 		String address1 = request.getParameter("address1");
 		String address2 = request.getParameter("address2");
 		int accumulateMileage = currentMileage - usedMileage;
+		int getMileage = 0;
 		String[] stock1 = request.getParameterValues("stock");
 		String[] pNo1 = request.getParameterValues("pNo");
 		String[] count1 = request.getParameterValues("count");
@@ -207,10 +208,14 @@ public class FrontOrders extends HttpServlet {
 		for (int index = 0; index < totalPrice.length; index++) {
 			totalP += Integer.parseInt(totalPrice[index]);
 			totalDeliveryFee += Integer.parseInt(deliveryFee[index]);
+			getMileage = (int) (accumulateMileage + (totalP * 0.1));
 			int stock = Integer.parseInt(stock1[index]);
 			
 			if (stock <= 0) {
-				// 알림
+				response.setContentType("text/html;charset=UTF-8");
+				PrintWriter writer = response.getWriter();
+				writer.println("<script>alert('재고가 없습니다.'); location.href='" + CONTEXT_PATH + "/product/productController?action=productListByCategoryForm';</script>");
+				writer.close();
 			}
 		}
 		if (memberId != null && accumulateMileage >= 0) {
@@ -222,12 +227,15 @@ public class FrontOrders extends HttpServlet {
 						int count = Integer.parseInt(count1[index]);
 						ordersBiz.cartDelete(memberId, pNo);
 						ordersBiz.ordersDetail(count, pNo);
+						ordersBiz.updateMileage(memberId, getMileage);
 						
 						Product product = new Product();
 						product.setpNo(pNo);
 						productBiz.selectProductOne(product);
 						productBiz.plusPsales(count, product);
+						
 					}
+					response.sendRedirect(CONTEXT_PATH + "/member/ordersSuccess.jsp");
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -265,7 +273,7 @@ public class FrontOrders extends HttpServlet {
 	}
 	
 	/**
-	 * 상품 상세 페이지에서 장바구니 담기(안쓸듯)
+	 * 상품 상세 페이지에서 장바구니 담기 - 상품상세에서 버튼 클릭시 count값 가져와야됨
 	 */
 	private void DetailsCartInsert(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
@@ -285,7 +293,7 @@ public class FrontOrders extends HttpServlet {
 	/**
 	 * 단일 결제하기
 	 */
-	private void order(HttpServletRequest request, HttpServletResponse response) {
+	private void order(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		HttpSession session = request.getSession();
 		String memberId = (String) session.getAttribute("memberId");
 		int orderMethod = Integer.parseInt(request.getParameter("optionsRadios"));
@@ -297,6 +305,7 @@ public class FrontOrders extends HttpServlet {
 		String address1 = request.getParameter("address1");
 		String address2 = request.getParameter("address2");
 		int accumulateMileage = currentMileage - usedMileage;
+		int getMileage = (int) (accumulateMileage + (totalPrice * 0.1));
 		int stock = Integer.parseInt(request.getParameter("stock"));
 		int pNo = Integer.parseInt(request.getParameter("pNo"));
 		int count = Integer.parseInt(request.getParameter("count"));
@@ -305,7 +314,10 @@ public class FrontOrders extends HttpServlet {
 		ProductBiz productBiz = new ProductBiz();
 		
 		if (stock <= 0) {
-			// 알림
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter writer = response.getWriter();
+			writer.println("<script>alert('재고가 없습니다.'); location.href='" + CONTEXT_PATH + "/product/productController?action=productListByCategoryForm';</script>");
+			writer.close();
 		}
 		
 		if (memberId != null && accumulateMileage >= 0) {
@@ -314,11 +326,14 @@ public class FrontOrders extends HttpServlet {
 				if (result == 1) {
 					ordersBiz.cartDelete(memberId, pNo);
 					ordersBiz.ordersDetail(count, pNo);
+					ordersBiz.updateMileage(memberId, getMileage);
 					
 					Product product = new Product();
 					product.setpNo(pNo);
 					productBiz.selectProductOne(product);
 					productBiz.plusPsales(count, product);
+					
+					response.sendRedirect(CONTEXT_PATH + "/member/ordersSuccess.jsp");
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
