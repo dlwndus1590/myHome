@@ -22,6 +22,15 @@
 	<jsp:include page="/inc/header.jsp" />
 
 	<!-- contents menu -->
+	<div class="row">
+	<div class="span9" style="width:960px;">
+    <ul class="breadcrumb">
+   		<li><a href="${CONTEXT_PATH}/product/productController?action=storeHome">Home</a> <span class="divider">></span></li>
+   		<li><a href="${CONTEXT_PATH}/notice/noticeController?action=noticeListForm">공지사항</a> <span class="divider">></span></li>
+   		<li class="active">공지사항 게시글 상세 조회</li>
+    </ul>
+
+	<div class="well well-small">
 	<c:if test="${not empty dto}">
 		<h3 align="center"">공지사항 게시글 상세 조회</h3>
 		<form action="${CONTEXT_PATH}/notice/noticeController?action=noticeEditOrDelete&nNo=${dto.nNo}" method="post">
@@ -48,17 +57,17 @@
 				
 				<c:if test="${sessionScope.memberId == 'admin'}">
 				<tr align="right">
-					<td><input type="submit" value="삭제" name ="submit" size="100px"
-						style="background-color: #03C75A; color: white; border: 1px; font-size: 18px; padding-left: 20px; padding-right: 20px">
-						<input type="submit" value="수정" name ="submit" size="100px"
-						style="background-color: #03C75A; color: white; border: 1px; font-size: 18px; padding-left: 20px; padding-right: 20px">
+					<td><input type="submit" value="삭제" name ="submit" size="100px"  class="shopBtn">
+						<input type="submit" value="수정" name ="submit" size="100px" class="shopBtn">
 					</td>
 				</tr>
 				</c:if>
 			</table>
 		</form>
 	</c:if>
-
+	</div>
+	</div>
+</div>
 	<!-- footer -->
 	<jsp:include page="/inc/footer.jsp" />
 	<!-- Placed at the end of the document so the pages load faster -->

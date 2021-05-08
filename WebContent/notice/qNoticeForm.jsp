@@ -31,7 +31,7 @@
 <div class="row">
 <div class="span9" style="width:960px;">
     <ul class="breadcrumb">
-   		<li><a href="${CONTEXT_PATH}/product/productController?action=storeHome">Home</a> <span class="divider"></span></li>
+   		<li><a href="${CONTEXT_PATH}/product/productController?action=storeHome">Home</a> <span class="divider">></span></li>
    		<li class="active">질문과 답변</li>
     </ul>
 

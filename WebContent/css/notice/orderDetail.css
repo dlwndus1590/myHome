@@ -1,13 +1,13 @@
 @charset "UTF-8";
 
 .headerTitle {
-	margin: 30px 0px 0px 50px;
+	margin: 30px 0px 0px 20px;
 }
 
 #orderInfoTable {
 	border: 5px solid #EFF0F2;
 	height: 40px;
-	margin: 5px 0px 10px 50px;
+	margin: 5px 0px 10px 20px;
 }
 
 #orderInfoTableTd {
@@ -40,7 +40,7 @@
 
 .hrBold {
 	border: 0;
-	margin: 0px 0px 0px 50px;
+	margin: 0px 0px 0px 20px;
 	width: 900px;
 	height: 2px;
 	background-color: black;
@@ -53,7 +53,7 @@
 #productNum {
 	width: 130px;
 	height: 20px;
-	padding-left: 50px;
+	padding-left: 20px;
 	text-align: center;
 }
 
@@ -86,7 +86,7 @@
 
 .hrSoft {
 	width: 900px;
-	margin: 0px 0px 0px 50px;
+	margin: 0px 0px 0px 20px;
 }
 
 .productPicture {
@@ -113,11 +113,11 @@
 }
 
 .priceTableInfo{
-	padding: 0px 0px 10px 47px;
+	padding: 0px 0px 10px 30px;
 }
 
 #receipt{
-	width : 300px;
+	width : 280px;
 	height: 160px;
 	background-color: #04AD00;
 	color : white;

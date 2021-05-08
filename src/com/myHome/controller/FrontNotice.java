@@ -182,7 +182,12 @@ public class FrontNotice extends HttpServlet {
 	 */
 	protected void noticeInputForm(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
+		
+		if (session == null || session.getAttribute("memberId") == null || !session.getAttribute("grade").equals("관리자")) {
+			request.getRequestDispatcher("/member/login.jsp").forward(request, response);
+			return;
+		}
 		request.getRequestDispatcher("/notice/noticeInputForm.jsp").forward(request, response);
 	}
 
@@ -192,11 +197,17 @@ public class FrontNotice extends HttpServlet {
 	 */
 	protected void noticeInput(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		
+		if (session == null || session.getAttribute("memberId") == null || !session.getAttribute("grade").equals("관리자")) {
+			request.getRequestDispatcher("/member/login.jsp").forward(request, response);
+			return;
+		}
+		
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html;charset=utf-8");
 		System.out.println("[debug]게시글 등록 요청");
 
-		HttpSession session = request.getSession();
 		NoticeBiz noticeBiz = new NoticeBiz();
 		// 데이터 추출
 		String nTitle = request.getParameter("nTitle");
@@ -223,6 +234,16 @@ public class FrontNotice extends HttpServlet {
 	 * @author 김보성
 	 */
 	private void noticeEditOrDelete(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession(false);
+		
+		if (session == null || session.getAttribute("memberId") == null || !session.getAttribute("grade").equals("관리자")) {
+			try {
+				request.getRequestDispatcher("/member/login.jsp").forward(request, response);
+			} catch (ServletException | IOException e) {
+				e.printStackTrace();
+			}
+			return;
+		}
 		response.setContentType("text/html;charset=utf-8");
 		String submit = request.getParameter("submit");
 		int nNo = Integer.parseInt(request.getParameter("nNo"));
@@ -268,6 +289,17 @@ public class FrontNotice extends HttpServlet {
 	 * @author 김보성
 	 */
 	private void noticeUpdate(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession(false);
+		
+		if (session == null || session.getAttribute("memberId") == null || !session.getAttribute("grade").equals("관리자")) {
+			try {
+				request.getRequestDispatcher("/member/login.jsp").forward(request, response);
+			} catch (ServletException | IOException e) {
+				e.printStackTrace();
+			}
+			return;
+		}
+		
 		String nTitle = request.getParameter("nTitle");
 		String nContent = request.getParameter("nContent");
 		int nNo = Integer.parseInt(request.getParameter("nNo"));
@@ -311,7 +343,11 @@ public class FrontNotice extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-
+	
+	/**
+	 * 질문 게시판 상세조회 요청 서비스
+	 * @author 김보성
+	 */
 	private void qNoticeDetail(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		NoticeBiz biz = new NoticeBiz();
@@ -342,6 +378,17 @@ public class FrontNotice extends HttpServlet {
 	 * @author 김보성
 	 */
 	private void qNoticeInputForm(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession(false);
+		
+		if (session == null || session.getAttribute("memberId") == null) {
+			try {
+				request.getRequestDispatcher("/member/login.jsp").forward(request, response);
+				return;
+			} catch (ServletException | IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		try {
 			request.getRequestDispatcher("/notice/qNoticeInputForm.jsp").forward(request, response);
 		} catch (ServletException | IOException e) {
@@ -354,6 +401,17 @@ public class FrontNotice extends HttpServlet {
 	 * @author 김보성
 	 */
 	private void qNoticeInput(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession(false);
+		
+		if (session == null || session.getAttribute("memberId") == null) {
+			try {
+				request.getRequestDispatcher("/member/login.jsp").forward(request, response);
+				return;
+			} catch (ServletException | IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		NoticeBiz biz = new NoticeBiz();
 		String directory = "C:/student_ucamp33/workspace_teamProject/myHome/WebContent/img/qNotice";
 		
@@ -383,7 +441,16 @@ public class FrontNotice extends HttpServlet {
 	 * @author 김보성
 	 */
 	private void addComment(HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
+		
+		if (session == null || session.getAttribute("memberId") == null) {
+			try {
+				request.getRequestDispatcher("/member/login.jsp").forward(request, response);
+				return;
+			} catch (ServletException | IOException e) {
+				e.printStackTrace();
+			}
+		}
 		String comment = request.getParameter("comment");
 		int qNo = Integer.parseInt(request.getParameter("qNo"));
 		NoticeBiz biz = new NoticeBiz();
@@ -406,6 +473,16 @@ public class FrontNotice extends HttpServlet {
 	 * @author 김보성
 	 */
 	private void updateComment(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession(false);
+		
+		if (session == null || session.getAttribute("memberId") == null) {
+			try {
+				request.getRequestDispatcher("/member/login.jsp").forward(request, response);
+				return;
+			} catch (ServletException | IOException e) {
+				e.printStackTrace();
+			}
+		}
 		int aNo = Integer.parseInt(request.getParameter("aNo"));
 		int qNo = Integer.parseInt(request.getParameter("qNo"));
 		String edditContent = request.getParameter("edit_acontent" + aNo);
@@ -423,6 +500,16 @@ public class FrontNotice extends HttpServlet {
 	 * @author 김보성
 	 */
 	private void deleteComment(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession(false);
+		
+		if (session == null || session.getAttribute("memberId") == null) {
+			try {
+				request.getRequestDispatcher("/member/login.jsp").forward(request, response);
+				return;
+			} catch (ServletException | IOException e) {
+				e.printStackTrace();
+			}
+		}
 		int qNo = Integer.parseInt(request.getParameter("qNo"));
 		int aNo = Integer.parseInt(request.getParameter("aNo"));
 		NoticeBiz biz = new NoticeBiz();
@@ -440,6 +527,17 @@ public class FrontNotice extends HttpServlet {
 	 * @author 김보성
 	 */
 	private void qNoticeUpdateForm(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession(false);
+		
+		if (session == null || session.getAttribute("memberId") == null) {
+			try {
+				request.getRequestDispatcher("/member/login.jsp").forward(request, response);
+				return;
+			} catch (ServletException | IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		int qNo = Integer.parseInt(request.getParameter("qNo"));
 		NoticeBiz biz = new NoticeBiz();
 		Qnotice dto = new Qnotice();
@@ -458,6 +556,17 @@ public class FrontNotice extends HttpServlet {
 	 * @author 김보성
 	 */
 	private void qNoticeUpdate(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession(false);
+		
+		if (session == null || session.getAttribute("memberId") == null) {
+			try {
+				request.getRequestDispatcher("/member/login.jsp").forward(request, response);
+				return;
+			} catch (ServletException | IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		int qNo = Integer.parseInt(request.getParameter("qNo"));
 		String qTitle = request.getParameter("qTitle");
 		String qContent = request.getParameter("qContent");
@@ -481,7 +590,19 @@ public class FrontNotice extends HttpServlet {
 	 * @author 김보성
 	 */
 	private void qNoticeDelete(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession(false);
+		
+		if (session == null || session.getAttribute("memberId") == null) {
+			try {
+				request.getRequestDispatcher("/member/login.jsp").forward(request, response);
+				return;
+			} catch (ServletException | IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		int qNo = Integer.parseInt(request.getParameter("qNo"));
+		
 		NoticeBiz biz = new NoticeBiz();
 		biz.qNoticeDelete(qNo);
 		try {
@@ -497,7 +618,6 @@ public class FrontNotice extends HttpServlet {
 	 */
 	private void qNoticeSearch(HttpServletRequest request, HttpServletResponse response) {
 		String searchInfo = request.getParameter("searchInfo");
-		String keyWord = request.getParameter("keyWord");
 		NoticeBiz biz = new NoticeBiz();
 		ArrayList<Qnotice> list = new ArrayList<Qnotice>();
 		biz.searchQnoticeList(searchInfo, list);

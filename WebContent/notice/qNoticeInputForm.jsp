@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%@ include file="/inc/taglib_menu.jsp"%>
+<%@ include file="/inc/taglib_menu.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,6 +29,15 @@
 	<jsp:include page="/inc/header.jsp" />
 
 	<!-- contents menu -->
+	<div class="row">
+	<div class="span9" style="width:960px;">
+    <ul class="breadcrumb">
+   		<li><a href="${CONTEXT_PATH}/product/productController?action=storeHome">Home</a> <span class="divider">></span></li>
+   		<li><a href="${CONTEXT_PATH}/notice/noticeController?action=qNoticeForm">질문과 답변</a> <span class="divider">></span></li>
+   		<li class="active">질문 게시글 작성</li>
+    </ul>
+
+	<div class="well well-small">
 	<h3 align="center">질문 게시글 작성</h3>
 	<form action="${CONTEXT_PATH}/notice/noticeController?action=qNoticeInput" method="post" enctype="multipart/form-data">
 		<table border="1px" align="center" width="400px" cellpadding="5px">
@@ -52,6 +61,9 @@
 			</tr>
 		</table>
 	</form>
+	</div>
+	</div>
+	</div>
 	<!-- footer -->
 	<jsp:include page="/inc/footer.jsp" />
 	<!-- Placed at the end of the document so the pages load faster -->

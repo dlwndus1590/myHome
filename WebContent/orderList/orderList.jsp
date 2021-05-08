@@ -16,6 +16,13 @@
 <link rel="shortcut icon" href="assets/ico/favicon.ico">
 </head>
 <body>
+<c:if test="${empty dto}">
+	<script type="text/javascript">
+		alert('로그인을 먼저 시도해주세요');
+		location.href="${CONTEXT_PATH}/member/login.jsp"
+	</script>
+</c:if>
+
 	<!-- header -->
 	<jsp:include page="/inc/header.jsp" />
 
@@ -26,10 +33,10 @@
    		<li><a href="${CONTEXT_PATH}/member/memberController?action=memberMyPage">마이페이지</a> <span class="divider">></span></li>
    		<li class="active">주문내역</li>
     </ul>
+		<div class="well well-large" style="width: 960px">
 	<h3>구매 이력</h3>
 	<c:choose>
 		<c:when test="${not empty requestScope.orderList}">
-			<div class="well well-large" style="width: 960px">
 				<br>
 				<div class="row-fluid">
 					<ul class="thumbnails">
@@ -39,10 +46,10 @@
 									<div class="thumbnail">
 										<a class="zoomTool"
 											href="${CONTEXT_PATH}/orderList/orderListController?action=orderDetail&oNo=${index.oNo}&oDate=${index.oDate}"><span
-											class="icon-search"></span> 구매 이력 상세</a> <a
-											href="${CONTEXT_PATH}/orderList/orderListController?action=orderDetail&oNo=${index.oNo}&oDate=${index.oDate}"><img
-											src="${CONTEXT_PATH}/${index.pImg}"></a>
-										<div class="caption cntr">
+											class="icon-search"></span> 구매 이력 상세</a> 
+											<a href="${CONTEXT_PATH}/orderList/orderListController?action=orderDetail&oNo=${index.oNo}&oDate=${index.oDate}">
+											<img src="${CONTEXT_PATH}/${index.pImg}"></a>
+										<div class="caption cntr" style="height:130px;">
 											<p>
 												<strong>${index.pName}</strong>
 											</p>
@@ -67,7 +74,7 @@
 		<c:otherwise>
 			<table style="width: 940px;">
 				<tr>
-					<td rowspan="5" colspan="5" align="center" style="padding: 100px;">등록한 후기가 없습니다.</td>
+					<td rowspan="5" colspan="5" align="center" style="padding: 100px;">구매하신 이력이 없습니다.</td>
 				</tr>
 			</table>
 		</c:otherwise>

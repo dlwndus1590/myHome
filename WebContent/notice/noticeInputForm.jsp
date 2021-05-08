@@ -29,6 +29,15 @@
 	<jsp:include page="/inc/header.jsp" />
 
 	<!-- contents menu -->
+	<div class="row">
+
+	<div class="span9" style="width:960px;">
+    <ul class="breadcrumb">
+   		<li><a href="${CONTEXT_PATH}/product/productController?action=storeHome">Home</a> <span class="divider">></span></li>
+   		<li><a href="${CONTEXT_PATH}/notice/noticeController?action=noticeListForm">공지사항</a> <span class="divider">></span></li>
+   		<li class="active">공지사항 게시글 작성</li>
+    </ul>
+	<div class="well well-small">
 	<h3 align="center">공지사항 게시글 작성</h3>
 	<form
 		action="${CONTEXT_PATH}/notice/noticeController?action=noticeInput"
@@ -46,12 +55,13 @@
 			</tr>
 			<tr align="right">
 				<td id="buttonLine"><input type="submit" value="등록"
-					size="100px" id="button"></td>
+					size="100px" id="button"  class="shopBtn"></td>
 			</tr>
 		</table>
 	</form>
-
-
+</div>
+</div>
+</div>
 	<!-- footer -->
 	<jsp:include page="/inc/footer.jsp" />
 	<!-- Placed at the end of the document so the pages load faster -->
