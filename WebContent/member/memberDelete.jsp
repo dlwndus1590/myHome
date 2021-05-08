@@ -21,23 +21,84 @@
 	<!-- Favicons -->
     <link rel="shortcut icon" href="${CONTEXT_PATH}/assets/ico/favicon.ico">
 
-	<link type="text/css" rel="stylesheet" href="${CONTEXT_PATH}/css/login.css">	
 	<!-- header menu -->
 	<jsp:include page="/inc/header.jsp" />
 
 <style>
 	#memberId, #memberPw,#memberPwConfirm{
-		height: 50px;
+		height: 50px;		
 		font-size: 20px;
 	}
+	
+	.col{
+		margin-left: 2%;
+	}
+	
+	* {box-sizing: border-box}
+
+	.input, .input {
+	  width: 50%;
+	  padding: 15px;
+	  margin: 5px 0 22px 0;
+	  display: inline-block;
+	  border: none;
+	  background: #f1f1f1;
+	}
+	
+	.input:focus, .input:focus {
+	  background-color: #ddd;
+	  outline: none;
+	}
+	
+	hr {
+	  border: 1px solid #f1f1f1;
+	  margin-bottom: 25px;
+	}
+	.mypagebtn{
+	  background-color: #548235;
+	  color: white;
+	  padding: 14px 20px;
+	  margin: 8px 0;
+	  border: none;
+	  cursor: pointer;
+	  width: 50%;
+	  opacity: 0.9;
+	  border-radius:5px;
+	}
+	
+	.input{
+	  background-color: #548235;
+	  color: white;
+	  padding: 14px 20px;
+	  margin: 8px 0;
+	  border: none;
+	  cursor: pointer;
+	  width: 100%;
+	  opacity: 0.9;
+	  border-radius:5px;
+	}
+	
+	.input:hover {
+	  opacity:1;
+	}
+	
+	.cancelbtn {
+	  padding: 14px 20px;
+	  background-color: #f44336;
+	}
+
+	
 </style>
-<script type="text/javascript" src="${CONTEXT_PATH}/js/member_input.js"></script>
+
 </head>
 <body>
 <!-- main menu : 로그인 전 메뉴 -->
 
 <!-- contents menu -->
-<form class="container" action="${CONTEXT_PATH}/member/memberController?action=memberDelete" method="post" style="padding-left:12%;">
+<form class="container" action="${CONTEXT_PATH}/member/memberController?action=memberDelete" method="post" >
+<div class="row">
+<div class="span9" style="width:960px;" >
+<div class="well well-small">
 	
 	   <div class="row">
 	      <h2 style="text-align:center">다음에 또 뵙고 싶습니다.</h2>
@@ -46,19 +107,21 @@
 	      </div>	
 	      
 		<div class="col">
-	      	<input type="text" name="memberId" id="memberId" placeholder="User Id" required>
-	        <input type="password" name="memberPw" id="memberPw" placeholder="User password" required>
-        	<input type="password" id="memberPwConfirm" name="memberPwConfirm" placeholder="User password" required>
-        	<!-- 비밀번호 보이기 -->
+	      	<input type="text" class="input" name="memberId" id="memberId" placeholder="User Id" required>
+	        <input type="password" class="input" name="memberPw" id="memberPw" placeholder="User password" required>
+        	<input type="password" class="input" id="memberPwConfirm" name="memberPwConfirm" placeholder="User password" required>
         	
-			<input type="checkbox" name="memberPwShow" id="memberPwShow" 
+        	<!-- 비밀번호 보이기 -->        	
+			<input type="checkbox"  name="memberPwShow" id="memberPwShow" 
 					onclick="showMemberPw()">비밀번호 보이기
 			<div id="memberPwConfirmMessage" name="memberPwConfirmMessage"></div>
 			
-	        <input type="submit" value="탈퇴하기">
+	        <input type="submit" class="input" value="탈퇴하기">
 		</div>	      
 
-	
+</div>
+</div>
+</div>	
 </form>
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="${CONTEXT_PATH}/assets/js/jquery.js"></script>

@@ -311,7 +311,18 @@
                   }
                %>   
                
-                <a href="${CONTEXT_PATH}/member/ordersController?action=cartPage"><span class="icon-shopping-cart" style="color:black;"></span> 장바구니 </a>
+               <%                  
+                  if(session.getAttribute("memberId")==null){
+               %>   
+                  <a href="${CONTEXT_PATH}/member/ordersController?action=cartPage"></a> 
+               <%
+                  } else {                     
+               %>
+                  <a href="${CONTEXT_PATH}/member/ordersController?action=cartPage"><span class="icon-shopping-cart" style="color:black;"></span> 장바구니 </a>
+               <%
+                  }
+               %>
+                
                
          </div>
       </div>

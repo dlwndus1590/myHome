@@ -57,7 +57,7 @@ input[type=text]:focus, input[type=password]:focus {
   outline: none;
 }
 
-hr {
+.hr {
   border: 1px solid #f1f1f1;
   margin-bottom: 25px;
   width:800px;
@@ -123,7 +123,7 @@ function postcodeTest() {
   <div class="container">
   	<br>
     <h1><%=dao.getName() %> 님 상세조회</h1>    
-    <hr>
+    <hr class="hr">
 
     <label><b>아이디</b></label>
     <p>
@@ -156,7 +156,7 @@ function postcodeTest() {
     <label><b>회사/점포명</b></label>
     <input type="text" placeholder="Enter Company" name="companyName" id="companyName" value="<%=dao.getCompanyName()%>">
     
-    <hr>
+    <hr class="hr">
 
 	<input type="submit" class="registerbtn" value="내 정보 변경"></input>
 	<input type="submit" class="registerbtn" onclick="location.href='history.back()'" value="취소하기"></input>

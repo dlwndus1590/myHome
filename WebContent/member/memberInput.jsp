@@ -56,7 +56,7 @@ input[type=text]:focus, input[type=password]:focus {
   outline: none;
 }
 
-hr {
+.hr {
   border: 1px solid #f1f1f1;
   margin-bottom: 25px;
   width:800px;
@@ -145,7 +145,7 @@ a {
   <div>
   	<br>
     <h1>일반 회원가입을 축하드립니다.</h1>    
-    <hr>
+    <hr class="hr">
 
     <label><b>아이디</b></label>
     <p>
@@ -177,7 +177,7 @@ a {
 	<input type="text" placeholder="Enter address" name="address1" id="address1" readonly="readonly" >
 	<input type="text" placeholder="Enter address" name="address2" id="address2" required="required" >	    
     
-    <hr>
+    <hr class="hr">
 
 	<input type="submit" class="registerbtn" value="가입하기">        
     <input type="reset" class="registerbtn"  onclick="location.href='loginChoice.jsp'" value="취소하기">

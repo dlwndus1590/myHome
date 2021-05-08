@@ -4,22 +4,34 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>myHome</title>
-<!-- header menu -->
-<jsp:include page="/inc/header.jsp" />
+<title>My Home</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="마이 페이지">
+    <meta name="author" content="강하영">
+    <!-- Bootstrap styles -->
+    <link href="${CONTEXT_PATH}/assets/css/bootstrap.css" rel="stylesheet"/>
+    <!-- Customize styles -->
+    <link href="${CONTEXT_PATH}/assets/style/style.css" rel="stylesheet"/>
+    <!-- font awesome styles -->
+	<link href="${CONTEXT_PATH}/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
+	<!-- Favicons -->
+    <link rel="shortcut icon" href="${CONTEXT_PATH}/assets/ico/favicon.ico">
+	<!-- header menu -->
+	<jsp:include page="/inc/header.jsp" />
+	
 <style>
 /* Full-width input fields */
-input[type=text], input[type=password] {
+.input {
   width: 50%;
   padding: 15px;
   margin: 5px 0 22px 0;
   display: inline-block;
   border: none;
-  background: #f1f1f1;
+  background: #f1f1f1;  
 }
 
 /* Add a background color when the inputs get focus */
-input[type=text]:focus, input[type=password]:focus {
+.input:focus, .input:focus {
   background-color: #ddd;
   outline: none;
 }
@@ -53,13 +65,13 @@ button:hover {
 }
 
 /* Add padding to container elements */
-.container {
+.container2 {
   padding: 16px;
 }
 
 /* Style the horizontal ruler */
-hr {
-  border: 1px solid #f1f1f1;
+.hr {
+  border: 1px solid white;
   width:680px;
   margin-bottom: 25px;
 }
@@ -71,6 +83,10 @@ hr {
   display: table;
 }
 
+#ino,#iname,#icareer,#idetail,#ilocation{
+	height: 40px;
+}
+
 </style>
 <script type="text/javascript">
 	function goBack() {
@@ -80,31 +96,37 @@ hr {
 </head>
 <body>
   <form action="${CONTEXT_PATH}/interior/interiorController?action=insertInterior" method="post">
-    <div class="container">
+<div class="row">
+<div class="span9" style="width:960px;">
+<div class="well well-small" style="height:600px;">
+    <div class="container2">
       <h1>인테리어(업체) 등록</h1>
             
-      <hr>
+      <hr class="hr">
       <label><b>No</b></label>      
-      <input type="text" placeholder="Enter No" name="ino" required>
+      <input type="text" placeholder="Enter No" class="input" id="ino" name="ino" required>
       
       <label><b>회사명</b></label>
       
-      <input type="text" placeholder="Enter Name" name="iname" required>
+      <input type="text" placeholder="Enter Name" class="input" id="iname" name="iname" required>
 
       <label><b>경력</b></label>
-      <input type="text" placeholder="Enter Career" name="icareer" required>
+      <input type="text" placeholder="Enter Career" class="input" id="icareer" name="icareer" required>
 
       <label><b>회사 설명</b></label>
-      <input type="text" placeholder="Enter Detail" name="idetail" required>
+      <input type="text" placeholder="Enter Detail" class="input" id="idetail"  name="idetail" required>
       
       <label><b>위치</b></label>
-      <input type="text" placeholder="Enter Location" name="ilocation" required>
+      <input type="text" placeholder="Enter Location" class="input" id="ilocation" name="ilocation" required>
 
       <div class="clearfix">
         <input type="reset" class="cancelbtn" value="초기화"></input>
         <input type="submit" class="signupbtn" value="등록하기" onclick="javascript:alert('등록이 완료되었습니다.')"></input>
         <input type="submit" class="signupbtn" value="이전으로"  onclick="goBack()"></input>
       </div>
+    </div>
+    </div>
+    </div>
     </div>
   </form>
   <!-- Placed at the end of the document so the pages load faster -->

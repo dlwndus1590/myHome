@@ -16,15 +16,86 @@
     <!-- font awesome styles -->
 	<link href="${CONTEXT_PATH}/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
 	<!-- Favicons -->
-    <link rel="shortcut icon" href="${CONTEXT_PATH}/assets/ico/favicon.ico">
-    
-    <link type="text/css" rel="stylesheet" href="${CONTEXT_PATH}/css/login.css">
-    
+    <link rel="shortcut icon" href="${CONTEXT_PATH}/assets/ico/favicon.ico">    
+        
+	<!-- header menu -->
+	<jsp:include page="/inc/header.jsp" />
+	
     <style>
-		#memberId, #memberPw{
-			height: 50px;
-			font-size: 20px;
-		}
+    * {box-sizing: border-box}
+
+	.input {
+	  width: 50%;
+	  padding: 15px;
+	  margin: 5px 0 22px 0;
+	  display: inline-block;
+	  border: none;
+	  background: #f1f1f1;
+	}
+	
+	.input:focus {
+	  background-color: #ddd;
+	  outline: none;
+	}
+	
+	.hr {
+	  border: 1px solid #f1f1f1;
+	  margin-bottom: 25px;
+	}
+	.mypagebtn{
+	  background-color: #548235;
+	  color: white;
+	  padding: 14px 20px;
+	  margin: 8px 0;
+	  border: none;
+	  cursor: pointer;
+	  width: 50%;
+	  opacity: 0.9;
+	  border-radius:5px;
+	}
+	button{
+	  background-color: #548235;
+	  color: white;
+	  padding: 14px 20px;
+	  margin: 8px 0;
+	  border: none;
+	  cursor: pointer;
+	  width: 100%;
+	  opacity: 0.9;
+	  border-radius:5px;
+	}
+	
+	button:hover {
+	  opacity:1;
+	}
+	
+	.cancelbtn {
+	  padding: 14px 20px;
+	  background-color: #f44336;
+	}
+	
+	.cancelbtn, .signupbtn {
+	  float: left;
+	  width: 50%;
+	}
+	
+	.container2 {
+	  padding: 16px;
+	}
+	
+	.clearfix::after {
+	  content: "";
+	  clear: both;
+	  display: table;
+	}
+	#memberId, #memberPw{
+		height: 50px;
+		font-size: 20px;
+	}
+	
+	.loginMain{
+		margin-left: 10%;
+	}
 	</style>
 	
 	<script type="text/javascript" src="${CONTEXT_PATH}/js/member_input.js"></script>
@@ -64,8 +135,6 @@
 </head>
 <body>
 
-<!-- header menu -->
-<jsp:include page="/inc/header.jsp" />
 
 
 <!-- contents menu -->
@@ -74,16 +143,16 @@
 
 <div class="well well-small">
 	<form action="${CONTEXT_PATH}/member/memberController?action=login" method="post" style="padding-left:23%;">
-	  <div class="container">
+	  <div class="container2">
 	    <h1>로그인</h1>
-	    <hr>
+	    <hr class="hr"> 
 	
 	    <label><b>아이디</b></label>    
-	    <input type="text" id="memberId" name="memberId" required>
+	    <input type="text" class="input" id="memberId" name="memberId" required>
 	    
 	    <br>
 	    <label><b>비밀번호</b></label>    
-	    <input type="password" id="memberPw" name="memberPw" required>
+	    <input type="password" class="input" id="memberPw" name="memberPw" required>
 	    <div id="memberPwConfirmMessage"></div>	
 	
 	    <label>
