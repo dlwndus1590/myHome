@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>My Home cart</title>
+<title>My Home</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -49,10 +49,12 @@
 	<ul class="breadcrumb">
 		<li><a href="${CONTEXT_PATH}/index.jsp">Home</a> <span
 			class="divider">/</span></li>
+		<li><a href="${CONTEXT_PATH}/member/ordersController?action=cartPage">장바구니</a> <span
+			class="divider">/</span></li>
 		<li class="active">결제하기</li>
 	</ul>
 	
-	<<div class="well well-small">
+	<div class="well well-small">
 	<fieldset>
 		<legend>상품정보</legend>
 	</fieldset>
@@ -73,18 +75,22 @@
 				<tbody>
 					<c:forEach var="dto" items="${ordersList }" varStatus="status">
 						<tr>
-							<td><input type="hidden" name="stock" value="${dto.stock }"><img width="100" src="${CONTEXT_PATH }/${dto.pImg }"></td>
+							<td>
+								<input type="hidden" name="pNo" value="${dto.pNo }">
+								<input type="hidden" name="stock" value="${dto.stock }">
+								<img width="100" src="${CONTEXT_PATH }/${dto.pImg }">
+							</td>
 							<td>${dto.pName }</td>
 							<td>
 								<fmt:formatNumber value="${dto.pPrice }" pattern="###,###" />원
 							</td>
-							<td><input type="hidden" name="deliveryFee" value="${dto.deliveryFee }">
+							<td><input type="text" name="deliveryFee" value="${dto.deliveryFee }">
 								<fmt:formatNumber value="${dto.deliveryFee }" pattern="###,###" />원
 							</td>
 							<td><input class="span1" style="max-width: 40px"
 								placeholder="1" size="16" type="number" value="${dto.cCount }"
 								min="1" readonly="readonly"></td>
-							<td><input type="hidden" name="totalPrice" value="${dto.totalPrice }">
+							<td><input type="text" name="totalPrice" value="${dto.totalPrice }">
 								<fmt:formatNumber value="${dto.totalPrice }" pattern="###,###" />원
 							</td>
 						</tr>
@@ -112,13 +118,13 @@
 			<div class="control-group">
 				<label class="control-label">이메일</label>
 				<div class="controls">
-					<input type="text" value="${orders[0].email }">
+					<input type="text" value="${orders[0].email }" readonly="readonly">
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label">휴대폰</label>
 				<div class="controls">
-					<input type="text" value="${orders[0].mobile }">
+					<input type="text" value="${orders[0].mobile }" readonly="readonly">
 				</div>
 			</div>
 			<fieldset>

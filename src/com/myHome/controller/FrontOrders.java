@@ -142,24 +142,21 @@ public class FrontOrders extends HttpServlet {
 	}
 	
 	/**
-	 * 단일 상품 결제페이지(상품상세에서 memberId - 세션, pNo, cCount)
+	 * 단일 상품 결제페이지(상품상세에서 memberId - 세션, pNo, cCount, 가격 가져와서 가격 * 수량)
 	 */
 	private void ordersPage(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		String memberId = (String) session.getAttribute("memberId");
-		//String[] totalPrice = request.getParameterValues("totalPrice");
-		String[] totalCost = request.getParameterValues("totalCost[]");
-		//String[] count = request.getParameterValues("itemCount");
-		int total = 0;
-		for (int i = 0; i < totalCost.length; i++) {
-			System.out.println(i + ", " + totalCost[i]);
-			//pNo = Integer.parseInt(pNo1[i]);
-			total += Integer.parseInt(totalCost[i]);
-		}
-		System.out.println("total : " + total);
-		//String memberId = "user01";
+		int pNo = Integer.parseInt(request.getParameter("pNo"));
+		int count = Integer.parseInt(request.getParameter("count"));
+		int total = 0; // 가격 * 수량
 		ArrayList<OrdersPage> ordersList = new ArrayList<OrdersPage>();
 		OrdersBiz ordersBiz = new OrdersBiz();
+		// 장바구니 추가
+		
+		
+		
+		
 		try {
 			ordersBiz.getOrdersPage(memberId, ordersList);
 			
@@ -179,36 +176,44 @@ public class FrontOrders extends HttpServlet {
 	private void orders(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
 		String memberId = (String) session.getAttribute("memberId");
-		// 회원 정보 받아오기
-		String optionsRadios = request.getParameter("optionsRadios");
-		String usedMileage = request.getParameter("usedMileage");
-		String currentMileage = request.getParameter("accumulateMileage");
+		int orderMethod = Integer.parseInt(request.getParameter("optionsRadios"));
+		int usedMileage = Integer.parseInt(request.getParameter("usedMileage"));
+		int currentMileage = Integer.parseInt(request.getParameter("accumulateMileage"));
 		String[] totalPrice = request.getParameterValues("totalPrice");
+		int totalP = 0;
 		String[] deliveryFee = request.getParameterValues("deliveryFee");
-		String zipCode = request.getParameter("zipcode");
+		int totalDeliveryFee = 0;
+		int zipCode = Integer.parseInt(request.getParameter("zipcode"));
 		String address1 = request.getParameter("address1");
 		String address2 = request.getParameter("address2");
-		int i = Integer.parseInt(currentMileage);
-		int j = Integer.parseInt(usedMileage);
-		System.out.println("optionsRadios : " + optionsRadios);
-		System.out.println("currentMileage : " + i);
-		System.out.println("usedMileage : " + j);
-		int accumulateMileage = i - j;
-		System.out.println("accumulateMileage : " + accumulateMileage);
-		System.out.println("zipCode : " + zipCode);
-		System.out.println("address1 : " + address1);
-		System.out.println("address2 : " + address2);
+		int accumulateMileage = currentMileage - usedMileage;
 		String[] stock1 = request.getParameterValues("stock");
+		String[] pNo1 = request.getParameterValues("pNo");
 		OrdersBiz ordersBiz = new OrdersBiz();
 		
 		for (int index = 0; index < totalPrice.length; index++) {
 			System.out.println("totalPrice : " + totalPrice[index]);
 			System.out.println("deliveryFee : " + deliveryFee[index]);
+			totalP += Integer.parseInt(totalPrice[index]);
+			totalDeliveryFee += Integer.parseInt(deliveryFee[index]);
 			int stock = Integer.parseInt(stock1[index]);
-			System.out.println("stock : " + stock);
-			// insert 처리
-			if (memberId != null && accumulateMileage >= 0 && stock > 0) {
-				
+			
+			if (stock > 0) {
+				// 알림
+			}
+		}
+		if (memberId != null && accumulateMileage >= 0) {
+			try {
+				int result = ordersBiz.orders(memberId, orderMethod, totalP, totalDeliveryFee, usedMileage, accumulateMileage, zipCode, address1, address2);
+				if (result == 1) {
+					for (int index = 0; index < totalPrice.length; index++) {
+						int pNo = Integer.parseInt(pNo1[index]);
+						ordersBiz.cartDelete(memberId, pNo);
+						// ordersDetail 추가(수량, pNo, oNo(dao), '미평가')
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 	}
@@ -216,13 +221,14 @@ public class FrontOrders extends HttpServlet {
 	/**
 	 * 카테고리, 베스트 페이지에서 장바구니 담기
 	 */
-	private void cartInsert(HttpServletRequest request, HttpServletResponse response) {
+	private void cartInsert(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		String memberId = (String) session.getAttribute("memberId");
 		int pNo = Integer.parseInt(request.getParameter("pNo"));
 		int count = 1;
 		
 		OrdersBiz ordersBiz = new OrdersBiz();
+		
 		try {
 			ordersBiz.cartInsert(memberId, pNo, count);
 			
@@ -232,12 +238,16 @@ public class FrontOrders extends HttpServlet {
 			writer.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-			// 에러처리 페이지로 이동
+
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter writer = response.getWriter();
+			writer.println("<script>alert('이미 등록된 상품입니다.'); location.href='" + CONTEXT_PATH + "/product/productController?action=productListByCategoryForm';</script>");
+			writer.close();
 		}
 	}
 	
 	/**
-	 * 상품 상세 페이지에서 장바구니 담기
+	 * 상품 상세 페이지에서 장바구니 담기(안쓸듯)
 	 */
 	private void DetailsCartInsert(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();

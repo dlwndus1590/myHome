@@ -7,9 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.myHome.common.JdbcTemplate;
-import com.myHome.model.dto.OrdersMethod;
 import com.myHome.model.dto.OrdersPage;
-import com.myHome.model.dto.Product;
 
 public class OrdersDao {
 	private static OrdersDao instance = new OrdersDao();
@@ -163,7 +161,11 @@ public class OrdersDao {
 	 * 장바구니 담기
 	 */
 	public void cartInsert(Connection conn, String memberId, int pNo, int count) throws Exception {
-		String sql = "insert into cart values((select max(nvl(c_no, 0)) + 1 from cart), ?, ?, ?)";
+		String sql = "insert into cart (c_no, member_id, p_no, c_count) " + 
+						"select " + 
+						"(select max(nvl(c_no, 0)) + 1 from cart), ?, ?, ? " + 
+						"from dual " + 
+						"where not exists (select * from cart where p_no = ? and member_id = ?)";
 		
 		PreparedStatement stmt = null;
 		
@@ -172,10 +174,45 @@ public class OrdersDao {
 			stmt.setString(1, memberId);
 			stmt.setInt(2, pNo);
 			stmt.setInt(3, count);
+			stmt.setInt(4, pNo);
+			stmt.setString(5, memberId);
 			int rows = stmt.executeUpdate();
 			if (rows == 0) {
 				throw new Exception();
 			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			throw new Exception();
+		} finally {
+			JdbcTemplate.close(stmt);
+		}
+	}
+
+	/**
+	 * 결제하기
+	 */
+	public int orders(Connection conn, String memberId, int orderMethod, int totalPrice, int deliveryFee,
+			int usedMileage, int accumulateMileage, int zipCode, String address1, String address2) throws Exception {
+		String sql = "insert into orders " + 
+				"values ((select max(nvl(o_no, 0)) + 1 from orders), ?, ?, ?, " + 
+				"to_char(sysdate, 'yyyy-mm-dd'), ?, ?, ?, ?, ?, ?)";
+		
+		PreparedStatement stmt = null;
+		
+		try {
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, memberId);
+			stmt.setInt(2, orderMethod);
+			stmt.setInt(3, totalPrice);
+			stmt.setInt(4, deliveryFee);
+			stmt.setInt(5, usedMileage);
+			stmt.setInt(6, accumulateMileage);
+			stmt.setInt(7, zipCode);
+			stmt.setString(8, address1);
+			stmt.setString(9, address2);
+			int rows = stmt.executeUpdate();
+			return rows;
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();

@@ -77,4 +77,22 @@ public class OrdersBiz {
 			JdbcTemplate.close(conn);
 		}
 	}
+
+	public int orders(String memberId, int orderMethod, int totalP, int totalDeliveryFee, int usedMileage,
+			int accumulateMileage, int zipCode, String address1, String address2) throws Exception {
+		Connection conn = JdbcTemplate.getConnection();
+		try {
+			int result = dao.orders(conn, memberId, orderMethod, totalP, totalDeliveryFee, usedMileage, accumulateMileage, zipCode, address1, address2);
+			JdbcTemplate.commit(conn);
+			return result;
+		} catch (Exception e) {
+			JdbcTemplate.rollback(conn);
+			e.printStackTrace();
+			throw e;
+		} finally {
+			JdbcTemplate.close(conn);
+		}
+	}
+
+
 }
