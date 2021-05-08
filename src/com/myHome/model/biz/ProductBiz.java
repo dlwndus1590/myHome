@@ -231,4 +231,45 @@ public class ProductBiz {
 			JdbcTemplate.close(conn);
 		}
 	}
+	
+	/**
+	 * 상품 구매시 상품판매수량 변경
+	 * @param count
+	 * @param product
+	 * @throws Exception
+	 */
+	public void plusPsales(int count, Product product) throws Exception{
+		Connection conn = JdbcTemplate.getConnection();
+		
+		try {
+			ProductDao.getInstance().plusPsales(conn, count, product);
+			JdbcTemplate.commit(conn);
+		} catch(SQLException e) {
+			JdbcTemplate.rollback(conn);
+			throw e;
+		} finally {
+			JdbcTemplate.close(conn);
+		}
+	}
+	
+	/**
+	 * 리뷰 작성시 상품 별점 변경
+	 * @param product
+	 * @param score
+	 * @param dcount 
+	 * @throws Exception
+	 */
+	public void updatePscore(Product product, int score, int dcount) throws Exception {
+		Connection conn = JdbcTemplate.getConnection();
+		
+		try {
+			ProductDao.getInstance().updatePscore(conn, product, score, dcount);
+			JdbcTemplate.commit(conn);
+		} catch(SQLException e) {
+			JdbcTemplate.rollback(conn);
+			throw e;
+		} finally {
+			JdbcTemplate.close(conn);
+		}
+	}
 }
