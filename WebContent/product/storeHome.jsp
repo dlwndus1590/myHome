@@ -102,7 +102,12 @@
 				<a  href="${CONTEXT_PATH}/product/productController?action=productDetail&pNo=${bestProduct.pNo}"><img src="${CONTEXT_PATH}/${bestProduct.pImg}"></a>
 				<div class="caption cntr">
 					<p><strong>${bestProduct.pName}</strong></p>
-					<h4><a class="shopBtn" href="#" title="add to cart"> 장바구니 담기 </a></h4>
+					<c:if test="${not empty dto.memberId }">
+						<h4><a class="shopBtn" href="${CONTEXT_PATH}/member/ordersController?action=cartInsert&pNo=${bestProduct.pNo}" title="add to cart"> 장바구니 담기 </a></h4>
+					</c:if>
+					<c:if test="${empty dto.memberId }">
+						<h4><a class="shopBtn" href="${CONTEXT_PATH }/member/memberController?action=loginForm" title="add to cart"> 장바구니 담기 </a></h4>
+					</c:if>
 					<div class="actionList">
 						<p><img src="${CONTEXT_PATH}/img/star.png">${bestProduct.pScore} </p> 
 					</div> 
