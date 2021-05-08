@@ -84,13 +84,13 @@
 							<td>
 								<fmt:formatNumber value="${dto.pPrice }" pattern="###,###" />원
 							</td>
-							<td><input type="text" name="deliveryFee" value="${dto.deliveryFee }">
+							<td><input type="hidden" name="deliveryFee" value="${dto.deliveryFee }">
 								<fmt:formatNumber value="${dto.deliveryFee }" pattern="###,###" />원
 							</td>
-							<td><input class="span1" style="max-width: 40px"
+							<td><input class="span1" name="count" style="max-width: 40px"
 								placeholder="1" size="16" type="number" value="${dto.cCount }"
 								min="1" readonly="readonly"></td>
-							<td><input type="text" name="totalPrice" value="${dto.totalPrice }">
+							<td><input type="hidden" name="totalPrice" value="${dto.totalPrice }">
 								<fmt:formatNumber value="${dto.totalPrice }" pattern="###,###" />원
 							</td>
 						</tr>

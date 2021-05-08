@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.myHome.model.biz.OrdersBiz;
+import com.myHome.model.biz.ProductBiz;
 import com.myHome.model.dto.OrdersPage;
+import com.myHome.model.dto.Product;
 
 /**
  * Servlet implementation class FrontOrders
@@ -149,12 +151,19 @@ public class FrontOrders extends HttpServlet {
 		String memberId = (String) session.getAttribute("memberId");
 		int pNo = Integer.parseInt(request.getParameter("pNo"));
 		int count = Integer.parseInt(request.getParameter("count"));
-		int total = 0; // 가격 * 수량
+		int pPrice = Integer.parseInt(request.getParameter("pPrice"));
+		int deliveryFee = Integer.parseInt(request.getParameter("deliveryFee"));
+		int total = (pPrice * count) + deliveryFee;
+		
 		ArrayList<OrdersPage> ordersList = new ArrayList<OrdersPage>();
 		OrdersBiz ordersBiz = new OrdersBiz();
 		// 장바구니 추가
-		
-		
+		try {
+			
+			ordersBiz.cartInsert(memberId, pNo, count);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		
 		try {
@@ -171,7 +180,7 @@ public class FrontOrders extends HttpServlet {
 	}
 	
 	/**
-	 * 다중 결제하기
+	 * 결제하기
 	 */
 	private void orders(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
@@ -189,7 +198,9 @@ public class FrontOrders extends HttpServlet {
 		int accumulateMileage = currentMileage - usedMileage;
 		String[] stock1 = request.getParameterValues("stock");
 		String[] pNo1 = request.getParameterValues("pNo");
+		String[] count1 = request.getParameterValues("count");
 		OrdersBiz ordersBiz = new OrdersBiz();
+		ProductBiz productBiz = new ProductBiz();
 		
 		for (int index = 0; index < totalPrice.length; index++) {
 			System.out.println("totalPrice : " + totalPrice[index]);
@@ -208,8 +219,18 @@ public class FrontOrders extends HttpServlet {
 				if (result == 1) {
 					for (int index = 0; index < totalPrice.length; index++) {
 						int pNo = Integer.parseInt(pNo1[index]);
+						int count = Integer.parseInt(count1[index]);
+						System.out.println("count : " + count);
+						System.out.println("pNo : " + pNo);
 						ordersBiz.cartDelete(memberId, pNo);
 						// ordersDetail 추가(수량, pNo, oNo(dao), '미평가')
+						
+						
+						//productBiz.plusPsales(count, pNo);
+						Product product = new Product();
+						product.setpNo(pNo);
+						productBiz.selectProductOne(product);
+						//productBiz.plusPsales(count, product);
 					}
 				}
 			} catch (Exception e) {

@@ -115,7 +115,7 @@
 			<div class="column">
 			   <div class="card">
 			     <h3>cartlist</h3>
-			     <a href="#"><p>장바구니</p></a>  
+			     <a href="${CONTEXT_PATH}/member/ordersController?action=cartPage"><p>장바구니</p></a>  
 			   </div>
 			 </div>
 		

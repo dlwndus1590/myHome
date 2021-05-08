@@ -69,10 +69,13 @@
 			<p> 회사/점포명 : ${product.companyName}</p>
 			<hr class="soft"/>
 				
-			<form class="form-horizontal qtyFrm">
+			<form class="form-horizontal qtyFrm" action="${CONTEXT_PATH}/member/ordersController?action=ordersPage" method="post">
 			  <div class="control-group">
 				<label class="control-label"> 수량</label>
-				<input type="number" id="count" class="span6" placeholder="1" min="1" style="width:100px" onmouseup="messageChange()" onkeyup="messageChange()">
+				<input type="hidden" name="pNo" value="${product.pNo }">
+				<input type="hidden" name="pPrice" value="${product.pPrice }">
+				<input type="hidden" name="deliveryFee" value="${product.deliveryFee }">
+				<input type="number" name="count" required="required" id="count" class="span6" placeholder="1" min="1" style="width:100px" onmouseup="messageChange()" onkeyup="messageChange()">
 			  </div>
 			  <h5> 재고수량 : <fmt:formatNumber value="${product.pCount }" pattern="###,###"/> </h5>
 			  <button type="button" class="defaultBtn" onclick="location.href='${CONTEXT_PATH}/member/ordersController?action=cartInsert&pNo=${product.pNo}'"><span class=" icon-shopping-cart"></span> 장바구니 </button>

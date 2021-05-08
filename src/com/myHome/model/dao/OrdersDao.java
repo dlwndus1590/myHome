@@ -105,6 +105,59 @@ public class OrdersDao {
 			JdbcTemplate.close(stmt);
 		}
 	}
+	
+	/**
+	 * 단일 결제 페이지 조회
+	 */
+	public void getSingleOrdersPage(Connection conn, String memberId, ArrayList<OrdersPage> ordersList) throws Exception {
+		String sql = "select m.name, m.email, m.mobile, m.mileage, m.zip_code, m.address1, m.address2, " + 
+				   		"p.p_no, p.p_name, p.p_price, c.c_count, p.p_img, p.p_describe, " + 
+				   		"p.p_count - c.c_count as stock, p.delivery_fee, (p.p_price * c.c_count) as total_price " + 
+				   	"from product p join cart c on (p.p_no = c.p_no) " + 
+				   	"join member m on (m.member_id = c.member_id) " + 
+				   	"where m.member_id = ?";
+		
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, memberId);
+			rs = stmt.executeQuery();
+			
+			OrdersPage ordersPage = null;
+			
+			while(rs.next()) {
+				ordersPage = new OrdersPage();
+				
+				ordersPage.setName(rs.getString(1));
+				ordersPage.setEmail(rs.getString(2));
+				ordersPage.setMobile(rs.getString(3));
+				ordersPage.setMileage(rs.getInt(4));
+				ordersPage.setZipCode(rs.getInt(5));
+				ordersPage.setAddress1(rs.getString(6));
+				ordersPage.setAddress2(rs.getString(7));
+				ordersPage.setpNo(rs.getInt(8));
+				ordersPage.setpName(rs.getString(9));
+				ordersPage.setpPrice(rs.getInt(10));
+				ordersPage.setcCount(rs.getInt(11));
+				ordersPage.setpImg(rs.getString(12));
+				ordersPage.setpDescribe(rs.getString(13));
+				ordersPage.setStock(rs.getInt(14));
+				ordersPage.setDeliveryFee(rs.getInt(15));
+				ordersPage.setTotalPrice(rs.getInt(16));
+				
+				ordersList.add(ordersPage);
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			throw new Exception();
+		} finally {
+			JdbcTemplate.close(rs);
+			JdbcTemplate.close(stmt);
+		}
+	}
 
 	/**
 	 * 장바구니 삭제
