@@ -166,5 +166,6 @@ create table interior(
     i_name       varchar2(40),
     i_career    number,
     i_detail     clob,
-    i_location    varchar2(100)
+    i_location    varchar2(100),
+    i_mobile	varchar2(30)
 );

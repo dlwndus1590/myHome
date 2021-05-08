@@ -76,8 +76,9 @@ public class MemberBiz<searchKey> {
 		
 		dto.setEntryDate(Utility.getCurrentDate("yyyy-MM-dd"));
 		try {			
-			dao.insertMember(con,dto);			
+			int index = dao.insertMember(con,dto);			
 			JdbcTemplate.commit(con);
+			return index;
 		} catch (Exception e) {
 			e.printStackTrace();
 			JdbcTemplate.rollback(con);

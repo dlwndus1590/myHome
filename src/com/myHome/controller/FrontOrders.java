@@ -228,7 +228,6 @@ public class FrontOrders extends HttpServlet {
 						ordersBiz.cartDelete(memberId, pNo);
 						ordersBiz.ordersDetail(count, pNo);
 						ordersBiz.updateMileage(memberId, getMileage);
-						
 						Product product = new Product();
 						product.setpNo(pNo);
 						productBiz.selectProductOne(product);
