@@ -34,6 +34,18 @@ public class OrdersBiz {
 		}
 	}
 	
+	public void getSingleOrdersPage(String memberId, int pNo, OrdersPage ordersPage) throws Exception {
+		Connection conn = JdbcTemplate.getConnection();
+		try {
+			dao.getSingleOrdersPage(conn, memberId, pNo, ordersPage);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			JdbcTemplate.close(conn);
+		}
+	}
+	
 	public void cartDelete(String memberId, int pNo) throws Exception {
 		Connection conn = JdbcTemplate.getConnection();
 		try {
@@ -85,6 +97,20 @@ public class OrdersBiz {
 			int result = dao.orders(conn, memberId, orderMethod, totalP, totalDeliveryFee, usedMileage, accumulateMileage, zipCode, address1, address2);
 			JdbcTemplate.commit(conn);
 			return result;
+		} catch (Exception e) {
+			JdbcTemplate.rollback(conn);
+			e.printStackTrace();
+			throw e;
+		} finally {
+			JdbcTemplate.close(conn);
+		}
+	}
+
+	public void ordersDetail(int count, int pNo) throws Exception {
+		Connection conn = JdbcTemplate.getConnection();
+		try {
+			dao.ordersDetail(conn, count, pNo);
+			JdbcTemplate.commit(conn);
 		} catch (Exception e) {
 			JdbcTemplate.rollback(conn);
 			e.printStackTrace();

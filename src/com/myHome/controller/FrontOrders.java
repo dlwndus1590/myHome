@@ -144,7 +144,7 @@ public class FrontOrders extends HttpServlet {
 	}
 	
 	/**
-	 * 단일 상품 결제페이지(상품상세에서 memberId - 세션, pNo, cCount, 가격 가져와서 가격 * 수량)
+	 * 단일 상품 결제페이지
 	 */
 	private void ordersPage(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
@@ -155,11 +155,9 @@ public class FrontOrders extends HttpServlet {
 		int deliveryFee = Integer.parseInt(request.getParameter("deliveryFee"));
 		int total = (pPrice * count) + deliveryFee;
 		
-		ArrayList<OrdersPage> ordersList = new ArrayList<OrdersPage>();
+		OrdersPage ordersPage = new OrdersPage();
 		OrdersBiz ordersBiz = new OrdersBiz();
-		// 장바구니 추가
 		try {
-			
 			ordersBiz.cartInsert(memberId, pNo, count);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -167,9 +165,10 @@ public class FrontOrders extends HttpServlet {
 		
 		
 		try {
-			ordersBiz.getOrdersPage(memberId, ordersList);
+			ordersBiz.getSingleOrdersPage(memberId, pNo, ordersPage);
 			
-			session.setAttribute("ordersList", ordersList);
+			session.setAttribute("ordersPage", ordersPage);
+			System.out.println(ordersPage);
 			session.setAttribute("totalCost", total);
 			response.sendRedirect(CONTEXT_PATH + "/member/ordersPage.jsp");
 		} catch (Exception e) {
@@ -180,7 +179,7 @@ public class FrontOrders extends HttpServlet {
 	}
 	
 	/**
-	 * 결제하기
+	 * 다중 결제하기
 	 */
 	private void orders(HttpServletRequest request, HttpServletResponse response) {
 		HttpSession session = request.getSession();
@@ -203,8 +202,6 @@ public class FrontOrders extends HttpServlet {
 		ProductBiz productBiz = new ProductBiz();
 		
 		for (int index = 0; index < totalPrice.length; index++) {
-			System.out.println("totalPrice : " + totalPrice[index]);
-			System.out.println("deliveryFee : " + deliveryFee[index]);
 			totalP += Integer.parseInt(totalPrice[index]);
 			totalDeliveryFee += Integer.parseInt(deliveryFee[index]);
 			int stock = Integer.parseInt(stock1[index]);
@@ -220,21 +217,18 @@ public class FrontOrders extends HttpServlet {
 					for (int index = 0; index < totalPrice.length; index++) {
 						int pNo = Integer.parseInt(pNo1[index]);
 						int count = Integer.parseInt(count1[index]);
-						System.out.println("count : " + count);
-						System.out.println("pNo : " + pNo);
 						ordersBiz.cartDelete(memberId, pNo);
-						// ordersDetail 추가(수량, pNo, oNo(dao), '미평가')
+						ordersBiz.ordersDetail(count, pNo);
 						
-						
-						//productBiz.plusPsales(count, pNo);
 						Product product = new Product();
 						product.setpNo(pNo);
 						productBiz.selectProductOne(product);
-						//productBiz.plusPsales(count, product);
+						productBiz.plusPsales(count, product);
 					}
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
+				// 에러 페이지로 이동
 			}
 		}
 	}
