@@ -129,7 +129,7 @@ public class FrontOrderList extends HttpServlet {
 		request.setAttribute("pImg", pImg);
 		request.setAttribute("pName", pName);
 		request.setAttribute("oDate", oDate);
-		request.setAttribute("dCount", dCount);
+		session.setAttribute("dCount", dCount);
 		try {
 			request.getRequestDispatcher("/orderList/reviewInputForm.jsp").forward(request, response);
 		} catch (ServletException | IOException e) {
@@ -155,6 +155,7 @@ public class FrontOrderList extends HttpServlet {
 		ProductBiz productBiz = new ProductBiz();
 		Product productDto = new Product();
 		productDto.setpNo(pNo);
+		
 		try {
 			productBiz.selectProductOne(productDto);
 		} catch (Exception e1) {
@@ -167,7 +168,7 @@ public class FrontOrderList extends HttpServlet {
 		try {
 			if(result > 0) {
 				try {
-					productBiz.updatePscore(productDto, score, dCount);
+					productBiz.updatePscore(productDto, score);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

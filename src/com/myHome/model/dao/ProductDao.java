@@ -89,6 +89,8 @@ public class ProductDao {
 				product.setpSales(rs.getInt(10));
 				product.setpCount(rs.getInt(11));
 				product.setpRegDate(rs.getString(12));
+				product.setpReviewCount(rs.getInt(13));
+				product.setpTotalScore(rs.getInt(14));
 				productList.add(product);
 			}
 		} catch(SQLException e) {
@@ -132,6 +134,8 @@ public class ProductDao {
 				product.setpSales(rs.getInt(10));
 				product.setpCount(rs.getInt(11));
 				product.setpRegDate(rs.getString(12));
+				product.setpReviewCount(rs.getInt(13));
+				product.setpTotalScore(rs.getInt(14));
 				productList.add(product);
 			}
 		} catch(SQLException e) {
@@ -174,6 +178,8 @@ public class ProductDao {
 				product.setpSales(rs.getInt(10));
 				product.setpCount(rs.getInt(11));
 				product.setpRegDate(rs.getString(12));
+				product.setpReviewCount(rs.getInt(13));
+				product.setpTotalScore(rs.getInt(14));
 			}
 		} catch(SQLException e) {
 			System.out.println(e.getMessage());
@@ -252,6 +258,8 @@ public class ProductDao {
 				product.setpSales(rs.getInt(10));
 				product.setpCount(rs.getInt(11));
 				product.setpRegDate(rs.getString(12));
+				product.setpReviewCount(rs.getInt(13));
+				product.setpTotalScore(rs.getInt(14));
 				productList.add(product);
 			}
 		} catch(SQLException e) {
@@ -295,6 +303,8 @@ public class ProductDao {
 				product.setpSales(rs.getInt(10));
 				product.setpCount(rs.getInt(11));
 				product.setpRegDate(rs.getString(12));
+				product.setpReviewCount(rs.getInt(13));
+				product.setpTotalScore(rs.getInt(14));
 				productList.add(product);
 			}
 		} catch(SQLException e) {
@@ -340,6 +350,8 @@ public class ProductDao {
 				product.setpSales(rs.getInt(10));
 				product.setpCount(rs.getInt(11));
 				product.setpRegDate(rs.getString(12));
+				product.setpReviewCount(rs.getInt(13));
+				product.setpTotalScore(rs.getInt(14));
 				productList.add(product);
 			}
 		} catch(SQLException e) {
@@ -385,6 +397,8 @@ public class ProductDao {
 				product.setpSales(rs.getInt(10));
 				product.setpCount(rs.getInt(11));
 				product.setpRegDate(rs.getString(12));
+				product.setpReviewCount(rs.getInt(13));
+				product.setpTotalScore(rs.getInt(14));
 				productList.add(product);
 			}
 		} catch(SQLException e) {
@@ -433,7 +447,7 @@ public class ProductDao {
 	 * @throws Exception
 	 */
 	public void addProduct(Connection conn, Product product) throws Exception {
-		String sql = "insert into product values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, to_date(?, 'yyyy-mm-dd'))";
+		String sql = "insert into product values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, to_date(?, 'yyyy-mm-dd'), ?, ?)";
 		
 		PreparedStatement pstmt = null;
 		
@@ -451,6 +465,8 @@ public class ProductDao {
 			pstmt.setInt(10, product.getpSales());
 			pstmt.setInt(11, product.getpCount());
 			pstmt.setString(12, product.getpRegDate());
+			pstmt.setInt(13, product.getpReviewCount());
+			pstmt.setInt(14, product.getpTotalScore());
 			
 			int rows = pstmt.executeUpdate(); 
 			if(rows == 0) {
@@ -525,20 +541,21 @@ public class ProductDao {
 	}
 
 	/**
-	 * 상품 구매시 상품판매량 증가
+	 * 상품 구매시 상품판매량 증가, 재고 감소
 	 * @param conn
 	 * @param count
 	 * @param product
 	 */
 	public void plusPsales(Connection conn, int count, Product product) throws Exception {
-		String sql = "update product set p_sales=? where p_no=?";
+		String sql = "update product set p_sales=?, p_count=? where p_no=?";
 		
 		PreparedStatement pstmt = null;
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, product.getpSales()+count);
-			pstmt.setInt(2, product.getpNo());
+			pstmt.setInt(2, product.getpCount()-count);
+			pstmt.setInt(3, product.getpNo());
 			
 			int rows = pstmt.executeUpdate();
 			if(rows == 0) {
@@ -560,15 +577,19 @@ public class ProductDao {
 	 * @param score
 	 * @param dcount
 	 */
-	public void updatePscore(Connection conn, Product product, int score, int dcount) throws Exception {
-		String sql = "update product set p_score=? where p_no=?";
+	public void updatePscore(Connection conn, Product product, int score) throws Exception {
+		StringBuffer sql = new StringBuffer();
+		sql.append("update product ");
+		sql.append("set p_score=?, p_reviewCount = p_reviewCount  + 1, p_totalScore = p_totalScore + ? ");
+		sql.append("where p_no=?");
 		
 		PreparedStatement pstmt = null;
 		
 		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setFloat(1, (product.getpScore()*(product.getpSales()-dcount)+score)/product.getpSales());
-			pstmt.setInt(2, product.getpNo());
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setFloat(1, ((product.getpTotalScore() + score) / (product.getpReviewCount() + 1) ));
+			pstmt.setInt(2, score);
+			pstmt.setInt(3, product.getpNo());
 			
 			int rows = pstmt.executeUpdate();
 			if(rows == 0) {

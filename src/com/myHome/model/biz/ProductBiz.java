@@ -185,6 +185,8 @@ public class ProductBiz {
 			product.setpRegDate(Utility.getCurrentDate("yyyy-MM-dd"));
 			product.setpScore(0);
 			product.setpSales(0);
+			product.setpReviewCount(0);
+			product.setpTotalScore(0);
 			ProductDao.getInstance().addProduct(conn, product);
 			JdbcTemplate.commit(conn);
 		} catch(SQLException e) {
@@ -259,11 +261,11 @@ public class ProductBiz {
 	 * @param dcount 
 	 * @throws Exception
 	 */
-	public void updatePscore(Product product, int score, int dcount) throws Exception {
+	public void updatePscore(Product product, int score) throws Exception {
 		Connection conn = JdbcTemplate.getConnection();
 		
 		try {
-			ProductDao.getInstance().updatePscore(conn, product, score, dcount);
+			ProductDao.getInstance().updatePscore(conn, product, score);
 			JdbcTemplate.commit(conn);
 		} catch(SQLException e) {
 			JdbcTemplate.rollback(conn);

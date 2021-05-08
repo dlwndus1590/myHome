@@ -68,6 +68,8 @@ create table product (
     p_sales number,
     p_count number,
     p_regDate date,
+    p_reviewCount number,
+    p_totalScore number,
     
     constraint company_name_fk foreign key(company_name) references member(company_name) on delete cascade,
     constraint category_id_fk foreign key(category_id) references category(category_id) on delete cascade
