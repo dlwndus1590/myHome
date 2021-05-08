@@ -15,8 +15,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.myHome.model.biz.MemberBiz;
+import com.myHome.model.biz.NoticeBiz;
+import com.myHome.model.biz.OrderListBiz;
 import com.myHome.model.dto.Member;
 import com.myHome.model.dto.MessageEntity;
+import com.myHome.model.dto.Qnotice;
+import com.myHome.model.dto.Review;
 
 
 /**
@@ -123,6 +127,9 @@ public class FrontMember extends HttpServlet {
 			break;
 		case "memberMyQNoticeList":	
 			memberMyQNoticeList(request,response);
+			break;
+		case "memberMyReviewList":	
+			memberMyReviewList(request,response);
 			break;
 		}
 	}
@@ -782,7 +789,35 @@ public class FrontMember extends HttpServlet {
 	 * @author 김보성
 	 */
 	private void memberMyQNoticeList(HttpServletRequest request, HttpServletResponse response) {
+			HttpSession session = request.getSession();
+			NoticeBiz biz = new NoticeBiz();
+			ArrayList<Qnotice> qnoticeList = new ArrayList<Qnotice>();
+			biz.getQnoticeList((String)session.getAttribute("memberId"),qnoticeList);
 			
+			request.setAttribute("qnoticeList", qnoticeList);
+			try {
+				request.getRequestDispatcher("/member/myNoticeList.jsp").forward(request, response);
+			} catch (ServletException | IOException e) {
+				e.printStackTrace();
+			}
+	}
+	
+	/**
+	 * 내 후기 리스트 화면 요청 서비스
+	 * @author 김보성
+	 */
+	private void memberMyReviewList(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		OrderListBiz biz = new OrderListBiz();
+		ArrayList<Review> reviewList = new ArrayList<Review>();
+		
+		biz.getReviewList((String)session.getAttribute("memberId"), reviewList);
+		request.setAttribute("reviewList", reviewList);
+		try {
+			request.getRequestDispatcher("/member/myReviewList.jsp").forward(request, response);
+		} catch (ServletException | IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
 

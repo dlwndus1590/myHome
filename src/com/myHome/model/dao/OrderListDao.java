@@ -23,13 +23,14 @@ public class OrderListDao {
 
 	/**
 	 * 구매 이력 리스트 요청 메서드
+	 * @param memberId 구매자 아이디
 	 * @param orderList 구매 이력 리스트
 	 */
-	public void getOrderList(ArrayList<OrderList> orderList) {
+	public void getOrderList(String memberId, ArrayList<OrderList> orderList) {
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT o.O_NO, o.MEMBER_ID, TO_CHAR(o.O_DATE,'yyyy-mm-dd') ,p.P_NAME, p.P_IMG , p.P_PRICE, p.P_SCORE ");
 		sql.append("FROM ORDERS o, ORDERS_DETAIL od, PRODUCT p ");
-		sql.append("WHERE o.O_NO = od.O_NO and p.P_NO = od.P_NO ");
+		sql.append("WHERE o.O_NO = od.O_NO and p.P_NO = od.P_NO AND o.MEMBER_ID = ? ");
 		sql.append("ORDER BY o.O_NO desc");
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -37,6 +38,7 @@ public class OrderListDao {
 		try {
 			conn = JdbcTemplate.getConnection();
 			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setString(1, memberId);
 			rs = pstmt.executeQuery();
 			OrderList dto = null;
 			while(rs.next()) {
@@ -179,7 +181,7 @@ public class OrderListDao {
 	 * @param list 상품 후기 리스트
 	 */
 	public void reviewList(int pNo, ArrayList<Review> list) {
-		String sql = "SELECT P_NO, R_IMG, R_CONTENT, R_SCORE, MEMBER_ID, TO_CHAR(R_REG_DATE,'yyyy-mm-dd') FROM REVIEW WHERE P_NO = ?";
+		String sql = "SELECT R_NO, P_NO, R_IMG, R_CONTENT, R_SCORE, MEMBER_ID, TO_CHAR(R_REG_DATE,'yyyy-mm-dd') FROM REVIEW WHERE P_NO = ?";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -191,7 +193,8 @@ public class OrderListDao {
 			Review dto = null;
 			while(rs.next()) {
 				dto = new Review(
-							rs.getString("MEMBER_ID")
+						    rs.getInt("R_NO")
+						   ,rs.getString("MEMBER_ID")
 						   ,rs.getString("TO_CHAR(R_REG_DATE,'yyyy-mm-dd')")
 						   ,rs.getInt("P_NO")
 						   ,rs.getString("R_IMG")
@@ -230,6 +233,51 @@ public class OrderListDao {
 			JdbcTemplate.rollback(conn);
 			System.out.println("Message : " + e.getMessage());
 			e.printStackTrace();
+		}finally {
+			JdbcTemplate.close(pstmt);
+			JdbcTemplate.close(conn);
+		}
+	}
+
+	/**
+	 * 로그인한 회원의 후기 리스트 요청 메서드
+	 * @param memberId 로그인한 회원의 아이디
+	 * @param reviewList 로그인한 회원의 후기 리스트
+	 */
+	public void getReviewList(String memberId, ArrayList<Review> reviewList) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT R_NO, P_NO, R_IMG, R_CONTENT, R_SCORE, MEMBER_ID, TO_CHAR(R_REG_DATE,'yyyy-mm-dd') ");
+		sql.append("FROM REVIEW ");
+		sql.append("WHERE MEMBER_ID = ? ");
+		sql.append("ORDER BY R_NO DESC");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = JdbcTemplate.getConnection();
+			pstmt = conn.prepareStatement(sql.toString());
+			pstmt.setString(1, memberId);
+			rs = pstmt.executeQuery();
+			Review dto = null;
+			while(rs.next()) {
+				dto = new Review(
+						 rs.getInt("R_NO")
+						,rs.getString("MEMBER_ID")
+						,rs.getString("TO_CHAR(R_REG_DATE,'yyyy-mm-dd')")
+						,rs.getInt("P_NO")
+						,rs.getString("R_IMG")
+						,rs.getString("R_CONTENT")
+						,rs.getInt("R_SCORE")
+						);
+				reviewList.add(dto);
+			}
+		}catch(SQLException e) {
+			System.out.println("Message : " + e.getMessage());
+			e.printStackTrace();
+		}finally {
+			JdbcTemplate.close(rs);
+			JdbcTemplate.close(pstmt);
+			JdbcTemplate.close(conn);
 		}
 	}
 }

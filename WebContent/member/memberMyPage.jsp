@@ -78,7 +78,7 @@
 		  
 		  <div class="column">
 		    <div class="card">
-		      <h3>myQboard</h3>
+		      <h3>my Qboard</h3>
 		      <a href="${CONTEXT_PATH}/member/memberController?action=memberMyQNoticeList"><p>내 질문 게시글</p></a>  
 		    </div>
 		  </div>
@@ -92,8 +92,8 @@
 		<div class="row">  
 		  <div class="column">
 		    <div class="card">
-		      <h3>myreview</h3>
-		      <a href="#"><p>내 후기</p></a>  
+		      <h3>my Review</h3>
+		      <a href="${CONTEXT_PATH}/member/memberController?action=memberMyReviewList"><p>내 후기</p></a>  
 		    </div>
 		  </div>
 		  

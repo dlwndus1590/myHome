@@ -233,4 +233,13 @@ public class NoticeBiz {
 	public void qNoticePopularityList(ArrayList<Qnotice> list) {
 		dao.getInstance().qNoticePopularityList(list);
 	}
+
+	/**
+	 * 질문 게시글 
+	 * @param memberId 로그인한 회원 아이디
+	 * @param qnoticeList 질문 게시글 리스트
+	 */
+	public void getQnoticeList(String memberId, ArrayList<Qnotice> qnoticeList) {
+		dao.getInstance().getQnoticeList(memberId, qnoticeList);
+	}
 }
