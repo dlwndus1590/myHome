@@ -18,29 +18,59 @@
 <jsp:include page="/inc/header.jsp" />
 
 <style>
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-  width: 100%;
-  border: 1px solid #ddd;
-}
-
-th, td {
-  text-align: center;
-  padding: 16px;
-}
-
-tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
+	table {
+	  border-collapse: collapse;
+	  border-spacing: 0;
+	  width: 100%;
+	  border: 1px solid #ddd;
+	}
+	
+	th, td {
+	  text-align: center;
+	  padding: 16px;
+	  font-size: 17px;
+	  font-family: verdana;
+	}
+	
+	tr:nth-child(even) {
+	  background-color: #f2f2f2;
+	}
+	.well{
+		background-color: white;
+	}
+	.input{
+	  background-color: #548235;
+	  color: white;
+	  padding: 14px 20px;
+	  margin: 8px 0;
+	  border: none;
+	  cursor: pointer;
+	  width: 100%;
+	  opacity: 0.9;
+	  border-radius:5px;
+	}
+	
+	.input:hover {
+	  opacity:1;
+	}
+	
+	.a{
+		font-family: verdana;
+		font-size: 25px;
+		font-weight: bold;
+		color: black;
+		margin-left: 86%;
+	}
 
 </style>
 
 </head>
 <body>
-<hr>
 
-<h2>${dto.name}  님 상세조회</h2>
+<div class="row">
+<div class="span9" style="width:960px;backgroud-color:white;">
+<div class="well well-small">
+<h2>${dto.name}  님 정보</h2>
 	<table>
 	  <tr>
 	    <th>No</th>
@@ -87,7 +117,13 @@ tr:nth-child(even) {
 		    <td>${dto.grade}</td>	
 		</tr>
 	</table>
-	
+	<br>
+	<a href="${CONTEXT_PATH}/member/memberController?action=memberDelete&memberId=${dto.memberId}"
+		class="a"	onclick="return confirm('회원님을 정말 탈퇴시키시겠습니까?')">탈퇴시키기</a>			
+	 
+</div>
+</div>
+</div>		
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="${CONTEXT_PATH}/assets/js/jquery.js"></script>
 <script src="${CONTEXT_PATH}/assets/js/bootstrap.min.js"></script>

@@ -1,3 +1,4 @@
+<%@page import="com.myHome.model.dto.Member"%>
 <%@page import="com.myHome.model.dto.Interior"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -24,23 +25,23 @@
 	
 <style>
 /* Full-width input fields */
-input[type=text], input[type=password] {
+.input {
   width: 50%;
   padding: 15px;
   margin: 5px 0 22px 0;
   display: inline-block;
   border: none;
-  background: #f1f1f1;
+  background: #f1f1f1;  
 }
 
 /* Add a background color when the inputs get focus */
-input[type=text]:focus, input[type=password]:focus {
+.input:focus, .input:focus {
   background-color: #ddd;
   outline: none;
 }
 
 /* Set a style for all buttons */
-.cancelbtn, .signupbtn{
+.button{
   background-color: #04AA6D;
   color: white;
   padding: 14px 20px;
@@ -51,21 +52,10 @@ input[type=text]:focus, input[type=password]:focus {
   opacity: 0.9;
 }
 
-button:hover {
+.button:hover {
   opacity:1;
 }
 
-/* Extra styles for the cancel button */
-.cancelbtn {
-  padding: 14px 20px;
-  background-color: #f44336;
-}
-
-/* Float cancel and signup buttons and add an equal width */
-.cancelbtn, .signupbtn {
-  float: left;
-  width: 228px;
-}
 
 /* Add padding to container elements */
 .container2 {
@@ -73,8 +63,8 @@ button:hover {
 }
 
 /* Style the horizontal ruler */
-hr {
-  border: 1px solid #f1f1f1;
+.hr {
+  border: 1px solid white;
   width:680px;
   margin-bottom: 25px;
 }
@@ -87,7 +77,11 @@ hr {
 }
 
 .row{
-	margin-left: 15%;
+	margin-left: 3%;
+}
+
+#ino,#iname,#icareer,#idetail,#ilocation,#imobile{
+	height: 40px;
 }
 </style>
 </head>
@@ -95,45 +89,75 @@ hr {
 <%
 	Interior dto = (Interior)session.getAttribute("interiordto");	
 %>
-<form action="${CONTEXT_PATH}/interior/interiorController?action=updateInterior" method="post">
+<form action="${CONTEXT_PATH}/interior/interiorController?action=updateInterior" method="post" style="width:960px; ">
 <div class="row">
-  <div class="column">
+<div class="span9" style="width:100%; padding-right:50px;">
+<div class="well well-small" style="width:100%; height:760px;">
   
-  <h2><%=dto.getIname() %> 정보조회</h2>
+  <h2><%=dto.getIname() %></h2>
       <div class="container2">            
-	      <hr>
+	      <hr class="hr">
 	      <label><b>No</b></label>      
-	      <input type="text" placeholder="Enter No" name="ino" value="<%=dto.getIno() %>" readonly="readonly">
+	      <input type="text" placeholder="Enter No"  class="input" id="ino" name="ino" value="<%=dto.getIno() %>" readonly="readonly">
 	      
 	      <label><b>회사명</b></label>	      
-	      <input type="text" placeholder="Enter Name" name="iname" value="<%=dto.getIname() %>">
+	      <input type="text" placeholder="Enter Name"   class="input" id="iname" name="iname" value="<%=dto.getIname() %>">
 	
 	      <label><b>경력</b></label>
-	      <input type="text" placeholder="Enter Career" name="icareer" value="<%=dto.getIcareer()%>">
+	      <input type="text" placeholder="Enter Career"  class="input" id="icareer" name="icareer" value="<%=dto.getIcareer()%>">
 	
 	      <label><b>회사 설명</b></label>
-	      <input type="text" placeholder="Enter Detail" name="idetail" value="<%=dto.getIdetail()%>">
+	      <input type="text" placeholder="Enter Detail"   class="input" id="idetail" name="idetail" value="<%=dto.getIdetail()%>">
 	      
 	      <label><b>위치</b></label>
-	      <input type="text" placeholder="Enter Location" name="ilocation" value="<%=dto.getIlocation()%>">
+	      <input type="text" placeholder="Enter Location"  class="input" id="ilocation" name="ilocation" value="<%=dto.getIlocation()%>">
+	      
+	      <label><b>연락처</b></label>
+      	  <input type="text" placeholder="' - ' 를 포함해서 작성해주세요." class="input" id="imobile" name="imobile" value="<%=dto.getImobile()%>">
 	
 		  <!-- 
 		  		인테리어 등록/수정/삭제하기는 관리자 권한
 		  		관리자 로그인 시에만 보이는 버튼  
 		  		-->
-	      <div class="clearfix">        
-			  <input type="submit"  value="수정하기" >			         
-	      </div>
+		  		
+		  		<%
+	                  Member mainMember = null;
+	                  if(session.getAttribute("dto")==null){
+	            %>   
+	                 	<p></p>                            
+	            <%
+	               	}else {
+	                     mainMember = (Member)session.getAttribute("dto");                     
+				%> 
+	            <% if(mainMember.getGrade().equals("관리자")){  %>  
+	            		<div class="clearfix">	            			   
+			  				<input type="submit" class="button"  value="수정하기" >			  							         
+	      				</div>      
+	                  	
+	         	<%
+	                }
+	            }
+	            %>
+	      
     </div>
-    
-  </div>
-</div>
+
 </form>
-<form action="${CONTEXT_PATH}/interior/interiorController?action=deleteInterior" method="post">
+<%
+        if(mainMember.getGrade().equals("관리자")){
+%> 
+<form action="${CONTEXT_PATH}/interior/interiorController?action=deleteInterior" method="post" style="margin-right:90%;">
 	<div class="clearfix" style="margin-left: 17%;">        
-			  <input type="submit"  value="삭제하기">		         
+		<input type="submit" class="button" value="삭제하기">		         
 	</div>	 
 </form>
+
+<%
+	    }	
+%>
+
+</div>
+</div>
+</div>
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="${CONTEXT_PATH}/assets/js/jquery.js"></script>
 <script src="${CONTEXT_PATH}/assets/js/bootstrap.min.js"></script>

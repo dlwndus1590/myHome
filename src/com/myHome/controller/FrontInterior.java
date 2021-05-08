@@ -1,6 +1,7 @@
 package com.myHome.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.ServletContext;
@@ -112,10 +113,10 @@ public class FrontInterior extends HttpServlet {
 	}
 		
 	/**
-	 * 인테리어 상담신청 메일발송
+	 * 인테리어 상담신청 발송
 	 */
 	protected void interiorSuccess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("[dubug] 상담신청 메일 발송 신청");
+		System.out.println("[dubug] 상담신청");
 		String url = CONTEXT_PATH + "/interior/interiorSuccess.jsp";
 		response.sendRedirect(url); 
 	}
@@ -127,6 +128,15 @@ public class FrontInterior extends HttpServlet {
 	protected void insertInterior(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		/** 인코딩 설정 */
 		System.out.println("[dubug] 인테리어 등록요청");
+		HttpSession session = request.getSession(false);
+		
+		if (session == null || 
+				session.getAttribute("memberId") == null ||
+				!session.getAttribute("grade").equals("관리자")) {
+			
+			request.getRequestDispatcher("/member/login.jsp").forward(request, response);
+			return;
+		}
 		
 		/** 데이터 추출 */
 		int ino = Integer.parseInt(request.getParameter("ino"));
@@ -134,21 +144,30 @@ public class FrontInterior extends HttpServlet {
 		int icareer = Integer.parseInt(request.getParameter("icareer"));		
 		String idetail = request.getParameter("idetail");		
 		String ilocation = request.getParameter("ilocation");	
+		String imobile = request.getParameter("imobile");	
 		
 		iname = iname.trim();		
 		idetail = idetail.trim();		
 		ilocation = ilocation.trim();		
+		imobile = imobile.trim();		
 		
 		InteriorBiz biz = new InteriorBiz();
-		Interior interior = new Interior(ino,iname, icareer, idetail, ilocation);
+		Interior interior = new Interior(ino,iname, icareer, idetail, ilocation,imobile);
 							
 		try {
 			biz.insertInterior(interior);	
 			
-			request.getRequestDispatcher("/interior/interiorController?action=interiorList").forward(request, response);
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter writer = response.getWriter();
+			writer.println("<script>alert('등록이 완료되었습니다.'); location.href= '"+CONTEXT_PATH+"/interior/interiorController?action=interiorList';</script>");
+			writer.close();	
+			
 		} catch (Exception e) {
 			e.printStackTrace();
-			request.getRequestDispatcher("/interior/interiorList.jsp").forward(request, response);
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter writer = response.getWriter();
+			writer.println("<script>alert('등록이 완료되었습니다.'); location.href= '"+CONTEXT_PATH+"/interior/interiorList.jsp';</script>");
+			writer.close();			
 		}
 		
 	}
@@ -162,8 +181,9 @@ public class FrontInterior extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		
 		if (session == null || 
-				session.getAttribute("memberId") == null) {
-			// 미사용자 오류 처리
+				session.getAttribute("memberId") == null ||
+				!session.getAttribute("grade").equals("관리자")) {
+			
 			request.getRequestDispatcher("/member/login.jsp").forward(request, response);
 			return;
 		}
@@ -172,20 +192,28 @@ public class FrontInterior extends HttpServlet {
 		String iname = (String)session.getAttribute("iname");
 		int icareer = Integer.parseInt(request.getParameter("icareer"));		
 		String idetail = request.getParameter("idetail");		
-		String ilocation = request.getParameter("ilocation");			
+		String ilocation = request.getParameter("ilocation");
+		String imobile = request.getParameter("imobile");	
 
 		InteriorBiz biz = new InteriorBiz();
-		Interior interior = new Interior(ino,iname, icareer, idetail, ilocation);		
+		Interior interior = new Interior(ino,iname, icareer, idetail, ilocation,imobile);		
 		try {
 			biz.updateInterior(interior);
 			session.setAttribute("iname", iname);
 			session.setAttribute("ino", ino);
 			session.setAttribute("interiordto", interior);
-			request.getRequestDispatcher("/interior/interiorController?action=selectInterior&iname="+iname).forward(request, response);
+			
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter writer = response.getWriter();
+			writer.println("<script>alert('수정이 완료되었습니다.'); location.href= '"+CONTEXT_PATH+"/interior/interiorController?action=interiorList';</script>");
+			writer.close();	
+			
 		} catch (Exception e) {
 			e.printStackTrace();
-			e.getMessage();
-			request.getRequestDispatcher("/interior/interiorList.jsp").forward(request, response);
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter writer = response.getWriter();
+			writer.println("<script>alert('수정에 실패하였습니다.'); location.href= '"+CONTEXT_PATH+"/interior/interiorController?action=interiorList';</script>");
+			writer.close();			
 		}
 	}
 	
@@ -196,13 +224,6 @@ public class FrontInterior extends HttpServlet {
 	protected void selectInterior(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 로그인 사용자 여부 체킹
 		HttpSession session = request.getSession(false);
-		
-		if (session == null || 
-				session.getAttribute("memberId") == null) {
-			// 미사용자 오류 처리
-			request.getRequestDispatcher("/member/login.jsp").forward(request, response);
-			return;
-		}
 		
 		String iname = request.getParameter("iname");
 		InteriorBiz biz = new InteriorBiz();
@@ -230,21 +251,30 @@ public class FrontInterior extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		
 		if (session == null || 
-				session.getAttribute("memberId") == null) {
-			// 미사용자 오류 처리
+				session.getAttribute("memberId") == null ||
+				!session.getAttribute("grade").equals("관리자")) {
+			
 			request.getRequestDispatcher("/member/login.jsp").forward(request, response);
 			return;
 		}
+		
 		String iname = (String)session.getAttribute("iname");
 	
 		InteriorBiz biz = new InteriorBiz();	
 		try{			
-			biz.deleteInterior(iname);
-			System.out.println("인테리어 삭제 테스트 :"+iname);
+			biz.deleteInterior(iname);			
 			session.invalidate();
-			response.sendRedirect(CONTEXT_PATH+"/index.jsp");
+			
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter writer = response.getWriter();
+			writer.println("<script>alert('삭제가 완료되었습니다.'); location.href= '"+CONTEXT_PATH+"/interior/interiorController?action=interiorList';</script>");
+			writer.close();	
+			
 		} catch(Exception e) {
-			request.getRequestDispatcher("/interior/interiorDetail.jsp").forward(request, response);
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter writer = response.getWriter();
+			writer.println("<script>alert('삭제에 실패하셨습니다.'); location.href= '"+CONTEXT_PATH+"/interior/interiorController?action=interiorList';</script>");
+			writer.close();			
 		}
 	}
 

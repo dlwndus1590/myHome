@@ -12,6 +12,7 @@ public class Interior {
 	private int icareer;
 	private String idetail;
 	private String ilocation;
+	private String imobile;
 	
 	/** 기본생성자 */
 	public Interior() {}
@@ -23,13 +24,15 @@ public class Interior {
 	 * @param icareer		경력
 	 * @param idetail		인테리어 업체 설명
 	 * @param ilocation	인테리어 근무 위치
+	 * @param imobile		인테리어 업체 연락처
 	 */
-	public Interior(String iname, int icareer, String idetail, String ilocation) {
+	public Interior(String iname, int icareer, String idetail, String ilocation, String imobile) {
 		super();		
 		this.iname = iname;
 		this.icareer = icareer;
 		this.idetail = idetail;
 		this.ilocation = ilocation;
+		this.imobile = imobile;
 	}
 	
 	/**
@@ -40,13 +43,14 @@ public class Interior {
 	 * @param idetail		인테리어 업체 설명
 	 * @param ilocation	인테리어 근무 위치
 	 */
-	public Interior(int ino, String iname, int icareer, String idetail, String ilocation) {
+	public Interior(int ino, String iname, int icareer, String idetail, String ilocation, String imobile) {
 		super();
 		this.ino = ino;
 		this.iname = iname;
 		this.icareer = icareer;
 		this.idetail = idetail;
 		this.ilocation = ilocation;
+		this.imobile = imobile;
 	}
 
 	/** 인테리어 정보에 대한 반환처리 및 변경 */
@@ -90,6 +94,14 @@ public class Interior {
 		this.ilocation = ilocation;
 	}
 
+	public String getImobile() {
+		return imobile;
+	}
+
+	public void setImobile(String imobile) {
+		this.imobile = imobile;
+	}
+
 	/** 인테리어 정보 출력 */
 	@Override
 	public String toString() {
@@ -104,6 +116,8 @@ public class Interior {
 		builder.append(idetail);
 		builder.append(", ilocation=");
 		builder.append(ilocation);
+		builder.append(", imobile=");
+		builder.append(imobile);
 		builder.append("]");
 		return builder.toString();
 	}

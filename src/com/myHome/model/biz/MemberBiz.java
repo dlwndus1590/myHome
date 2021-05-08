@@ -71,19 +71,20 @@ public class MemberBiz<searchKey> {
 	 * @param dto 회원객체
 	 * @return 성공시 true, 실패시 false
 	 */
-	public void insertMember(Member dto) {
+	public int insertMember(Member dto) {
 		Connection con = JdbcTemplate.getConnection();
 		
 		dto.setEntryDate(Utility.getCurrentDate("yyyy-MM-dd"));
 		try {			
-			dao.insertMember(con,dto);
+			dao.insertMember(con,dto);			
 			JdbcTemplate.commit(con);
 		} catch (Exception e) {
 			e.printStackTrace();
 			JdbcTemplate.rollback(con);
 		} finally {
 			JdbcTemplate.close(con);
-		}		
+		}
+		return 0;		
 	}
 	
 	/**
@@ -263,16 +264,6 @@ public class MemberBiz<searchKey> {
 		}
 		
 		return null;
-	}
-	
-	
-	/** 
-	 * 관리자 : 전체 회원정보 수정
-	 * @param dto Member
-	 * @return 성공시 true, 실패시 false
-	 */
-	public boolean updateAll(Member dto) {
-		return dao.updateAll(dto);
 	}
 	
 	/**

@@ -280,7 +280,7 @@
                <%
                   } else {                     
                %>
-                  <a href="${CONTEXT_PATH}/member/loginChoice.jsp"></a>
+                  <a></a>
                <%
                   }
                %>
@@ -314,7 +314,7 @@
                <%                  
                   if(session.getAttribute("memberId")==null){
                %>   
-                  <a href="${CONTEXT_PATH}/member/ordersController?action=cartPage"></a> 
+                  <a ></a> 
                <%
                   } else {   
                 	  mainMember = (Member)session.getAttribute("dto");
@@ -326,7 +326,7 @@
                <%
                		} else{               			
                	%>               	
-               			<a href="${CONTEXT_PATH}/member/ordersController?action=cartPage"></a>               	
+               			<a></a>               	
                	<%
                		}
                   }

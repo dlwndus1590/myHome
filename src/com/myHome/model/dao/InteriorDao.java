@@ -32,7 +32,7 @@ public class InteriorDao implements Serializable{
 	 * @return 성공시 1, 실패시 0
 	 */
 	public void insertInterior(Connection con,Interior dto) {
-		String sql = "insert into interior values(?, ?, ?, ?, ?)";
+		String sql = "insert into interior values(?, ?, ?, ?, ?, ?)";
 
 		PreparedStatement stmt = null;
 		
@@ -44,6 +44,7 @@ public class InteriorDao implements Serializable{
 			stmt.setInt(3, dto.getIcareer());
 			stmt.setString(4, dto.getIdetail());
 			stmt.setString(5, dto.getIlocation());			
+			stmt.setString(6, dto.getImobile());			
 			stmt.executeUpdate();
 			
 		} catch (SQLException e) {						
@@ -106,6 +107,7 @@ public class InteriorDao implements Serializable{
 				interior.setIcareer(rs.getInt("i_career"));
 				interior.setIdetail(rs.getString("i_detail"));
 				interior.setIlocation(rs.getString("i_location"));
+				interior.setImobile(rs.getString("i_mobile"));
 			}			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -167,6 +169,7 @@ public class InteriorDao implements Serializable{
 				dto.setIcareer(rs.getInt("i_career"));
 				dto.setIdetail(rs.getString("i_detail"));
 				dto.setIlocation(rs.getString("i_location"));
+				dto.setImobile(rs.getString("i_mobile"));
 		
 				list.add(dto);
 			}

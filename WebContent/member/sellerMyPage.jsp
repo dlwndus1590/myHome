@@ -58,16 +58,10 @@
 				<a href="${CONTEXT_PATH}/member/memberController?action=sellerMyInfo"><input type="submit" class="mypagebtn" value="내 정보 변경"></a>
 					
 				<h3><%=dto.getName() %> 님은 [<%=dto.getGrade()%>] 입니다.</h2>
-				<p>0원 이상 구매시, 구매금액의 1%를 추가 적립해 드립니다.</p>
+				<p>구매금액의 1%를 추가 적립해 드립니다.</p>
 				
 				<br>
 				<br>
-				<table>
-				  <tr>
-				    <th>마일리지 : ${dto.mileage }원</th>
-				    <th>쿠폰 : 0개</th>
-				  </tr>
-				</table>
 		
 		</center>
 	</div>
