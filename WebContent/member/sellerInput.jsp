@@ -3,12 +3,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>판매자 회원가입</title>
-<link type="text/css" rel="stylesheet" href="${CONTEXT_PATH}/css/input.css">
+    <meta charset="utf-8">
+    <title>My Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="로그인 페이지">
+    <meta name="author" content="강하영">
+    <!-- Bootstrap styles -->
+    <link href="${CONTEXT_PATH}/assets/css/bootstrap.css" rel="stylesheet"/>
+    <!-- Customize styles -->
+    <link href="${CONTEXT_PATH}/assets/style/style.css" rel="stylesheet"/>
+    <!-- font awesome styles -->
+	<link href="${CONTEXT_PATH}/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
+	<!-- Favicons -->
+    <link rel="shortcut icon" href="${CONTEXT_PATH}/assets/ico/favicon.ico">
 
-<!-- header menu -->
-<jsp:include page="/inc/header.jsp" />
+	<!-- header menu -->
+	<jsp:include page="/inc/header.jsp" />
 
 <style>
 <style>
@@ -16,9 +26,9 @@
   box-sizing: border-box;
 }
 
-.container {  
-  padding: 16px;
-  background-color: white;
+form{
+	background-color: white;
+	margin-left: 3%;
 }
 
 input[type=text], input[type=password] {
@@ -78,14 +88,16 @@ a {
   color: dodgerblue;
 }
 
-.signin {
-  background-color: #f1f1f1;
+.signin {  
   text-align: center;
 }
+
+#memberId, #memberPw,#name,#email,#mobile,#zipcode,#address1,#address2,#businessNumber,#companyName{
+	height: 40px;
+}
+
 </style>
-<script
-     src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js";></script>
-<script type="text/javascript" src="${CONTEXT_PATH}/js/member_input.js"></script>
+
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script type="text/javascript">
 	/* 아이디 중복 체크 */
@@ -103,8 +115,7 @@ a {
 					if(data == '1'){
 						alert("해당 아이디는 사용중입니다.");	
 						idcheck=false;
-					}else {
-						//$("#memberId").attr("value","Y");						
+					}else {					
 						alert("사용가능한 아이디입니다.");
 						idcheck=true;
 					}			
@@ -128,10 +139,11 @@ a {
 <!-- main menu : 로그인 전 메뉴 -->
 
 <!-- contents menu -->
-<form action="${CONTEXT_PATH}/member/memberController?action=sellerInput" style="border:1px solid #ccc" method="post">
+<form action="${CONTEXT_PATH}/member/memberController?action=sellerInput"  method="post" style="padding-left:5%;">
 	
-  <div class="container">
-    <h1>Welcome</h1>    
+  <div >
+  <br>
+    <h1>판매자 회원가입을 축하드립니다.</h1>    
     <hr>
 
     <label><b>아이디</b></label>
@@ -172,7 +184,7 @@ a {
     <hr>
 
 	<input type="submit" class="registerbtn" class="regist" value="가입하기">        
-    <button type="reset" class="registerbtn"  onclick="location.href='loginChoice.jsp'">취소하기</button>
+    <input type="reset" class="registerbtn"  onclick="location.href='loginChoice.jsp'" value="취소하기">
   </div>
   
   <div class="container signin">

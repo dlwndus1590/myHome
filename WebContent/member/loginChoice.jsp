@@ -22,11 +22,11 @@
 	<jsp:include page="/inc/header.jsp" />
 
 <style type="text/css">
-.line {
-  border: 1px solid #f1f1f1;
-  margin-bottom: 10px;
-  width: 200px;
-}
+	.line {
+	  border: 1px solid #f1f1f1;
+	  margin-bottom: 10px;
+	  width: 200px;
+	}
 </style>
 </head>
 <body>

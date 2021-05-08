@@ -5,37 +5,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>일반 회원가입</title>
-<link type="text/css" rel="stylesheet" href="${CONTEXT_PATH}/css/input.css">
+    <meta charset="utf-8">
+    <title>My Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="로그인 페이지">
+    <meta name="author" content="강하영">
+    <!-- Bootstrap styles -->
+    <link href="${CONTEXT_PATH}/assets/css/bootstrap.css" rel="stylesheet"/>
+    <!-- Customize styles -->
+    <link href="${CONTEXT_PATH}/assets/style/style.css" rel="stylesheet"/>
+    <!-- font awesome styles -->
+	<link href="${CONTEXT_PATH}/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
+	<!-- Favicons -->
+    <link rel="shortcut icon" href="${CONTEXT_PATH}/assets/ico/favicon.ico">
 
-<!-- header menu -->
-<jsp:include page="/inc/header.jsp" />
+
+	<!-- header menu -->
+	<jsp:include page="/inc/header.jsp" />
 
 <style>
 * {
   box-sizing: border-box;
 }
 
-.container {  
-  padding: 16px;
-  background-color: white;
+form{
+	background-color: white;
+	margin-left: 3%;
 }
-
 input[type=text], input[type=password] {
   width: 90%;
   padding: 15px;
   margin: 5px 0 22px 0;
   display: inline-block;
   border: none;
-  background: #f1f1f1;
+  background: #f1f1f1;  
 }
 
 #zipcode, #memberid{
 	width:30%;
 }
 
-#idcheck , #zipcodeCheck{
+#idcheck ,#zipcodeCheck{
 	background-color:#A0DAA9;
 	width:100px;
 	height: 30px;
@@ -52,7 +62,7 @@ hr {
   width:800px;
 }
 
-.registerbtn, .idCheck_btn {
+.registerbtn, .idCheck_btn, .registerbtn{
   background-color: #04AA6D;
   color: white;
   padding: 16px 20px;
@@ -80,24 +90,21 @@ a {
   color: dodgerblue;
 }
 
-.signin {
-  background-color: #f1f1f1;
+.signin {  
   text-align: center;
+}
+
+#memberId, #memberPw,#name,#email,#mobile,#zipcode,#address1,#address2{
+	height: 40px;
 }
 </style>
 
-<script
-     src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script type="text/javascript" src="${CONTEXT_PATH}/js/member_input.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script type="text/javascript">
 	var idcheck=false;
 	
 	function idCheck(){
-		/* var memberId = document.getElementById("memberId").value; */
-		 $.ajax({	
-			 	//http://localhost:8090/myHome/member/memberInput.jsp
-			 	//8090/member/Id_Check=test
+		 $.ajax({
 				url:"/myHome/member/memberController?action=idCheck",
 				type:"get",			
 				data:{
@@ -108,8 +115,7 @@ a {
 					if(data == '1'){
 						alert("해당 아이디는 사용중입니다.");	
 						idcheck=false;
-					}else {
-						//$("#memberId").attr("value","Y");						
+					}else {				
 						alert("사용가능한 아이디입니다.");
 						idcheck=true;
 					}			
@@ -134,10 +140,11 @@ a {
 <!-- main menu : 로그인 전 메뉴 -->
 
 <!-- contents menu -->
-<form id="form" action="${CONTEXT_PATH}/member/memberController?action=memberInput" style="border:1px solid #ccc" method="post">
+<form id="form" action="${CONTEXT_PATH}/member/memberController?action=memberInput"  method="post" style="padding-left:5%;">
 	
-  <div class="container">
-    <h1>Welcome</h1>    
+  <div>
+  	<br>
+    <h1>일반 회원가입을 축하드립니다.</h1>    
     <hr>
 
     <label><b>아이디</b></label>
@@ -173,10 +180,10 @@ a {
     <hr>
 
 	<input type="submit" class="registerbtn" value="가입하기">        
-    <button type="reset" class="registerbtn"  onclick="location.href='loginChoice.jsp'">취소하기</button>
+    <input type="reset" class="registerbtn"  onclick="location.href='loginChoice.jsp'" value="취소하기">
   </div>
   
-  <div class="container signin">
+  <div class="container signin" >
     <p>Already have an account? <a href="${CONTEXT_PATH}/member/memberController?action=loginForm">Sign in</a>.</p>
   </div>
 	
@@ -188,7 +195,7 @@ a {
 <script src="${CONTEXT_PATH}/assets/js/jquery.easing-1.3.min.js"></script>
 <script src="${CONTEXT_PATH}/assets/js/jquery.scrollTo-1.4.3.1-min.js"></script>
 <script src="${CONTEXT_PATH}/assets/js/shop.js"></script>
+</body>
 <!-- footer menu -->
 <jsp:include page="/inc/footer.jsp"/>
-</body>
 </html>

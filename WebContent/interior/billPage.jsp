@@ -5,10 +5,21 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>my Home</title>
+<title>My Home</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="마이 페이지">
+    <meta name="author" content="강하영">
+    <!-- Bootstrap styles -->
+    <link href="${CONTEXT_PATH}/assets/css/bootstrap.css" rel="stylesheet"/>
+    <!-- Customize styles -->
+    <link href="${CONTEXT_PATH}/assets/style/style.css" rel="stylesheet"/>
+    <!-- font awesome styles -->
+	<link href="${CONTEXT_PATH}/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
+	<!-- Favicons -->
+    <link rel="shortcut icon" href="${CONTEXT_PATH}/assets/ico/favicon.ico">
 
-<!-- header menu -->
-<jsp:include page="/inc/header.jsp" />
+	<!-- header menu -->
+	<jsp:include page="/inc/header.jsp" />
 
 <style>
 .btn {
@@ -40,7 +51,7 @@
   margin: 5px;
 }
 
-input[type='text'] {
+#mobile {
 	font-size: 20px;
 	width: 280px;
 	height: 53px;
@@ -86,7 +97,7 @@ h3{
 	font-family: verdana;
 }
 </style>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 <script type="text/javascript">
 
 	function getParameterByName(name) {
@@ -225,7 +236,7 @@ h3{
 	<br>
 	<p>연락 받으실 번호</p>
 	<div class="house">		
-		<input type="text" placeholder=" '-'를 포함해서 입력바랍니다. " >			
+		<input type="text" id="mobile" placeholder=" '-'를 포함해서 입력바랍니다. " maxlength="13">			
 	</div>
 	
 	<br>

@@ -7,21 +7,99 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>일반 회원가입</title>
-<link type="text/css" rel="stylesheet" href="${CONTEXT_PATH}/css/input.css">
+    <meta charset="utf-8">
+    <title>My Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="로그인 페이지">
+    <meta name="author" content="강하영">
+    <!-- Bootstrap styles -->
+    <link href="${CONTEXT_PATH}/assets/css/bootstrap.css" rel="stylesheet"/>
+    <!-- Customize styles -->
+    <link href="${CONTEXT_PATH}/assets/style/style.css" rel="stylesheet"/>
+    <!-- font awesome styles -->
+	<link href="${CONTEXT_PATH}/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
+	<!-- Favicons -->
+    <link rel="shortcut icon" href="${CONTEXT_PATH}/assets/ico/favicon.ico">
 
-<!-- header menu -->
-<jsp:include page="/inc/header.jsp" />
+
+	<!-- header menu -->
+	<jsp:include page="/inc/header.jsp" />
 
 <style type="text/css">
-	input[type=text], input[type=password]{
-		height: 35px;		
+	* {
+	  box-sizing: border-box;
 	}
 	
+	form{
+		background-color: white;
+		margin-left: 3%;
+	}
+	input[type=text], input[type=password] {
+	  width: 90%;
+	  padding: 15px;
+	  margin: 5px 0 22px 0;
+	  display: inline-block;
+	  border: none;
+	  background: #f1f1f1;  
+	}
+	
+	#zipcode, #memberid{
+		width:30%;
+	}
+	
+	#idcheck ,#zipcodeCheck{
+		background-color:#A0DAA9;
+		width:100px;
+		height: 30px;
+	}
+	
+	input[type=text]:focus, input[type=password]:focus {
+	  background-color: #ddd;
+	  outline: none;
+	}
+	
+	hr {
+	  border: 1px solid #f1f1f1;
+	  margin-bottom: 25px;
+	  width:800px;
+	}
+	
+	.registerbtn, .idCheck_btn, .registerbtn{
+	  background-color: #04AA6D;
+	  color: white;
+	  padding: 16px 20px;
+	  margin: 8px 0;
+	  border: none;
+	  cursor: pointer;
+	  width: 80%;
+	  opacity: 0.9;
+	}
+	
+	.registerbtn:hover{
+	  opacity: 1;
+	}
+	
+	.btn-group {
+		opacity: 1;
+		width: 160px;
+		height: 70px;
+		margin-bottom: 15px;
+		padding: 15px;
+	}
+	
+	
+	a {
+	  color: dodgerblue;
+	}
+	
+	.signin {  
+	  text-align: center;
+	}
+	#memberid, #memberPw,#name,#email,#mobile,#zipcode,#address1,#address2,#entrydate,#mileage,#grade{
+		height: 40px;
+	}
 </style>
 
-<script type="text/javascript" src="${CONTEXT_PATH}/js/member_input.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script type="text/javascript">
 function postcodeTest() {
@@ -40,9 +118,10 @@ function postcodeTest() {
 <!-- main menu : 로그인 전 메뉴 -->
 
 <!-- contents menu -->
-<form action="${CONTEXT_PATH}/member/memberController?action=memberMyInfoUpdate" style="border:1px solid #ccc" method="post">
+<form action="${CONTEXT_PATH}/member/memberController?action=memberMyInfoUpdate"  method="post" style="padding-left:4%;">
 	
   <div class="container">
+  	<br>
     <h1><%=dto.getName() %> 님 상세 조회</h1>    
     <hr>
 
@@ -68,8 +147,8 @@ function postcodeTest() {
     <br>
     <input type="text" placeholder="Enter Zipcode" id="zipcode" name="zipcode"  value="<%=dto.getZipcode() %>" maxlength="5">
    	<input type="button" value="우편찾기" id="zipcodeCheck" name="zipcodeCheck">
-	<input type="text" placeholder="Enter address" name="address1"  value="<%=dto.getAddress1()%>">
-	<input type="text" placeholder="Enter address" name="address2"  value="<%=dto.getAddress2()%>">	    
+	<input type="text" placeholder="Enter address" id="address1" name="address1"  value="<%=dto.getAddress1()%>">
+	<input type="text" placeholder="Enter address" id="address2" name="address2"  value="<%=dto.getAddress2()%>">	    
     
     <label><b>가입일자</b></label>
     <input type="text" placeholder="Enter Mobile" name="entrydate" id="entrydate" value="<%=dto.getEntryDate()%>">

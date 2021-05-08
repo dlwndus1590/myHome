@@ -15,9 +15,12 @@
     <link href="${CONTEXT_PATH}/assets/style/style.css" rel="stylesheet"/>
     <!-- font awesome styles -->
 	<link href="${CONTEXT_PATH}/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
-
 	<!-- Favicons -->
     <link rel="shortcut icon" href="${CONTEXT_PATH}/assets/ico/favicon.ico">
+    
+    
+	<!-- header menu -->
+	<jsp:include page="/inc/header.jsp" />
     
 	<style>
 		/** 아이디/비밀번호 찾기 디자인 */
@@ -29,14 +32,13 @@
 		  box-sizing: border-box;
 		}
 		
-		.container {
+		.container2 {
 		  position: relative;
-		  border-radius: 5px;
-		  
+		  border-radius: 5px;		  
 		  padding: 20px 0 30px 0;
 		} 
 		
-		input,
+		.input,
 		.btn {
 		  width: 100%;
 		  padding: 12px;
@@ -50,23 +52,23 @@
 		  text-decoration: none; 
 		}
 		
-		input:hover,
+		.input:hover,
 		.btn:hover {
 		  opacity: 1;
 		}
 		
 		/* style the submit button */
-		input[type=submit] {
+		.input[type=submit] {
 		  background-color: #04AA6D;
 		  color: white;
 		  cursor: pointer;
 		}
 		
-		input[type=submit]:hover {
+		.input[type=submit]:hover {
 		  background-color: #45a049;
 		}
 		
-		input[type=text] {
+		#name,#mobile,#memberId {
 		 	width:100%;
 		 	height:50px;
 		}
@@ -131,21 +133,19 @@
 			position: relative;
 			float: left;
 		}
-		
+
 	</style>
   </head>
 <body>
 
-<!-- header menu -->
-<jsp:include page="/inc/header.jsp" />
 
 <!-- main menu : 로그인 전 메뉴 -->
 
 <!-- contents menu -->
 <div class="row">
 <div class="span9" style="width:960px;">
-<div class="well well-small">
-	<div class="container">
+<div class="well well-small" style="height:600px;">
+	<div class="container2">
 	  	<form action="${CONTEXT_PATH}/member/memberController?action=memberFindId" method="post">
 		    <div class="row">
 		      <h2 style="text-align:center">아이디 찾기</h2>
@@ -155,13 +155,14 @@
 		     </div>
 		      
 			<div class="col">
-		      <input type="text" name="name" id="name" placeholder="User Name" required>
-		        <input type="text" name="mobile" placeholder="User Mobile" required>
-		        <input type="submit" value="아이디 찾기">
+		      <input type="text" class="input" name="name" id="name" placeholder="User Name" required>
+		        <input type="text" class="input" name="mobile" id="mobile" placeholder="User Mobile" required>
+		        <input type="submit" class="input" value="아이디 찾기">
 			</div>
 		
 		</form>
 	
+
 	     
 		<form action="${CONTEXT_PATH}/member/memberController?action=memberFindPw" method="post">
 	
@@ -171,10 +172,10 @@
 		      </div>	
 		      
 		     <div class="col">
-		    	<input type="text" name="memberId" id="memberId" placeholder="User Id" required>
-		        <input type="text" name="name" id="name" placeholder="User Name" required>
-	        	<input type="text" id="mobile" name="mobile" placeholder="User Mobile" required>
-		        <input type="submit" value="비밀번호 찾기">
+		    	<input type="text" class="input" name="memberId" id="memberId" placeholder="User Id" required>
+		        <input type="text" class="input" name="name" id="name" placeholder="User Name" required>
+	        	<input type="text" class="input" id="mobile" name="mobile" placeholder="User Mobile" required>
+		        <input type="submit" class="input" value="비밀번호 찾기">
 		     </div>
 	            
 	 	</form>

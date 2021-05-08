@@ -26,8 +26,7 @@
 			font-size: 20px;
 		}
 	</style>
-
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
 	<script type="text/javascript" src="${CONTEXT_PATH}/js/member_input.js"></script>
 	<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 	

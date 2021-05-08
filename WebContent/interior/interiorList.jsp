@@ -10,9 +10,21 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>myHome</title>
-<!-- header menu -->
-<jsp:include page="/inc/header.jsp" />
+<title>My Home</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="마이 페이지">
+    <meta name="author" content="강하영">
+    <!-- Bootstrap styles -->
+    <link href="${CONTEXT_PATH}/assets/css/bootstrap.css" rel="stylesheet"/>
+    <!-- Customize styles -->
+    <link href="${CONTEXT_PATH}/assets/style/style.css" rel="stylesheet"/>
+    <!-- font awesome styles -->
+	<link href="${CONTEXT_PATH}/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
+	<!-- Favicons -->
+    <link rel="shortcut icon" href="${CONTEXT_PATH}/assets/ico/favicon.ico">
+	<!-- header menu -->
+	<jsp:include page="/inc/header.jsp" />
+
 <style>
 body {font-family: Arial, Helvetica, sans-serif;}
 
@@ -21,14 +33,14 @@ body {font-family: Arial, Helvetica, sans-serif;}
 }
 
 .row {
-  margin-left:-5px;
-  margin-right:-5px;
+  margin-left:-12px;
+  margin-right:-6px;  
 }
   
 .column {
   float: left;
   width: 100%;
-  padding: 5px;
+  padding: 5px;  
 }
 
 /* Clearfix (clear floats) */
@@ -79,54 +91,60 @@ button:hover {
 <body>
 <h2>인테리어 모아보기</h2>
 <p>디자인은 아무것도 없는 곳에 무언가를 넣어 시간과 공간을 만드는 것이다.</p>
-
 <div class="row">
-  <div class="column">
-    <table>
-      <tr>
-        <th>No</th>
-        <th>업체명</th>
-        <th>경력</th>
-        <th>업체 설명</th>
-        <th>위치</th>
-        <th>상담</th>
-      </tr>
-      <%
-      		int num = 0;
-      		for(Interior dto : list){
-      			num++;
-      %>
+<div class="span9" style="width:960px;">
+<div class="well well-small">
+
+	<div class="row">
+	  <div class="column">
+	    <table>
 	      <tr>
-	        <td><%=dto.getIno() %></td>
-	        <td><a href="${CONTEXT_PATH}/interior/interiorController?action=selectInterior&iname=<%=dto.getIname()%>"><%=dto.getIname() %></a></td>
-	        <td><%=dto.getIcareer() %></td>
-	        <td><%=dto.getIdetail() %></td>
-	        <td><%=dto.getIlocation() %></td>
-	        <td class="applyBtn"><a class="applyBtn" href="${CONTEXT_PATH}/interior/interiorController?action=billPage&icareer=<%=dto.getIcareer()%>">견적</a></td>
+	        <th>No</th>
+	        <th>업체명</th>
+	        <th>경력</th>
+	        <th>업체 설명</th>
+	        <th>위치</th>
+	        <th>상담</th>
 	      </tr>
-      <%} %>
-    </table>
-  </div>
-  
-	<!-- 
-  		인테리어 등록/수정/삭제하기는 관리자 권한
-  		관리자 로그인 시에만 보이는 버튼  
-  		-->
-  			<%
-                  Member mainMember = null;
-                  if(session.getAttribute("dto")==null){
-            %>   
-                 	<p></p>                            
-            <%
-               	}else {
-                     mainMember = (Member)session.getAttribute("dto");                     
-			%> 
-            <% if(mainMember.getGrade().equals("관리자")){  %>                
-                  	<button onclick="location.href='interiorInput.jsp'" style="width:auto;">등록하기</button>
-         	<%
-                }
-            }
-            %>
+	      <%
+	      		int num = 0;
+	      		for(Interior dto : list){
+	      			num++;
+	      %>
+		      <tr>
+		        <td><%=dto.getIno() %></td>
+		        <td><a href="${CONTEXT_PATH}/interior/interiorController?action=selectInterior&iname=<%=dto.getIname()%>"><%=dto.getIname() %></a></td>
+		        <td><%=dto.getIcareer() %></td>
+		        <td><%=dto.getIdetail() %></td>
+		        <td><%=dto.getIlocation() %></td>
+		        <td class="applyBtn"><a class="applyBtn" href="${CONTEXT_PATH}/interior/interiorController?action=billPage&icareer=<%=dto.getIcareer()%>">견적</a></td>
+		      </tr>
+	      <%} %>
+	    </table>
+	  </div>
+	  
+		<!-- 
+	  		인테리어 등록/수정/삭제하기는 관리자 권한
+	  		관리자 로그인 시에만 보이는 버튼  
+	  		-->
+	  			<%
+	                  Member mainMember = null;
+	                  if(session.getAttribute("dto")==null){
+	            %>   
+	                 	<p></p>                            
+	            <%
+	               	}else {
+	                     mainMember = (Member)session.getAttribute("dto");                     
+				%> 
+	            <% if(mainMember.getGrade().equals("관리자")){  %>                
+	                  	<button onclick="location.href='interiorInput.jsp'" style="width:auto;">등록하기</button>
+	         	<%
+	                }
+	            }
+	            %>
+	</div>
+</div>
+</div>
 </div>
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="${CONTEXT_PATH}/assets/js/jquery.js"></script>
