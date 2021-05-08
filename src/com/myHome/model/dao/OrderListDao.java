@@ -107,7 +107,7 @@ public class OrderListDao {
 						 ,rs.getString("ADDRESS2")
 						 ,rs.getString("NAME")
 						 ,rs.getString("MOBILE")
-						 ,rs.getString("REVIEWCHECK")
+						 ,rs.getInt("REVIEWCHECK")
 						);
 				orderDetailList.add(dto);
 			}
@@ -150,7 +150,7 @@ public class OrderListDao {
 	 * 후기 등록 요청 메서드
 	 * @param dto 후기 객체
 	 */
-	public void addReview(int row, Review dto) {
+	public int addReview(int row, Review dto) {
 		String sql = "INSERT INTO REVIEW VALUES(?, ?, ?, ?, ?, ?, ?)";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -164,8 +164,9 @@ public class OrderListDao {
 			pstmt.setInt(5, dto.getScore());
 			pstmt.setString(6, dto.getMemberId());
 			pstmt.setString(7, dto.getoDate());
-			pstmt.executeUpdate();
+			int result = pstmt.executeUpdate();
 			JdbcTemplate.commit(conn);
+			return result;
 		}catch(SQLException e) {
 			JdbcTemplate.rollback(conn);
 			System.out.println("Message : " +e.getMessage());
@@ -174,6 +175,7 @@ public class OrderListDao {
 			JdbcTemplate.close(pstmt);
 			JdbcTemplate.close(conn);
 		}
+		return 0;
 	}
 
 	/**
@@ -215,18 +217,20 @@ public class OrderListDao {
 
 	/**
 	 * 후기 작성 완료 후 주문 상세 테이블에 주문체크를 평가로 업데이트 요청 메서드
+	 * @param score 평가한 점수
 	 * @param pNo 주문할 상품 번호
 	 * @param oNo 주문 번호
 	 */
-	public void reviewCheckTrue(int pNo, int oNo) {
-		String sql = "UPDATE ORDERS_DETAIL SET REVIEWCHECK = '평가완료' WHERE P_No = ? AND O_NO = ?";
+	public void reviewCheckTrue(int score, int pNo, int oNo) {
+		String sql = "UPDATE ORDERS_DETAIL SET REVIEWCHECK = ? WHERE P_No = ? AND O_NO = ?";
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
 			conn =JdbcTemplate.getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, pNo);
-			pstmt.setInt(2, oNo);
+			pstmt.setInt(1, score);
+			pstmt.setInt(2, pNo);
+			pstmt.setInt(3, oNo);
 			pstmt.executeUpdate();
 			JdbcTemplate.commit(conn);
 		}catch(SQLException e) {

@@ -40,9 +40,9 @@ public class OrderListBiz {
 	 * 후기 등록 요청 메서드
 	 * @param dto 후기 객체
 	 */
-	public void addReview(Review dto) {
+	public int addReview(Review dto) {
 		int row = reviewLastNum() + 1;
-		dao.getInstance().addReview(row, dto);
+		return dao.getInstance().addReview(row, dto);
 	}
 	
 	/**
@@ -55,11 +55,12 @@ public class OrderListBiz {
 
 	/**
 	 * 후기 작성 완료 후 주문 상세 테이블에 주문체크를 평가로 업데이트 요청 메서드
+	 * @param score 평가한 점수
 	 * @param pNo 주문할 상품 번호
 	 * @param oNo 주문 번호
 	 */
-	public void reviewCheckTrue(int pNo, int oNo) {
-		dao.getInstance().reviewCheckTrue(pNo, oNo);
+	public void reviewCheckTrue(int score,int pNo, int oNo) {
+		dao.getInstance().reviewCheckTrue(score, pNo, oNo);
 	}
 
 	/**

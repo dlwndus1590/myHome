@@ -14,8 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.myHome.model.biz.OrderListBiz;
+import com.myHome.model.biz.ProductBiz;
 import com.myHome.model.dto.OrderList;
 import com.myHome.model.dto.OrdersDetail;
+import com.myHome.model.dto.Product;
 import com.myHome.model.dto.Review;
 
 /**
@@ -118,6 +120,7 @@ public class FrontOrderList extends HttpServlet {
 		HttpSession session = request.getSession();
 		int oNo = Integer.parseInt(request.getParameter("oNo"));
 		int pNo = Integer.parseInt(request.getParameter("pNo"));
+		int dCount = Integer.parseInt(request.getParameter("dCount"));
 		String pImg = request.getParameter("pImg");
 		String pName = request.getParameter("pName");
 		String oDate = request.getParameter("oDate");
@@ -126,6 +129,7 @@ public class FrontOrderList extends HttpServlet {
 		request.setAttribute("pImg", pImg);
 		request.setAttribute("pName", pName);
 		request.setAttribute("oDate", oDate);
+		request.setAttribute("dCount", dCount);
 		try {
 			request.getRequestDispatcher("/orderList/reviewInputForm.jsp").forward(request, response);
 		} catch (ServletException | IOException e) {
@@ -142,16 +146,32 @@ public class FrontOrderList extends HttpServlet {
 		String oDate = request.getParameter("oDate");
 		int pNo = Integer.parseInt(request.getParameter("pNo"));
 		int oNo = (int)session.getAttribute("oNo");
+		int dCount = (int)session.getAttribute("dCount");
 		String pImg = request.getParameter("pImg");
 		String reviewContent = request.getParameter("reviewContent");
 		int score = Integer.parseInt(request.getParameter("score"));
 		Review dto = new Review(memberId, oDate, pNo, pImg,reviewContent, score);
 		OrderListBiz biz = new OrderListBiz();
+		ProductBiz productBiz = new ProductBiz();
+		Product productDto = new Product();
+		productDto.setpNo(pNo);
+		try {
+			productBiz.selectProductOne(productDto);
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
 		
-		biz.addReview(dto);
-		biz.reviewCheckTrue(pNo, oNo);
+		int result = biz.addReview(dto);
+		biz.reviewCheckTrue(score,pNo, oNo);
 		PrintWriter writer;
 		try {
+			if(result > 0) {
+				try {
+					productBiz.updatePscore(productDto, score, dCount);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 			response.setContentType("text/html;charset=UTF-8");
 			writer = response.getWriter();
 			writer.println("<script>alert('후기 작성이 완료되었습니다.'); location.href= '"+CONTEXT_PATH+"/member/memberMyPage.jsp';</script>");

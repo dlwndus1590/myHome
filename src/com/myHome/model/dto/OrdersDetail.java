@@ -27,7 +27,7 @@ public class OrdersDetail implements Serializable {
 	private String address2;
 	private String memberName;
 	private String mobile;
-	private String reviewCheck = "미평가";
+	private int reviewCheck = 0;
 	
 	/**
 	 * 기본 생성자
@@ -58,7 +58,7 @@ public class OrdersDetail implements Serializable {
 	 * @param mobile 구매자 핸드폰번호
 	 */
 	public OrdersDetail(int oNo, int dNo, String memberId, String oDate,int pNo ,String pName, String pImg, String pPrice, int dCount,
-			String oDeliveryFee, String usedMileage, String accumulateMileage, String oTotalPrice, String oTotalPricePlusFee, String totalAmount, int zipCode, String address1, String address2, String memberName, String mobile, String reviewCheck) {
+			String oDeliveryFee, String usedMileage, String accumulateMileage, String oTotalPrice, String oTotalPricePlusFee, String totalAmount, int zipCode, String address1, String address2, String memberName, String mobile, int reviewCheck) {
 		super();
 		this.oNo = oNo;
 		this.dNo = dNo;
@@ -374,14 +374,14 @@ public class OrdersDetail implements Serializable {
 	/**
 	 * @return the reviewCheck
 	 */
-	public String getReviewCheck() {
+	public int getReviewCheck() {
 		return reviewCheck;
 	}
 
 	/**
 	 * @param reviewCheck the reviewCheck to set
 	 */
-	public void setReviewCheck(String reviewCheck) {
+	public void setReviewCheck(int reviewCheck) {
 		this.reviewCheck = reviewCheck;
 	}
 }

@@ -46,9 +46,6 @@
 											<p>
 												<strong>${index.pName}</strong>
 											</p>
-											<h4>
-												<a class="shopBtn" href="#" title="review"> 후기 작성 </a>
-											</h4>
 											<div class="actionList">
 												<p style="margin-top: 5px;">
 													<img src="${CONTEXT_PATH}/img/star.png">${index.pScore}
