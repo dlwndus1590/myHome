@@ -58,7 +58,7 @@
 	<fieldset>
 		<legend>상품정보</legend>
 	</fieldset>
-	<c:set var="orders" value="${ordersList }" />
+	<c:set var="orders" value="${ordersPage }" />
 	<c:if test="${orders != null }">
 		<form class="form-horizontal" action="${CONTEXT_PATH}/member/ordersController?action=orders" method="post">
 			<table class="table table-bordered table-condensed">
@@ -73,7 +73,8 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="dto" items="${ordersList }" varStatus="status">
+					<%-- <c:forEach var="dto" items="${ordersPage }" varStatus="status"> --%>
+					<c:set var="dto" value="${ordersPage }" />
 						<tr>
 							<td>
 								<input type="hidden" name="pNo" value="${dto.pNo }">
@@ -87,14 +88,14 @@
 							<td><input type="hidden" name="deliveryFee" value="${dto.deliveryFee }">
 								<fmt:formatNumber value="${dto.deliveryFee }" pattern="###,###" />원
 							</td>
-							<td><input class="span1" style="max-width: 40px"
+							<td><input class="span1" name="count" style="max-width: 40px"
 								placeholder="1" size="16" type="number" value="${dto.cCount }"
 								min="1" readonly="readonly"></td>
 							<td><input type="hidden" name="totalPrice" value="${dto.totalPrice }">
 								<fmt:formatNumber value="${dto.totalPrice }" pattern="###,###" />원
 							</td>
 						</tr>
-					</c:forEach>
+					<%-- </c:forEach> --%>
 					<tr>
 						<c:set var="total" value="0" />
 						<td colspan="6" class="alignR"
@@ -112,19 +113,19 @@
 			<div class="control-group">
 				<label class="control-label">이름</label>
 				<div class="controls">
-					<input type="text" value="${orders[0].name }" readonly="readonly">
+					<input type="text" value="${orders.name }" readonly="readonly">
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label">이메일</label>
 				<div class="controls">
-					<input type="text" value="${orders[0].email }" readonly="readonly">
+					<input type="text" value="${orders.email }" readonly="readonly">
 				</div>
 			</div>
 			<div class="control-group">
 				<label class="control-label">휴대폰</label>
 				<div class="controls">
-					<input type="text" value="${orders[0].mobile }" readonly="readonly">
+					<input type="text" value="${orders.mobile }" readonly="readonly">
 				</div>
 			</div>
 			<fieldset>
@@ -135,16 +136,16 @@
 				<tr>
 					<td width="200">우편번호</td>
 					<td><input type="text" name="zipcode" id="zipcode" size="7"
-						readonly="readonly" value="${orders[0].zipCode }"> <input
+						readonly="readonly" value="${orders.zipCode }"> <input
 						type="button" value="우편번호찾기" onClick="postcodeTest()"></td>
 				</tr>
 
 				<tr>
 					<td>주소</td>
 					<td><input type="text" name="address1" id="address1" size="70"
-						readonly="readonly" placeholder="도로명주소" value="${orders[0].address1 }"> <input type="text"
+						readonly="readonly" placeholder="도로명주소" value="${orders.address1 }"> <input type="text"
 						name="address2" id="address2" size="70" placeholder="상세주소"
-						value="${orders[0].address2 }">
+						value="${orders.address2 }">
 					</td>
 				</tr>
 			</table>
@@ -156,13 +157,13 @@
 				<label class="control-label">보유 마일리지</label>
 				<div class="controls">
 					<input type="text" name="accumulateMileage" id="accumulateMileage"
-						value="${orders[0].mileage }" readonly="readonly">
+						value="${orders.mileage }" readonly="readonly">
 				</div>
 				<br>
 				<label class="control-label">사용할 마일리지</label>
 				<div class="controls">
 					<input type="text" name="usedMileage" id="usedMileage" value="0"
-						min="0" max="${orders[0].mileage }"> 
+						min="0" max="${orders.mileage }"> 
 					<input class="checkbox" id="checkedMileage" type="checkbox">전액 사용
 				</div>
 			</div>
@@ -203,7 +204,7 @@
 		$(document).ready(function() {
 			$("#checkedMileage").change(function() {
 				if ($("#checkedMileage").is(":checked")) {
-					$("#usedMileage").attr("value", "${orders[0].mileage }");
+					$("#usedMileage").attr("value", "${orders.mileage }");
 				} else {
 					$("#usedMileage").attr("value", 0);
 				}

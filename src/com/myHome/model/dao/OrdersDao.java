@@ -109,13 +109,13 @@ public class OrdersDao {
 	/**
 	 * 단일 결제 페이지 조회
 	 */
-	public void getSingleOrdersPage(Connection conn, String memberId, ArrayList<OrdersPage> ordersList) throws Exception {
+	public void getSingleOrdersPage(Connection conn, String memberId, int pNo, OrdersPage ordersPage) throws Exception {
 		String sql = "select m.name, m.email, m.mobile, m.mileage, m.zip_code, m.address1, m.address2, " + 
 				   		"p.p_no, p.p_name, p.p_price, c.c_count, p.p_img, p.p_describe, " + 
 				   		"p.p_count - c.c_count as stock, p.delivery_fee, (p.p_price * c.c_count) as total_price " + 
 				   	"from product p join cart c on (p.p_no = c.p_no) " + 
 				   	"join member m on (m.member_id = c.member_id) " + 
-				   	"where m.member_id = ?";
+				   	"where m.member_id = ? and p.p_no = ?";
 		
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -123,13 +123,10 @@ public class OrdersDao {
 		try {
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, memberId);
+			stmt.setInt(2, pNo);
 			rs = stmt.executeQuery();
 			
-			OrdersPage ordersPage = null;
-			
-			while(rs.next()) {
-				ordersPage = new OrdersPage();
-				
+			if (rs.next()) {
 				ordersPage.setName(rs.getString(1));
 				ordersPage.setEmail(rs.getString(2));
 				ordersPage.setMobile(rs.getString(3));
@@ -146,8 +143,6 @@ public class OrdersDao {
 				ordersPage.setStock(rs.getInt(14));
 				ordersPage.setDeliveryFee(rs.getInt(15));
 				ordersPage.setTotalPrice(rs.getInt(16));
-				
-				ordersList.add(ordersPage);
 			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -266,6 +261,32 @@ public class OrdersDao {
 			stmt.setString(9, address2);
 			int rows = stmt.executeUpdate();
 			return rows;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			throw new Exception();
+		} finally {
+			JdbcTemplate.close(stmt);
+		}
+	}
+
+	/**
+	 * 주문상세
+	 */
+	public void ordersDetail(Connection conn, int count, int pNo) throws Exception {
+		String sql = "insert into orders_detail values ((select max(nvl(d_no, 0)) + 1 from orders_detail), ?, ?, "
+				+ "(select max(nvl(o_no, 0)) from orders), 0)";
+		
+		PreparedStatement stmt = null;
+		
+		try {
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, count);
+			stmt.setInt(2, pNo);
+			int rows = stmt.executeUpdate();
+			if (rows == 0) {
+				throw new Exception();
+			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
