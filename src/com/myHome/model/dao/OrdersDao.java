@@ -211,7 +211,7 @@ public class OrdersDao {
 	public void cartInsert(Connection conn, String memberId, int pNo, int count) throws Exception {
 		String sql = "insert into cart (c_no, member_id, p_no, c_count) " + 
 						"select " + 
-						"(select max(nvl(c_no, 0)) + 1 from cart), ?, ?, ? " + 
+						"(select nvl(max(c_no), 0) + 1 from cart), ?, ?, ? " + 
 						"from dual " + 
 						"where not exists (select * from cart where p_no = ? and member_id = ?)";
 		
@@ -243,7 +243,7 @@ public class OrdersDao {
 	public int orders(Connection conn, String memberId, int orderMethod, int totalPrice, int deliveryFee,
 			int usedMileage, int accumulateMileage, int zipCode, String address1, String address2) throws Exception {
 		String sql = "insert into orders " + 
-				"values ((select max(nvl(o_no, 0)) + 1 from orders), ?, ?, ?, " + 
+				"values ((select nvl(max(o_no), 0) + 1 from orders), ?, ?, ?, " + 
 				"to_char(sysdate, 'yyyy-mm-dd'), ?, ?, ?, ?, ?, ?)";
 		
 		PreparedStatement stmt = null;

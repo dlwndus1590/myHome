@@ -57,6 +57,9 @@ public class FrontOrders extends HttpServlet {
 		case "DetailsCartInsert":
 			DetailsCartInsert(request, response);	
 			break;
+		case "order":
+			order(request, response);	
+			break;
 		}
 	}
 
@@ -206,7 +209,7 @@ public class FrontOrders extends HttpServlet {
 			totalDeliveryFee += Integer.parseInt(deliveryFee[index]);
 			int stock = Integer.parseInt(stock1[index]);
 			
-			if (stock > 0) {
+			if (stock <= 0) {
 				// 알림
 			}
 		}
@@ -276,6 +279,51 @@ public class FrontOrders extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 			// 에러처리 페이지로 이동
+		}
+	}
+	
+	/**
+	 * 단일 결제하기
+	 */
+	private void order(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		String memberId = (String) session.getAttribute("memberId");
+		int orderMethod = Integer.parseInt(request.getParameter("optionsRadios"));
+		int usedMileage = Integer.parseInt(request.getParameter("usedMileage"));
+		int currentMileage = Integer.parseInt(request.getParameter("accumulateMileage"));
+		int totalPrice = Integer.parseInt(request.getParameter("totalPrice"));
+		int deliveryFee = Integer.parseInt(request.getParameter("deliveryFee"));
+		int zipCode = Integer.parseInt(request.getParameter("zipcode"));
+		String address1 = request.getParameter("address1");
+		String address2 = request.getParameter("address2");
+		int accumulateMileage = currentMileage - usedMileage;
+		int stock = Integer.parseInt(request.getParameter("stock"));
+		int pNo = Integer.parseInt(request.getParameter("pNo"));
+		int count = Integer.parseInt(request.getParameter("count"));
+		
+		OrdersBiz ordersBiz = new OrdersBiz();
+		ProductBiz productBiz = new ProductBiz();
+		
+		if (stock <= 0) {
+			// 알림
+		}
+		
+		if (memberId != null && accumulateMileage >= 0) {
+			try {
+				int result = ordersBiz.orders(memberId, orderMethod, totalPrice, deliveryFee, usedMileage, accumulateMileage, zipCode, address1, address2);
+				if (result == 1) {
+					ordersBiz.cartDelete(memberId, pNo);
+					ordersBiz.ordersDetail(count, pNo);
+					
+					Product product = new Product();
+					product.setpNo(pNo);
+					productBiz.selectProductOne(product);
+					productBiz.plusPsales(count, product);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				// 에러 페이지로 이동
+			}
 		}
 	}
 }

@@ -60,7 +60,7 @@
 	</fieldset>
 	<c:set var="orders" value="${ordersPage }" />
 	<c:if test="${orders != null }">
-		<form class="form-horizontal" action="${CONTEXT_PATH}/member/ordersController?action=orders" method="post">
+		<form class="form-horizontal" action="${CONTEXT_PATH}/member/ordersController?action=order" method="post">
 			<table class="table table-bordered table-condensed">
 				<thead>
 					<tr>
