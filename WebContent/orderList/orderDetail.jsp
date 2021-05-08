@@ -65,7 +65,7 @@
 		<tr><td colspan="5"><hr class="hrSoft"></td></tr>
 		<c:set var="flag" value= "미입력" />
 		<c:forEach var="index" items="${orderDetailList}">
-		<form action="${CONTEXT_PATH}/orderList/orderListController?action=reviewInputForm&oNo=${index.oNo}&pNo=${index.pNo}&pName=${index.pName}&pImg=${index.pImg}&oDate=${index.oDate}" method="post">
+		<form action="${CONTEXT_PATH}/orderList/orderListController?action=reviewInputForm&oNo=${index.oNo}&pNo=${index.pNo}&pName=${index.pName}&pImg=${index.pImg}&oDate=${index.oDate}&dCount=${index.dCount}" method="post">
 			<tr>
 				<td style="text-align: center; padding-left: 40px;">${index.dNo}</td>
 				<td><img src="${CONTEXT_PATH}/${index.pImg}" class="productPicture">${index.pName}</td>
@@ -75,7 +75,7 @@
 				<c:set var="flag" value="입력"/>
 				</c:if>
 				<c:choose>
-					<c:when test="${index.reviewCheck == '미평가'}">
+					<c:when test="${index.reviewCheck == 0}">
 						<td class="grayColor">구매확정<span style="padding-left: 60px;"><input type="submit" value="후기작성"></span></td>
 					</c:when>
 					<c:otherwise>

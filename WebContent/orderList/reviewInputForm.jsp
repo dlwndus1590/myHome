@@ -97,6 +97,7 @@ $(document).on("click",".star", function(){
 			<br>
 			<input type="hidden" value="${score}" id="score" name="score">
 			<input type="hidden" value="${oDate}" name="oDate">
+			<input type="hidden" value="${dCount}" name="dCount">
 			<br>
 			<div class="btn-group">
 				<input type="submit" class="shopBtn" style="margin-left: 800px;" value="작성완료">

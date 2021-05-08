@@ -27,7 +27,7 @@
 			<a href="http://iabacus.co.kr/wp/"><img src="${CONTEXT_PATH}/assets/img/애버커스.png" style="margin-left : 70px; width: 140px; height: 50px;"></a>
 		</div>
 		<div class="span2">
-			<a href="http://www.sqnt.co.kr/default"><img src="${CONTEXT_PATH}/assets/img/에스큐앤티.jpg" style="margin-left : 70px; width: 140px; height: 50px;"></a>
+			<a href="http://www.sqnt.co.kr/default"><img src="${CONTEXT_PATH}/assets/img/에스큐앤티.png" style="margin-left : 70px; width: 140px; height: 50px;"></a>
 		</div>
 	</div>
 </section>
