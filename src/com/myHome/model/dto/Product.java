@@ -31,6 +31,8 @@ public class Product implements Serializable {
 	private int pCount;
 	/** 상품등록날짜 */
 	private String pRegDate;
+	private int pReviewCount;
+	private int pTotalScore;
 	
 	/** 기본생성자 */
 	public Product() {}
@@ -49,9 +51,11 @@ public class Product implements Serializable {
 	 * @param pSales
 	 * @param pCount
 	 * @param pRegDate
+	 * @param pReviewCount
+	 * @param pTotalScore
 	 */
 	public Product(int pNo, String pName, int pPrice, String pImg, String pDescribe, int deliveryFee,
-			String companyName, int categoryId, float pScore, int pSales, int pCount, String pRegDate) {
+			String companyName, int categoryId, float pScore, int pSales, int pCount, String pRegDate, int pReviewCount, int pTotalScore) {
 		this.pNo = pNo;
 		this.pName = pName;
 		this.pPrice = pPrice;
@@ -64,6 +68,8 @@ public class Product implements Serializable {
 		this.pSales = pSales;
 		this.pCount = pCount;
 		this.pRegDate = pRegDate;
+		this.pReviewCount = pReviewCount;
+		this.pTotalScore = pTotalScore;
 	}
 	
 	/**
@@ -203,10 +209,39 @@ public class Product implements Serializable {
 		this.pRegDate = pRegDate;
 	}
 
+	/**
+	 * @return the pReviewCount
+	 */
+	public int getpReviewCount() {
+		return pReviewCount;
+	}
+
+	/**
+	 * @param pReviewCount the pReviewCount to set
+	 */
+	public void setpReviewCount(int pReviewCount) {
+		this.pReviewCount = pReviewCount;
+	}
+
+	/**
+	 * @return the pTotalScore
+	 */
+	public int getpTotalScore() {
+		return pTotalScore;
+	}
+
+	/**
+	 * @param pTotalScore the pTotalScore to set
+	 */
+	public void setpTotalScore(int pTotalScore) {
+		this.pTotalScore = pTotalScore;
+	}
+
 	@Override
 	public String toString() {
 		return "Product [pNo=" + pNo + ", pName=" + pName + ", pPrice=" + pPrice + ", pImg=" + pImg + ", pDescribe="
 				+ pDescribe + ", deliveryFee=" + deliveryFee + ", companyName=" + companyName + ", categoryId="
-				+ categoryId + ", pScore=" + pScore + ", pSales=" + pSales + ", pCount=" + pCount + ", pRegDate=" + pRegDate + "]";
+				+ categoryId + ", pScore=" + pScore + ", pSales=" + pSales + ", pCount=" + pCount + ", pRegDate="
+				+ pRegDate + ", pReviewCount=" + pReviewCount + ", pTotalScore=" + pTotalScore + "]";
 	}
 }
