@@ -38,7 +38,9 @@ th, td {
 tr:nth-child(even) {
   background-color: #f2f2f2;
 }
-
+.well{
+	background-color: white;
+}
 </style>
 <script type="text/javascript">
 	function searchCheck(frm){
@@ -54,8 +56,9 @@ tr:nth-child(even) {
 </script>
 </head>
 <body>
-<hr>
-
+<div class="row">
+<div class="span9" style="width:960px;backgroud-color:white;">
+<div class="well well-small">
 <h2>회원 전체목록</h2>
 	<table>
 	  <tr>
@@ -119,7 +122,10 @@ tr:nth-child(even) {
   <input type="text" placeholder="Search.." name="keyWord">  
   <input type="submit" class="signupbtn" value="검색" onclick="searchCheck(form)"></button>
 </form>
-	
+
+</div>
+</div>
+</div>	
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="${CONTEXT_PATH}/assets/js/jquery.js"></script>
 <script src="${CONTEXT_PATH}/assets/js/bootstrap.min.js"></script>

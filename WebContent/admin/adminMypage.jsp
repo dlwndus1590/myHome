@@ -57,10 +57,8 @@
 	<img  alt="배경화면" src="${CONTEXT_PATH}/img/adminbg.jpg">
     <div class="topnav">
       <a href="${CONTEXT_PATH}/index.jsp">Home</a>
-      <a href="${CONTEXT_PATH}/member/memberController?action=memberList">전체 회원조회</a>
-      <a href="${CONTEXT_PATH}/member/memberController?action=productList">상품 전체목록</a>
-      <a href="${CONTEXT_PATH}/notice/noticeController?action=noticeListForm">공지사항</a>
-      <a href="${CONTEXT_PATH}/member/memberController?action=?">질문과 답변</a>      
+      <a href="${CONTEXT_PATH}/member/memberController?action=memberList">전체 회원조회</a>      
+      <a href="${CONTEXT_PATH}/notice/noticeController?action=noticeListForm">공지사항</a>       
     </div>
   </div>
 

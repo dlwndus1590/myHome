@@ -81,6 +81,7 @@ button{
   cursor: pointer;
   width: 65%;
   opacity: 0.9;
+  margin-left: 3%;
 }
 
 button:hover {

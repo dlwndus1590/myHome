@@ -16,15 +16,30 @@
     <!-- font awesome styles -->
 	<link href="${CONTEXT_PATH}/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
 	<!-- Favicons -->
-    <link rel="shortcut icon" href="${CONTEXT_PATH}/assets/ico/favicon.ico">
-    
-    <link type="text/css" rel="stylesheet" href="${CONTEXT_PATH}/css/login.css">
+    <link rel="shortcut icon" href="${CONTEXT_PATH}/assets/ico/favicon.ico">        
     <link type="text/css" rel="stylesheet" href="${CONTEXT_PATH}/css/mypage.css">
+    
+	<!-- header menu -->
+	<jsp:include page="/inc/header.jsp" />
+	
+	<style type="text/css">
+	
+		.mypagebtn{
+  			background-color: #548235;
+  			color: white;
+  			padding: 14px 20px;
+			margin: 8px 0;
+			border: none;
+			cursor: pointer;
+			width: 50%;
+			opacity: 0.9;
+			border-radius:5px;
+		}
+		
+	</style>
   </head>
 <body>
 
-<!-- header menu -->
-<jsp:include page="/inc/header.jsp" />
 
 <!-- main menu : 로그인 전 메뉴 -->
 
