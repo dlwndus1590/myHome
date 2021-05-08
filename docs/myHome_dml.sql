@@ -63,7 +63,7 @@ INSERT INTO orders_detail VALUES (2, 2, 2, 1, 4);
 INSERT INTO orders_detail VALUES (3, 2, 3, 1, 0);
 
 -- interior 초기화데이터
-insert into interior values (1, '유캠프인테리어', 5, '설명 대체', '서울시 태해란로 11길 5');
+insert into interior values (1, '유캠프인테리어', 5, '설명 대체', '서울시 태해란로 11길 5','010-3924-2391');
 commit;
 ----------------------------------------------------------------------------------------------
 

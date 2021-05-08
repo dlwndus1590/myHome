@@ -171,16 +171,38 @@ public class FrontMember extends HttpServlet {
 	 * 마이페이지 일반/판매자 분리 화면 요청 서비스
 	 */
 	protected void memberMyPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String url = CONTEXT_PATH + "/member/memberMyPage.jsp";
-		response.sendRedirect(url); 
+		Member dto = new Member();
+		HttpSession session = request.getSession();
+		dto.setMemberId((String)session.getAttribute("memberId"));
+		
+		MemberBiz biz = new MemberBiz();
+		
+		try {
+			biz.selectOneMember(dto);
+			session.setAttribute("dto", dto);
+			response.sendRedirect(CONTEXT_PATH + "/member/memberMyPage.jsp"); 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
 	 * 마이페이지 일반/판매자 분리 화면 요청 서비스
 	 */
 	protected void sellerMyPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String url = CONTEXT_PATH + "/member/sellerMyPage.jsp";
-		response.sendRedirect(url); 
+		Member dto = new Member();
+		HttpSession session = request.getSession();
+		dto.setMemberId((String)session.getAttribute("memberId"));
+		
+		MemberBiz biz = new MemberBiz();
+		
+		try {
+			biz.selectOneMember(dto);
+			session.setAttribute("dto", dto);
+			response.sendRedirect(CONTEXT_PATH + "/member/sellerMyPage.jsp"); 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -239,7 +261,7 @@ public class FrontMember extends HttpServlet {
 				session.setAttribute("name", dto.getName());
 				session.setAttribute("companyName", dto.getCompanyName());
 				session.setAttribute("dto", dto);	
-				
+				session.setAttribute("mileage", dto.getMileage());
 				request.getRequestDispatcher("/index.jsp").forward(request,response);		
 				
 			}else {

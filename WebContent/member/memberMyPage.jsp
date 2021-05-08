@@ -65,7 +65,7 @@
 				<br>
 				<table>
 				  <tr>
-				    <th>마일리지 : ${dto.mileage }원</th>				    
+				    <th>마일리지 : ${dto.mileage}원</th>				    
 				  </tr>
 				</table>
 		
