@@ -355,7 +355,7 @@ public class FrontNotice extends HttpServlet {
 	 */
 	private void qNoticeInput(HttpServletRequest request, HttpServletResponse response) {
 		NoticeBiz biz = new NoticeBiz();
-		String directory = "C:/Users/jspea/git/myHome/WebContent/img/qNotice";
+		String directory = "C:/student_ucamp33/workspace_teamProject/myHome/WebContent/img/qNotice";
 		
 		int maxSize = 1024 * 1024 * 100;
 		String encoding = "UTF-8";
