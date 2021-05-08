@@ -7,9 +7,21 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>myHome</title>
-<!-- header menu -->
-<jsp:include page="/inc/header.jsp" />
+<title>My Home</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="마이 페이지">
+    <meta name="author" content="강하영">
+    <!-- Bootstrap styles -->
+    <link href="${CONTEXT_PATH}/assets/css/bootstrap.css" rel="stylesheet"/>
+    <!-- Customize styles -->
+    <link href="${CONTEXT_PATH}/assets/style/style.css" rel="stylesheet"/>
+    <!-- font awesome styles -->
+	<link href="${CONTEXT_PATH}/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
+	<!-- Favicons -->
+    <link rel="shortcut icon" href="${CONTEXT_PATH}/assets/ico/favicon.ico">
+	<!-- header menu -->
+	<jsp:include page="/inc/header.jsp" />
+	
 <style>
 /* Full-width input fields */
 input[type=text], input[type=password] {
@@ -56,7 +68,7 @@ button:hover {
 }
 
 /* Add padding to container elements */
-.container {
+.container2 {
   padding: 16px;
 }
 
@@ -73,19 +85,22 @@ hr {
   clear: both;
   display: table;
 }
+
+.row{
+	margin-left: 15%;
+}
 </style>
 </head>
 <body>
 <%
-	Interior dto = (Interior)session.getAttribute("interiordto");
-	System.out.println("detail jsp:"+dto);
+	Interior dto = (Interior)session.getAttribute("interiordto");	
 %>
 <form action="${CONTEXT_PATH}/interior/interiorController?action=updateInterior" method="post">
 <div class="row">
   <div class="column">
   
   <h2><%=dto.getIname() %> 정보조회</h2>
-      <div class="container">            
+      <div class="container2">            
 	      <hr>
 	      <label><b>No</b></label>      
 	      <input type="text" placeholder="Enter No" name="ino" value="<%=dto.getIno() %>" readonly="readonly">
@@ -115,7 +130,7 @@ hr {
 </div>
 </form>
 <form action="${CONTEXT_PATH}/interior/interiorController?action=deleteInterior" method="post">
-	<div class="clearfix">        
+	<div class="clearfix" style="margin-left: 17%;">        
 			  <input type="submit"  value="삭제하기">		         
 	</div>	 
 </form>

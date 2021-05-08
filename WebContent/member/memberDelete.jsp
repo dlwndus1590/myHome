@@ -7,11 +7,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>회원 탈되</title>
-<link type="text/css" rel="stylesheet" href="${CONTEXT_PATH}/css/login.css">
-<!-- header menu -->
-<jsp:include page="/inc/header.jsp" />
+    <meta charset="utf-8">
+    <title>My Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="로그인 페이지">
+    <meta name="author" content="강하영">
+    <!-- Bootstrap styles -->
+    <link href="${CONTEXT_PATH}/assets/css/bootstrap.css" rel="stylesheet"/>
+    <!-- Customize styles -->
+    <link href="${CONTEXT_PATH}/assets/style/style.css" rel="stylesheet"/>
+    <!-- font awesome styles -->
+	<link href="${CONTEXT_PATH}/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
+	<!-- Favicons -->
+    <link rel="shortcut icon" href="${CONTEXT_PATH}/assets/ico/favicon.ico">
+
+	<link type="text/css" rel="stylesheet" href="${CONTEXT_PATH}/css/login.css">	
+	<!-- header menu -->
+	<jsp:include page="/inc/header.jsp" />
 
 <style>
 	#memberId, #memberPw,#memberPwConfirm{
@@ -19,13 +31,13 @@
 		font-size: 20px;
 	}
 </style>
-
+<script type="text/javascript" src="${CONTEXT_PATH}/js/member_input.js"></script>
 </head>
 <body>
 <!-- main menu : 로그인 전 메뉴 -->
 
 <!-- contents menu -->
-<form class="container" action="${CONTEXT_PATH}/member/memberController?action=memberDelete" method="post">
+<form class="container" action="${CONTEXT_PATH}/member/memberController?action=memberDelete" method="post" style="padding-left:12%;">
 	
 	   <div class="row">
 	      <h2 style="text-align:center">다음에 또 뵙고 싶습니다.</h2>
@@ -54,7 +66,7 @@
 <script src="${CONTEXT_PATH}/assets/js/jquery.easing-1.3.min.js"></script>
 <script src="${CONTEXT_PATH}/assets/js/jquery.scrollTo-1.4.3.1-min.js"></script>
 <script src="${CONTEXT_PATH}/assets/js/shop.js"></script>
+</body>
 <!-- footer menu -->
 <jsp:include page="/inc/footer.jsp"/>
-</body>
 </html>
