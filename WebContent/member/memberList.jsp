@@ -32,7 +32,7 @@ table {
 th, td {
   text-align: center;
   padding: 10px;
-  font-size: 10px;
+  font-size: 15px;
 }
 
 tr:nth-child(even) {
@@ -72,9 +72,6 @@ tr:nth-child(even) {
 	    <th>기본주소</th>
     	<th>상세주소</th>	
 		<th>사업자 번호</th>
-	    <th>회사/점포명</th>	    
-	    <th >가입일</th>      
-	    <th>마일리지</th>
 	    <th>등급</th>    
 	  </tr>
 		<%
@@ -92,9 +89,6 @@ tr:nth-child(even) {
 		    <td>${dto.address1}</td>
 	    	<td>${dto.address2}</td>
 			<td>${dto.businessNumber}</td>
-		    <td>${dto.companyName}</td>
-		    <td>${dto.entryDate}</td>			    		    
-		    <td>${dto.mileage}</td>
 		    <td>${dto.grade}</td> 
 	  </tr>
 	  

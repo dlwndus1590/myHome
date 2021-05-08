@@ -159,7 +159,7 @@ function postcodeTest() {
     <hr class="hr">
 
 	<input type="submit" class="registerbtn" value="내 정보 변경"></input>
-	<input type="submit" class="registerbtn" onclick="location.href='history.back()'" value="취소하기"></input>
+	<input type="button" class="registerbtn" onclick="history.back();" value="취소하기"></input>
   </div>
   	
 </form>

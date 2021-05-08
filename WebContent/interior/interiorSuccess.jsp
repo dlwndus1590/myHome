@@ -64,8 +64,7 @@ body {
 	    <h2><b>상담신청이 완료되었습니다.</b></h2> 
 	    <p>항상 마음에 디자인을 담아 최상의 만족을 드리기 위해 최선을 다하겠습니다. 화이팅</p>
 	  </div>
-	  <div class="container">
-	    <p>Use Code: <span class="promo"><%=Utility.getSecureString(6, true)%></span></p>
+	  <div class="container">	    
 	    <p class="application">Application date: <%=Utility.getCurrentDate("yyyy-MM-dd")%></p>
 	  </div>
 	</div>

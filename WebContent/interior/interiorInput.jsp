@@ -83,7 +83,7 @@ button:hover {
   display: table;
 }
 
-#ino,#iname,#icareer,#idetail,#ilocation{
+#ino,#iname,#icareer,#idetail,#ilocation,#imobile{
 	height: 40px;
 }
 
@@ -98,7 +98,7 @@ button:hover {
   <form action="${CONTEXT_PATH}/interior/interiorController?action=insertInterior" method="post">
 <div class="row">
 <div class="span9" style="width:960px;">
-<div class="well well-small" style="height:600px;">
+<div class="well well-small" style="height:670px;">
     <div class="container2">
       <h1>인테리어(업체) 등록</h1>
             
@@ -118,10 +118,13 @@ button:hover {
       
       <label><b>위치</b></label>
       <input type="text" placeholder="Enter Location" class="input" id="ilocation" name="ilocation" required>
+      
+      <label><b>연락처</b></label>
+      <input type="text" placeholder="' - ' 를 포함해서 작성해주세요." class="input" id="imobile" name="imobile" required maxlength="13">
 
       <div class="clearfix">
         <input type="reset" class="cancelbtn" value="초기화"></input>
-        <input type="submit" class="signupbtn" value="등록하기" onclick="javascript:alert('등록이 완료되었습니다.')"></input>
+        <input type="submit" class="signupbtn" value="등록하기"></input>
         <input type="submit" class="signupbtn" value="이전으로"  onclick="goBack()"></input>
       </div>
     </div>

@@ -105,6 +105,7 @@ button:hover {
 	        <th>경력</th>
 	        <th>업체 설명</th>
 	        <th>위치</th>
+	        <th>연락처</th>
 	        <th>상담</th>
 	      </tr>
 	      <%
@@ -118,6 +119,7 @@ button:hover {
 		        <td><%=dto.getIcareer() %></td>
 		        <td><%=dto.getIdetail() %></td>
 		        <td><%=dto.getIlocation() %></td>
+		        <td><%=dto.getImobile()%></td>
 		        <td class="applyBtn"><a class="applyBtn" href="${CONTEXT_PATH}/interior/interiorController?action=billPage&icareer=<%=dto.getIcareer()%>">견적</a></td>
 		      </tr>
 	      <%} %>
