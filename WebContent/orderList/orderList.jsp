@@ -21,45 +21,60 @@
 
 
 	<!-- New Products -->
-	<div class="well well-large" style="width: 910px">
-		<h3>구매 이력</h3>
-		<br>
-		<div class="row-fluid">
-			<ul class="thumbnails">
-				<c:forEach var="index" items="${orderList}">
-					<c:if test="${index.memberId == sessionScope.memberId}">
-						<li class="span4" style="width: 220px; margin-left: 50px;">
-							<div class="thumbnail">
-								<a class="zoomTool"
-									href="${CONTEXT_PATH}/orderList/orderListController?action=orderDetail&oNo=${index.oNo}&oDate=${index.oDate}"><span
-									class="icon-search"></span> 구매 이력 상세</a> <a
-									href="${CONTEXT_PATH}/orderList/orderListController?action=orderDetail&oNo=${index.oNo}&oDate=${index.oDate}"><img
-									src="${CONTEXT_PATH}/${index.pImg}"></a>
-								<div class="caption cntr">
-									<p>
-										<strong>${index.pName}</strong>
-									</p>
-									<h4>
-										<a class="shopBtn" href="#" title="review"> 후기 작성 </a>
-									</h4>
-									<div class="actionList">
-										<p style="margin-top: 5px;">
-											<img src="${CONTEXT_PATH}/img/star.png">${index.pScore}
-										</p>
-										<p style="margin-top: 15px;">
-											구매일 : ${index.oDate}
-										</p>
+	<ul class="breadcrumb" style="width: 960px;">
+   		<li><a href="${CONTEXT_PATH}/product/productController?action=storeHome">Home</a> <span class="divider">></span></li>
+   		<li><a href="${CONTEXT_PATH}/member/memberController?action=memberMyPage">마이페이지</a> <span class="divider">></span></li>
+   		<li class="active">주문내역</li>
+    </ul>
+	<h3>구매 이력</h3>
+	<c:choose>
+		<c:when test="${not empty requestScope.orderList}">
+			<div class="well well-large" style="width: 960px">
+				<br>
+				<div class="row-fluid">
+					<ul class="thumbnails">
+						<c:forEach var="index" items="${orderList}">
+							<c:if test="${index.memberId == sessionScope.memberId}">
+								<li class="span4" style="width: 220px; margin-left: 50px;">
+									<div class="thumbnail">
+										<a class="zoomTool"
+											href="${CONTEXT_PATH}/orderList/orderListController?action=orderDetail&oNo=${index.oNo}&oDate=${index.oDate}"><span
+											class="icon-search"></span> 구매 이력 상세</a> <a
+											href="${CONTEXT_PATH}/orderList/orderListController?action=orderDetail&oNo=${index.oNo}&oDate=${index.oDate}"><img
+											src="${CONTEXT_PATH}/${index.pImg}"></a>
+										<div class="caption cntr">
+											<p>
+												<strong>${index.pName}</strong>
+											</p>
+											<h4>
+												<a class="shopBtn" href="#" title="review"> 후기 작성 </a>
+											</h4>
+											<div class="actionList">
+												<p style="margin-top: 5px;">
+													<img src="${CONTEXT_PATH}/img/star.png">${index.pScore}
+												</p>
+												<p style="margin-top: 15px;">구매일 : ${index.oDate}</p>
+											</div>
+											<br class="clr">
+										</div>
 									</div>
-									<br class="clr">
-								</div>
-							</div>
-						</li>
-						</c:if>
-				</c:forEach>
-			</ul>
-		</div>
-	</div>
-	<br>
+								</li>
+							</c:if>
+						</c:forEach>
+					</ul>
+				</div>
+			</div>
+			<br>
+		</c:when>
+		
+		<c:otherwise>
+			<table style="width: 940px;">
+				<tr>
+					<td rowspan="5" colspan="5" align="center" style="padding: 100px;">등록한 후기가 없습니다.</td>
+				</tr>
+			</table>
+		</c:otherwise>
+	</c:choose>
 	<!-- footer -->
 	<jsp:include page="/inc/footer.jsp" />
 

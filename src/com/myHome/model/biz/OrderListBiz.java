@@ -12,10 +12,11 @@ public class OrderListBiz {
 	
 	/**
 	 * 구매 이력 리스트 요청 메서드
+	 * @param memberId 구매자 아이디
 	 * @param orderList 구매 이력 리스트
 	 */
-	public void getOrderList(ArrayList<OrderList> orderList) {
-		dao.getInstance().getOrderList(orderList);
+	public void getOrderList(String memberId, ArrayList<OrderList> orderList) {
+		dao.getInstance().getOrderList(memberId, orderList);
 	}
 
 	/**
@@ -59,5 +60,14 @@ public class OrderListBiz {
 	 */
 	public void reviewCheckTrue(int pNo, int oNo) {
 		dao.getInstance().reviewCheckTrue(pNo, oNo);
+	}
+
+	/**
+	 * 로그인한 회원의 후기 리스트 요청 메서드
+	 * @param memberId 로그인한 회원의 아이디
+	 * @param reviewList 로그인한 회원의 후기 리스트
+	 */
+	public void getReviewList(String memberId, ArrayList<Review> reviewList) {
+		dao.getInstance().getReviewList(memberId, reviewList);
 	}
 }

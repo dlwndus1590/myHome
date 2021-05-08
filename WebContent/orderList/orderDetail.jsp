@@ -20,6 +20,11 @@
 	<jsp:include page="/inc/header.jsp" />
 
 	<!-- contents menu -->
+	<ul class="breadcrumb" style="width: 960px;">
+   		<li><a href="${CONTEXT_PATH}/product/productController?action=storeHome">Home</a> <span class="divider">></span></li>
+   		<li><a href="${CONTEXT_PATH}/member/memberController?action=memberMyPage">마이페이지</a> <span class="divider">></span></li>
+   		<li class="active">주문상세내역</li>
+    </ul>
 	<h3 class="headerTitle">주문 상세정보</h3>
 	<table id = "orderInfoTable">
 		<tr>

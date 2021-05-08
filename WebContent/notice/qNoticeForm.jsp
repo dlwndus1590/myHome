@@ -31,7 +31,7 @@
 <div class="row">
 <div class="span9" style="width:960px;">
     <ul class="breadcrumb">
-   		<li><a href="${CONTEXT_PATH}/product/productController?action=storeHome">Home</a> <span class="divider">></span></li>
+   		<li><a href="${CONTEXT_PATH}/product/productController?action=storeHome">Home</a> <span class="divider"></span></li>
    		<li class="active">질문과 답변</li>
     </ul>
 
@@ -41,7 +41,7 @@
 		<form
 			action="${CONTEXT_PATH}/notice/noticeController?action=qNoticeSearch"
 			method="post">
-			<table id="qtable"">
+			<table id="qtable">
 				<tr>
 					<td><br></td>
 				</tr>
@@ -65,8 +65,7 @@
 	
 	<div class="sub">
 	<div align="right">
-		<a
-			href="${CONTEXT_PATH}/notice/noticeController?action=qNoticeInputForm">
+		<a href="${CONTEXT_PATH}/notice/noticeController?action=qNoticeInputForm">
 			<input type="button" value="질문하기" id="qButton">
 		</a>
 	</div>

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ include file="/inc/taglib_menu.jsp"%>    
+	pageEncoding="UTF-8"%>
+<%@ include file="/inc/taglib_menu.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,81 +13,79 @@
 <link href="${CONTEXT_PATH}/assets/style/style.css" rel="stylesheet" />
 <link href="${CONTEXT_PATH}/assets/font-awesome/css/font-awesome.css"
 	rel="stylesheet">
+<link href="${CONTEXT_PATH}/css/notice/qNotice.css" rel="stylesheet" />
 <link rel="shortcut icon" href="assets/ico/favicon.ico">
+<style>
+#userIcon {
+	width: 30px;
+	height: 30px;
+	margin-right: 10px;
+	float: left;
+}
+</style>
 </head>
 <body>
 	<!-- header -->
 	<jsp:include page="/inc/header.jsp" />
-	
+
 	<!-- contents menu -->
-	<div class="well well-small">   
-	<h3 align="left" style="padding-left: 50px;">공지사항</h3>
-	<hr>
+	<div class="row">
+		<div class="span9" style="width: 960px;">
+			<div class="well well-small">
+				<h2 align="center" style="font-size: 25px;">내 질문 게시글</h2>
+				<br>
+				<div align="right">
+					<a href="${CONTEXT_PATH}/notice/noticeController?action=qNoticeInputForm">
+					<input type="button" value="질문하기" id="qButton" style="margin : 20px 70px 20px 0px;">
+					</a>
+				</div>
+				<c:choose>
+					<c:when test="${not empty qnoticeList}">
+						<c:forEach var="index" items="${qnoticeList}">
+							<article class="qItem">
+								<table class="qTable">
+									<tr>
+										<td style="width: 680px">
+											<h3>
+												<a
+													href="${CONTEXT_PATH}/notice/noticeController?action=qNoticeDetail&qNo=${index.qNo}&writeMemberId=${index.memberId}"><span>${index.qTitle}</span></a>
+											</h3>
+										</td>
+										<td></td>
+									</tr>
 
-	<div align="center">
-		<table class="commonTable">
-			<c:if test="${sessionScope.memberId == 'admin'}">
-				<tr>
-					<td align="right" colspan="8"><a
-						href="${CONTEXT_PATH}/notice/noticeController?action=noticeInputForm">
-							<input type="button" value="글쓰기" id="write">
-					</a></td>
-				</tr>
-			</c:if>
-			<tr>
-				<th align="center" class="nTitle" id="nNo"></th>
-				<th align="center" class="nTitle">아이디</th>
-				<th align="center" class="nTitle">제목</th>
-				<th align="center" class="nTitle">등록일자</th>
-				<th align="center" class="nTitle">조회수</th>
-			</tr>
-			<c:choose>
-				<c:when test="${not empty list}">
-					<c:forEach var="index" items="${list}">
-						<tr>
-							<td class="info">${index.nNo}</td>
-							<td class="info">${index.memberId}</td>
-							<td class="info"><a
-								href="${CONTEXT_PATH}/notice/noticeController?action=noticeDetail&nNo=${index.nNo}&writeMemberId=${index.memberId}"
-								id="link">${index.nTitle}</a></td>
-							<td class="info">${index.nRegDate}</td>
-							<td class="info">${index.nHits}</td>
-						</tr>
-					</c:forEach>
-				</c:when>
+									<tr>
+										<td style="width: 680px"><span class="qContent">${index.qContent}</span></td>
+										<td><img src="${CONTEXT_PATH}${index.qImg}"
+											class="picture"></td>
+									</tr>
 
-				<c:otherwise>
-					<tr>
-						<td rowspan="5" colspan="5" align="center" id="noInfo">등록된
-							게시글이 없습니다.</td>
-					</tr>
-				</c:otherwise>
-			</c:choose>
-		</table>
-	</div>
-	<br />
-
-	<form
-		action="${CONTEXT_PATH}/notice/noticeController?action=noticeSearch"
-		method="post">
-		<div align="center">
-			<table class="commonTable">
-				<tr>
-					<td align="center" height="20px"><select name="searchType"
-						id="searchType">
-							<option value="titleContents">제목+내용</option>
-							<option value="title">제목만</option>
-							<option value="writer">작성자</option>
-					</select></td>
-					<td><input type="text" placeholder="검색어를 입력해주세요"
-						name="searchInfo" id="searchInfo"></td>
-					<td><input type="submit" value="검색" id="search"></td>
-				</tr>
-			</table>
+									<tr>
+										<td style="width: 680px"><img
+											src="${CONTEXT_PATH}/img/qNotice/userIcon.png" id="userIcon" />
+											<span>${index.memberId}</span> | <span>조회수
+												${index.qHits}</span> | <span style="padding-left: 5px;">${index.qRegDate}</span></td>
+									</tr>
+								</table>
+							</article>
+							<br>
+							<hr>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<table style="width: 940px;">
+							<tr>
+								<td rowspan="5" colspan="5" align="center"
+									style="padding: 100px;">등록된 게시글이 없습니다.</td>
+							</tr>
+						</table>
+					</c:otherwise>
+				</c:choose>
+			</div>
 		</div>
-	</form>
-</div>
-	
+	</div>
+	</div>
+
 	<!-- footer -->
 	<jsp:include page="/inc/footer.jsp" />
 	<!-- Placed at the end of the document so the pages load faster -->

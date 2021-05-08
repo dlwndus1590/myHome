@@ -72,11 +72,12 @@ public class FrontOrderList extends HttpServlet {
 	 * 구매 이력 리스트 요청 서비스
 	 */
 	private void orderList(HttpServletRequest request, HttpServletResponse response) {
+		HttpSession session = request.getSession();
 		OrderListBiz biz = new OrderListBiz();
 		ArrayList<OrderList> orderList = new ArrayList<OrderList>();
 		
 		try {
-			biz.getOrderList(orderList);
+			biz.getOrderList((String)session.getAttribute("memberId"),orderList);
 			
 			request.setAttribute("orderList", orderList);
 			request.getRequestDispatcher("/orderList/orderList.jsp").forward(request, response);

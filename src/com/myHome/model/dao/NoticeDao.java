@@ -17,7 +17,11 @@ public class NoticeDao {
 	public static NoticeDao getInstance() {
 		return instance; // 2. singleton pattern
 	}
-
+	
+	/**
+	 * 공지사항 게시글 리스트 요청 메서드
+	 * @param list 공지사항 게시글 리스트
+	 */
 	public void selectList(ArrayList<Notice> list) {
 		String sql = "SELECT N_NO, MEMBER_ID, N_TITLE, N_CONTENT, TO_CHAR(N_REG_DATE,'yyyy-mm-dd'), N_HITS FROM NOTICE ORDER BY N_NO DESC";
 
@@ -806,6 +810,49 @@ public class NoticeDao {
 			JdbcTemplate.close(rs);
 			JdbcTemplate.close(pstmt);
 			JdbcTemplate.close(conn);
+		}
+	}
+
+	/**
+	 * 질문 게시글 
+	 * @param memberId 로그인한 회원 아이디
+	 * @param qnoticeList 질문 게시글 리스트
+	 */
+	public void getQnoticeList(String memberId, ArrayList<Qnotice> qnoticeList) {
+		StringBuffer sql = new StringBuffer();
+		sql.append("SELECT Q_NO, Q_TITLE, Q_CONTENT, Q_IMG, MEMBER_ID,TO_CHAR(Q_REG_DATE,'yyyy-mm-dd'), Q_HITS ");
+		sql.append("FROM QNOTICE ");
+		sql.append("WHERE MEMBER_ID = ? ");
+		sql.append("ORDER BY Q_NO DESC");
+
+		Connection conn = JdbcTemplate.getConnection();
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		try {
+			stmt = conn.prepareStatement(sql.toString());
+			stmt.setString(1, memberId);
+			rs = stmt.executeQuery();
+			Qnotice dto = null;
+			while (rs.next()) {
+				dto = new Qnotice(
+						 rs.getInt("Q_NO")
+						,rs.getString("Q_TITLE")
+						,rs.getString("Q_CONTENT")
+						,rs.getString("Q_IMG")
+						,rs.getString("MEMBER_ID")
+						,rs.getString("TO_CHAR(Q_REG_DATE,'yyyy-mm-dd')")
+						,rs.getInt("Q_HITS")
+						);
+				qnoticeList.add(dto);
+			}
+		} catch (SQLException e) {
+			System.out.println("Message : " + e.getMessage());
+			e.printStackTrace();
+		} finally {
+			JdbcTemplate.close(conn);
+			JdbcTemplate.close(rs);
+			JdbcTemplate.close(stmt);
 		}
 	}
 }
