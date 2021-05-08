@@ -175,7 +175,6 @@ public class ProductDao {
 				product.setpCount(rs.getInt(11));
 				product.setpRegDate(rs.getString(12));
 			}
-			System.out.println("dao 확인 " + product);
 		} catch(SQLException e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
@@ -516,6 +515,65 @@ public class ProductDao {
 			if(rows == 0) {
 				throw new Exception();
 			} 
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			throw new Exception();
+		} finally {
+			JdbcTemplate.close(pstmt);
+		}
+	}
+
+	/**
+	 * 상품 구매시 상품판매량 증가
+	 * @param conn
+	 * @param count
+	 * @param product
+	 */
+	public void plusPsales(Connection conn, int count, Product product) throws Exception {
+		String sql = "update product set p_sales=? where p_no=?";
+		
+		PreparedStatement pstmt = null;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, product.getpSales()+count);
+			pstmt.setInt(2, product.getpNo());
+			
+			int rows = pstmt.executeUpdate();
+			if(rows == 0) {
+				throw new Exception();
+			}
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			throw new Exception();
+		} finally {
+			JdbcTemplate.close(pstmt);
+		}
+	}
+
+	/**
+	 * 리뷰 등록시 상품별점 변경
+	 * @param conn
+	 * @param product
+	 * @param score
+	 * @param dcount
+	 */
+	public void updatePscore(Connection conn, Product product, int score, int dcount) throws Exception {
+		String sql = "update product set p_score=? where p_no=?";
+		
+		PreparedStatement pstmt = null;
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setFloat(1, (product.getpScore()*(product.getpSales()-dcount)+score)/product.getpSales());
+			pstmt.setInt(2, product.getpNo());
+			
+			int rows = pstmt.executeUpdate();
+			if(rows == 0) {
+				throw new Exception();
+			}
 		} catch(Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
