@@ -74,7 +74,16 @@ public class FrontOrderList extends HttpServlet {
 	 * 구매 이력 리스트 요청 서비스
 	 */
 	private void orderList(HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
+		
+		if (session == null || session.getAttribute("memberId") == null || !session.getAttribute("grade").equals("일반회원")) {
+			try {
+				request.getRequestDispatcher("/member/login.jsp").forward(request, response);
+				return;
+			} catch (ServletException | IOException e) {
+				e.printStackTrace();
+			}
+		}
 		OrderListBiz biz = new OrderListBiz();
 		ArrayList<OrderList> orderList = new ArrayList<OrderList>();
 		
@@ -92,7 +101,16 @@ public class FrontOrderList extends HttpServlet {
 	 * 구매 이력 상세 조회 요청 서비스
 	 */
 	private void orderDetail(HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
+		
+		if (session == null || session.getAttribute("memberId") == null || !session.getAttribute("grade").equals("일반회원")) {
+			try {
+				request.getRequestDispatcher("/member/login.jsp").forward(request, response);
+				return;
+			} catch (ServletException | IOException e) {
+				e.printStackTrace();
+			}
+		}
 		String memberId = (String)session.getAttribute("memberId");
 		int oNo = Integer.parseInt(request.getParameter("oNo"));
 		String oDate = request.getParameter("oDate");
@@ -117,7 +135,16 @@ public class FrontOrderList extends HttpServlet {
 	 * 리뷰 작성 화면 요청 서비스
 	 */
 	private void reviewInputForm(HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
+		
+		if (session == null || session.getAttribute("memberId") == null || !session.getAttribute("grade").equals("일반회원")) {
+			try {
+				request.getRequestDispatcher("/member/login.jsp").forward(request, response);
+				return;
+			} catch (ServletException | IOException e) {
+				e.printStackTrace();
+			}
+		}
 		int oNo = Integer.parseInt(request.getParameter("oNo"));
 		int pNo = Integer.parseInt(request.getParameter("pNo"));
 		int dCount = Integer.parseInt(request.getParameter("dCount"));
@@ -141,7 +168,16 @@ public class FrontOrderList extends HttpServlet {
 	 * 리뷰 작성 요청 서비스
 	 */
 	private void reviewInput(HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
+		
+		if (session == null || session.getAttribute("memberId") == null || !session.getAttribute("grade").equals("일반회원")) {
+			try {
+				request.getRequestDispatcher("/member/login.jsp").forward(request, response);
+				return;
+			} catch (ServletException | IOException e) {
+				e.printStackTrace();
+			}
+		}
 		String memberId = request.getParameter("memberId");
 		String oDate = request.getParameter("oDate");
 		int pNo = Integer.parseInt(request.getParameter("pNo"));

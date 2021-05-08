@@ -16,15 +16,24 @@
 <link rel="shortcut icon" href="assets/ico/favicon.ico">
 </head>
 <body>
+<c:if test="${empty dto}">
+	<script type="text/javascript">
+		alert('로그인을 먼저 시도해주세요');
+		location.href="${CONTEXT_PATH}/member/login.jsp"
+	</script>
+</c:if>
+
 	<!-- header -->
 	<jsp:include page="/inc/header.jsp" />
 
 	<!-- contents menu -->
+		<div class="row" style="padding-left:20px;">
 	<ul class="breadcrumb" style="width: 960px;">
    		<li><a href="${CONTEXT_PATH}/product/productController?action=storeHome">Home</a> <span class="divider">></span></li>
    		<li><a href="${CONTEXT_PATH}/member/memberController?action=memberMyPage">마이페이지</a> <span class="divider">></span></li>
    		<li class="active">주문상세내역</li>
     </ul>
+	<div class="well well-small" style="width: 960px;">
 	<h3 class="headerTitle">주문 상세정보</h3>
 	<table id = "orderInfoTable">
 		<tr>
@@ -37,7 +46,7 @@
 			</td>
 		</tr>
 	</table>
-	<hr class="hrBold">
+	<hr class="hrBold" style="width: 920px;">
 	
 	<table id="productDetailTable">
 		<tr>
@@ -76,10 +85,10 @@
 				</c:if>
 				<c:choose>
 					<c:when test="${index.reviewCheck == 0}">
-						<td class="grayColor">구매확정<span style="padding-left: 60px;"><input type="submit" value="후기작성"></span></td>
+						<td class="grayColor">구매확정<span style="padding-left: 50px;"><input type="submit" value="후기작성" class="shopBtn" style="width: 100px"></span></td>
 					</c:when>
 					<c:otherwise>
-						<td class="grayColor">구매확정<input type="text" value="후기작성완료" readonly="readonly" style="width: 100px; margin-left: 50px; height: 30px;"></td>
+						<td class="grayColor">구매확정<input type="button" value="후기작성완료" style="width: 100px; margin-left: 50px; height: 30px; text-align: center" class="shopBtn"></td>
 					</c:otherwise>
 				</c:choose>
 			</tr>
@@ -89,13 +98,13 @@
 	</table>
 	
 	<h3 class="headerTitle">주문/결제 금액 정보</h3>
-	<hr class="hrBold">
+	<hr class="hrBold" style="width: 920px;">
 	
 	<table id="receiptTable1">
 		<tr>
-			<th style="width : 110px; padding : 20px 0px 30px 45px;">주문금액</th>
+			<th style="width : 110px; padding : 20px 10px 30px 15px;">주문금액</th>
 			<td style="width : 200px; padding-left: 50px;"></td>
-			<th style="width : 130px; padding-left : 25px;">결제상세</th>
+			<th style="width : 130px; padding-right : 40px;">결제상세</th>
 			<td style="width : 200px; padding-left: 50px;"></td>
 		</tr>
 		
@@ -129,26 +138,28 @@
 	<div id="lineSpaceTop"></div>
 	
 	<h3 class="headerTitle">배송지 정보</h3>
-	<hr class="hrBold">
+	<hr class="hrBold" style="width: 920px;">
 	<table style="width: 400px;">
 		<tr>
-			<th style="padding : 30px 0px 15px 80px; width: 150px; font-weight: bolder;">수령인</th>
-			<td style="padding : 30px 0px 15px 10px;">${orderDetailList.get(0).memberName}</td>
+			<th style="padding : 30px 40px 15px 0px; width: 150px; font-weight: bolder;">수령인</th>
+			<td style="padding : 30px 30px 15px 0px;">${orderDetailList.get(0).memberName}</td>
 		</tr>
 		
 		<tr>
-			<th style="padding : 0px 0px 15px 80px; width: 150px; font-weight: bolder;">연락처</th>
-			<td style="padding : 0px 0px 15px 10px;">${orderDetailList.get(0).mobile}</td>
+			<th style="padding : 0px 40px 15px 0px; width: 150px; font-weight: bolder;">연락처</th>
+			<td style="padding : 0px 30px 15px 0px;">${orderDetailList.get(0).mobile}</td>
 		</tr>
 		
 		<tr>
-			<th style="padding : 0px 0px 15px 80px; width: 150px; font-weight: bolder;">배송지</th>
-			<td style="padding : 0px 0px 15px 10px;">${orderDetailList.get(0).zipCode}
+			<th style="padding : 0px 40px 15px 0px; width: 150px; font-weight: bolder;">배송지</th>
+			<td style="padding : 0px 30px 15px 0px;">${orderDetailList.get(0).zipCode}
 				<br>${orderDetailList.get(0).address1}
 				<br>${orderDetailList.get(0).address2}
 			</td>
 		</tr>
 	</table>
+	</div>
+	</div>
 	<!-- footer -->
 	<jsp:include page="/inc/footer.jsp" />
 	<!-- Placed at the end of the document so the pages load faster -->

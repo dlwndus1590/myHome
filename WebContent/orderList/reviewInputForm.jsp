@@ -61,15 +61,25 @@ $(document).on("click",".star", function(){
 </script>
 </head>
 <body>
+<c:if test="${empty dto}">
+	<script type="text/javascript">
+		alert('로그인을 먼저 시도해주세요');
+		location.href="${CONTEXT_PATH}/member/login.jsp"
+	</script>
+</c:if>
+
 	<!-- header -->
 	<jsp:include page="/inc/header.jsp" />
 
 	<!-- contents menu -->
-	<ul class="breadcrumb" style="width: 960px;">
+	<div class="row">
+	<div class="span9" style="width:960px;">
+	<ul class="breadcrumb">
    		<li><a href="${CONTEXT_PATH}/product/productController?action=storeHome">Home</a> <span class="divider">></span></li>
    		<li><a href="${CONTEXT_PATH}/member/memberController?action=memberMyPage">마이페이지</a> <span class="divider">></span></li>
    		<li class="active">리뷰작성</li>
     </ul>
+	<div class="well well-small">
 	<form action="${CONTEXT_PATH}/orderList/orderListController?action=reviewInput&pNo=${pNo}&memberId=${sessionScope.memberId}&pImg=${pImg}" method="post">
 		<div class="row-fluid">
 			<div class="span2" style="width: 160px;">
@@ -82,27 +92,29 @@ $(document).on("click",".star", function(){
 					placeholder="리뷰 내용을 작성해주세요." name="reviewContent"></textarea>
 			</div>
 		</div>
-		<br> <span style="font-size: 25px; font-weight: bolder; margin-left: 330px;">
+		<br> 
+		<input type="hidden" value="${score}" id="score" name="score">
+		<input type="hidden" value="${oDate}" name="oDate">
+		<input type="hidden" value="${dCount}" name="dCount">
+		<span style="font-size: 25px; font-weight: bolder; margin-left: 330px;">
 			평점 : 
 			</span>
 			<span class="star-container" id="star">
-				<span style="margin :20px 0px 0px 5px;">
+				<span style="margin :100px 0px 0px 5px;">
  					 <span class="star">★</span>
   				  	 <span class="star">★</span>
   					 <span class="star">★</span>
 			    	 <span class="star">★</span>
  				 	 <span class="star">★</span>
 				</span>
+				<span style="margin:0px 0px 150px 790px;">
+				<input type="submit" class="shopBtn" value="작성완료" style="margin-bottom: 50px; width: 90px; height: 40px;">
+				</span>
 			</span>
-			<br>
-			<input type="hidden" value="${score}" id="score" name="score">
-			<input type="hidden" value="${oDate}" name="oDate">
-			<input type="hidden" value="${dCount}" name="dCount">
-			<br>
-			<div class="btn-group">
-				<input type="submit" class="shopBtn" style="margin-left: 800px;" value="작성완료">
-			</div>
 	</form>
+	</div>
+	</div>
+</div>
 	<!-- footer -->
 	<jsp:include page="/inc/footer.jsp" />
 	<!-- Placed at the end of the document so the pages load faster -->

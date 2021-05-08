@@ -138,10 +138,11 @@
 				<div class="span4 alignR">
 					<p style="font-weight: bolder;"> 작성자 : ${index.memberId}</p>
 					<p style="font-weight: bolder;"> 구매일자 : ${index.oDate}</p>
+					<p style="font-weight: bolder;"> 평점 : ${index.score}점</p>
 				</div>
 			</div>
-			</c:forEach>
 			<hr class="soften"/>
+			</c:forEach>
 		</div>
 	</div>
 </div>
