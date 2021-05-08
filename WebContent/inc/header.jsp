@@ -316,10 +316,19 @@
                %>   
                   <a href="${CONTEXT_PATH}/member/ordersController?action=cartPage"></a> 
                <%
-                  } else {                     
+                  } else {   
+                	  mainMember = (Member)session.getAttribute("dto");
                %>
-                  <a href="${CONTEXT_PATH}/member/ordersController?action=cartPage"><span class="icon-shopping-cart" style="color:black;"></span> 장바구니 </a>
                <%
+               		if(mainMember.getGrade().equals("일반회원")){
+               %>
+                  		<a href="${CONTEXT_PATH}/member/ordersController?action=cartPage"><span class="icon-shopping-cart" style="color:black;"></span> 장바구니 </a>
+               <%
+               		} else{               			
+               	%>               	
+               			<a href="${CONTEXT_PATH}/member/ordersController?action=cartPage"></a>               	
+               	<%
+               		}
                   }
                %>
                 
