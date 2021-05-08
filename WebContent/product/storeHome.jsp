@@ -100,13 +100,14 @@
 			  <div class="thumbnail">
 				<a class="zoomTool" href="${CONTEXT_PATH}/product/productController?action=productDetail&pNo=${bestProduct.pNo}" title="add to cart"><span class="icon-search"></span> <fmt:formatNumber value="${bestProduct.pPrice }" pattern="###,###"/> 원</a>
 				<a  href="${CONTEXT_PATH}/product/productController?action=productDetail&pNo=${bestProduct.pNo}"><img src="${CONTEXT_PATH}/${bestProduct.pImg}"></a>
-				<div class="caption cntr">
+				<div class="caption cntr" style="height:130px;">
 					<p><strong>${bestProduct.pName}</strong></p>
-					<c:if test="${not empty dto.memberId }">
+					<c:if test="${dto.grade == '일반회원' }">
 						<h4><a class="shopBtn" href="${CONTEXT_PATH}/member/ordersController?action=cartInsert&pNo=${bestProduct.pNo}" title="add to cart"> 장바구니 담기 </a></h4>
 					</c:if>
 					<c:if test="${empty dto.memberId }">
-						<h4><a class="shopBtn" href="${CONTEXT_PATH }/member/memberController?action=loginForm" title="add to cart"> 장바구니 담기 </a></h4>
+						<h4><a class="shopBtn" href="${CONTEXT_PATH }/member/memberController?action=loginForm" title="add to cart" 
+										onclick="return confirm('로그인 후 이용해주시기 바랍니다 ')"> 장바구니 담기 </a></h4>
 					</c:if>
 					<div class="actionList">
 						<p><img src="${CONTEXT_PATH}/img/star.png">${bestProduct.pScore} </p> 

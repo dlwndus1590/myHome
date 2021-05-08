@@ -31,7 +31,9 @@ public class Product implements Serializable {
 	private int pCount;
 	/** 상품등록날짜 */
 	private String pRegDate;
+	/** 리뷰갯수 */
 	private int pReviewCount;
+	/** 별점총합 */
 	private int pTotalScore;
 	
 	/** 기본생성자 */

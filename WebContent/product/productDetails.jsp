@@ -78,8 +78,14 @@
 				<input type="number" name="count" required="required" id="count" class="span6" placeholder="1" min="1" style="width:100px" onmouseup="messageChange()" onkeyup="messageChange()">
 			  </div>
 			  <h5> 재고수량 : <fmt:formatNumber value="${product.pCount }" pattern="###,###"/> </h5>
-			  <button type="button" class="defaultBtn" onclick="location.href='${CONTEXT_PATH}/member/ordersController?action=cartInsert&pNo=${product.pNo}'"><span class=" icon-shopping-cart"></span> 장바구니 </button>
-			  <button type="submit" class="shopBtn"><span class=" icon-shopping-cart"></span> 바로구매 </button>
+			  <c:if test="${dto.grade == '일반회원'}">
+				  <button type="button" class="defaultBtn" onclick="location.href='${CONTEXT_PATH}/member/ordersController?action=cartInsert&pNo=${product.pNo}'"><span class=" icon-shopping-cart"></span> 장바구니 </button>
+				  <button type="submit" class="shopBtn"><span class=" icon-shopping-cart"></span> 바로구매 </button>
+			  </c:if>
+			  <c:if test="${empty dto.memberId }">
+			  	  <button type="button" class="defaultBtn" onclick="return confirm('로그인 후 이용해주시기 바랍니다 ')"><span class=" icon-shopping-cart"></span> 장바구니 </button>
+				  <button type="submit" class="shopBtn" onclick="return confirm('로그인 후 이용해주시기 바랍니다 ')"><span class=" icon-shopping-cart"></span> 바로구매 </button>
+			  </c:if>
 			</form>
 			<h3 style="float:right; padding-right:100px;"> </h3>
 			<div id="message" style="float:right; font-size:20px; font-weight:bold; color:#548235;"></div>
@@ -96,7 +102,6 @@
 	</ul>
 	<div id="myTabContent" class="tab-content tabWrapper">
 		<div class="tab-pane fade active in" id="detail">
-		<h4>상품 정보</h4>
 			<p style="padding-left:60px;"><img src="${CONTEXT_PATH}/${product.pDescribe}"></p>
 		</div>
 		
@@ -116,8 +121,15 @@
 					<form class="form-horizontal qtyFrm">
 						<h3> <fmt:formatNumber value="${productList.pPrice }" pattern="###,###"/> 원 </h3>
 						<div class="btn-group">
-						  <a href="${CONTEXT_PATH}/member/ordersController?action=cartInsert&pNo=${productList.pNo}" class="defaultBtn"><span class=" icon-shopping-cart"></span> 장바구니 추가</a>
-				 		  <a href="product_details.html" class="shopBtn">상세보기</a>
+						<c:if test="${dto.grade == '일반회원' }">
+						  <a href="${CONTEXT_PATH}/member/ordersController?action=cartInsert&pNo=${productList.pNo}" 
+						  			onclick="return confirm('로그인 후 이용해주시기 바랍니다 ')" class="defaultBtn"><span class=" icon-shopping-cart"></span> 장바구니 추가</a>
+				 		  <a href="${CONTEXT_PATH}/product/productController?action=productDetail&pNo=${productList.pNo}" class="shopBtn">상세보기</a>
+				 		</c:if>
+				 		<c:if test="${empty dto.memberId }">
+				 		  <a onclick="return confirm('로그인 후 이용해주시기 바랍니다 ')" class="defaultBtn"><span class=" icon-shopping-cart"></span> 장바구니 추가</a>
+				 		  <a href="${CONTEXT_PATH}/product/productController?action=productDetail&pNo=${productList.pNo}" class="shopBtn">상세보기</a>
+				 		</c:if>
 						</div>
 					</form>
 				</div>
