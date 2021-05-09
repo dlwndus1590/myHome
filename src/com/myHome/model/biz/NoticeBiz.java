@@ -242,4 +242,12 @@ public class NoticeBiz {
 	public void getQnoticeList(String memberId, ArrayList<Qnotice> qnoticeList) {
 		dao.getInstance().getQnoticeList(memberId, qnoticeList);
 	}
+
+	/**
+	 * 질문 게시글 객체 담아오는 요청 서비스
+	 * @param dto 질문 게시글 객체
+	 */
+	public void selectQnoticeOne(Qnotice dto) {
+		dao.getInstance().selectQnoticeOne(dto);
+	}
 }
