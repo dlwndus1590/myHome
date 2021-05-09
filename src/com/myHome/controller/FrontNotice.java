@@ -1,5 +1,6 @@
 package com.myHome.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -602,13 +603,35 @@ public class FrontNotice extends HttpServlet {
 		}
 		
 		int qNo = Integer.parseInt(request.getParameter("qNo"));
-		
+		Qnotice dto = new Qnotice();
 		NoticeBiz biz = new NoticeBiz();
+		dto.setqNo(qNo);
+		biz.selectQnoticeOne(dto);
 		biz.qNoticeDelete(qNo);
-		try {
-			request.getRequestDispatcher("/notice/noticeController?action=qNoticeForm").forward(request, response);
-		} catch (ServletException | IOException e) {
-			e.printStackTrace();
+		File file = new File("C:/student_ucamp33/workspace_teamProject" + CONTEXT_PATH + "/WebContent" + dto.getqImg());
+		System.out.println(file);
+		if(file.exists()) {
+			if(file.delete()) {
+				response.setContentType("text/html;charset=UTF-8");
+				PrintWriter writer;
+				try {
+					writer = response.getWriter();
+					writer.println("<script>alert('게시글 삭제가 완료되었습니다.'); location.href='" + CONTEXT_PATH + "/notice/noticeController?action=qNoticeForm';</script>");
+					writer.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			} else {
+				response.setContentType("text/html;charset=UTF-8");
+				PrintWriter writer;
+				try {
+					writer = response.getWriter();
+					writer.println("<script>alert('게시글을 삭제하지 못했습니다. 다시 시도하세요.'); location.href='" + CONTEXT_PATH + "/notice/noticeController?action=qNoticeForm';</script>");
+					writer.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 	

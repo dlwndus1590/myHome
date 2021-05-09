@@ -57,7 +57,7 @@
 			</tr>
 			<tr align="right">
 				<td id="buttonLine"><input type="submit" value="등록"
-					size="100px" id="button"></td>
+					size="100px" id="button" class="shopBtn"></td>
 			</tr>
 		</table>
 	</form>

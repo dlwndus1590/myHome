@@ -33,7 +33,7 @@ insert into cart values (1, 'user01', 2, 2);
 insert into review values (1, 2, 'img/product/2.jpg', '무척 최고!!', 4, 'user01', '2021-04-02');
 
 -- qnotice 초기화데이터
-insert into qnotice values (1, '이거 어떻게 해결해야하나요', '답변 부탁드립니다.', '/img/interior.jpg', 'user01', to_char(sysdate, 'yyyy-mm-dd'), 5);
+insert into qnotice values (1, '이거 어떻게 해결해야하나요', '답변 부탁드립니다.', '/img/qNotice/interior.jpg', 'user01', to_char(sysdate, 'yyyy-mm-dd'), 5);
 
 -- qnotice 초기화데이터
 insert into qnotice values (2, '마루바닥 눌림 어떻게 하면 좋을까요?', '사진과 같이 철제 다리로 된 소파를 사용한 지 6개월 정도 됐습니다.

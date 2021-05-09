@@ -855,4 +855,36 @@ public class NoticeDao {
 			JdbcTemplate.close(stmt);
 		}
 	}
+
+	/**
+	 * 질문 게시글 객체 담아오는 요청 서비스
+	 * @param dto 질문 게시글 객체
+	 */
+	public void selectQnoticeOne(Qnotice dto) {
+		String sql = "SELECT Q_NO, Q_TITLE, Q_CONTENT, Q_IMG, MEMBER_ID,TO_CHAR(Q_REG_DATE,'yyyy-mm-dd'), Q_HITS FROM QNOTICE WHERE Q_NO = ?";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = JdbcTemplate.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, dto.getqNo());
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				dto.setqTitle(rs.getString("Q_TITLE"));
+				dto.setqContent(rs.getString("Q_TITLE"));
+				dto.setqImg(rs.getString("Q_IMG"));
+				dto.setMemberId(rs.getString("MEMBER_ID"));
+				dto.setqRegDate(rs.getString("TO_CHAR(Q_REG_DATE,'yyyy-mm-dd')"));
+				dto.setqHits(rs.getInt("Q_HITS"));
+			}
+		}catch(SQLException e) {
+			System.out.println("Message : " + e.getMessage());
+			e.printStackTrace();
+		}finally {
+			JdbcTemplate.close(rs);
+			JdbcTemplate.close(pstmt);
+			JdbcTemplate.close(conn);
+		}
+	}
 }
