@@ -2,6 +2,11 @@ package com.myHome.model.dto;
 
 import java.io.Serializable;
 
+/**
+ * 결제 도메인
+ * @author 최인묵
+ *
+ */
 public class Orders implements Serializable {
 	private int oNo;
 	private String memberId;
