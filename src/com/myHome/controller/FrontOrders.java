@@ -93,8 +93,6 @@ public class FrontOrders extends HttpServlet {
 			response.sendRedirect(CONTEXT_PATH + "/member/cart.jsp");
 		} catch (Exception e) {
 			e.printStackTrace();
-			// 에러처리 페이지로 이동
-			
 		}
 	}
 	
@@ -111,7 +109,6 @@ public class FrontOrders extends HttpServlet {
 			response.sendRedirect(CONTEXT_PATH + "/member/ordersController?action=cartPage");
 		} catch (Exception e) {
 			e.printStackTrace();
-			// 에러처리 페이지로 이동
 		}
 	}
 	
@@ -162,7 +159,11 @@ public class FrontOrders extends HttpServlet {
 		OrdersPage ordersPage = new OrdersPage();
 		OrdersBiz ordersBiz = new OrdersBiz();
 		try {
-			ordersBiz.cartInsert(memberId, pNo, count);
+			if (ordersBiz.isValid(memberId, pNo)) {
+				ordersBiz.cartUpdate(pNo, count, memberId);
+			} else {
+				ordersBiz.cartInsert(memberId, pNo, count);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -176,8 +177,6 @@ public class FrontOrders extends HttpServlet {
 			response.sendRedirect(CONTEXT_PATH + "/member/ordersPage.jsp");
 		} catch (Exception e) {
 			e.printStackTrace();
-			// 에러처리 페이지로 이동
-			
 		}
 	}
 	
@@ -238,7 +237,6 @@ public class FrontOrders extends HttpServlet {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				// 에러 페이지로 이동
 			}
 		}
 	}
@@ -285,7 +283,6 @@ public class FrontOrders extends HttpServlet {
 			ordersBiz.cartInsert(memberId, pNo, count);
 		} catch (Exception e) {
 			e.printStackTrace();
-			// 에러처리 페이지로 이동
 		}
 	}
 	
@@ -336,7 +333,6 @@ public class FrontOrders extends HttpServlet {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				// 에러 페이지로 이동
 			}
 		}
 	}

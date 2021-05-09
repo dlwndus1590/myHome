@@ -1,6 +1,12 @@
 package com.myHome.model.dto;
 
+/**
+ * 결제 페이지 도메인
+ * @author 최인묵
+ *
+ */
 public class OrdersPage {
+	/** 회원 정보 */
 	private String name;
 	private String email;
 	private String mobile;
@@ -8,20 +14,33 @@ public class OrdersPage {
 	private int zipCode;
 	private String address1;
 	private String address2;
+	/** 상품 정보 */
 	private int pNo;
 	private String pName;
 	private int pPrice;
 	private int cCount;
 	private String pImg;
 	private String pDescribe;
+	/** 결제 정보 */
 	private int stock;
 	private int deliveryFee;
 	private int totalPrice;
 	
+	/** 기본 생성자 */
 	public OrdersPage() {
 	}
 
-	
+	/**
+	 * 장바구니 페이지 생성자
+	 * @param pNo
+	 * @param pName
+	 * @param pPrice
+	 * @param cCount
+	 * @param pImg
+	 * @param deliveryFee
+	 * @param totalPrice
+	 * @param stock
+	 */
 	public OrdersPage(int pNo, String pName, int pPrice, int cCount, String pImg, int deliveryFee, int totalPrice, int stock) {
 		this.pNo = pNo;
 		this.pName = pName;
@@ -33,7 +52,25 @@ public class OrdersPage {
 		this.stock = stock;
 	}
 
-
+	/**
+	 * 결제 페이지 생성자
+	 * @param name
+	 * @param email
+	 * @param mobile
+	 * @param mileage
+	 * @param zipCode
+	 * @param address1
+	 * @param address2
+	 * @param pNo
+	 * @param pName
+	 * @param pPrice
+	 * @param cCount
+	 * @param pImg
+	 * @param pDescribe
+	 * @param stock
+	 * @param deliveryFee
+	 * @param totalPrice
+	 */
 	public OrdersPage(String name, String email, String mobile, int mileage, int zipCode, String address1,
 			String address2, int pNo, String pName, int pPrice, int cCount, String pImg, String pDescribe, int stock,
 			int deliveryFee, int totalPrice) {

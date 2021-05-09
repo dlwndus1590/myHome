@@ -2,6 +2,11 @@ package com.myHome.model.dto;
 
 import java.io.Serializable;
 
+/**
+ * 장바구니 도메인
+ * @author 최인묵
+ *
+ */
 public class Cart implements Serializable {
 	private int cNo;
 	private String memberId;

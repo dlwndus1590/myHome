@@ -61,7 +61,6 @@
 									<tr>
 										<td>
 											<input type="hidden" name="pNo" value="${dto.pNo }">
-											<%-- <input type="text" name="pCount" value=${dto.pCount }> --%>
 											<img width="100" src="${CONTEXT_PATH }/${dto.pImg }">
 										</td>
 										<td width="150">${dto.pName }</td>
@@ -137,23 +136,19 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("input[name=itemCount]").each(function(index) {
-				console.log(index);
 				$("input[name=itemCount]").change(function() {
 					var itemCount = $("input[name=itemCount]:eq(" + index + ")").val();
-					//console.log(index + ", itemCount : " + itemCount);
 					var itemPrice = $("input[name=itemPrice]:eq(" + index + ")").val();
-					//console.log(index + ", itemPrice : " + itemPrice);
 					var deliveryFee = $("input[name=deliveryFee]:eq(" + index + ")").val();
-					//console.log(index + ", deliveryFee : " + deliveryFee);
 					var price = itemCount * itemPrice;
 					//price = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-					//console.log("price : " + price);
+					console.log("price : " + price);
 					var totalPrice = $("input[name=totalPrice]:eq(" + index + ")").val(price);
 					//totalPrice = totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+					//console.log("totalPrice : " + totalPrice.val());
 					totalPrice = parseInt(totalPrice.val());
-					//console.log("totalPrice : " + totalPrice);
 					var totalCost = totalPrice + parseInt(deliveryFee);
-					//console.log("totalCost : " + totalCost);
+					console.log("totalCost : " + totalCost);
 					//totalCost = totalCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 					$("input[name='totalCost[]']:eq(" + index + ")").val(totalCost);
 				});
@@ -161,7 +156,6 @@
 			
 			$("input[name=itemCount]").change(function() {
 				var obj = $("input[name='totalCost[]']");
-				console.log("obj.length : " + obj.length);
 				var frm = document.cartfrm;
 			    var sum = 0;
 			    if(obj.length) {

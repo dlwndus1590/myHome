@@ -101,6 +101,7 @@
 						<td colspan="6" class="alignR"
 							style="text-align: right; font-size: 20px;">총 금액 :</td>
 						<td class="label label-primary" style="font-size: 20px">
+							<input type="hidden" name="totalCost" id="totalCost" value="${totalCost }">
 							<fmt:formatNumber value="${totalCost }" pattern="###,###" />원
 						</td>
 					</tr>
@@ -204,7 +205,11 @@
 		$(document).ready(function() {
 			$("#checkedMileage").change(function() {
 				if ($("#checkedMileage").is(":checked")) {
-					$("#usedMileage").attr("value", "${orders.mileage }");
+					if ($("#totalCost").val() >= $("#accumulateMileage").val()) {
+						$("#usedMileage").attr("value", "${orders.mileage }");
+					} else {
+						$("#usedMileage").attr("value", "${totalCost }");
+					}
 				} else {
 					$("#usedMileage").attr("value", 0);
 				}

@@ -25,7 +25,6 @@ public class OrdersBiz {
 		try {
 			dao.getCartPage(conn, memberId, cartList);
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw e;
 		} finally {
 			JdbcTemplate.close(conn);
@@ -43,7 +42,6 @@ public class OrdersBiz {
 		try {
 			dao.getOrdersPage(conn, memberId, ordersList);
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw e;
 		} finally {
 			JdbcTemplate.close(conn);
@@ -62,7 +60,6 @@ public class OrdersBiz {
 		try {
 			dao.getSingleOrdersPage(conn, memberId, pNo, ordersPage);
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw e;
 		} finally {
 			JdbcTemplate.close(conn);
@@ -82,7 +79,6 @@ public class OrdersBiz {
 			JdbcTemplate.commit(conn);
 		} catch (Exception e) {
 			JdbcTemplate.rollback(conn);
-			e.printStackTrace();
 			throw e;
 		} finally {
 			JdbcTemplate.close(conn);
@@ -105,7 +101,6 @@ public class OrdersBiz {
 			JdbcTemplate.commit(conn);
 		} catch (Exception e) {
 			JdbcTemplate.rollback(conn);
-			e.printStackTrace();
 			throw e;
 		} finally {
 			JdbcTemplate.close(conn);
@@ -126,7 +121,6 @@ public class OrdersBiz {
 			JdbcTemplate.commit(conn);
 		} catch (Exception e) {
 			JdbcTemplate.rollback(conn);
-			e.printStackTrace();
 			throw e;
 		} finally {
 			JdbcTemplate.close(conn);
@@ -156,7 +150,6 @@ public class OrdersBiz {
 			return result;
 		} catch (Exception e) {
 			JdbcTemplate.rollback(conn);
-			e.printStackTrace();
 			throw e;
 		} finally {
 			JdbcTemplate.close(conn);
@@ -176,7 +169,6 @@ public class OrdersBiz {
 			JdbcTemplate.commit(conn);
 		} catch (Exception e) {
 			JdbcTemplate.rollback(conn);
-			e.printStackTrace();
 			throw e;
 		} finally {
 			JdbcTemplate.close(conn);
@@ -196,11 +188,47 @@ public class OrdersBiz {
 			JdbcTemplate.commit(conn);
 		} catch (Exception e) {
 			JdbcTemplate.rollback(conn);
-			e.printStackTrace();
 			throw e;
 		} finally {
 			JdbcTemplate.close(conn);
 		}
 	}
 
+	/**
+	 * 바로구매시 장바구니에 동일한 상품이 있는지 확인
+	 * @param memberId
+	 * @param pNo
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean isValid(String memberId, int pNo) throws Exception {
+		Connection conn = JdbcTemplate.getConnection();
+		try {
+			return dao.isValid(conn, memberId, pNo);
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			JdbcTemplate.close(conn);
+		}
+	}
+	
+	/**
+	 * 바로구매시 동일 상품 수량 변경
+	 * @param pNo
+	 * @param count
+	 * @param memberId
+	 * @throws Exception
+	 */
+	public void cartUpdate(int pNo, int count, String memberId) throws Exception {
+		Connection conn = JdbcTemplate.getConnection();
+		try {
+			dao.cartUpdate(conn, pNo, count, memberId);
+			JdbcTemplate.commit(conn);
+		} catch (Exception e) {
+			JdbcTemplate.rollback(conn);
+			throw e;
+		} finally {
+			JdbcTemplate.close(conn);
+		}
+	}
 }

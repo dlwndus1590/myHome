@@ -324,4 +324,26 @@ public class OrdersDao {
 			JdbcTemplate.close(stmt);
 		}
 	}
+	
+	public boolean isValid(Connection conn, String memberId, int pNo) throws Exception {
+		String sql = "select * from cart where member_id = ? and p_no = ?";
+		
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, memberId);
+			stmt.setInt(2, pNo);
+			rs = stmt.executeQuery();
+			return rs.next();
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+			throw new Exception();
+		} finally {
+			JdbcTemplate.close(rs);
+			JdbcTemplate.close(stmt);
+		}
+	}
 }
