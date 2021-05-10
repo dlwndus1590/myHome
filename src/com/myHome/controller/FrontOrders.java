@@ -222,6 +222,7 @@ public class FrontOrders extends HttpServlet {
 				PrintWriter writer = response.getWriter();
 				writer.println("<script>alert('재고가 없습니다.'); location.href='" + CONTEXT_PATH + "/product/productController?action=productListByCategoryForm';</script>");
 				writer.close();
+				return;
 			}
 		}
 		if (memberId != null && accumulateMileage >= 0) {
@@ -327,6 +328,7 @@ public class FrontOrders extends HttpServlet {
 			PrintWriter writer = response.getWriter();
 			writer.println("<script>alert('재고가 없습니다.'); location.href='" + CONTEXT_PATH + "/product/productController?action=productListByCategoryForm';</script>");
 			writer.close();
+			return;
 		}
 		
 		if (memberId != null && accumulateMileage >= 0) {
