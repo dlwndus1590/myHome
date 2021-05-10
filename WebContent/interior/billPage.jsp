@@ -177,7 +177,15 @@ h3{
 </script>
 </head>
 <body>
-
+<div class="row">
+<div class="span9" style="width:960px;">
+    <ul class="breadcrumb" style="width:960px;">
+   		<li><a href="${CONTEXT_PATH}/index.jsp">Home</a> <span class="divider">></span></li>
+   		<li><a href="${CONTEXT_PATH}/interior/interiorController?action=interiorList">인테리어 모아보기</a> <span class="divider">></span></li>
+   		<li class="active">종합 리모델링 견적 계산</li>
+    </ul>
+  	<div class="well well-small" style="width:960px;">
+    
 	<h2>종합 리모델링 견적 계산</h2>
 	<div>
 		<img alt="견적서" src="${CONTEXT_PATH}/img/bill2.png">
@@ -250,6 +258,9 @@ h3{
 <form action="${CONTEXT_PATH}/interior/interiorSuccess.jsp" method="get">	
 	<button class="button" id="myBtn" onclick="return sangdamCheck()"><span>상담신청</span></button>
 </form>
+</div>
+</div>
+</div>
 
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="${CONTEXT_PATH}/assets/js/jquery.js"></script>

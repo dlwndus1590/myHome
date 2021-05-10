@@ -90,11 +90,15 @@ button:hover {
 </style>
 </head>
 <body>
-<h2>인테리어 모아보기</h2>
-<p>디자인은 아무것도 없는 곳에 무언가를 넣어 시간과 공간을 만드는 것이다.</p>
 <div class="row">
 <div class="span9" style="width:960px;">
+    <ul class="breadcrumb">
+   		<li><a href="${CONTEXT_PATH}/index.jsp">Home</a> <span class="divider">></span></li>
+   		<li class="active">인테리어 모아보기</li>
+    </ul>
 <div class="well well-small">
+<h2>인테리어 모아보기</h2>
+<p>디자인은 아무것도 없는 곳에 무언가를 넣어 시간과 공간을 만드는 것이다.</p>
 
 	<div class="row">
 	  <div class="column">
@@ -145,6 +149,7 @@ button:hover {
 	                }
 	            }
 	            %>
+	            
 	</div>
 </div>
 </div>

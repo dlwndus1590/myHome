@@ -1,6 +1,7 @@
 <%@page import="com.myHome.model.dto.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/inc/taglib_menu.jsp" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -100,10 +101,9 @@
                      } else if(mainMember.getGrade().equals("판매자")){%>
                         <a href="${CONTEXT_PATH}/member/memberController?action=sellerMyPage"><span class="icon-user" style="color:black;"></span> 마이페이지</a>                   
                <%
-                     } else if(mainMember.getGrade().equals("관리자")){%>
-                        <a href="${CONTEXT_PATH}/member/memberController?action=adminMyPage"><span class="icon-user" style="color:black;"></span> 마이페이지</a>
+                     } %>
                <%
-                     }
+                     
                   }
                %>   
                
@@ -175,6 +175,15 @@
                       <a href="${CONTEXT_PATH}/product/productController?action=productListByBestForm">베스트</a>
                    </div>
                 </li>
+                <c:if test="${dto.grade == '관리자' }">
+				<li class="dropdown">
+                   <a data-toggle="dropdown" class="dropdown-toggle" href="#">회원관리</a>
+                      <div class="dropdown-menu">
+                      <a href="${CONTEXT_PATH}/member/memberController?action=memberList">전체 회원목록</a>
+                      <a href="${CONTEXT_PATH}/member/memberController?action=adminMyInfo">내정보 변경</a>
+                   </div>
+                </li>
+                </c:if>
             </ul>
         </div>
       </div>
