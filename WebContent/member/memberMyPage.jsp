@@ -65,7 +65,7 @@
 				<br>
 				<table>
 				  <tr>
-				    <th>마일리지 : ${dto.mileage}원</th>				    
+				    <th>마일리지 :  <fmt:formatNumber value="${dto.mileage}" pattern="###,###"/> 원</th>				    
 				  </tr>
 				</table>
 		
@@ -121,7 +121,7 @@
 			
 			<div class="column">
 			   <div class="card">
-			     <h3>widthdraw</h3>
+			     <h3>withdraw</h3>
 			     <a href="${CONTEXT_PATH}/member/memberDelete.jsp"><p>탈퇴하기</p></a>  
 			   </div>
 			</div>
