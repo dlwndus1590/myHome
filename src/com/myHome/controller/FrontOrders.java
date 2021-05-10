@@ -198,6 +198,7 @@ public class FrontOrders extends HttpServlet {
 		String address2 = request.getParameter("address2");
 		int accumulateMileage = currentMileage - usedMileage;
 		int getMileage = 0;
+		int earnMileage = 0;
 		String[] stock1 = request.getParameterValues("stock");
 		String[] pNo1 = request.getParameterValues("pNo");
 		String[] count1 = request.getParameterValues("count");
@@ -208,6 +209,7 @@ public class FrontOrders extends HttpServlet {
 			totalP += Integer.parseInt(totalPrice[index]);
 			totalDeliveryFee += Integer.parseInt(deliveryFee[index]);
 			getMileage = (int) (accumulateMileage + (totalP * 0.1));
+			earnMileage = (int) (totalP * 0.1);
 			int stock = Integer.parseInt(stock1[index]);
 			int pNo = Integer.parseInt(pNo1[index]);
 			
@@ -227,7 +229,7 @@ public class FrontOrders extends HttpServlet {
 		}
 		if (memberId != null && accumulateMileage >= 0) {
 			try {
-				int result = ordersBiz.orders(memberId, orderMethod, totalP, totalDeliveryFee, usedMileage, getMileage, zipCode, address1, address2);
+				int result = ordersBiz.orders(memberId, orderMethod, totalP, totalDeliveryFee, usedMileage, earnMileage, zipCode, address1, address2);
 				if (result == 1) {
 					for (int index = 0; index < totalPrice.length; index++) {
 						int pNo = Integer.parseInt(pNo1[index]);
@@ -310,6 +312,7 @@ public class FrontOrders extends HttpServlet {
 		String address2 = request.getParameter("address2");
 		int accumulateMileage = currentMileage - usedMileage;
 		int getMileage = (int) (accumulateMileage + (totalPrice * 0.1));
+		int earnMileage = (int) (totalPrice * 0.1);
 		int stock = Integer.parseInt(request.getParameter("stock"));
 		int pNo = Integer.parseInt(request.getParameter("pNo"));
 		int count = Integer.parseInt(request.getParameter("count"));
@@ -333,7 +336,7 @@ public class FrontOrders extends HttpServlet {
 		
 		if (memberId != null && accumulateMileage >= 0) {
 			try {
-				int result = ordersBiz.orders(memberId, orderMethod, totalPrice, deliveryFee, usedMileage, getMileage, zipCode, address1, address2);
+				int result = ordersBiz.orders(memberId, orderMethod, totalPrice, deliveryFee, usedMileage, earnMileage, zipCode, address1, address2);
 				if (result == 1) {
 					ordersBiz.cartDelete(memberId, pNo);
 					ordersBiz.ordersDetail(count, pNo);
