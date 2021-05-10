@@ -227,7 +227,7 @@ public class FrontOrders extends HttpServlet {
 		}
 		if (memberId != null && accumulateMileage >= 0) {
 			try {
-				int result = ordersBiz.orders(memberId, orderMethod, totalP, totalDeliveryFee, usedMileage, accumulateMileage, zipCode, address1, address2);
+				int result = ordersBiz.orders(memberId, orderMethod, totalP, totalDeliveryFee, usedMileage, getMileage, zipCode, address1, address2);
 				if (result == 1) {
 					for (int index = 0; index < totalPrice.length; index++) {
 						int pNo = Integer.parseInt(pNo1[index]);
@@ -333,7 +333,7 @@ public class FrontOrders extends HttpServlet {
 		
 		if (memberId != null && accumulateMileage >= 0) {
 			try {
-				int result = ordersBiz.orders(memberId, orderMethod, totalPrice, deliveryFee, usedMileage, accumulateMileage, zipCode, address1, address2);
+				int result = ordersBiz.orders(memberId, orderMethod, totalPrice, deliveryFee, usedMileage, getMileage, zipCode, address1, address2);
 				if (result == 1) {
 					ordersBiz.cartDelete(memberId, pNo);
 					ordersBiz.ordersDetail(count, pNo);
