@@ -132,7 +132,6 @@
 	    
 		<div class="loginMain">
 			<a  href="${CONTEXT_PATH}/member/memberController?action=memberFindForm"><b>아이디 / 비밀번호 찾기</b></a>
-			<a  href="${CONTEXT_PATH}/member/memberController?action=loginChoice"><b>회원가입</b></a>
 		</div>
 	  </div>
 	</form>
