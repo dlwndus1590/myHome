@@ -270,7 +270,7 @@ public class FrontMember extends HttpServlet {
 				session.setAttribute("grade", dto.getGrade());
 				session.setAttribute("name", dto.getName());
 				session.setAttribute("companyName", dto.getCompanyName());
-				System.out.println(dto);
+				
 				session.setAttribute("dto", dto);	
 				session.setAttribute("mileage", dto.getMileage());
 				request.getRequestDispatcher("/index.jsp").forward(request,response);	

@@ -150,6 +150,7 @@ h3{
 	}
 
 	var mobileElement = document.getElementById("mobile");
+	var mobile = mobileElement.value;
 	
 	function sangdamCheck(){
 		if(num1==0){
@@ -170,10 +171,11 @@ h3{
 		} else if(num6==0){
 			alert("주방을 선택해 주세요.");
 			return false;
-		} else if(mobileElement == null){			
+		} else if(mobile.length == 0){			
 			alert("연락처를 입력해주세요.");
+			mobileElement.focus();
 			return false;
-		} else if(num1 !=0 || num2 != 0 || num3 !=0 || num4 !=0 || num5 != 0 || num6 != 0 || mobileElement !=  null){
+		} else if(num1 !=0 || num2 != 0 || num3 !=0 || num4 !=0 || num5 != 0 || num6 != 0){
 			alert("작성해 주신 연락처로 연락을 드리도록 하겠습니다.");
 			return true;						
 		}
