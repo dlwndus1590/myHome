@@ -611,9 +611,10 @@ public class ProductDao {
 	 * 카테고리 해시맵
 	 * @return
 	 */
-	public HashMap<Integer, Category> selectCategoryMap(Connection conn) {
+	public HashMap<Integer, Category> selectCategoryMap() {
 		String sql = "select * from category";
 		
+		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
@@ -641,6 +642,7 @@ public class ProductDao {
 		} finally {
 			  JdbcTemplate.close(rs);
 			  JdbcTemplate.close(pstmt);
+			  JdbcTemplate.close(conn);
 		}
 		return null;	
 	}

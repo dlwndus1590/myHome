@@ -281,7 +281,6 @@ public class ProductBiz {
 	 * @return HashMap<Category>
 	 */
 	public HashMap<Integer, Category> getCategoryMap() {
-		Connection conn = JdbcTemplate.getConnection();
-		return ProductDao.getInstance().selectCategoryMap(conn);
+		return ProductDao.getInstance().selectCategoryMap();
 	}
 }

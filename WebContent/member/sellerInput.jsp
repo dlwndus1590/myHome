@@ -177,7 +177,7 @@ a {
 	<input type="text" placeholder="Enter address" name="address2" id="address2" required="required" >	    
     
     <label><b>사업자 번호</b></label>
-    <input type="text" placeholder=" '-'를 제외하고 입력해주세요. " name="businessNumber" id="businessNumber" maxlength="12" required>
+    <input type="text" placeholder=" '-'를 포함해서 입력해주세요. " name="businessNumber" id="businessNumber" maxlength="12" required>
     
     <label><b>회사/점포명</b></label>
     <input type="text" placeholder="Enter Company" name="companyName" id="companyName" required>
