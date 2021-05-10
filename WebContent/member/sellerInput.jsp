@@ -143,7 +143,7 @@ a {
 	
   <div >
   <br>
-    <h1>판매자 회원가입을 축하드립니다.</h1>    
+    <h1>판매자회원 회원가입</h1>    
     <hr class="hr">
 
     <label><b>아이디</b></label>
@@ -184,7 +184,7 @@ a {
     <hr class="hr">
 
 	<input type="submit" class="registerbtn" class="regist" value="가입하기">        
-    <input type="reset" class="registerbtn"  onclick="location.href='loginChoice.jsp'" value="취소하기">
+    <input type="reset" class="registerbtn"  onclick="location.href='${CONTEXT_PATH}/product/productController?action=storeHome'" value="취소하기">
   </div>
   
   <div class="container signin">
