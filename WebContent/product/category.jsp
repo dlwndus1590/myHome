@@ -43,7 +43,14 @@
 
 <!-- New Products -->
 <div class="well well-small" style="width:730px">
-<h3> 전체 </h3>
+<c:choose>
+	<c:when test="${empty categoryName }">
+		<h3> 전체 </h3>
+	</c:when>
+	<c:otherwise>
+		<h3>${categoryName}</h3>
+	</c:otherwise>
+</c:choose>
 	<div class="row-fluid">	
 		<ul class="thumbnails">
 		  <c:forEach var="productList" items="${productList1}">
