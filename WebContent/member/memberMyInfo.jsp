@@ -141,7 +141,7 @@ function postcodeTest() {
     <input type="text" placeholder="Enter Email" name="email" id="email" value="<%=dto.getEmail()%>">
 
 	<label><b>핸드폰</b></label>
-    <input type="text" placeholder="Enter Mobile" name="mobile" id="mobile" value="<%=dto.getMobile()%>">
+    <input type="text" placeholder="Enter Mobile" name="mobile" id="mobile" pattern="010-\d{4}-\d{4}" maxlength="13" value="<%=dto.getMobile()%>">
     
     <label><b>주소</b></label>
     <br>
