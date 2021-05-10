@@ -85,10 +85,10 @@
 				</c:if>
 				<c:choose>
 					<c:when test="${index.reviewCheck == 0}">
-						<td class="grayColor">구매확정<span style="padding-left: 50px;"><input type="submit" value="후기작성" class="shopBtn" style="width: 100px"></span></td>
+						<td class="grayColor">구매확정<span style="padding-left: 30px;"><input type="submit" value="후기작성" class="shopBtn" style="width: 100px"></span></td>
 					</c:when>
 					<c:otherwise>
-						<td class="grayColor">구매확정<input type="button" value="후기작성완료" style="width: 100px; margin-left: 50px; height: 30px; text-align: center" class="shopBtn"></td>
+						<td class="grayColor">구매확정<input type="button" value="후기작성완료" style="width: 100px; margin-left: 30px; height: 30px; text-align: center" class="shopBtn"></td>
 					</c:otherwise>
 				</c:choose>
 			</tr>
@@ -104,7 +104,7 @@
 		<tr>
 			<th style="width : 110px; padding : 20px 10px 30px 15px;">주문금액</th>
 			<td style="width : 200px; padding-left: 50px;"></td>
-			<th style="width : 130px; padding-right : 40px;">결제상세</th>
+			<th style="width : 130px; padding-right : 20px;">결제상세</th>
 			<td style="width : 200px; padding-left: 50px;"></td>
 		</tr>
 		

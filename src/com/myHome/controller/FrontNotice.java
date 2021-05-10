@@ -425,7 +425,8 @@ public class FrontNotice extends HttpServlet {
 			String qTitle = multipartRequest.getParameter("qTitle");
 			String imgUrl = "/img/qNotice/" + multipartRequest.getOriginalFileName("imgUrl");
 			String qContent = multipartRequest.getParameter("qContent");
-			Qnotice dto = new Qnotice(qTitle, qContent, imgUrl, "user01");
+			String memberId = (String)session.getAttribute("memberId");
+			Qnotice dto = new Qnotice(qTitle, qContent, imgUrl, memberId);
 			biz.addQnotice(dto);
 			try {
 				request.getRequestDispatcher("/notice/noticeController?action=qNoticeForm").forward(request, response);
