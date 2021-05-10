@@ -118,7 +118,7 @@
 		</tr>
 	</table>
 	<br>
-	<a href="${CONTEXT_PATH}/member/memberController?action=memberDelete&memberId=${dto.memberId}"
+	<a href="${CONTEXT_PATH}/member/memberController?action=memberAdminDelete&memberId=${dto.memberId}"
 		class="a"	onclick="return confirm('회원님을 정말 탈퇴시키시겠습니까?')">탈퇴시키기</a>			
 	 
 </div>

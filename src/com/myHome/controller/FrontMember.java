@@ -116,8 +116,17 @@ public class FrontMember extends HttpServlet {
 		case "adminMyPage":	
 			adminMyPage(request,response);
 			break;	
+		case "adminMyInfo":	
+			adminMyInfo(request,response);
+			break;	
+		case "adminMyInfoUpdate":	
+			adminMyInfoUpdate(request,response);
+			break;	
 		case "memberDelete":	
 			memberDelete(request,response);
+			break;
+		case "memberAdminDelete":	
+			memberAdminDelete(request,response);
 			break;
 		case "memberList":	
 			memberList(request,response);
@@ -193,11 +202,11 @@ public class FrontMember extends HttpServlet {
 		Member dto = new Member();
 		HttpSession session = request.getSession();
 		dto.setMemberId((String)session.getAttribute("memberId"));
-		
+				
 		MemberBiz biz = new MemberBiz();
 		
 		try {
-			biz.selectOneMember(dto);
+			biz.selectOneSeller(dto);
 			session.setAttribute("dto", dto);
 			response.sendRedirect(CONTEXT_PATH + "/member/sellerMyPage.jsp"); 
 		} catch (Exception e) {
@@ -253,9 +262,10 @@ public class FrontMember extends HttpServlet {
 		
 		try {
 			biz.login(dto);
+
 			if (dto.getName() != null) {
 				
-				HttpSession session = request.getSession(true); // true
+				HttpSession session = request.getSession(true); 
 				session.setAttribute("memberId", memberId);
 				session.setAttribute("grade", dto.getGrade());
 				session.setAttribute("name", dto.getName());
@@ -588,15 +598,12 @@ public class FrontMember extends HttpServlet {
 		try {
 			
 			biz.selectOneMember(dto);	
-			request.setAttribute("dto", dto);		
-			
-			request.getRequestDispatcher("/member/memberMyInfo.jsp")
-					.forward(request, response);
+			request.setAttribute("dto", dto);					
+			request.getRequestDispatcher("/member/memberMyInfo.jsp").forward(request, response);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-			request.getRequestDispatcher("/member/memberMyPage.jsp")
-					.forward(request, response);
+			request.getRequestDispatcher("/member/memberMyPage.jsp").forward(request, response);
 		}		
 	}
 	
@@ -629,11 +636,25 @@ public class FrontMember extends HttpServlet {
 
 		MemberBiz biz = new MemberBiz();
 		
-		Member dto = new Member(memberId, memberPw, name, email, mobile, zipcode, address1, address2, entryDate, mileage, grade);
+		Member dto = new Member();
+		
+		dto.setMemberId(memberId);
+		dto.setMemberPw(memberPw);
+		dto.setName(name);
+		dto.setEmail(email);
+		dto.setMobile(mobile);
+		dto.setZipcode(zipcode);
+		dto.setAddress1(address1);
+		dto.setAddress2(address2);
+		dto.setMileage(mileage);
+		dto.setGrade(grade);
+		
 		
 		try {
 			biz.updateMemberMyInfo(dto);
-			session.setAttribute("dto", dto);
+			biz.selectOneMember(dto);
+			session.setAttribute("dto", dto);	
+			session.setAttribute("name", name);
 			
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter writer = response.getWriter();
@@ -655,7 +676,7 @@ public class FrontMember extends HttpServlet {
 	protected void sellerMyInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session= request.getSession();
 		String memberId = (String)session.getAttribute("memberId");
-		
+				
 		if (session == null || 
 				session.getAttribute("memberId") == null ||
 				session.getAttribute("grade") == null) {
@@ -668,16 +689,15 @@ public class FrontMember extends HttpServlet {
 		MemberBiz biz = new MemberBiz();
 		Member dto = new Member();
 		dto.setMemberId(memberId);
-		
+
 		try {
 			biz.selectOneSeller(dto);
-			
+
 			request.setAttribute("dto", dto);			
-			request.getRequestDispatcher("/member/memberMyInfo.jsp")
-				.forward(request, response);
+			request.getRequestDispatcher("/member/sellerMyInfo.jsp").forward(request, response);
 		} catch (Exception e) {
 			e.getMessage();
-			request.getRequestDispatcher("/member/memberMyPage.jsp").forward(request, response);
+			request.getRequestDispatcher("/member/sellerMyPage.jsp").forward(request, response);
 		}	
 		
 	}
@@ -706,17 +726,18 @@ public class FrontMember extends HttpServlet {
 		String address2 = request.getParameter("address2");
 		String businessNumber = request.getParameter("businessNumber");
 		String companyName = request.getParameter("companyName");
-		String entryDate = request.getParameter("entrydate");		
-		int mileage = Integer.parseInt(request.getParameter("mileage"));		
+		String entryDate = request.getParameter("entrydate");	
 		String grade = request.getParameter("grade");	
 
 		MemberBiz biz = new MemberBiz();
-		Member dao = new Member(memberId, memberPw, name, email, mobile, zipcode, address1, address2, businessNumber, companyName, entryDate, mileage, grade);
+		Member dto = new Member(memberId, memberPw, name, email, mobile, zipcode, address1, address2, businessNumber, companyName, entryDate, grade);
 		
 		
 		try {
-			biz.updateSellerMyInfo(dao);
-			session.setAttribute("dao", dao);
+			biz.updateSellerMyInfo(dto);
+			biz.selectOneSeller(dto);
+			session.setAttribute("dto", dto);
+			session.setAttribute("name", name);
 						
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter writer = response.getWriter();
@@ -733,19 +754,17 @@ public class FrontMember extends HttpServlet {
 	}	
 	
 	/**
-	 * 관리자 : 회원탈퇴 요청
+	 * 일반/판매자 : 회원탈퇴 요청
 	 */
 	protected void memberDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
 		
 		if (session.getAttribute("memberId") == null || session.getAttribute("grade") == null) {
 			// 로그인 하지 않은 사용자
-			MessageEntity messageEntity = new MessageEntity("message", 0);
-			messageEntity.setLinkTitle("로그인");
-			messageEntity.setUrl(CONTEXT_PATH +"/member/loginForm");
-			request.setAttribute("messageEntity", messageEntity);
-			request.getRequestDispatcher("/member/message.jsp").forward(request, response);
-			return;
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter writer = response.getWriter();
+			writer.println("<script>alert('로그인이 필요한 서비스입니다.'); location.href= '"+CONTEXT_PATH+"/index.jsp';</script>");
+			writer.close();
 		} 
 		
 		String memberId = request.getParameter("memberId");
@@ -762,7 +781,38 @@ public class FrontMember extends HttpServlet {
 			writer.close();
 		} else {
 			PrintWriter writer = response.getWriter();
-			writer.println("<script>alert('회원탈퇴가 완료되었습니다.'); location.href= '"+CONTEXT_PATH+"/member/memberMyPage.jsp';</script>");
+			writer.println("<script>alert('회원탈퇴가 실패하였습니다.'); location.href= '"+CONTEXT_PATH+"/member/adminMyPage.jsp';</script>");
+			writer.close();
+		}
+	}
+	
+	/**
+	 * 관리자 : 회원탈퇴 요청
+	 */
+	protected void memberAdminDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		
+		if (session.getAttribute("memberId") == null || session.getAttribute("grade") == null) {
+			// 로그인 하지 않은 사용자
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter writer = response.getWriter();
+			writer.println("<script>alert('로그인이 필요한 서비스입니다.'); location.href= '"+CONTEXT_PATH+"/index.jsp';</script>");
+			writer.close();
+		} 
+		
+		String memberId = request.getParameter("memberId");
+		
+		MemberBiz biz = new MemberBiz();
+		boolean result = biz.deleteMember(memberId);
+		
+		if (result) {			
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter writer = response.getWriter();
+			writer.println("<script>alert('회원탈퇴가 완료되었습니다.'); location.href= '"+CONTEXT_PATH+"/member/memberController?action=memberList';</script>");
+			writer.close();
+		} else {
+			PrintWriter writer = response.getWriter();
+			writer.println("<script>alert('회원탈퇴가 실패하였습니다.'); location.href= '"+CONTEXT_PATH+"/member/adminMyPage.jsp';</script>");
 			writer.close();
 		}
 	}
@@ -791,6 +841,95 @@ public class FrontMember extends HttpServlet {
 		} catch (Exception e) {
 			/* 응답 페이지로 이동 */
 			request.getRequestDispatcher("/member/adminMypage.jsp").forward(request, response);
+		}		
+	}
+	
+	/**
+	 * 관리자 상세조회
+	 */
+	protected void adminMyInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session= request.getSession();
+		String memberId = (String)session.getAttribute("memberId");
+		
+		if (session == null || session.getAttribute("memberId") == null ||
+				session.getAttribute("grade") == null) {
+			request.getRequestDispatcher("/member/login.jsp")
+					.forward(request, response);
+			return;
+		}
+		
+		memberId = memberId.trim();
+		MemberBiz biz = new MemberBiz();
+		Member dto = new Member();
+		dto.setMemberId(memberId);
+				
+		try {
+			
+			biz.selectOneAdmin(dto);	
+			request.setAttribute("dto", dto);			
+			request.getRequestDispatcher("/admin/adminMyInfo.jsp").forward(request, response);
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+			request.getRequestDispatcher("/admin/adminMypage.jsp").forward(request, response);
+		}		
+	}
+	
+	/**
+	 * 관리자 정보 변경
+	 */
+	protected void adminMyInfoUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session= request.getSession();
+		String memberId = (String)session.getAttribute("memberId");
+		String memberPw = request.getParameter("memberPw");
+		String name = request.getParameter("name");
+		String mobile = request.getParameter("mobile");
+		String email = request.getParameter("email");
+		int zipcode = Integer.parseInt(request.getParameter("zipcode"));
+		String address1 = request.getParameter("address1");
+		String address2 = request.getParameter("address2");
+		String entryDate = request.getParameter("entrydate");	
+		String grade = request.getParameter("grade");
+		
+		if (session == null || session.getAttribute("memberId") == null ||
+				session.getAttribute("grade") == null) {
+			request.getRequestDispatcher("/member/login.jsp")
+			.forward(request, response);
+			return;
+		}
+		
+		memberId = memberId.trim();
+		MemberBiz biz = new MemberBiz();
+		Member dto = new Member();
+		
+		dto.setMemberId(memberId);
+		dto.setMemberPw(memberPw);
+		dto.setName(name);
+		dto.setEmail(email);
+		dto.setMobile(mobile);
+		dto.setZipcode(zipcode);
+		dto.setAddress1(address1);
+		dto.setAddress2(address2);
+		dto.setEntryDate(entryDate);
+		dto.setGrade(grade);
+		
+		try {			
+			biz.updateAdminMyInfo(dto);	
+			biz.selectOneAdmin(dto);
+			session.setAttribute("dto", dto);
+			session.setAttribute("name", name);
+			
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter writer = response.getWriter();
+			writer.println("<script>alert('정보변경이 완료되었습니다.'); location.href= '"+CONTEXT_PATH+"/member/memberController?action=adminMyPage&memberId="+memberId+"';</script>");
+			writer.close();			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter writer = response.getWriter();
+			writer.println("<script>alert('정보변경에 실패하셨습니다.'); location.href= '"+CONTEXT_PATH+"/admin/adminMyInfo.jsp';</script>");
+			writer.close();			
 		}		
 	}
 	

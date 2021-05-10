@@ -155,6 +155,24 @@ public class MemberBiz<searchKey> {
 	}
 	
 	/**
+	 * 관리자 상세조회 
+	 * @param memberId 아이디
+	 * @return 존재시 Member, 미존재시 null
+	 */
+	public void selectOneAdmin(Member dto) throws Exception {
+		Connection con = JdbcTemplate.getConnection();
+		
+		try {
+			dao.selectOneAdmin(con, dto);
+			
+		} catch (Exception e) {			
+			throw e;
+		} finally {
+			JdbcTemplate.close(con);	
+		}	
+	}
+	
+	/**
 	 * 일반 회원
 	 * 		-- 내정보 수정
 	 * @param dto Member
@@ -176,6 +194,7 @@ public class MemberBiz<searchKey> {
 			JdbcTemplate.close(con);	
 		}		
 	}
+	
 	/**
 	 * 판매자 회원
 	 * 		-- 내정보 수정
@@ -198,6 +217,30 @@ public class MemberBiz<searchKey> {
 			JdbcTemplate.close(con);	
 		}		
 	}
+	
+	/**
+	 * 관리자
+	 * 		-- 내정보 수정
+	 * @param dto Member
+	 * @return 성공시 true, 실패시 false
+	 */
+	public void updateAdminMyInfo(Member dto) throws Exception{
+		Connection con = JdbcTemplate.getConnection();
+		
+		try{
+			dao.updateAdminInfo(con, dto);
+			JdbcTemplate.commit(con);
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+			JdbcTemplate.rollback(con);
+			throw e; 
+			
+		} finally {
+			JdbcTemplate.close(con);	
+		}		
+	}
+	
 	/** 
 	 * 관리자 권한
 	 * 		- 전체회원조회(일반 회원, 판매자 회원)

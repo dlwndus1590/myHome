@@ -286,10 +286,11 @@ public class MemberDao implements Serializable{
 		ResultSet rs = null;
 		
 		try {
-			String sql = "select member_id, member_pw, name, mobile, email, zip_code, address1, address2, business_number, grade from member";
+			String sql = "select member_id, member_pw, name, mobile, email, zip_code, address1, address2, business_number, grade from member where "
+					+ "not(member_id='admin')";
 			
 			if(keyWord != null && !keyWord.equals("") ){
-                sql +=" where "+searchKey.trim()+" LIKE '%"+keyWord.trim()+"%' order by entry_date desc";
+                sql +=" and "+searchKey.trim()+" LIKE '%"+keyWord.trim()+"%' order by entry_date desc";
             }else {//모든 레코드 검색
                 sql +=" order by entry_date desc";
             }
@@ -309,10 +310,7 @@ public class MemberDao implements Serializable{
 				dto.setZipcode(rs.getInt("zip_code"));
 				dto.setAddress1(rs.getString("address1"));
 				dto.setAddress2(rs.getString("address2"));
-				dto.setBusinessNumber(rs.getString("business_number"));
-				//dto.setCompanyName(rs.getString("company_name"));				
-				//dto.setEntryDate(rs.getString("entry_date"));
-				//dto.setMileage(rs.getInt("mileage"));
+				dto.setBusinessNumber(rs.getString("business_number"));				
 				dto.setGrade(rs.getString("grade"));
 				
 				list.add(dto);
@@ -478,7 +476,6 @@ public class MemberDao implements Serializable{
 		}		
 	}
 	
-	
 	/**
 	 * 판매자 회원
 	 * 		-- 내정보 수정
@@ -514,6 +511,42 @@ public class MemberDao implements Serializable{
 			e.printStackTrace();
 		} finally {
 			JdbcTemplate.close(stmt);		
+		}		
+	}
+	
+	/**
+	 * 관리자
+	 * 		-- 내정보 수정
+	 * @param dto Member
+	 * @return 성공시 true, 실패시 false
+	 */
+	public void updateAdminInfo(Connection con,Member dto) throws Exception{
+		String sql = "update member set member_pw=?, name=?, mobile=?, email=?, "
+				+ "zip_code=?, address1=?, address2=? where member_id=?";
+		
+		PreparedStatement stmt = null;
+		
+		try {			
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, dto.getMemberPw());
+			stmt.setString(2, dto.getName());
+			stmt.setString(3, dto.getMobile());
+			stmt.setString(4, dto.getEmail());
+			stmt.setInt(5, dto.getZipcode());
+			stmt.setString(6, dto.getAddress1());
+			stmt.setString(7, dto.getAddress2());
+			stmt.setString(8, dto.getMemberId());	
+			
+			int rows =stmt.executeUpdate();
+			if(rows == 0) {
+				throw new Exception();
+			}
+			
+		} catch (SQLException e) {			
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		} finally {
+			JdbcTemplate.close(stmt);			
 		}		
 	}
 	
@@ -560,6 +593,48 @@ public class MemberDao implements Serializable{
 			JdbcTemplate.close(stmt);
 		}		
 	}
+
+	/**
+	 * 관리자 상세조회
+	 * @param memberId 회원아이디
+	 * @return 회원, 미존재시 null
+	 */
+	public void selectOneAdmin(Connection con,Member dto) throws Exception{
+		String sql = "select member_id, member_pw, name, mobile, email, zip_code, address1, address2, "
+				+ "to_char(entry_date,'yyyy-mm-dd'), grade from member where member_id=?";
+
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		try {		
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, dto.getMemberId());
+			rs = stmt.executeQuery();
+			
+			if(rs.next()) {			
+				
+				dto.setMemberId(rs.getString("member_id"));
+				dto.setMemberPw(rs.getString("member_pw"));
+				dto.setName(rs.getString("name"));
+				dto.setEmail(rs.getString("email"));
+				dto.setMobile(rs.getString("mobile"));
+				dto.setZipcode(rs.getInt("zip_code"));
+				dto.setAddress1(rs.getString("address1"));
+				dto.setAddress2(rs.getString("address2"));		
+				dto.setEntryDate(rs.getString("to_char(entry_date,'yyyy-mm-dd')"));				
+				dto.setGrade(rs.getString("grade"));
+
+			}			
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());			
+			e.printStackTrace();
+		} finally {
+			JdbcTemplate.close(rs);
+			JdbcTemplate.close(stmt);			
+		}
+		
+	}
+	
 
 	
 	/**

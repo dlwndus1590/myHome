@@ -189,20 +189,28 @@ public class FrontInterior extends HttpServlet {
 		}
 		
 		int ino = Integer.parseInt(request.getParameter("ino"));
-		String iname = (String)session.getAttribute("iname");
+		String iname = request.getParameter("iname");		
+		//String iname = (String)session.getAttribute("iname");
 		int icareer = Integer.parseInt(request.getParameter("icareer"));		
 		String idetail = request.getParameter("idetail");		
 		String ilocation = request.getParameter("ilocation");
 		String imobile = request.getParameter("imobile");	
 
 		InteriorBiz biz = new InteriorBiz();
-		Interior interior = new Interior(ino,iname, icareer, idetail, ilocation,imobile);		
+		Interior interior = new Interior();		
+		
+		interior.setIno(ino);
+		interior.setIname(iname);
+		interior.setIcareer(icareer);
+		interior.setIdetail(idetail);
+		interior.setIlocation(ilocation);
+		interior.setImobile(imobile);
+		
 		try {
-			biz.updateInterior(interior);
-			session.setAttribute("iname", iname);
+			biz.updateInterior(interior);			
 			session.setAttribute("ino", ino);
 			session.setAttribute("interiordto", interior);
-			
+						
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter writer = response.getWriter();
 			writer.println("<script>alert('수정이 완료되었습니다.'); location.href= '"+CONTEXT_PATH+"/interior/interiorController?action=interiorList';</script>");
@@ -236,8 +244,7 @@ public class FrontInterior extends HttpServlet {
 			session.setAttribute("interiordto", interior);
 			request.getRequestDispatcher("/interior/interiorDetail.jsp").forward(request, response);
 		} catch (Exception e) {
-			e.printStackTrace();
-			e.getMessage();
+			e.printStackTrace();			
 			request.getRequestDispatcher("/interior/interiorList.jsp").forward(request, response);
 		}
 	}
@@ -263,7 +270,6 @@ public class FrontInterior extends HttpServlet {
 		InteriorBiz biz = new InteriorBiz();	
 		try{			
 			biz.deleteInterior(iname);			
-			session.invalidate();
 			
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter writer = response.getWriter();
