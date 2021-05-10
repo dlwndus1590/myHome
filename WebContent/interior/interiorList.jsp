@@ -93,7 +93,7 @@ button:hover {
 <div class="row">
 <div class="span9" style="width:960px;">
     <ul class="breadcrumb">
-   		<li><a href="${CONTEXT_PATH}/index.jsp">Home</a> <span class="divider">></span></li>
+   		<li><a href="${CONTEXT_PATH}/product/productController?action=storeHome">Home</a> <span class="divider">></span></li>
    		<li class="active">인테리어 모아보기</li>
     </ul>
 <div class="well well-small">
@@ -124,7 +124,7 @@ button:hover {
 		        <td><%=dto.getIdetail() %></td>
 		        <td><%=dto.getIlocation() %></td>
 		        <td><%=dto.getImobile()%></td>
-		        <td class="applyBtn"><a class="applyBtn" href="${CONTEXT_PATH}/interior/interiorController?action=billPage&icareer=<%=dto.getIcareer()%>">견적</a></td>
+		        <td class="applyBtn"><input type="button" class="defaultBtn" onclick="location.href='${CONTEXT_PATH}/interior/interiorController?action=billPage&icareer=<%=dto.getIcareer()%>'" value="견적"></td>
 		      </tr>
 	      <%} %>
 	    </table>
@@ -144,7 +144,7 @@ button:hover {
 	                     mainMember = (Member)session.getAttribute("dto");                     
 				%> 
 	            <% if(mainMember.getGrade().equals("관리자")){  %>                
-	                  	<button onclick="location.href='interiorInput.jsp'" style="width:auto;">등록하기</button>
+	                  	<button onclick="location.href='interiorInput.jsp'" class="shopBtn" style="width:auto;">인테리어업체 등록</button>
 	         	<%
 	                }
 	            }

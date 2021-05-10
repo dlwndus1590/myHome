@@ -53,13 +53,13 @@
 		<div class="control-group">
 		<label class="control-label">상품명 <sup>*</sup></label>
 		<div class="controls">
-			<input type="text" name="pName" id="pName" placeholder="상품명을 입력하세요." required="required" style="width:300px;">
+			<input type="text" name="pName" id="pName" placeholder="상품명을 입력하세요." required="required" style="width:300px; height:30px;">
 		</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label"> 가격 <sup>*</sup></label>
 			<div class="controls">
-			  <input type="number" name="pPrice" id="pPrice" min="0" required="required" placeholder="숫자만 입력" >
+			  <input type="number" name="pPrice" id="pPrice" min="0" required="required" placeholder="숫자만 입력" style="height:30px;">
 			</div>
 		 </div>
 		 <div class="control-group">
@@ -77,7 +77,7 @@
 		<div class="control-group">
 		<label class="control-label"> 배송비 <sup>*</sup></label>
 		<div class="controls">
-		  <input type="number" name="deliveryFee" id="deliveryFee" max="50000" min="0" required="required" placeholder="숫자만 입력">
+		  <input type="number" name="deliveryFee" id="deliveryFee" max="50000" min="0" required="required" placeholder="숫자만 입력" style="height:30px;">
 		</div>
 	   </div>
 		<div class="control-group">
@@ -93,7 +93,7 @@
 	  <div class="control-group">
 		<label class="control-label"> 재고수량 <sup>*</sup></label>
 		<div class="controls">
-		  <input type="number" name="pCount" id="pCount" placeholder="숫자만 입력" required="required">
+		  <input type="number" name="pCount" id="pCount" placeholder="숫자만 입력" required="required" style="height:30px;">
 		</div>
 	   </div>
 	<div class="control-group">

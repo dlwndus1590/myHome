@@ -76,13 +76,13 @@
 		<div class="control-group">
 		<label class="control-label">상품명 <sup>*</sup></label>
 		<div class="controls">
-			<input type="text" name="pName" id="pName" value="${product.pName}" required="required" style="width:300px;">
+			<input type="text" name="pName" id="pName" value="${product.pName}" required="required" style="width:300px; height:30px;">
 		</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label"> 가격 <sup>*</sup></label>
 			<div class="controls">
-			  <input type="number" name="pPrice" id="pPrice" min="0" required="required" value="${product.pPrice}" >
+			  <input type="number" name="pPrice" id="pPrice" min="0" required="required" value="${product.pPrice}" style="height:30px;">
 			</div>
 		 </div>
 		 <div class="control-group">
@@ -100,13 +100,13 @@
 		<div class="control-group">
 		<label class="control-label"> 배송비 <sup>*</sup></label>
 		<div class="controls">
-		  <input type="number" name="deliveryFee" id="deliveryFee" max="50000" min="0" required="required" value="${product.deliveryFee}">
+		  <input type="number" name="deliveryFee" id="deliveryFee" max="50000" min="0" required="required" value="${product.deliveryFee}" style="height:30px;">
 		</div>
 	   </div>
 		<div class="control-group">
 		<label class="control-label"> 카테고리 <sup>*</sup></label>
 		<div class="controls">
-			<input type="text" name="categoryName" id="categoryName" readonly="readonly" value="${category.categoryName}"> 
+			<input type="text" name="categoryName" id="categoryName" readonly="readonly" value="${category.categoryName}" style="height:30px;"> 
 		  	<select name="categoryId" id="categoryId" style="width:220px;" onchange="changeCategory()">
 		  	<c:forEach var="categoryList" items="${categoryList}">
 				<option value="${categoryList.categoryId}">${categoryList.categoryName}</option>
@@ -117,7 +117,7 @@
 	  <div class="control-group">
 		<label class="control-label"> 재고수량 <sup>*</sup></label>
 		<div class="controls">
-		  <input type="number" name="pCount" id="pCount" value="${product.pCount}" required="required">
+		  <input type="number" name="pCount" id="pCount" value="${product.pCount}" required="required" style="height:30px;">
 		</div>
 	   </div>
 	<div class="control-group">

@@ -118,7 +118,7 @@ function postcodeTest() {
 <!-- main menu : 로그인 전 메뉴 -->
 
 <!-- contents menu -->
-<form action="${CONTEXT_PATH}/member/memberController?action=memberMyInfoUpdate"  method="post" style="padding-left:4%;">
+<form action="${CONTEXT_PATH}/member/memberController?action=memberMyInfoUpdate"  method="post" style="padding-left:4%; height:1200px;">
 	
   <div class="container">
   	<br>
@@ -160,8 +160,8 @@ function postcodeTest() {
     <input type="text" placeholder="Enter Mobile" name="grade" id="grade" value="<%=dto.getGrade()%>" readonly="readonly">
     <hr class="hr">
 
-    <input type="submit" class="registerbtn" value="내 정보 변경"></input>
-    <input type="button" class="registerbtn" onclick="history.back();" value="취소하기"></input>
+    <input type="submit" class="shopBtn" value="내 정보 변경"></input>
+    <input type="button" class="defaultBtn" onclick="history.back();" value="취소하기"></input>
   </div>
 	
 </form>

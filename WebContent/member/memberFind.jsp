@@ -157,7 +157,7 @@
 			<div class="col">
 		      <input type="text" class="input" name="name" id="name" placeholder="User Name" required>
 		        <input type="text" class="input" name="mobile" id="mobile" placeholder="User Mobile" required>
-		        <input type="submit" class="input" value="아이디 찾기">
+		        <input type="submit" class="shopBtn" value="아이디 찾기">
 			</div>
 		
 		</form>
@@ -175,7 +175,7 @@
 		    	<input type="text" class="input" name="memberId" id="memberId" placeholder="User Id" required>
 		        <input type="text" class="input" name="name" id="name" placeholder="User Name" required>
 	        	<input type="text" class="input" id="mobile" name="mobile" placeholder="User Mobile" required>
-		        <input type="submit" class="input" value="비밀번호 찾기">
+		        <input type="submit" class="shopBtn" value="비밀번호 찾기">
 		     </div>
 	            
 	 	</form>
