@@ -37,13 +37,30 @@
                                     <span class="nav__name">Profile</span>
                                     <i class='bx bx-chevron-down nav__icon nav__dropdown-icon'></i>
                                 </a>
-
-                                <div class="nav__dropdown-collapse">
-                                    <div class="nav__dropdown-content">
-                                        <a href="${CONTEXT_PATH}/interior/interiorController?action=interiorList" class="nav__dropdown-item">Interior store</a> 
-                                    </div>
-                                </div>
-                                
+								 <%              
+								 	  Member mainMember = null;
+					                  if(session.getAttribute("memberId")==null){
+					               %>   
+					                  <div class="nav__dropdown-collapse">
+		                                    <div class="nav__dropdown-content">
+		                                        <a href="javascript:alert('로그인이 필요한 서비스입니다.')" class="nav__dropdown-item">Interior store</a> 
+		                                    </div>
+		                              </div> 
+					               <%
+					                  } else {   
+					                	  mainMember = (Member)session.getAttribute("dto");
+					               %>
+					               <%
+					               		if(mainMember.getGrade().equals("일반회원") || mainMember.getGrade().equals("판매자") || mainMember.getGrade().equals("관리자")){
+					               %>
+	                                	<div class="nav__dropdown-collapse">
+			                                    <div class="nav__dropdown-content">
+			                                        <a href="${CONTEXT_PATH}/interior/interiorController?action=interiorList" class="nav__dropdown-item">Interior store</a> 
+			                                    </div>
+			                            </div> 
+                                <%
+                                	}
+					               } %>	
                             </div>
 
                         </div>                        
@@ -84,8 +101,7 @@
                
                
                <!-- 로그인 / 미 로그인 상태 변화 -->
-               <%
-                  Member mainMember = null;
+               <%                  
                   if(session.getAttribute("dto")==null){
                %>   
                   <a href="${CONTEXT_PATH}/member/login.jsp"><span class="icon-lock" style="color:black;"></span> Login </a>                            
