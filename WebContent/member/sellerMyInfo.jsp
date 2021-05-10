@@ -151,7 +151,7 @@ function postcodeTest() {
 	<input type="text" placeholder="Enter address" name="address2"  required="required" value="<%=dto.getAddress2()%>">	    
     
     <label><b>사업자 번호</b></label>
-    <input type="text" placeholder=" '-'를 제외하고 입력해주세요. " name="businessNumber" id="businessNumber" pattern="\d{3}-\d{2}-\d{5}" maxlength="12" value="<%=dto.getBusinessNumber()%>">
+    <input type="text" placeholder=" '-'를 포함해서 입력해주세요. " name="businessNumber" id="businessNumber" pattern="\d{3}-\d{2}-\d{5}" maxlength="12" value="<%=dto.getBusinessNumber()%>">
     
     <label><b>회사/점포명</b></label>
     <input type="text" placeholder="Enter Company" name="companyName" id="companyName" value="<%=dto.getCompanyName()%>">
