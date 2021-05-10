@@ -205,7 +205,13 @@
 		$(document).ready(function() {
 			$("#checkedMileage").change(function() {
 				if ($("#checkedMileage").is(":checked")) {
-					if ($("#totalCost").val() >= $("#accumulateMileage").val()) {
+					var totalCost = $("#totalCost").val();
+					var mileage = $("#accumulateMileage").val();
+					totalCost = parseInt(totalCost);
+					mileage = parseInt(mileage);
+					console.log(totalCost, typeof totalCost);
+					console.log(mileage, typeof mileage);
+					if (totalCost >= mileage) {
 						$("#usedMileage").attr("value", "${orders.mileage }");
 					} else {
 						$("#usedMileage").attr("value", "${totalCost }");
