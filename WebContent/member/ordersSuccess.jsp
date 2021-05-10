@@ -61,7 +61,7 @@ button {
 	  </div>
 	  <div class="container" >
 	    <h2><b>결제가 완료되었습니다.</b></h2> 
-	    <button class="btn btn-success" onclick="location.href='${CONTEXT_PATH}/orderList/orderListController?action=orderList'">주문내역</button>
+	    <button class="btn btn-success" onclick="location.href='${CONTEXT_PATH}/member/memberController?action=memberMyPage'">마이페이지</button>
 	  </div>
 	</div>
 </div>
