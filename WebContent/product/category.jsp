@@ -30,7 +30,7 @@
 	<ul class="nav nav-list">
 		<li><a href="${CONTEXT_PATH}/product/productController?action=productListByCategoryForm">
 			<span class="icon-chevron-right"></span>전체</a></li>
-		<c:forEach var="categoryList" items="${categoryList1}">
+		<c:forEach var="categoryList" items="${categoryList}">
 		<li><a href="${CONTEXT_PATH}/product/productController?action=productListByCategory&categoryId=${categoryList.categoryId}">
 			<span class="icon-chevron-right"></span>${categoryList.categoryName}</a></li>
 		</c:forEach>

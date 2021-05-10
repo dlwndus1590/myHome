@@ -262,8 +262,7 @@ public class FrontMember extends HttpServlet {
 				session.setAttribute("companyName", dto.getCompanyName());
 				session.setAttribute("dto", dto);	
 				session.setAttribute("mileage", dto.getMileage());
-				request.getRequestDispatcher("/index.jsp").forward(request,response);		
-				
+				request.getRequestDispatcher("/index.jsp").forward(request,response);	
 			}else {
 				response.setContentType("text/html;charset=UTF-8");
 				PrintWriter writer = response.getWriter();

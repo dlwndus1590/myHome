@@ -55,7 +55,7 @@
             <div class="carousel-inner">
 			<div class="item active">
 			  <ul class="thumbnails">
-			  	<c:forEach var="categoryList" items="${categoryList3}" begin="0" end="3" step="1">
+			  	<c:forEach var="categoryList" items="${categoryList}" begin="0" end="3" step="1">
 				<li class="span3">
 				<div class="thumbnail">
 					<a class="zoomTool" href="${CONTEXT_PATH}/product/productController?action=productListByCategory&categoryId=${categoryList.categoryId}" title="add to cart"><span class="icon-search"></span>${categoryList.categoryName}</a>
@@ -70,7 +70,7 @@
 			  </div>
 		   <div class="item">
 		  <ul class="thumbnails">
-		  	<c:forEach var="categoryList" items="${categoryList3}" begin="4" end="7" step="1">
+		  	<c:forEach var="categoryList" items="${categoryList}" begin="4" end="7" step="1">
 			<li class="span3">
 			  <div class="thumbnail">
 				<a class="zoomTool" href="${CONTEXT_PATH}/product/productController?action=productListByCategory&categoryId=${categoryList.categoryId}" title="add to cart"><span class="icon-search"></span>${categoryList.categoryName}</a>

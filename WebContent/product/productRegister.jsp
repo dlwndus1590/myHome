@@ -84,7 +84,7 @@
 		<label class="control-label"> 카테고리 <sup>*</sup></label>
 		<div class="controls">
 		  	<select name="categoryId" id="categoryId" style="width:220px;">
-		  	<c:forEach var="categoryList" items="${categoryList4}">
+		  	<c:forEach var="categoryList" items="${categoryList}">
 				<option value="${categoryList.categoryId}">${categoryList.categoryName}</option>
 			</c:forEach>
 			</select>
