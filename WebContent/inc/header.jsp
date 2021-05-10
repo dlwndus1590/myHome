@@ -175,7 +175,7 @@
                       <a href="${CONTEXT_PATH}/product/productController?action=productListByBestForm">베스트</a>
                    </div>
                 </li>
-                <c:if test="${dto.grade == '관리자' }">
+                <c:if test="${sessionScope.dto.grade == '관리자' }">
 				<li class="dropdown">
                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">회원관리</a>
                       <div class="dropdown-menu">

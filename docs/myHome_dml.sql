@@ -2,13 +2,15 @@
 -- member 초기화데이터
 insert into member values ('user01', 'password01', '홍길동', 'user01@work.com', '010-1234-1000', '12345', '서울시 관악구', '111동 1111호', null, null, to_char(sysdate, 'yyyy-mm-dd'), 1000, '일반회원');
 insert into member values ('admin', 'admin01', '마동석', 'admin@work.com', '010-1111-2222', '46321', '부산 해운대구', '102동 1103호', null, null, '2020-01-01', 0, '관리자');
-insert into member values ('ucamp01', 'ucamppw01', '강감찬', 'ucamp01@work.com', '010-5678-1000', '73154', '서울시 은평구', 'oo건물 502호', '251-24-51821', 'KCC', '2021-03-20', 0, '판매자');
+insert into member values ('ucamp01', 'ucamppw01', '이서아', 'ucamp01@work.com', '010-5678-1000', '73154', '서울시 은평구', 'oo건물 502호', '251-24-51821', 'KCC', '2019-03-20', 0, '판매자');
+insert into member values ('ucamp02', 'ucamppw02', '김상훈', 'ucamp02@work.com', '010-3892-8231', '37214', '서울시 강남구', 'oo건물 302호', '324-62-68925', 'USP', '2020-04-21', 0, '판매자');
+insert into member values ('ucamp03', 'ucamppw03', '이재철', 'ucamp03@work.com', '010-3921-8421', '89382', '서울시 서초구', 'oo건물 409호', '455-13-89283', 'W3C', '2020-06-30', 0, '판매자');
 
 -- notice(공지사항) 초기화데이터
-insert into notice values (1,'admin', '질문 게시글 공지사항입니다.', '질문 게시글에서 커뮤니티에 적합하지 않는 게시글은 통보 없이 삭제 될 수 있으니 유의하시기 바랍니다.', to_char(sysdate, 'yyyy-mm-dd'), 123);
-insert into notice values (2,'admin', '댓글 관련 공지사항입니다.', '커뮤니티에 적합하지 않는 댓글은 통보 없이 삭제 될 수 있으니 유의하시기 바랍니다.', to_char(sysdate, 'yyyy-mm-dd'), 74);
-insert into notice values (3,'admin', '후기 관련 공지사항입니다.', '지나친 욕설, 인격 모독을 후기에 입력 하실 경우, 고소 절차가 진행 될 수 있습니다.', to_char(sysdate, 'yyyy-mm-dd'), 49);
-insert into notice values (4,'admin', '구매 관련 공지사항입니다.', '구매가 완료될 경우, 구매 총 금액의 1퍼센트를 마일리지로 적립해 드립니다!!', to_char(sysdate, 'yyyy-mm-dd'), 32);
+insert into notice values (1,'admin', '질문 게시글 공지사항입니다.', '질문 게시글에서 커뮤니티에 적합하지 않는 게시글은 통보 없이 삭제 될 수 있으니 유의하시기 바랍니다.', to_date('2019-04-20', 'yyyy-mm-dd'), 421);
+insert into notice values (2,'admin', '댓글 관련 공지사항입니다.', '커뮤니티에 적합하지 않는 댓글은 통보 없이 삭제 될 수 있으니 유의하시기 바랍니다.', to_date('2019-04-25', 'yyyy-mm-dd'), 392);
+insert into notice values (3,'admin', '후기 관련 공지사항입니다.', '지나친 욕설, 인격 모독을 후기에 입력 하실 경우, 고소 절차가 진행 될 수 있습니다.', to_date('2019-04-26', 'yyyy-mm-dd'), 387);
+insert into notice values (4,'admin', '구매 관련 공지사항입니다.', '구매가 완료될 경우, 구매 총 금액의 1퍼센트를 마일리지로 적립해 드립니다!!', to_date('2019-05-20', 'yyyy-mm-dd'), 283);
 
 -- category 초기화데이터
 insert into category values (1, '가구/가전','img/category/category1.jpg');
@@ -23,11 +25,11 @@ insert into category values (7, 'DIY/공구', 'img/category/category7.jpg');
 insert into product values (1, '박나래 기절베개 - 호텔식베개 커버포함 2종',  25900, 'img/product/1.jpg', 'img/product/describe1.png', 0, 'KCC', 2, 4.87, 80 , 210, to_date('2019-04-21', 'yyyy-mm-dd'), 35, 171);
 insert into product values (2, '프란시스 Y3.3 커피머신 + 웰컴캡슐 14개',  119000, 'img/product/2.jpg', 'img/product/describe2.png', 5000, 'KCC', 1, 4.9, 90, 240, to_date('2019-05-17', 'yyyy-mm-dd'), 65, 319);
 insert into product values (3, '헤링본 발탄 사이잘룩 러그 카페트',  12800, 'img/product/3.jpg', 'img/product/describe3.png', 0, 'KCC', 2, 4.85, 46, 180, to_date('2020-02-02', 'yyyy-mm-dd'), 25, 121);
-insert into product values (4, '스마트전구 (LED 컬러 전구 / 앱연동)',  19900, 'img/product/4.jpg', 'img/product/describe4.png', 3000, 'KCC', 3, 3.85, 20, 130, to_date('2020-11-13', 'yyyy-mm-dd'), 8, 31);
-insert into product values (5, 'RASKOG 로스코그 키친 카트 트롤리 웨건',  34900, 'img/product/5.jpg', 'img/product/describe5.png', 0, 'KCC', 4, 4.55, 32, 190, to_date('2020-09-16', 'yyyy-mm-dd'), 14, 64);
-insert into product values (6, '비바체 100매 20팩 캡형 물티슈',  14900, 'img/product/6.jpg', 'img/product/describe6.png', 0, 'KCC', 5, 4.78, 49, 130, to_date('2021-10-03', 'yyyy-mm-dd'), 20, 96);
-insert into product values (7, '놋담 달수저 외 인기 커트러리 모음',  25800, 'img/product/7.jpg', 'img/product/describe7.png', 2500, 'KCC', 6, 4.45, 85, 320, to_date('2021-04-29', 'yyyy-mm-dd'), 65, 289);
-insert into product values (8, '3.7V 전동 드라이버 WW-D1',  29900, 'img/product/8.jpg', 'img/product/describe8.png', 0, 'KCC', 7, 4.3, 23, 300, to_date('2021-05-06','yyyy-mm-dd'), 12, 52);
+insert into product values (4, '스마트전구 (LED 컬러 전구 / 앱연동)',  19900, 'img/product/4.jpg', 'img/product/describe4.png', 3000, 'W3C', 3, 3.85, 20, 130, to_date('2020-11-13', 'yyyy-mm-dd'), 8, 31);
+insert into product values (5, 'RASKOG 로스코그 키친 카트 트롤리 웨건',  34900, 'img/product/5.jpg', 'img/product/describe5.png', 0, 'USP', 4, 4.55, 32, 190, to_date('2020-09-16', 'yyyy-mm-dd'), 14, 64);
+insert into product values (6, '비바체 100매 20팩 캡형 물티슈',  14900, 'img/product/6.jpg', 'img/product/describe6.png', 0, 'USP', 5, 4.78, 49, 130, to_date('2021-10-03', 'yyyy-mm-dd'), 20, 96);
+insert into product values (7, '놋담 달수저 외 인기 커트러리 모음',  25800, 'img/product/7.jpg', 'img/product/describe7.png', 2500, 'USP', 6, 4.45, 85, 320, to_date('2021-04-29', 'yyyy-mm-dd'), 65, 289);
+insert into product values (8, '3.7V 전동 드라이버 WW-D1',  29900, 'img/product/8.jpg', 'img/product/describe8.png', 0, 'W3C', 7, 4.3, 23, 300, to_date('2021-05-06','yyyy-mm-dd'), 12, 52);
 
 -- cart 초기화데이터
 insert into cart values (1, 'user01', 2, 2);
@@ -66,7 +68,11 @@ INSERT INTO orders_detail VALUES (2, 2, 2, 1, 4);
 INSERT INTO orders_detail VALUES (3, 2, 3, 1, 0);
 
 -- interior 초기화데이터
-insert into interior values (1, '유캠프인테리어', 5, '설명 대체', '서울시 태해란로 11길 5','010-3924-2391');
+insert into interior values (1, '디자인젬', 5, '화이트 톤의 인테리어를 잘 꾸밀 수 있습니다', '서울시 태해란로 11길 5','010-3924-2391');
+insert into interior values (2, '(주)아름드리디자인', 9, '항상 아낌없이 다하는 인테리어를 합니다', '서울시 서해로 39길 12','010-4523-9122');
+insert into interior values (3, '그린리프디자인 ', 8, '항상 고객님이 원하는 최상의 결과를 보여드리겠습니다.', '서울시 강남구 18길 42','010-8349-9391');
+insert into interior values (4, '디자인바이세미콜론', 12, '깔끔하고 우아한 분위기의 인테리어를 만들어 낼 수 있습니다.', '서울시 보라매로 19길 39','010-9012-8524');
+
 commit;
 ----------------------------------------------------------------------------------------------
 
