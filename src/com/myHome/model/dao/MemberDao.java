@@ -76,8 +76,7 @@ public class MemberDao implements Serializable{
 			e.printStackTrace();
 		} finally {
 			JdbcTemplate.close(rs);
-			JdbcTemplate.close(stmt);
-			JdbcTemplate.close(conn);
+			JdbcTemplate.close(stmt);			
 		}		
 	}
 	

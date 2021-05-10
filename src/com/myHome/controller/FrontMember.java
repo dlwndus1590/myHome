@@ -565,7 +565,7 @@ public class FrontMember extends HttpServlet {
 		if(selectByMemberPw != null){
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter writer = response.getWriter();
-			writer.println("<script>alert('회원님의 임시 비밀번호는 "+selectByMemberPw+" 입니다.'); location.href= '"+CONTEXT_PATH+"/index.jsp';</script>");
+			writer.println("<script>alert('회원님의 임시 비밀번호는 "+selectByMemberPw+" 입니다. 비밀번호 변경을 부탁드립니다.'); location.href= '"+CONTEXT_PATH+"/index.jsp';</script>");
 			writer.close();			
 		} else {
 			response.setContentType("text/html;charset=UTF-8");
