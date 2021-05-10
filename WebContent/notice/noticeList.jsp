@@ -44,10 +44,10 @@
 			</c:if>
 			<tr>
 				<th align="center" class="nTitle" id="nNo"></th>
-				<th align="center" class="nTitle">아이디</th>
-				<th align="center" class="nTitle">제목</th>
+				<th align="center" class="nTitle" style="width:10%;">아이디</th>
+				<th align="center" class="nTitle" style="width:55%;">제목</th>
 				<th align="center" class="nTitle">등록일자</th>
-				<th align="center" class="nTitle">조회수</th>
+				<th align="center" class="nTitle" style="width:10%;">조회수</th>
 			</tr>
 			<c:choose>
 				<c:when test="${not empty list}">

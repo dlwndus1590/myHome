@@ -123,9 +123,9 @@ button:hover {
       <input type="text" placeholder="' - ' 를 포함해서 작성해주세요." class="input" id="imobile" name="imobile" required maxlength="13">
 
       <div class="clearfix">
-        <input type="reset" class="cancelbtn" value="초기화"></input>
-        <input type="submit" class="signupbtn" value="등록하기"></input>
-        <input type="submit" class="signupbtn" value="이전으로"  onclick="goBack()"></input>
+        <input type="reset" class="shopBtn" value="초기화"></input>
+        <input type="submit" class="shopBtn" value="등록하기"></input>
+        <input type="submit" class="defaultBtn" value="이전으로"  onclick="goBack()"></input>
       </div>
     </div>
     </div>

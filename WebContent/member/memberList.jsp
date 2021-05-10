@@ -105,15 +105,15 @@ tr:nth-child(even) {
 <p>
 <p>
 <p>
-<form action="${CONTEXT_PATH}/member/memberController?action=memberList" style="max-width:200px" method="post">  	
-  	<select name="searchKey">
+<form action="${CONTEXT_PATH}/member/memberController?action=memberList" style="max-width:200px; display:inline; padding-left:23%;" method="post">  	
+  	<select name="searchKey" style="display:inline;">
 		<option value="none">::선택::</option>
 		<option value="member_id">아이디</option>
 		<option value="name">이름</option>
 		<option value="grade">등급</option>
 	</select>
-  <input type="text" placeholder="Search.." name="keyWord">  
-  <input type="submit" class="signupbtn" value="검색" onclick="searchCheck(form)"></button>
+  <input type="text" placeholder="Search.." name="keyWord" style="display:inline; height:30px;">  
+  <input type="submit" class="shopBtn" value="검색" onclick="searchCheck(form)" style="display:inline; height:30px;"></button>
 </form>
 
 </div>

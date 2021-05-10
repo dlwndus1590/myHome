@@ -68,8 +68,8 @@
 <body>
 
 <div class="row">
-<div class="span9" style="width:960px;backgroud-color:white;">
-<div class="well well-small">
+<div class="span9" style="width:960px; backgroud-color:white;">
+<div class="well well-small" style="height:400px;">
 <h2>${dto.name}  님 정보</h2>
 	<table>
 	  <tr>
@@ -119,7 +119,7 @@
 	</table>
 	<br>
 	<a href="${CONTEXT_PATH}/member/memberController?action=memberAdminDelete&memberId=${dto.memberId}"
-		class="a"	onclick="return confirm('회원님을 정말 탈퇴시키시겠습니까?')">탈퇴시키기</a>			
+		class="shopBtn"	onclick="return confirm('회원님을 정말 탈퇴시키시겠습니까?')" style="float:right;">탈퇴시키기</a>			
 	 
 </div>
 </div>

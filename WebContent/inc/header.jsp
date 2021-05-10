@@ -193,7 +193,7 @@
                 </li>
                 <c:if test="${sessionScope.dto.grade == '관리자' }">
 				<li class="dropdown">
-                   <a data-toggle="dropdown" class="dropdown-toggle" href="#">회원관리</a>
+                   <a data-toggle="dropdown" class="dropdown-toggle" href="#">회원관리 <b class="caret"></b></a>
                       <div class="dropdown-menu">
                       <a href="${CONTEXT_PATH}/member/memberController?action=memberList">전체 회원목록</a>
                       <a href="${CONTEXT_PATH}/member/memberController?action=adminMyInfo">내정보 변경</a>
