@@ -149,10 +149,10 @@ h3{
 		document.getElementById("innerText").innerHTML = total+" 원";		
 	}
 
-	var mobileElement = document.getElementById("mobile");
-	var mobile = mobileElement.value;
-	
 	function sangdamCheck(){
+		var mobileElement = document.getElementById("mobile");
+		var mobile = mobileElement.value;
+	
 		if(num1==0){
 			alert("주거유형을 선택해 주세요.");
 			return false;
