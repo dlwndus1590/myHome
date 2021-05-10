@@ -171,7 +171,7 @@ h3{
 		} else if(num6==0){
 			alert("주방을 선택해 주세요.");
 			return false;
-		} else if(mobile.length == 0){			
+		} else if(mobile.length ==0 ){			
 			alert("연락처를 입력해주세요.");
 			mobileElement.focus();
 			return false;
