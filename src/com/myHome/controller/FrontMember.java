@@ -273,7 +273,7 @@ public class FrontMember extends HttpServlet {
 				session.setAttribute("grade", dto.getGrade());
 				session.setAttribute("name", dto.getName());
 				session.setAttribute("companyName", dto.getCompanyName());
-				System.out.println(dto);
+				
 				session.setAttribute("dto", dto);	
 				session.setAttribute("mileage", dto.getMileage());
 				request.getRequestDispatcher("/index.jsp").forward(request,response);	
@@ -924,7 +924,7 @@ public class FrontMember extends HttpServlet {
 			
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter writer = response.getWriter();
-			writer.println("<script>alert('정보변경이 완료되었습니다.'); location.href= '"+CONTEXT_PATH+"/member/memberController?action=adminMyPage&memberId="+memberId+"';</script>");
+			writer.println("<script>alert('정보변경이 완료되었습니다.'); location.href= '"+CONTEXT_PATH+"/member/memberController?action=adminMyInfo&memberId="+memberId+"';</script>");
 			writer.close();			
 			
 		} catch (Exception e) {

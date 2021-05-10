@@ -101,60 +101,90 @@
 <div class="well well-small" style="width:100%; height:760px;">
   
   <h2><%=dto.getIname() %></h2>
-      <div class="container2">            
-	      <hr class="hr">
-	      <label><b>No</b></label>      
-	      <input type="text" placeholder="Enter No"  class="input" id="ino" name="ino" value="<%=dto.getIno() %>" readonly="readonly">
-	      
-	      <label><b>회사명</b></label>	      
-	      <input type="text" placeholder="Enter Name"   class="input" id="iname" name="iname" value="<%=dto.getIname() %>">
-	
-	      <label><b>경력</b></label>
-	      <input type="text" placeholder="Enter Career"  class="input" id="icareer" name="icareer" value="<%=dto.getIcareer()%>">
-	
-	      <label><b>회사 설명</b></label>
-	      <input type="text" placeholder="Enter Detail"   class="input" id="idetail" name="idetail" value="<%=dto.getIdetail()%>">
-	      
-	      <label><b>위치</b></label>
-	      <input type="text" placeholder="Enter Location"  class="input" id="ilocation" name="ilocation" value="<%=dto.getIlocation()%>">
-	      
-	      <label><b>연락처</b></label>
-      	  <input type="text" placeholder="' - ' 를 포함해서 작성해주세요." class="input" id="imobile" name="imobile" value="<%=dto.getImobile()%>">
-	
-		  <!-- 
-		  		인테리어 등록/수정/삭제하기는 관리자 권한
-		  		관리자 로그인 시에만 보이는 버튼  
-		  		-->
-		  		
-		  		<%
-	                  Member mainMember = null;
-	                  if(session.getAttribute("dto")==null){
-	            %>   
-	                 	<p></p>                            
-	            <%
-	               	}else {
-	                     mainMember = (Member)session.getAttribute("dto");                     
-				%> 
-	            <% if(mainMember.getGrade().equals("관리자")){  %>  
-	            		<div class="clearfix">	            			   
-			  				<input type="submit" class="button"  value="수정하기" >			  							         
-	      				</div>      
-	            
-	      
-    </div>
-
-</form>
-
-<form action="${CONTEXT_PATH}/interior/interiorController?action=deleteInterior" method="post" style="margin-right:90%;">
-	<div class="clearfix" style="margin-left: 17%;">        
-		<input type="submit" class="button" value="삭제하기">		         
-	</div>	 
-</form>
-
-<%
-	    }	
-	            }
-%>
+  	
+  	<%
+           Member mainMember = null;
+  		   mainMember = (Member)session.getAttribute("dto");
+           if(mainMember.getGrade().equals("관리자")){
+  	%>   
+          		<div class="container2">            
+			      <hr class="hr">
+			      <label><b>No</b></label>      
+			      <input type="text" placeholder="Enter No"  class="input" id="ino" name="ino" value="<%=dto.getIno() %>" readonly="readonly">
+			      
+			      <label><b>회사명</b></label>	      
+			      <input type="text" placeholder="Enter Name"   class="input" id="iname" name="iname" value="<%=dto.getIname() %>">
+			
+			      <label><b>경력</b></label>
+			      <input type="text" placeholder="Enter Career"  class="input" id="icareer" name="icareer" value="<%=dto.getIcareer()%>">
+			
+			      <label><b>회사 설명</b></label>
+			      <input type="text" placeholder="Enter Detail"   class="input" id="idetail" name="idetail" value="<%=dto.getIdetail()%>">
+			      
+			      <label><b>위치</b></label>
+			      <input type="text" placeholder="Enter Location"  class="input" id="ilocation" name="ilocation" value="<%=dto.getIlocation()%>">
+			      
+			      <label><b>연락처</b></label>
+		      	  <input type="text" placeholder="' - ' 를 포함해서 작성해주세요." class="input" id="imobile" name="imobile" value="<%=dto.getImobile()%>">
+			
+				  <!-- 
+				  		인테리어 등록/수정/삭제하기는 관리자 권한
+				  		관리자 로그인 시에만 보이는 버튼  
+				  		-->
+				  		
+				  		<%			                  
+			                  if(session.getAttribute("dto")==null){
+			            %>   
+			                 	<p></p>                            
+			            <%
+			               	}else {
+			                     mainMember = (Member)session.getAttribute("dto");                     
+						%> 
+			            <% if(mainMember.getGrade().equals("관리자")){  %>  
+			            		<div class="clearfix">	            			   
+					  				<input type="submit" class="button"  value="수정하기" >			  							         
+			      				</div>   		      
+		    	</div>		
+			</form>		
+			<form action="${CONTEXT_PATH}/interior/interiorController?action=deleteInterior" method="post" style="margin-right:90%;">
+				<div class="clearfix" style="margin-left: 17%;">        
+					<input type="submit" class="button" value="삭제하기">		         
+				</div>	 
+			</form>		
+		<%
+			    }	
+			            }
+		%>           
+		                 
+  		<%
+        	} else if(mainMember.getGrade().equals("일반회원") || mainMember.getGrade().equals("판매자")){                                   	
+		%> 
+           		<div class="container2">            
+			      <hr class="hr">
+			      <label><b>No</b></label>      
+			      <input type="text" placeholder="Enter No"  class="input" id="ino" name="ino" value="<%=dto.getIno() %>" readonly="readonly">
+			      
+			      <label><b>회사명</b></label>	      
+			      <input type="text" placeholder="Enter Name"   class="input" id="iname" name="iname" value="<%=dto.getIname() %>" readonly="readonly">
+			
+			      <label><b>경력</b></label>
+			      <input type="text" placeholder="Enter Career"  class="input" id="icareer" name="icareer" value="<%=dto.getIcareer()%>" readonly="readonly">
+			
+			      <label><b>회사 설명</b></label>
+			      <input type="text" placeholder="Enter Detail"   class="input" id="idetail" name="idetail" value="<%=dto.getIdetail()%>" readonly="readonly">
+			      
+			      <label><b>위치</b></label>
+			      <input type="text" placeholder="Enter Location"  class="input" id="ilocation" name="ilocation" value="<%=dto.getIlocation()%>" readonly="readonly">
+			      
+			      <label><b>연락처</b></label>
+		      	  <input type="text" placeholder="' - ' 를 포함해서 작성해주세요." class="input" id="imobile" name="imobile" value="<%=dto.getImobile()%>" readonly="readonly">
+    	
+     
+     	<%
+        	}
+     	%>  
+     
+      
 
 </div>
 </div>

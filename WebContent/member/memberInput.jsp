@@ -168,7 +168,11 @@ a {
     <input type="text" placeholder="Enter Email" name="email" id="email" required>
 
 	<label><b>핸드폰</b></label>
+<<<<<<< HEAD
     <input type="text" placeholder="Enter mobile" name="mobile" id="mobile" placeholder=" '-'를 포함해서 입력해주세요. " pattern="010-\d{4}-\d{4}" maxlength="13" required>
+=======
+    <input type="text" placeholder="Enter mobile" name="mobile" id="mobile" pattern="010-\d{4}-\d{4}" maxlength="13" placeholder=" '-'를 포함해서 입력해주세요. " required>
+>>>>>>> feature/500
     
     <label><b>주소</b></label>
     <br>
