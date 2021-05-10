@@ -921,7 +921,7 @@ public class FrontMember extends HttpServlet {
 			
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter writer = response.getWriter();
-			writer.println("<script>alert('정보변경이 완료되었습니다.'); location.href= '"+CONTEXT_PATH+"/member/memberController?action=adminMyPage&memberId="+memberId+"';</script>");
+			writer.println("<script>alert('정보변경이 완료되었습니다.'); location.href= '"+CONTEXT_PATH+"/member/memberController?action=adminMyInfo&memberId="+memberId+"';</script>");
 			writer.close();			
 			
 		} catch (Exception e) {

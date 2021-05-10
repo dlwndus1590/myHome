@@ -149,6 +149,7 @@ h3{
 		document.getElementById("innerText").innerHTML = total+" 원";		
 	}
 
+	var mobileElement = document.getElementById("mobile");
 	
 	function sangdamCheck(){
 		if(num1==0){
@@ -169,7 +170,10 @@ h3{
 		} else if(num6==0){
 			alert("주방을 선택해 주세요.");
 			return false;
-		} else if(num1 !=0 || num2 != 0 || num3 !=0 || num4 !=0 || num5 != 0 || num6 != 0){
+		} else if(mobileElement == null){			
+			alert("연락처를 입력해주세요.");
+			return false;
+		} else if(num1 !=0 || num2 != 0 || num3 !=0 || num4 !=0 || num5 != 0 || num6 != 0 || mobileElement !=  null){
 			alert("작성해 주신 연락처로 연락을 드리도록 하겠습니다.");
 			return true;						
 		}
@@ -191,7 +195,7 @@ h3{
 		<img alt="견적서" src="${CONTEXT_PATH}/img/bill2.png">
 	</div>
 	<br>
-	<p>주거유형(필수)</p>
+	<p>주거유형</p>
 	<div class="title">
 		<button id="titie1" class="btn success" value="1000000" onclick="totalPrice(this)">아파트</button>
 		<button id="titie2" class="btn success" value="900000" onclick="totalPrice(this)">빌라</button>
@@ -199,7 +203,7 @@ h3{
 	</div>
 	
 	<br>
-	<p>평수/공급면적(필수)</p>
+	<p>평수/공급면적</p>
 	<div class="width">
 		<button id="width1" class="btn success" value="300000" onclick="totalPrice(this)">20평~</button>
 		<button id="width2" class="btn success" value="350000" onclick="totalPrice(this)">30평~</button>
