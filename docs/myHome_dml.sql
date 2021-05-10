@@ -38,7 +38,7 @@ insert into cart values (1, 'user01', 2, 2);
 insert into review values (1, 2, 'img/product/2.jpg', '무척 최고!!', 4, 'user01', '2021-04-02');
 
 -- qnotice 초기화데이터
-insert into qnotice values (1, '이거 어떻게 해결해야하나요', '답변 부탁드립니다.', '/img/qNotice/interior.jpg', 'user01', to_char(sysdate, 'yyyy-mm-dd'), 5);
+insert into qnotice values (1, '이거 어떻게 해결해야하나요', '답변 부탁드립니다.', '/img/qNotice/interior.jpg', 'user01', to_date('2019-04-20', 'yyyy-mm-dd'), 5);
 
 -- qnotice 초기화데이터
 insert into qnotice values (2, '마루바닥 눌림 어떻게 하면 좋을까요?', '사진과 같이 철제 다리로 된 소파를 사용한 지 6개월 정도 됐습니다.
@@ -49,7 +49,7 @@ insert into qnotice values (2, '마루바닥 눌림 어떻게 하면 좋을까�
 
 그치만 자국이 남기는 남아서 계속 방법을 찾고 있는데, 혹시 테니스공을 쓰거나 러그를 깔면 마루에 자국이 안 남을까요? 아니면 사진과 같은 나무 원판을 다리 밑에 놓아서 무게를 분산시키는게 나을까요?
 
-그리고 눌린 부분을 다리미로 열을 가해 원상복구 시킬 수도 있을까요?', '/img/qNotice/maru.PNG', 'user01', to_char(sysdate, 'yyyy-mm-dd'), 5);
+그리고 눌린 부분을 다리미로 열을 가해 원상복구 시킬 수도 있을까요?', '/img/qNotice/maru.PNG', 'user01', to_date('2021-05-10', 'yyyy-mm-dd'), 5);
 
 -- answer 초기화데이터
 insert into answer values (1, 1, '그건 이렇게 해결하는겁니다.', 'ucamp01', to_char(sysdate, 'yyyy-mm-dd'));

@@ -140,6 +140,9 @@ public class FrontMember extends HttpServlet {
 		case "memberMyReviewList":	
 			memberMyReviewList(request,response);
 			break;
+		case "sellerMyQNoticeList":	
+			sellerMyQNoticeList(request,response);
+			break;
 		}
 	}
 
@@ -967,6 +970,24 @@ public class FrontMember extends HttpServlet {
 	 * 내 게시글 리스트 화면 요청 서비스
 	 * @author 김보성
 	 */
+	private void sellerMyQNoticeList(HttpServletRequest request, HttpServletResponse response) {
+			HttpSession session = request.getSession();
+			NoticeBiz biz = new NoticeBiz();
+			ArrayList<Qnotice> qnoticeList = new ArrayList<Qnotice>();
+			biz.getQnoticeList((String)session.getAttribute("memberId"),qnoticeList);
+			
+			request.setAttribute("qnoticeList", qnoticeList);
+			try {
+				request.getRequestDispatcher("/member/sellerQNoticeList.jsp").forward(request, response);
+			} catch (ServletException | IOException e) {
+				e.printStackTrace();
+			}
+	}
+	
+	/**
+	 * 내 게시글 리스트 화면 요청 서비스
+	 * @author 김보성
+	 */
 	private void memberMyQNoticeList(HttpServletRequest request, HttpServletResponse response) {
 			HttpSession session = request.getSession();
 			NoticeBiz biz = new NoticeBiz();
@@ -975,7 +996,7 @@ public class FrontMember extends HttpServlet {
 			
 			request.setAttribute("qnoticeList", qnoticeList);
 			try {
-				request.getRequestDispatcher("/member/myNoticeList.jsp").forward(request, response);
+				request.getRequestDispatcher("/member/memberNoticeList.jsp").forward(request, response);
 			} catch (ServletException | IOException e) {
 				e.printStackTrace();
 			}
@@ -993,10 +1014,9 @@ public class FrontMember extends HttpServlet {
 		biz.getReviewList((String)session.getAttribute("memberId"), reviewList);
 		request.setAttribute("reviewList", reviewList);
 		try {
-			request.getRequestDispatcher("/member/myReviewList.jsp").forward(request, response);
+			request.getRequestDispatcher("/member/memberReviewList.jsp").forward(request, response);
 		} catch (ServletException | IOException e) {
 			e.printStackTrace();
 		}
 	}
 }
-

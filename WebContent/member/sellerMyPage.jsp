@@ -100,7 +100,7 @@
 	  <div class="column">
 	    <div class="card">
 	      <h3>myboard</h3>
-	      <a href="${CONTEXT_PATH}/member/memberController?action=memberMyQNoticeList"><p>내 게시글</p></a>  
+	      <a href="${CONTEXT_PATH}/member/memberController?action=sellerMyQNoticeList"><p>내 게시글</p></a>  
 	    </div>
 	  </div>
 		
