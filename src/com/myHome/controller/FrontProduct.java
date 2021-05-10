@@ -107,7 +107,6 @@ public class FrontProduct extends HttpServlet {
 			HttpSession session = request.getSession();
 			session.setAttribute("categoryList", categoryList);
 			session.setAttribute("productList1", productList1);
-			
 			response.sendRedirect(CONTEXT_PATH + "/product/category.jsp");
 		} catch (Exception e) {
 			e.printStackTrace();			
@@ -121,14 +120,18 @@ public class FrontProduct extends HttpServlet {
 		String categoryIdStr = request.getParameter("categoryId");
 		int categoryId = Integer.parseInt(categoryIdStr);
 		ArrayList<Product> productList1 = new ArrayList<Product>();
+		Category category = new Category();
+		category.setCategoryId(categoryId);
 		
 		ProductBiz biz = new ProductBiz();
 		
 		try {
 			biz.getProductListByCategory(categoryId, productList1);
+			biz.getCategory(category);
 			
 			HttpSession session = request.getSession();
 			session.setAttribute("productList1", productList1);
+			request.setAttribute("categoryName", category.getCategoryName());
 			request.getRequestDispatcher("/product/category.jsp").forward(request, response);
 			
 		} catch (Exception e) {
