@@ -209,8 +209,15 @@ public class FrontOrders extends HttpServlet {
 			totalDeliveryFee += Integer.parseInt(deliveryFee[index]);
 			getMileage = (int) (accumulateMileage + (totalP * 0.1));
 			int stock = Integer.parseInt(stock1[index]);
+			int pNo = Integer.parseInt(pNo1[index]);
 			
-			if (stock <= 0) {
+			if (stock < 0) {
+				try {
+					ordersBiz.cartDelete(memberId, pNo);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
 				response.setContentType("text/html;charset=UTF-8");
 				PrintWriter writer = response.getWriter();
 				writer.println("<script>alert('재고가 없습니다.'); location.href='" + CONTEXT_PATH + "/product/productController?action=productListByCategoryForm';</script>");
@@ -309,7 +316,13 @@ public class FrontOrders extends HttpServlet {
 		OrdersBiz ordersBiz = new OrdersBiz();
 		ProductBiz productBiz = new ProductBiz();
 		
-		if (stock <= 0) {
+		if (stock < 0) {
+			try {
+				ordersBiz.cartDelete(memberId, pNo);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter writer = response.getWriter();
 			writer.println("<script>alert('재고가 없습니다.'); location.href='" + CONTEXT_PATH + "/product/productController?action=productListByCategoryForm';</script>");
