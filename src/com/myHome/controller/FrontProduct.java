@@ -470,8 +470,6 @@ public class FrontProduct extends HttpServlet {
 			
 			biz.deleteProduct(pNo);
 			
-			System.out.println("상품 : " + product);
-			
 			File file1 = new File("C:/student_ucamp33/workspace_teamProject" + CONTEXT_PATH + "/WebContent/" + product.getpImg());
 			File file2 = new File("C:/student_ucamp33/workspace_teamProject" + CONTEXT_PATH + "/WebContent/" + product.getpDescribe());
 			System.out.println(file1 + "        " + file2);
