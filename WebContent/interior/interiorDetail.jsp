@@ -133,18 +133,12 @@
 	            		<div class="clearfix">	            			   
 			  				<input type="submit" class="button"  value="수정하기" >			  							         
 	      				</div>      
-	                  	
-	         	<%
-	                }
-	            }
-	            %>
+	            
 	      
     </div>
 
 </form>
-<%
-        if(mainMember.getGrade().equals("관리자")){
-%> 
+
 <form action="${CONTEXT_PATH}/interior/interiorController?action=deleteInterior" method="post" style="margin-right:90%;">
 	<div class="clearfix" style="margin-left: 17%;">        
 		<input type="submit" class="button" value="삭제하기">		         
@@ -153,6 +147,7 @@
 
 <%
 	    }	
+	            }
 %>
 
 </div>

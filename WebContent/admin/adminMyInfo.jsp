@@ -95,7 +95,7 @@
 	.signin {  
 	  text-align: center;
 	}
-	#memberid, #memberPw,#name,#email,#mobile,#zipcode,#address1,#address2,#entrydate,#mileage,#grade{
+	#memberid, #memberPw,#name,#email,#mobile,#zipcode,#address1,#address2,#entrydate,#grade{
 		height: 40px;
 	}
 </style>
@@ -118,7 +118,7 @@ function postcodeTest() {
 <!-- main menu : 로그인 전 메뉴 -->
 
 <!-- contents menu -->
-<form action="${CONTEXT_PATH}/member/memberController?action=memberMyInfoUpdate"  method="post" style="padding-left:4%;">
+<form action="${CONTEXT_PATH}/member/memberController?action=adminMyInfoUpdate"  method="post" style="padding-left:4%;">
 	
   <div class="container">
   	<br>
@@ -152,10 +152,7 @@ function postcodeTest() {
     
     <label><b>가입일자</b></label>
     <input type="text" placeholder="Enter Mobile" name="entrydate" id="entrydate" value="<%=dto.getEntryDate()%>" readonly="readonly">
-    
-    <label><b>마일리지</b></label>
-    <input type="text" placeholder="Enter Mobile" name="mileage" id="mileage" value="<%=dto.getMileage()%>" readonly="readonly">
-        
+            
     <label><b>등급</b></label>
     <input type="text" placeholder="Enter Mobile" name="grade" id="grade" value="<%=dto.getGrade()%>" readonly="readonly">
     <hr class="hr">

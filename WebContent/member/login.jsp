@@ -97,7 +97,7 @@
 		margin-left: 10%;
 	}
 	</style>
-
+<script type="text/javascript" src="${CONTEXT_PATH}/js/member_input.js"></script>
 </head>
 <body>
 

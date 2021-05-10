@@ -60,7 +60,7 @@ public class InteriorDao implements Serializable{
 	 * @return 성공시 true, 실패시 false
 	 */
 	public void updateInterior(Connection con,Interior interior) throws Exception{
-		String sql = "update interior set i_name=?,i_career=?,i_detail=?,i_location=? where i_no=?";
+		String sql = "update interior set i_name=?,i_career=?,i_detail=?,i_location=?,i_mobile=? where i_no=?";
 
 		PreparedStatement stmt = null;
 		
@@ -70,16 +70,15 @@ public class InteriorDao implements Serializable{
 			stmt.setInt(2, interior.getIcareer());
 			stmt.setString(3, interior.getIdetail());
 			stmt.setString(4, interior.getIlocation());
-			stmt.setInt(5, interior.getIno());			
+			stmt.setString(5, interior.getImobile());
+			stmt.setInt(6, interior.getIno());			
 			
-			int rows =stmt.executeUpdate();
-			if(rows == 0) {				
-				throw new Exception();
-			}
+			stmt.executeUpdate();
+
+		} catch (SQLException e) {	
 			
-		} catch (SQLException e) {			
-			System.out.println(e.getMessage());
 			e.printStackTrace();
+			throw new Exception();
 		} finally {
 			JdbcTemplate.close(stmt);			
 		}		

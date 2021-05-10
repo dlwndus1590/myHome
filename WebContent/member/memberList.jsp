@@ -7,9 +7,8 @@
 <%@page import="java.util.ArrayList"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
-	ArrayList<Member> dao = (ArrayList<Member>)request.getAttribute("list");	
-	Pager pager = new Pager();
-	pager.init(request, dao);
+	ArrayList<Member> dao = (ArrayList<Member>)request.getAttribute("list");
+
 %>
 <!DOCTYPE html>
 <html>
@@ -75,7 +74,7 @@ tr:nth-child(even) {
 	    <th>등급</th>    
 	  </tr>
 		<%
-			int num = 1;
+			int num = 1;			
 		%>
 		<c:forEach var="dto" items="${list}">
 		  <tr>	    

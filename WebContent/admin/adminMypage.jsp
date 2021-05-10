@@ -55,7 +55,7 @@
 		<h1><%=dto.getName() %>[${dto.memberId }] 님의 쇼핑정보</h1>
 		<hr>
 		<center>
-				<a href="${CONTEXT_PATH}/member/memberController?action=sellerMyInfo"><input type="submit" class="mypagebtn" value="내 정보 변경"></a>
+				<a href="${CONTEXT_PATH}/member/memberController?action=adminMyInfo"><input type="submit" class="mypagebtn" value="내 정보 변경"></a>
 					
 				<h3><%=dto.getName() %> 님은 [<%=dto.getGrade()%>] 입니다.</h2>			
 				
