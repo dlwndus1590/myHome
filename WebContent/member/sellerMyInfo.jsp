@@ -145,7 +145,7 @@ function postcodeTest() {
     
     <label><b>주소</b></label>
     <br>
-    <input type="text" placeholder="Enter Zipcode" name="zipcode" id="zipcode" value="<%=dto.getZipcode() %>" >
+    <input type="text" placeholder="Enter Zipcode" name="zipcode" id="zipcode" value="<%=dto.getZipcode() %>" readonly="readonly">
     <input type="button" value="우편찾기" id="zipcodeCheck" name="zipcodeCheck" onclick="postcodeTest()">  
 	<input type="text" placeholder="Enter address" name="address1"  required="required" value="<%=dto.getAddress1()%>" readonly="readonly">
 	<input type="text" placeholder="Enter address" name="address2"  required="required" value="<%=dto.getAddress2()%>">	    

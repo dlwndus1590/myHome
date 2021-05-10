@@ -92,6 +92,12 @@
 <form action="${CONTEXT_PATH}/interior/interiorController?action=updateInterior" method="post" style="width:960px; ">
 <div class="row">
 <div class="span9" style="width:100%; padding-right:50px;">
+    <ul class="breadcrumb">
+   		<li><a href="${CONTEXT_PATH}/index.jsp">Home</a> <span class="divider">></span></li>
+   		<li><a href="${CONTEXT_PATH}/interior/interiorController?action=interiorList">인테리어 모아보기</a> <span class="divider">></span></li>
+   		<li class="active"><%=dto.getIname() %></li>
+    </ul>
+
 <div class="well well-small" style="width:100%; height:760px;">
   
   <h2><%=dto.getIname() %></h2>

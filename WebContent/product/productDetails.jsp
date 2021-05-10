@@ -122,12 +122,9 @@
 						<h3> <fmt:formatNumber value="${productList.pPrice }" pattern="###,###"/> 원 </h3>
 						<div class="btn-group">
 						<c:if test="${dto.grade == '일반회원' }">
-						  <a href="${CONTEXT_PATH}/member/ordersController?action=cartInsert&pNo=${productList.pNo}" 
-						  			onclick="return confirm('로그인 후 이용해주시기 바랍니다 ')" class="defaultBtn"><span class=" icon-shopping-cart"></span> 장바구니 추가</a>
 				 		  <a href="${CONTEXT_PATH}/product/productController?action=productDetail&pNo=${productList.pNo}" class="shopBtn">상세보기</a>
 				 		</c:if>
 				 		<c:if test="${empty dto.memberId }">
-				 		  <a onclick="return confirm('로그인 후 이용해주시기 바랍니다 ')" class="defaultBtn"><span class=" icon-shopping-cart"></span> 장바구니 추가</a>
 				 		  <a href="${CONTEXT_PATH}/product/productController?action=productDetail&pNo=${productList.pNo}" class="shopBtn">상세보기</a>
 				 		</c:if>
 						</div>
