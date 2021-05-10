@@ -84,7 +84,7 @@
 												</a>
 											</div></td>
 										<td width="120">
-											<input class="input-small" type="text" name="totalPrice" value="${dto.totalPrice }">원
+											<input class="input-small" type="text" name="totalPrice" value="${dto.totalPrice }" readonly="readonly">원
 										</td>
 									</tr>
 									<input type="hidden" name="totalCost[]" value="${(dto.pPrice * dto.cCount) + dto.deliveryFee }">
@@ -97,7 +97,7 @@
 										<c:set var="total" value="${total + cart[i].totalPrice + cart[i].deliveryFee }" />
 									</c:forEach>
 									<td class="label label-primary" style="font-size: 20px">
-										<input class="input-small" type="text" name="sum_qty" value="${total }" 
+										<input class="input-small" type="text" name="sum_qty" value="<fmt:formatNumber value="${total}" pattern="###,###" />" 
 										style="background-color: #999999; 
 										color: #FFFFFF; font-size: 20px; border: none;">원
 									</td>
@@ -164,7 +164,7 @@
 				        	sum += obj[i].value * 1;
 				        }
 				    }
-				    //sum = sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+				    sum = sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 				    frm.sum_qty.value = sum;
 				}
 			});
