@@ -398,7 +398,7 @@ public class FrontMember extends HttpServlet {
 				} else {
 					response.setContentType("text/html;charset=UTF-8");
 					PrintWriter writer = response.getWriter();
-					writer.println("<script>alert('회원가입에 실패하셨습니다.'); location.href= '"+CONTEXT_PATH+"/member/memberController?action=loginChoice';</script>");
+					writer.println("<script>alert('회원가입에 실패하셨습니다.'); location.href= '"+CONTEXT_PATH+"/index.jsp';</script>");
 					writer.close();	
 				}
 				
@@ -481,7 +481,7 @@ public class FrontMember extends HttpServlet {
 				} else {
 					response.setContentType("text/html;charset=UTF-8");
 					PrintWriter writer = response.getWriter();
-					writer.println("<script>alert('회원가입에 실패하셨습니다.'); location.href= '"+CONTEXT_PATH+"/member/memberController?action=loginChoice';</script>");
+					writer.println("<script>alert('회원가입에 실패하셨습니다.'); location.href= '"+CONTEXT_PATH+"/index.jsp';</script>");
 					writer.close();	
 				}
 			} catch (Exception e) {

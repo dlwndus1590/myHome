@@ -99,6 +99,7 @@ a {
 </style>
 
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script type="text/javascript" src="${CONTEXT_PATH}/js/member_input.js"></script>
 <script type="text/javascript">
 	/* 아이디 중복 체크 */
 	var idcheck=false;
