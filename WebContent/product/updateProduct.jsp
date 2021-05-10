@@ -108,7 +108,7 @@
 		<div class="controls">
 			<input type="text" name="categoryName" id="categoryName" readonly="readonly" value="${category.categoryName}"> 
 		  	<select name="categoryId" id="categoryId" style="width:220px;" onchange="changeCategory()">
-		  	<c:forEach var="categoryList" items="${categoryList4}">
+		  	<c:forEach var="categoryList" items="${categoryList}">
 				<option value="${categoryList.categoryId}">${categoryList.categoryName}</option>
 			</c:forEach>
 			</select>

@@ -43,7 +43,7 @@
 	<div class="well well-small">
 		<a href="${CONTEXT_PATH}/product/productController?action=productListByBestForm" style="padding-right:30px; color:#385723; font-weight:bold;">
 			<img src="${CONTEXT_PATH}/img/circle.png" style="padding-right:5px;">전체</a>
-		<c:forEach var="categoryList" items="${categoryList2}"> 
+		<c:forEach var="categoryList" items="${categoryList}"> 
 		<a href="${CONTEXT_PATH}/product/productController?action=productListByBest&categoryId=${categoryList.categoryId}" style="padding-right:30px; color:#385723; font-weight:bold;">
 			<img src="${CONTEXT_PATH}/img/circle.png" style="padding-right:5px;">${categoryList.categoryName}</a>
 		</c:forEach>

@@ -35,7 +35,7 @@
 <!--Footer -->
 <div class="copyright">
 <div class="container" align="center">
-	<span>Copyright &copy; 2021<br> myHome</span>
+	<span>Copyright &copy; 2021 <span style="font-weight:bold;">MYHOME. </span> All Rights Reserved.</span>
 </div>
 </div>
 <button class="gotop" onClick="javascript:window.scrollTo(0,0)"><i class="icon-double-angle-up"></i></button>

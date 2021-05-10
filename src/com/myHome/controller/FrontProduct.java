@@ -97,15 +97,15 @@ public class FrontProduct extends HttpServlet {
 	 */
 	protected void productListByCategoryForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ProductBiz biz = new ProductBiz();
-		ArrayList<Category> categoryList1 = new ArrayList<Category>();
+		ArrayList<Category> categoryList = new ArrayList<Category>();
 		ArrayList<Product> productList1 = new ArrayList<Product>();
 		
 		try {
-			biz.getCategoryList(categoryList1);
+			biz.getCategoryList(categoryList);
 			biz.getProductList(productList1);
 			
 			HttpSession session = request.getSession();
-			session.setAttribute("categoryList1", categoryList1);
+			session.setAttribute("categoryList", categoryList);
 			session.setAttribute("productList1", productList1);
 			
 			response.sendRedirect(CONTEXT_PATH + "/product/category.jsp");
@@ -178,16 +178,16 @@ public class FrontProduct extends HttpServlet {
 	protected void productListByBestForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ArrayList<Product> productList3 = new ArrayList<Product>();
 		ProductBiz biz = new ProductBiz();
-		ArrayList<Category> categoryList2 = new ArrayList<Category>();
+		ArrayList<Category> categoryList = new ArrayList<Category>();
 		int number= 1;
 		
 		try {
 			biz.productListbyBest(productList3);
-			biz.getCategoryList(categoryList2);
+			biz.getCategoryList(categoryList);
 			
 			HttpSession session = request.getSession();
 			session.setAttribute("productList3", productList3);
-			session.setAttribute("categoryList2", categoryList2);
+			session.setAttribute("categoryList", categoryList);
 			session.setAttribute("number", number);
 			
 			response.sendRedirect(CONTEXT_PATH + "/product/best.jsp");
@@ -224,15 +224,15 @@ public class FrontProduct extends HttpServlet {
 	 */
 	protected void storeHome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ProductBiz biz = new ProductBiz();
-		ArrayList<Category> categoryList3 = new ArrayList<Category>();
+		ArrayList<Category> categoryList = new ArrayList<Category>();
 		ArrayList<Product> productList4 = new ArrayList<Product>();
 		
 		try {
 			biz.productListbyBest(productList4);
-			biz.getCategoryList(categoryList3);
+			biz.getCategoryList(categoryList);
 			
 			HttpSession session = request.getSession();
-			session.setAttribute("categoryList3", categoryList3);
+			session.setAttribute("categoryList", categoryList);
 			session.setAttribute("productList4", productList4);
 			
 			request.getRequestDispatcher("/product/storeHome.jsp").forward(request, response);
@@ -255,8 +255,7 @@ public class FrontProduct extends HttpServlet {
 			return;
 		}
 		
-		Member member = (Member)session.getAttribute("dto");
-		String companyName = member.getCompanyName();
+		String companyName = (String)session.getAttribute("companyName");
 		
 		ArrayList<Product> productList5 = new ArrayList<Product>();
 		ProductBiz biz = new ProductBiz();
@@ -287,13 +286,12 @@ public class FrontProduct extends HttpServlet {
 			request.getRequestDispatcher("/member/login.jsp").forward(request, response);
 			return;
 		}
-		
-		ArrayList<Category> categoryList4 = new ArrayList<Category>();
+		ArrayList<Category> categoryList = new ArrayList<Category>();
 		ProductBiz biz = new ProductBiz();
 		
 		try {
-			biz.getCategoryList(categoryList4);
-			session.setAttribute("categoryList4", categoryList4);
+			biz.getCategoryList(categoryList);
+			session.setAttribute("categoryList", categoryList);
 			
 			response.sendRedirect(CONTEXT_PATH + "/product/productRegister.jsp");
 		} catch (Exception e) {
