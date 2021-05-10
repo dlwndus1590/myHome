@@ -251,7 +251,7 @@ h3{
 	<br>
 	<p>연락 받으실 번호</p>
 	<div class="house">		
-		<input type="text" id="mobile" placeholder=" '-'를 포함해서 입력바랍니다. " maxlength="13">			
+		<input type="text" id="mobile" placeholder=" '-'를 포함해서 입력바랍니다. " maxlength="13" pattern="010-\d{4}-\d{4}">			
 	</div>
 	
 	<br>
