@@ -168,7 +168,7 @@ a {
     <input type="text" placeholder="Enter Email" name="email" id="email" required>
 
 	<label><b>핸드폰</b></label>
-    <input type="text" placeholder="Enter mobile" name="mobile" id="mobile" required>
+    <input type="text" placeholder="Enter mobile" name="mobile" id="mobile" pattern="010-\d{4}-\d{4}" maxlength="13" required>
     
     <label><b>주소</b></label>
     <br>
