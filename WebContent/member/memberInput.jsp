@@ -98,7 +98,7 @@ a {
 	height: 40px;
 }
 </style>
-
+<script type="text/javascript" src="${CONTEXT_PATH}/js/member_input.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script type="text/javascript">
 	var idcheck=false;
