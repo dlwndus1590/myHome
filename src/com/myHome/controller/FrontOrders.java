@@ -208,8 +208,8 @@ public class FrontOrders extends HttpServlet {
 		for (int index = 0; index < totalPrice.length; index++) {
 			totalP += Integer.parseInt(totalPrice[index]);
 			totalDeliveryFee += Integer.parseInt(deliveryFee[index]);
-			getMileage = (int) (accumulateMileage + (totalP * 0.1));
-			earnMileage = (int) (totalP * 0.1);
+			getMileage = (int) (accumulateMileage + (totalP * 0.01));
+			earnMileage = (int) (totalP * 0.01);
 			int stock = Integer.parseInt(stock1[index]);
 			int pNo = Integer.parseInt(pNo1[index]);
 			
@@ -311,8 +311,8 @@ public class FrontOrders extends HttpServlet {
 		String address1 = request.getParameter("address1");
 		String address2 = request.getParameter("address2");
 		int accumulateMileage = currentMileage - usedMileage;
-		int getMileage = (int) (accumulateMileage + (totalPrice * 0.1));
-		int earnMileage = (int) (totalPrice * 0.1);
+		int getMileage = (int) (accumulateMileage + (totalPrice * 0.01));
+		int earnMileage = (int) (totalPrice * 0.01);
 		int stock = Integer.parseInt(request.getParameter("stock"));
 		int pNo = Integer.parseInt(request.getParameter("pNo"));
 		int count = Integer.parseInt(request.getParameter("count"));
