@@ -117,8 +117,7 @@
   	%>   
           		<div class="container2">            
 			      <hr class="hr">
-			      <label><b>No</b></label>      
-			      <input type="text" placeholder="Enter No"  class="input" id="ino" name="ino" value="<%=dto.getIno() %>" readonly="readonly">
+			      <input type="hidden" placeholder="Enter No"  class="input" id="ino" name="ino" value="<%=dto.getIno() %>" readonly="readonly">
 			      
 			      <label><b>회사명</b></label>	      
 			      <input type="text" placeholder="Enter Name"   class="input" id="iname" name="iname" value="<%=dto.getIname() %>">
@@ -169,8 +168,7 @@
 		%> 
            		<div class="container2">            
 			      <hr class="hr">
-			      <label><b>No</b></label>      
-			      <input type="text" placeholder="Enter No"  class="input" id="ino" name="ino" value="<%=dto.getIno() %>" readonly="readonly">
+			      <input type="hidden" placeholder="Enter No"  class="input" id="ino" name="ino" value="<%=dto.getIno() %>" readonly="readonly">
 			      
 			      <label><b>회사명</b></label>	      
 			      <input type="text" placeholder="Enter Name"   class="input" id="iname" name="iname" value="<%=dto.getIname() %>" readonly="readonly">
