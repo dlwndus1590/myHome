@@ -42,13 +42,18 @@
   </head>
 
 <body>
-
-<!-- main menu : 로그인 전 메뉴 -->
-
+<!-- main menu : 로그인 전 -->
+<c:if test="${empty dto}">
+	<script type="text/javascript">
+		alert('로그인을 먼저 시도해주세요');
+		location.href="${CONTEXT_PATH}/member/login.jsp"
+	</script>
+</c:if>
 <!-- contents menu -->
 <%
 	Member dto = (Member)session.getAttribute("dto");
 %>
+
 <div class="row">
 <div class="span9" style="width:960px;">
 <div class="well well-small" style="height:850px;">
