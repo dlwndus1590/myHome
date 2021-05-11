@@ -114,13 +114,6 @@ tr:nth-child(even) {
 	  	</c:forEach>
 	</table>
 	<p>
-	<div>
-		<table>
-			<tr>
-				<td>[1]</td>
-			</tr>			
-		</table>
-	</div>
 	
 <p>
 <p>
