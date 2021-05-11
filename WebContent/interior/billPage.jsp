@@ -1,6 +1,7 @@
 <%@page import="com.myHome.util.Utility"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/inc/taglib_menu.jsp" %>  
 <!DOCTYPE html>
 <html>
 <head>
@@ -96,6 +97,18 @@ h3{
 	font-weight: bold;
 	font-family: verdana;
 }
+
+.text {
+	font-family: 굴림체;
+	font-weight: bold;
+	font-size: 27px;	
+	display: inline;
+}
+
+p{
+	font-family: verdana;	
+	font-size: 17px;
+}
 </style>
 
 <script type="text/javascript">
@@ -120,33 +133,40 @@ h3{
 	var num7 = 0;	
 	
 	function totalPrice(clickValue){		
-		var action = $(clickValue.parentNode).attr("class");		
+		var action = $(clickValue.parentNode).attr("class");	
+		
 		switch(action) {
 		case "title":
+			document.getElementById("span1").innerText = clickValue.id;
 			num1 = parseInt(clickValue.value);			
 			break;
 		case "width":
-			num2 = parseInt(clickValue.value);
+			document.getElementById("span2").innerText = clickValue.id;
+			num2 = parseInt(clickValue.value);	
 			break;
 		case "all":
-			num3 = parseInt(clickValue.value);
+			document.getElementById("span3").innerText = clickValue.id;
+			num3 = parseInt(clickValue.value);	
 			break;
 		case "silke":
-			num4 = parseInt(clickValue.value);			
+			document.getElementById("span4").innerText = clickValue.id;	
+			num4 = parseInt(clickValue.value);	
 			break;
 		case "floor":
-			num5 = parseInt(clickValue.value);			
+			document.getElementById("span5").innerText = clickValue.id;
+			num5 = parseInt(clickValue.value);	
 			break;
 		case "kitchen":
+			document.getElementById("span6").innerText = clickValue.id;
 			num6 = parseInt(clickValue.value);
 			break;			
 		}
 		
-		total = num1 + num2 + num3 + num4 + num5 + num6;		
+		total = num1 + num2 + num3 + num4 + num5 + num6;	
 		total = total * (param * 0.21);		
-		total = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+		total = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');		
 		
-		document.getElementById("innerText").innerHTML = total+" 원";		
+		document.getElementById("innerText").innerHTML = total+" 원";
 	}
 
 	function sangdamCheck(){
@@ -159,18 +179,6 @@ h3{
 		} else if(num2==0){
 			alert("평수/공급면적을 선택해 주세요.");
 			return false;
-		} else if(num3==0){
-			alert("시공 면적을 선택해 주세요.");
-			return false;
-		} else if(num4==0){
-			alert("도배를 선택해 주세요.");
-			return false;
-		} else if(num5==0){
-			alert("바닥재를 선택해 주세요.");
-			return false;
-		} else if(num6==0){
-			alert("주방을 선택해 주세요.");
-			return false;
 		} else if(mobile.length ==0 ){			
 			alert("연락처를 입력해주세요.");
 			mobileElement.focus();
@@ -180,9 +188,18 @@ h3{
 			return true;						
 		}
 	}
+
 </script>
 </head>
 <body>
+<!-- main menu : 로그인 전 -->
+<c:if test="${empty dto}">
+	<script type="text/javascript">
+		alert('로그인을 먼저 시도해주세요');
+		location.href="${CONTEXT_PATH}/member/login.jsp"
+	</script>
+</c:if>
+
 <div class="row">
 <div class="span9" style="width:960px;">
     <ul class="breadcrumb" style="width:960px;">
@@ -197,59 +214,65 @@ h3{
 		<img alt="견적서" src="${CONTEXT_PATH}/img/bill2.png">
 	</div>
 	<br>
-	<p>주거유형</p>
+	<p>주거유형(필수)</p>
 	<div class="title">
-		<button id="titie1" class="btn success" value="1000000" onclick="totalPrice(this)">아파트</button>
-		<button id="titie2" class="btn success" value="900000" onclick="totalPrice(this)">빌라</button>
-		<button id="titie3" class="btn success" value="1200000" onclick="totalPrice(this)">단독주택</button>
+		<button id="아파트" class="btn success" value="1000000" onclick="totalPrice(this)">아파트</button>
+		<button id="빌라" class="btn success" value="900000" onclick="totalPrice(this)">빌라</button>
+		<button id="단독주택" class="btn success" value="1200000" onclick="totalPrice(this)">단독주택</button>
+		<div class="text" id="span1" name="span1"></div>
 	</div>
 	
 	<br>
-	<p>평수/공급면적</p>
+	<p>평수/공급면적(필수)</p>
 	<div class="width">
-		<button id="width1" class="btn success" value="300000" onclick="totalPrice(this)">20평~</button>
-		<button id="width2" class="btn success" value="350000" onclick="totalPrice(this)">30평~</button>
-		<button id="width3" class="btn success" value="380000" onclick="totalPrice(this)">40평~</button>
-		<button id="width4" class="btn success" value="420000" onclick="totalPrice(this)">~59평</button>
+		<button id="20평대" class="btn success" value="300000" onclick="totalPrice(this)">20평~</button>
+		<button id="30평대" class="btn success" value="350000" onclick="totalPrice(this)">30평~</button>
+		<button id="40평대" class="btn success" value="380000" onclick="totalPrice(this)">40평~</button>
+		<button id="50평대" class="btn success" value="420000" onclick="totalPrice(this)">~59평</button>
+		<div class="text" id="span2" name="span2"></div>
 	</div>
 	
 	<br>
 	<p>시공 면적</p>
 	<div class="all">		
-		<button id="all1" class="btn success" value="5000000" onclick="totalPrice(this)">전체시공</button>
-		<button id="all2" class="btn success" value="2800000" onclick="totalPrice(this)">부분시공</button>		
-		<button id="all3" class="btn success" value="1900000" onclick="totalPrice(this)">필름시공</button>		
-		<button id="all4" class="btn success" value="2100000" onclick="totalPrice(this)">폴딩도어</button>		
+		<button id="전체시공" class="btn success" value="5000000" onclick="totalPrice(this)">전체시공</button>
+		<button id="부분시공" class="btn success" value="2800000" onclick="totalPrice(this)">부분시공</button>		
+		<button id="필름시공" class="btn success" value="1900000" onclick="totalPrice(this)">필름시공</button>		
+		<button id="폴딩도어" class="btn success" value="2100000" onclick="totalPrice(this)">폴딩도어</button>
+		<div class="text" id="span3" name="span3"></div>		
 	</div>
 	
 	<br>
 	<p>도배</p>
 	<div class="silke">		
-		<button id="silke1" class="btn success" value="1100000" onclick="totalPrice(this)">실크</button>
-		<button id="silke2" class="btn success" value="700000" onclick="totalPrice(this)">합지</button>		
-		<button id="silke3" class="btn success" value="900000" onclick="totalPrice(this)">실크 & 합지</button>				
+		<button id="실크" class="btn success" value="1100000" onclick="totalPrice(this)">실크</button>
+		<button id="합지" class="btn success" value="700000" onclick="totalPrice(this)">합지</button>		
+		<button id="실크 & 합지" class="btn success" value="900000" onclick="totalPrice(this)">실크 & 합지</button>
+		<div class="text" id="span4" name="span4"></div>				
 	</div>
 	
 	<br>
 	<p>바닥재</p>
 	<div class="floor">		
-		<button id="floor1" class="btn success" value="1000000" onclick="totalPrice(this)">장판</button>
-		<button id="floor2" class="btn success" value="1300000" onclick="totalPrice(this)">강화마루</button>		
-		<button id="floor3" class="btn success" value="1500000" onclick="totalPrice(this)">강마루</button>				
-		<button id="floor4" class="btn success" value="900000" onclick="totalPrice(this)">원목마루</button>				
-		<button id="floor5" class="btn success" value="1100000" onclick="totalPrice(this)">포세린타일</button>				
-		<button id="floor6" class="btn success" value="1500000" onclick="totalPrice(this)">천연대리석</button>				
+		<button id="장판" class="btn success" value="1000000" onclick="totalPrice(this)">장판</button>
+		<button id="강화마루" class="btn success" value="1300000" onclick="totalPrice(this)">강화마루</button>		
+		<button id="강마루" class="btn success" value="1500000" onclick="totalPrice(this)">강마루</button>				
+		<button id="원목마루" class="btn success" value="900000" onclick="totalPrice(this)">원목마루</button>				
+		<button id="포세린타일" class="btn success" value="1100000" onclick="totalPrice(this)">포세린타일</button>				
+		<button id="천연대리석" class="btn success" value="1500000" onclick="totalPrice(this)">천연대리석</button>		
+		<div class="text" id="span5" name="span5"></div>		
 	</div>
 	
 	<br>
 	<p>주방</p>
 	<div class="kitchen">		
-		<button id="kitchen1" class="btn success" value="4800000" onclick="totalPrice(this)">전체교체</button>
-		<button id="kitchen2" class="btn success" value="2500000" onclick="totalPrice(this)">부분교체</button>				
+		<button id="전체교체" class="btn success" value="4800000" onclick="totalPrice(this)">전체교체</button>
+		<button id="부분교체" class="btn success" value="2500000" onclick="totalPrice(this)">부분교체</button>
+		<div class="text" id="span6" name="span6"></div>				
 	</div>
 	
 	<br>
-	<p>연락 받으실 번호</p>
+	<p>연락 받으실 번호(필수)</p>
 	<div class="house">		
 		<input type="text" id="mobile" placeholder=" '-'를 포함해서 입력바랍니다. " maxlength="13" pattern="010-\d{4}-\d{4}">			
 	</div>

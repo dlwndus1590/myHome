@@ -6,6 +6,7 @@
 <%@page import="com.myHome.model.dto.Member"%>
 <%@page import="java.util.ArrayList"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ include file="/inc/taglib_menu.jsp" %>  
 <%
 	ArrayList<Member> dao = (ArrayList<Member>)request.getAttribute("list");
 
@@ -13,8 +14,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>회원전체조회</title>
+    <meta charset="utf-8">
+    <title>My Home</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="아이디/비밀번호 찾기">
+    <meta name="author" content="강하영">
+    <!-- Bootstrap styles -->
+    <link href="${CONTEXT_PATH}/assets/css/bootstrap.css" rel="stylesheet"/>
+    <!-- Customize styles -->
+    <link href="${CONTEXT_PATH}/assets/style/style.css" rel="stylesheet"/>
+    <!-- font awesome styles -->
+	<link href="${CONTEXT_PATH}/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
+	<!-- Favicons -->
+    <link rel="shortcut icon" href="${CONTEXT_PATH}/assets/ico/favicon.ico">
 
 <!-- header menu -->
 <jsp:include page="/inc/header.jsp" />
@@ -55,6 +67,14 @@ tr:nth-child(even) {
 </script>
 </head>
 <body>
+<!-- main menu : 로그인 전 -->
+<c:if test="${empty dto}">
+	<script type="text/javascript">
+		alert('로그인을 먼저 시도해주세요');
+		location.href="${CONTEXT_PATH}/member/login.jsp"
+	</script>
+</c:if>
+
 <div class="row">
 <div class="span9" style="width:960px;backgroud-color:white;">
 <div class="well well-small">
