@@ -3,6 +3,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/inc/taglib_menu.jsp" %>      
 <%
 	ArrayList<Interior> list = (ArrayList<Interior>)request.getAttribute("list");
 %>
@@ -90,6 +91,14 @@ button:hover {
 </style>
 </head>
 <body>
+<!-- main menu : 로그인 전 -->
+<c:if test="${empty dto}">
+	<script type="text/javascript">
+		alert('로그인을 먼저 시도해주세요');
+		location.href="${CONTEXT_PATH}/member/login.jsp"
+	</script>
+</c:if>
+
 <div class="row">
 <div class="span9" style="width:960px;">
     <ul class="breadcrumb">

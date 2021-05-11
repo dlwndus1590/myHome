@@ -1,6 +1,7 @@
 <%@page import="com.myHome.model.dto.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/inc/taglib_menu.jsp" %>  
 <!DOCTYPE html>
 <html>
   <head>
@@ -39,9 +40,13 @@
 	</style>
   </head>
 <body>
-
-
-<!-- main menu : 로그인 전 메뉴 -->
+<!-- main menu : 로그인 전 -->
+<c:if test="${empty dto}">
+	<script type="text/javascript">
+		alert('로그인을 먼저 시도해주세요');
+		location.href="${CONTEXT_PATH}/member/login.jsp"
+	</script>
+</c:if>
 
 <!-- contents menu -->
 <%
