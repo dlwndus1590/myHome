@@ -33,7 +33,6 @@
 	
 	form{
 		background-color: white;
-		margin-left: 3%;
 	}
 	input[type=text], input[type=password] {
 	  width: 90%;
@@ -124,7 +123,7 @@ function postcodeTest() {
 </c:if>
 
 <!-- contents menu -->
-<form action="${CONTEXT_PATH}/member/memberController?action=memberMyInfoUpdate"  method="post" style="padding-left:4%; height:1200px;">
+<form action="${CONTEXT_PATH}/member/memberController?action=memberMyInfoUpdate"  method="post" style="padding-left:4%; height:1200px; width:960px;">
 	
   <div class="container">
   	<br>

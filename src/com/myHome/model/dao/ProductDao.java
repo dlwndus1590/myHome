@@ -590,7 +590,7 @@ public class ProductDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql.toString());
-			pstmt.setFloat(1, ((product.getpTotalScore() + score) / (product.getpReviewCount() + 1) ));
+			pstmt.setFloat(1, ((float)(product.getpTotalScore() + score) / (float)(product.getpReviewCount() + 1) ));
 			pstmt.setInt(2, score);
 			pstmt.setInt(3, product.getpNo());
 			

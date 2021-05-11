@@ -32,7 +32,6 @@
 	
 	form{
 		background-color: white;
-		margin-left: 3%;
 	}
 	input[type=text], input[type=password] {
 	  width: 90%;
@@ -118,7 +117,7 @@ function postcodeTest() {
 <!-- main menu : 로그인 전 메뉴 -->
 
 <!-- contents menu -->
-<form action="${CONTEXT_PATH}/member/memberController?action=adminMyInfoUpdate"  method="post" style="padding-left:4%; height:1100px;">
+<form action="${CONTEXT_PATH}/member/memberController?action=adminMyInfoUpdate"  method="post" style="padding-left:4%; height:1100px; width:960px;">
 	
   <div class="container">
   	<br>
