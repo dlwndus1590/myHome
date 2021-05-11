@@ -82,7 +82,21 @@ public class FrontOrders extends HttpServlet {
 	 * 장바구니페이지
 	 */
 	private void cartPage(HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
+	      
+		if (session == null || 
+		    session.getAttribute("memberId") == null) {
+		         
+		    try {
+				request.getRequestDispatcher("/member/login.jsp").forward(request, response);
+			} catch (ServletException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		    return;
+		}
+		
 		String memberId = (String) session.getAttribute("memberId");
 		ArrayList<OrdersPage> cartList = new ArrayList<OrdersPage>();
 		OrdersBiz ordersBiz = new OrdersBiz();
@@ -116,7 +130,21 @@ public class FrontOrders extends HttpServlet {
 	 * 장바구니 결제페이지
 	 */
 	private void cartOrdersPage(HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
+	      
+		if (session == null || 
+		    session.getAttribute("memberId") == null) {
+		         
+		    try {
+				request.getRequestDispatcher("/member/login.jsp").forward(request, response);
+			} catch (ServletException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		    return;
+		}
+		
 		String memberId = (String) session.getAttribute("memberId");
 		String[] pNo = request.getParameterValues("pNo");
 		String[] count = request.getParameterValues("itemCount");
@@ -148,7 +176,21 @@ public class FrontOrders extends HttpServlet {
 	 * 단일 상품 결제페이지
 	 */
 	private void ordersPage(HttpServletRequest request, HttpServletResponse response) {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
+	      
+		if (session == null || 
+		    session.getAttribute("memberId") == null) {
+		         
+		    try {
+				request.getRequestDispatcher("/member/login.jsp").forward(request, response);
+			} catch (ServletException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		    return;
+		}
+		
 		String memberId = (String) session.getAttribute("memberId");
 		int pNo = Integer.parseInt(request.getParameter("pNo"));
 		int count = Integer.parseInt(request.getParameter("count"));
@@ -184,7 +226,21 @@ public class FrontOrders extends HttpServlet {
 	 * 다중 결제하기
 	 */
 	private void orders(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
+	      
+		if (session == null || 
+		    session.getAttribute("memberId") == null) {
+		         
+		    try {
+				request.getRequestDispatcher("/member/login.jsp").forward(request, response);
+			} catch (ServletException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		    return;
+		}
+		
 		String memberId = (String) session.getAttribute("memberId");
 		int orderMethod = Integer.parseInt(request.getParameter("optionsRadios"));
 		int usedMileage = Integer.parseInt(request.getParameter("usedMileage"));
@@ -300,7 +356,21 @@ public class FrontOrders extends HttpServlet {
 	 * 단일 결제하기
 	 */
 	private void order(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
+	      
+		if (session == null || 
+		    session.getAttribute("memberId") == null) {
+		         
+		    try {
+				request.getRequestDispatcher("/member/login.jsp").forward(request, response);
+			} catch (ServletException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		    return;
+		}
+		
 		String memberId = (String) session.getAttribute("memberId");
 		int orderMethod = Integer.parseInt(request.getParameter("optionsRadios"));
 		int usedMileage = Integer.parseInt(request.getParameter("usedMileage"));
