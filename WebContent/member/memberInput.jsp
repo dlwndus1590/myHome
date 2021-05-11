@@ -30,7 +30,6 @@
 
 form{
 	background-color: white;
-	margin-left: 3%;
 }
 input[type=text], input[type=password] {
   width: 90%;
@@ -140,7 +139,7 @@ a {
 <!-- main menu : 로그인 전 메뉴 -->
 
 <!-- contents menu -->
-<form id="form" action="${CONTEXT_PATH}/member/memberController?action=memberInput"  method="post" style="padding-left:5%;">
+<form id="form" action="${CONTEXT_PATH}/member/memberController?action=memberInput"  method="post" style="padding-left:5%; width:960px;">
 	
   <div>
   	<br>
@@ -151,8 +150,9 @@ a {
     <p>
     <input type="text" name=memberId id="memberId" placeholder="아이디"
 		class="inline" autofocus="autofocus">
-	<input type="button" value="중복체크" class="idCheck_btn" onclick="idCheck()">	
-  	<br>
+		<br>
+	<input type="button" value="중복체크" class="shopBtn" onclick="idCheck()">	
+  	<br><br>
   	
     <label><b>비밀번호</b></label>
     <input type="password" placeholder="Enter your Password" name="memberPw" id="memberPw" required>    
@@ -179,8 +179,8 @@ a {
     
     <hr class="hr">
 
-	<input type="submit" class="registerbtn" value="가입하기">        
-    <input type="reset" class="registerbtn"  onclick="location.href='${CONTEXT_PATH}/product/productController?action=storeHome'" value="취소하기">
+	<input type="submit" class="shopBtn" value="가입하기">        
+    <input type="reset" class="defaultBtn"  onclick="location.href='${CONTEXT_PATH}/product/productController?action=storeHome'" value="취소하기">
   </div>
   
   <div class="container signin" >

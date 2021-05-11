@@ -76,10 +76,6 @@
   display: table;
 }
 
-.row{
-	margin-left: 3%;
-}
-
 #ino,#iname,#icareer,#idetail,#ilocation,#imobile{
 	height: 40px;
 }
@@ -99,14 +95,14 @@
 %>
 <form action="${CONTEXT_PATH}/interior/interiorController?action=updateInterior" method="post" style="width:960px; ">
 <div class="row">
-<div class="span9" style="width:100%; padding-right:50px;">
-    <ul class="breadcrumb">
+<div class="span9" style="width:960px; padding-right:50px;">
+    <ul class="breadcrumb" style="width:960px;">
    		<li><a href="${CONTEXT_PATH}/index.jsp">Home</a> <span class="divider">></span></li>
    		<li><a href="${CONTEXT_PATH}/interior/interiorController?action=interiorList">인테리어 모아보기</a> <span class="divider">></span></li>
    		<li class="active"><%=dto.getIname() %></li>
     </ul>
 
-<div class="well well-small" style="width:100%; height:760px;">
+<div class="well well-small" style="width:960px; height:600px;">
   
   <h2><%=dto.getIname() %></h2>
   	
@@ -115,7 +111,6 @@
   		   mainMember = (Member)session.getAttribute("dto");
            if(mainMember.getGrade().equals("관리자")){
   	%>   
-          		<div class="container2">            
 			      <hr class="hr">
 			      <input type="hidden" placeholder="Enter No"  class="input" id="ino" name="ino" value="<%=dto.getIno() %>" readonly="readonly">
 			      
@@ -148,14 +143,12 @@
 			                     mainMember = (Member)session.getAttribute("dto");                     
 						%> 
 			            <% if(mainMember.getGrade().equals("관리자")){  %>  
-			            		<div class="clearfix">	            			   
-					  				<input type="submit" class="button"  value="수정하기" >			  							         
-			      				</div>   		      
-		    	</div>		
+			            	<br>
+					  		<input type="submit" class="shopBtn"  value="수정하기" style="display:inline-block;">			  							         
 			</form>		
-			<form action="${CONTEXT_PATH}/interior/interiorController?action=deleteInterior" method="post" style="margin-right:90%;">
-				<div class="clearfix" style="margin-left: 17%;">        
-					<input type="submit" class="button" value="삭제하기">		         
+			<form action="${CONTEXT_PATH}/interior/interiorController?action=deleteInterior" method="post" style=" display:inline; margin:auto;">
+				<div class="clearfix" style="margin-left: 1%; display:inline-block;">        
+					<input type="submit" class="defaultBtn" value="삭제하기">		         
 				</div>	 
 			</form>		
 		<%
