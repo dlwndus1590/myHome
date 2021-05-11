@@ -121,7 +121,7 @@ p{
 	}
 	
 	var param = getParameterByName('icareer');	
-	
+	console.log(param * 0.21);
 	var total = 0;
 	var sum  = 0;
 	var num1 = 0;
