@@ -167,7 +167,7 @@
 			    }	
 			            }
 		%>           
-		                 
+ 		                 
   		<%
         	} else if(mainMember.getGrade().equals("일반회원") || mainMember.getGrade().equals("판매자")){                                   	
 		%> 
